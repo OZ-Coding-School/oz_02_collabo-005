@@ -1,11 +1,8 @@
-import './App.css'
+import "./App.css";
+import Layout from "./layout/Layout";
 
-function App() {
+const App: React.FC = () => {
+  return <Layout />;
+};
 
-  return (
-    <>
-    </>
-  )
-}
-
-export default App
+export default App;

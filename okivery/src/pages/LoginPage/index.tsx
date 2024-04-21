@@ -1,7 +1,7 @@
 import React from "react";
 
-const LoginPage = () => {
-  return <div>LoginPage</div>;
+const index: React.FC = () => {
+  return <div>index</div>;
 };
 
-export default LoginPage;
+export default index;

@@ -9,24 +9,24 @@ const SignupPage = () => {
     <>
       <Layout>
         <Header />
-        <div className="signup-container">
-          <h1 className="signup-title">Sign Up</h1>
+        <div className='signup-container'>
+          <h1 className='signup-title'>Sign Up</h1>
           <form>
-            <InputFormItem label="Name" name="name" type="text" />
-            <InputFormItem label="E-Mail" name="email" type="email" />
-            <InputFormItem label="Password" name="password" type="password" />
+            <InputFormItem label='Name' name='name' type='text' />
+            <InputFormItem label='E-Mail' name='email' type='email' />
+            <InputFormItem label='Password' name='password' type='password' />
             <InputFormItem
-              label="Repeat Password"
-              name="repeat-password"
-              type="password"
+              label='Repeat Password'
+              name='repeat-password'
+              type='password'
             />
-            <InputFormItem label="Phone number" name="phone" type="number" />
+            <InputFormItem label='Phone number' name='phone' type='number' />
             <BirthdayInputForm />
-            <div className="term-container">
+            <div className='term-container'>
               <label>
                 Terms <span>*</span>
               </label>
-              <button className="term-btn">terms of service</button>
+              <button className='term-btn'>terms of service</button>
             </div>
             <button>Sign up</button>
           </form>

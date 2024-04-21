@@ -1,8 +1,12 @@
 import "./App.css";
-import Layout from "./layout/Layout";
+import SignupPage from "./pages/SignupPage";
 
-const App: React.FC = () => {
-  return <Layout />;
+const App = () => {
+  return (
+    <>
+      <SignupPage />
+    </>
+  );
 };
 
 export default App;

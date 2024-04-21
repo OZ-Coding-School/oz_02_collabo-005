@@ -22,7 +22,6 @@ import PaymentPage from "./pages/PaymentPage";
 
 const App: React.FC = () => {
   const isLogined: boolean = false;
-
   return (
     <Router>
       <Routes>

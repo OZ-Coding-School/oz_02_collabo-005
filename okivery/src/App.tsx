@@ -1,11 +1,13 @@
-import './App.css'
+import "./App.css";
+// import { Routes, Route } from "react-router-dom";
+import SignupPage from "./pages/SignupPage";
 
-function App() {
-
+const App = () => {
   return (
     <>
+      <SignupPage />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

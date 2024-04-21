@@ -1,6 +1,12 @@
 import "../../styles/signup/component/InputFormItem.css";
 
-const InputFormItem = ({ label, name, type }) => {
+interface InputFormIemProps {
+  label: string;
+  name: string;
+  type: string;
+}
+
+const InputFormItem: React.FC<InputFormIemProps> = ({ label, name, type }) => {
   return (
     <div className="input-container">
       <label>

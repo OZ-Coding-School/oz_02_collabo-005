@@ -26,21 +26,21 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route
-          path='/'
+          path="/"
           element={
             isLogined ? (
               <Layout>
-                <Navigate to='/home' />
+                <Navigate to="/home" />
               </Layout>
             ) : (
               <Layout>
-                <Navigate to='/splash' />
+                <Navigate to="/splash" />
               </Layout>
             )
           }
         />
         <Route
-          path='/splash'
+          path="/splash"
           element={
             <Layout>
               <SplashPage />
@@ -48,7 +48,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/login'
+          path="/login"
           element={
             <Layout>
               <LoginPage />
@@ -56,7 +56,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/home'
+          path="/home"
           element={
             <Layout>
               <HomePage />
@@ -64,7 +64,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/sign'
+          path="/sign"
           element={
             <Layout>
               <SignUpPage />
@@ -72,7 +72,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/restaurant'
+          path="/restaurant"
           element={
             <Layout>
               <RestaurantPage />
@@ -80,7 +80,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/address'
+          path="/address"
           element={
             <Layout>
               <AddressPage />
@@ -88,7 +88,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/account'
+          path="/account"
           element={
             <Layout>
               <AccountPage />
@@ -96,7 +96,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/address/select-map'
+          path="/address/select-map"
           element={
             <Layout>
               <MapPage />
@@ -104,7 +104,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/restaurant/menu'
+          path="/restaurant/menu"
           element={
             <Layout>
               <MenuPage />
@@ -112,7 +112,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/order/sheet'
+          path="/order/sheet"
           element={
             <Layout>
               <OrderSheetPage />
@@ -120,7 +120,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/orders'
+          path="/orders"
           element={
             <Layout>
               <OrdersPage />
@@ -128,7 +128,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/order/status'
+          path="/order/status"
           element={
             <Layout>
               <OrderStatusPage />
@@ -136,7 +136,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path='/payment'
+          path="/payment"
           element={
             <Layout>
               <PaymentPage />

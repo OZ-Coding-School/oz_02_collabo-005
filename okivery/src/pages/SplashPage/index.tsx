@@ -24,7 +24,7 @@ const index: React.FC = () => {
             </div>
           </div>
           <div className='loginButton'>
-            <Button name='Login' backgroundColor='#414f42' />
+            <Button name='Login' backgroundColor='#414f42' to='/login' />
           </div>
         </div>
       </div>

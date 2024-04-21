@@ -1,0 +1,35 @@
+.splashMainContainer {
+  width: 100%;
+  height: 100vh;
+  background-color: #ff6347;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.appNameTextContainer {
+  text-align: center;
+}
+
+.loginButton {
+  margin-top: 100px;
+}
+
+.appNameDescription h1 {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 36px;
+  margin-top: 40px;
+}
+
+.appName h1 {
+  color: #414f42;
+  font-weight: bold;
+  font-size: 36px;
+}

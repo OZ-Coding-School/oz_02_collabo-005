@@ -18,3 +18,7 @@
 .term-container > label > span {
   color: red;
 }
+
+.signup-btn {
+  text-align: center;
+}

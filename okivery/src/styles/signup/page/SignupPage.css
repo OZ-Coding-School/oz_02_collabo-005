@@ -19,6 +19,15 @@
   color: red;
 }
 
+.term-content {
+  display: flex;
+  align-items: start;
+}
+
+#term {
+  margin-right: 10px;
+}
+
 .signup-btn {
   text-align: center;
 }

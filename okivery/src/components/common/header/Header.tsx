@@ -6,15 +6,21 @@ import "../../../styles/common/header/Header.css";
 
 interface HeaderProps {
   hasBackIcon: boolean;
+  to: string;
   title: string;
   hasCartIcon: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ hasBackIcon, title, hasCartIcon }) => {
+const Header: React.FC<HeaderProps> = ({
+  hasBackIcon,
+  to,
+  title,
+  hasCartIcon,
+}) => {
   return (
     <div className="headerContainer">
       {hasBackIcon && (
-        <Link to="/login">
+        <Link to={to}>
           <img src={BackIcon} className="backIcon" />
         </Link>
       )}

@@ -10,14 +10,15 @@
   height: 35px;
   width: 35px;
   margin-left: 10px;
+  margin-top: 5px;
 }
 
 .headerTitle {
   color: white;
   font-size: 1.5rem;
+  font-weight: 600;
   display: flex;
   position: absolute;
-  top: 5px;
   left: 55px;
 }
 

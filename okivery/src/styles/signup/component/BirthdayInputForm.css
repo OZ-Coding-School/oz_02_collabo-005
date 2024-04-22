@@ -1,0 +1,20 @@
+.birthInput-container {
+  margin-bottom: 10px;
+}
+
+.event-explain {
+  margin: 10px 0;
+  font-size: 11px;
+  color: #92a0a9;
+}
+.birthInput-form {
+  display: flex;
+  justify-content: space-around;
+}
+.birth-input {
+  height: 5vh;
+  width: 30%;
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+  text-align: center;
+}

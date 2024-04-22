@@ -9,9 +9,9 @@ const SignupPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackicon={true} title="" hasCartIcon={false} />
-      <div className="signup-container">
-        <h1 className="signup-title">Sign Up</h1>
+      <Header hasBackIcon={true} title="" hasCartIcon={false} />
+      <div className="signupContainer">
+        <h1 className="signupTitle">Sign Up</h1>
         <form>
           <InputFormItem label="Name" name="name" type="text" />
           <InputFormItem label="E-Mail" name="email" type="email" />
@@ -23,11 +23,11 @@ const SignupPage: React.FC = () => {
           />
           <InputFormItem label="Phone number" name="phone" type="number" />
           <BirthdayInputForm />
-          <div className="term-container">
+          <div className="termContainer">
             <label>
               Terms <span>*</span>
             </label>
-            <div className="term-content">
+            <div className="termContent">
               <input type="radio" name="term" value="agree" id="term" />
               <div>
                 {terms}
@@ -37,7 +37,7 @@ const SignupPage: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="signup-btn">
+          <div className="signupBtn">
             <Button name="Sign up" backgroundColor="#FF6347" to="/login" />
           </div>
         </form>

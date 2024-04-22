@@ -5,24 +5,24 @@ import CartIcon from "../../../assets/icons/cart-icon.png";
 import "../../../styles/common/header/Header.css";
 
 interface HeaderProps {
-  hasBackicon: boolean;
+  hasBackIcon: boolean;
   title: string;
   hasCartIcon: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ hasBackicon, title, hasCartIcon }) => {
+const Header: React.FC<HeaderProps> = ({ hasBackIcon, title, hasCartIcon }) => {
   return (
-    <div className="header-container">
-      {hasBackicon && (
+    <div className="headerContainer">
+      {hasBackIcon && (
         <Link to="/login">
-          <img src={BackIcon} className="back-icon" />
+          <img src={BackIcon} className="backIcon" />
         </Link>
       )}
-      <div className="header-title">{title}</div>
+      <div className="headerTitle">{title}</div>
       {hasCartIcon && (
-        <div className="header-cart">
-          <img src={CartIcon} className="cart-iocn" />
-          <div className="cart-quantity">0</div>
+        <div className="headerCart">
+          <img src={CartIcon} className="cartIcon" />
+          <div className="cartQuantity">0</div>
         </div>
       )}
     </div>

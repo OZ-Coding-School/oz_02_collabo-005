@@ -8,7 +8,7 @@ interface InputFormIemProps {
 
 const InputFormItem: React.FC<InputFormIemProps> = ({ label, name, type }) => {
   return (
-    <div className="input-container">
+    <div className="inputContainer">
       <label htmlFor={name}>
         {label} <span>*</span>
       </label>

@@ -9,8 +9,7 @@
 .back-icon {
   height: 35px;
   width: 35px;
-  position: absolute;
-  left: 10px;
+  margin-left: 10px;
 }
 
 .header-title {
@@ -22,9 +21,19 @@
   left: 55px;
 }
 
-.cart-iocn {
-  height: 40px;
-  width: 35px;
+.header-cart {
   position: absolute;
   right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 35px;
+  width: 70px;
+  background-color: #eeeeee;
+  border-radius: 99px;
+}
+
+.cart-iocn {
+  height: 30px;
+  width: 30px;
 }

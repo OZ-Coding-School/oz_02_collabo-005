@@ -5,6 +5,8 @@ import InputFormItem from "../../components/signup/InputFormItem";
 import "../../styles/signup/page/SignupPage.css";
 
 const SignupPage: React.FC = () => {
+  const terms = "I agree that I have fully read Okivery’s Terms of Use and ";
+
   return (
     <>
       <Header hasBackicon={true} title="" hasCartIcon={false} />
@@ -25,7 +27,15 @@ const SignupPage: React.FC = () => {
             <label>
               Terms <span>*</span>
             </label>
-            <Button name="terms of service" backgroundColor="#FF6347" to="/" />
+            <div className="term-content">
+              <input type="radio" name="term" value="agree" id="term" />
+              <div>
+                {terms}
+                <a href="/" target="_blank">
+                  Privacy Policy.
+                </a>
+              </div>
+            </div>
           </div>
           <div className="signup-btn">
             <Button name="Sign up" backgroundColor="#FF6347" to="/login" />

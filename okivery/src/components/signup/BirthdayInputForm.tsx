@@ -11,19 +11,19 @@ const BirthdayInputForm = () => {
         <input
           type="text"
           name="year"
-          value="YEAR"
+          placeholder="YEAR"
           className="birth-input"
         ></input>
         <input
           type="text"
           name="month"
-          value="Month"
+          placeholder="Month"
           className="birth-input"
         ></input>
         <input
           type="text"
           name="day"
-          value="Day"
+          placeholder="Day"
           className="birth-input"
         ></input>
       </div>

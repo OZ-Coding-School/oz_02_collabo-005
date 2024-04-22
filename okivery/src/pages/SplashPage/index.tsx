@@ -23,7 +23,7 @@ const index: React.FC = () => {
               <h1>okivery</h1>
             </div>
           </div>
-          <div className="loginButton">
+          <div className="splashLoginButton">
             <Button name="Login" backgroundColor="#414f42" to="/login" />
           </div>
         </div>

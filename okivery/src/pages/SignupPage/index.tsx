@@ -7,7 +7,7 @@ import "../../styles/signup/page/SignupPage.css";
 const SignupPage: React.FC = () => {
   return (
     <>
-      <Header />
+      <Header hasBackicon={true} title="" hasCartIcon={false} />
       <div className="signup-container">
         <h1 className="signup-title">Sign Up</h1>
         <form>

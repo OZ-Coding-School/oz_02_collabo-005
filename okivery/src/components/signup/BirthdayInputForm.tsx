@@ -1,4 +1,4 @@
-import "../../styles/signup/component/BirthdayInputForm.css";
+import "./BirthdayInputForm.css";
 
 const BirthdayInputForm = () => {
   return (
@@ -9,7 +9,7 @@ const BirthdayInputForm = () => {
       </p>
       <div className="birthInputForm">
         <input
-          type="text"
+          type="number"
           name="year"
           placeholder="YEAR"
           className="birthInput"
@@ -17,13 +17,13 @@ const BirthdayInputForm = () => {
         <input
           type="text"
           name="month"
-          placeholder="Month"
+          placeholder="MONTH"
           className="birthInput"
         ></input>
         <input
           type="text"
           name="day"
-          placeholder="Day"
+          placeholder="DAY"
           className="birthInput"
         ></input>
       </div>

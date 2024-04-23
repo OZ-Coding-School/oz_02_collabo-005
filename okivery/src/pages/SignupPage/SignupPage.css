@@ -1,0 +1,44 @@
+.signupTitle {
+  font-size: 2rem;
+}
+
+.signupContainer {
+  margin: 10px;
+}
+
+.passwordNotMatch {
+  font-size: 0.8rem;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.hide {
+  display: none;
+}
+
+.termContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.termContainer > label {
+  margin-bottom: 10px;
+}
+
+.termContainer > label > span {
+  color: red;
+}
+
+.termContent {
+  display: flex;
+  align-items: start;
+}
+
+#term {
+  margin-right: 10px;
+}
+
+.signupBtn {
+  text-align: center;
+}

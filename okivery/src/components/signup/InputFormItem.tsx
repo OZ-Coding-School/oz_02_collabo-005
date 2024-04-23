@@ -1,12 +1,22 @@
-import "../../styles/signup/component/InputFormItem.css";
+import "./InputFormItem.css";
 
 interface InputFormIemProps {
   label: string;
   name: string;
   type: string;
+  value: string;
+  place: string;
+  handleInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const InputFormItem: React.FC<InputFormIemProps> = ({ label, name, type }) => {
+const InputFormItem: React.FC<InputFormIemProps> = ({
+  label,
+  name,
+  type,
+  value,
+  place,
+  handleInputChange,
+}) => {
   return (
     <div className="inputContainer">
       <label htmlFor={name}>
@@ -16,11 +26,9 @@ const InputFormItem: React.FC<InputFormIemProps> = ({ label, name, type }) => {
         type={type}
         name={name}
         id={name}
-        placeholder={
-          name === "password"
-            ? "Please set the password to a minimum of 8 characters"
-            : name
-        }
+        value={value}
+        placeholder={place}
+        onChange={handleInputChange}
       ></input>
     </div>
   );

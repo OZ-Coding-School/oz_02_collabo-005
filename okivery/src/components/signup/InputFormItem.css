@@ -1,0 +1,18 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+.inputContainer > label {
+  margin-bottom: 10px;
+}
+
+.inputContainer > label > span {
+  color: red;
+}
+.inputContainer input {
+  height: 5vh;
+  border: 1px solid #c4c4c4;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}

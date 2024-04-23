@@ -1,6 +1,10 @@
 import "./BirthdayInputForm.css";
 
-const BirthdayInputForm = () => {
+interface BirthdayInputProps {
+  isEdit?: boolean;
+}
+
+const BirthdayInputForm: React.FC<BirthdayInputProps> = ({ isEdit }) => {
   return (
     <div className="birthInputContainer">
       <label>Birthday</label>
@@ -13,18 +17,21 @@ const BirthdayInputForm = () => {
           name="year"
           placeholder="YEAR"
           className="birthInput"
+          readOnly={!isEdit}
         ></input>
         <input
           type="text"
           name="month"
           placeholder="MONTH"
           className="birthInput"
+          readOnly={!isEdit}
         ></input>
         <input
           type="text"
           name="day"
           placeholder="DAY"
           className="birthInput"
+          readOnly={!isEdit}
         ></input>
       </div>
     </div>

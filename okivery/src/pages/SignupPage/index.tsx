@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/common/button/Button";
 import Header from "../../components/common/header/Header";
-import BirthdayInputForm from "../../components/signup/BirthdayInputForm";
 import InputFormItem from "../../components/common/input/InputFormItem";
 import "./SignupPage.css";
+import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
 
 const SignupPage: React.FC = () => {
   const terms = "I agree that I have fully read Okivery’s Terms of Use and ";

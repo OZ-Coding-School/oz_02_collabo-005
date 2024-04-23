@@ -29,7 +29,7 @@ const AccountPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackicon={true} title="Account" hasCartIcon={false} />
+      <Header hasBackIcon={false} to="" title="Account" hasCartIcon={false} />
       <div className="accountMainContainer">
         <div className="editButtonSection">
           <SmallButton

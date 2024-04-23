@@ -1,17 +1,23 @@
-.birthInput-container {
+.birthInputContainer {
   margin-bottom: 10px;
 }
 
-.event-explain {
+.eventExplain {
   margin: 10px 0;
   font-size: 11px;
   color: #92a0a9;
 }
-.birthInput-form {
+.birthInputForm {
   display: flex;
   justify-content: space-around;
 }
-.birth-input {
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.birthInput {
   height: 5vh;
   width: 30%;
   border: 1px solid #c4c4c4;

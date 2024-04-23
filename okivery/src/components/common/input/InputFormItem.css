@@ -9,6 +9,10 @@
 .inputContainer > label > span {
   color: red;
 }
+
+.hideSpan {
+  display: none;
+}
 .inputContainer input {
   height: 5vh;
   border: 1px solid #c4c4c4;

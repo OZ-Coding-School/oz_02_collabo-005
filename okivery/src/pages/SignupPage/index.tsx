@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "../../components/common/button/Button";
 import Header from "../../components/common/header/Header";
 import BirthdayInputForm from "../../components/signup/BirthdayInputForm";
-import InputFormItem from "../../components/signup/InputFormItem";
+import InputFormItem from "../../components/common/input/InputFormItem";
 import "./SignupPage.css";
 
 const SignupPage: React.FC = () => {
@@ -86,6 +86,7 @@ const SignupPage: React.FC = () => {
             type="text"
             value={userData.name}
             place="Please enter your name"
+            isMust={true}
             handleInputChange={handleInputChange}
           />
           <InputFormItem
@@ -94,6 +95,7 @@ const SignupPage: React.FC = () => {
             type="email"
             value={userData.email}
             place="ex) abcd1234@gmail.com"
+            isMust={true}
             handleInputChange={handleInputChange}
           />
           <InputFormItem
@@ -102,6 +104,7 @@ const SignupPage: React.FC = () => {
             type="password"
             value={userData.password}
             place="Please enter a password of at least 8 characters"
+            isMust={true}
             handleInputChange={handleInputChange}
           />
           <InputFormItem
@@ -110,6 +113,7 @@ const SignupPage: React.FC = () => {
             type="password"
             value={userData.repeatPassword}
             place="Please re-enter your password"
+            isMust={true}
             handleInputChange={handleInputChange}
           />
           <div className="passwordNotMatch hide">Your password dismatches</div>
@@ -119,6 +123,7 @@ const SignupPage: React.FC = () => {
             type="phone"
             value={userData.phone}
             place="Please enter except for hyphen (-)"
+            isMust={true}
             handleInputChange={handleInputChange}
           />
           <BirthdayInputForm />

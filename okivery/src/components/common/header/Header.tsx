@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import BackIcon from "../../../assets/icons/back-icon.png";
 import CartIcon from "../../../assets/icons/cart-icon.png";
-
-import "../../../styles/common/header/Header.css";
+import "./Header.css";
 
 interface HeaderProps {
   hasBackIcon: boolean;

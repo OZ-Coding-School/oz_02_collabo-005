@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Header from "../../components/common/header/Header";
 import logoImage from "../../assets/images/AppLogo.png";
-import LoginInput from "../../components/login/LoginInput";
 import Button from "../../components/common/button/Button";
-import "../../styles/login/page/LoginPage.css";
+import "./LoginPage.css";
 import facebookLogoImage from "../../assets/images/FacebookLogoImage.png";
 import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
+import FloatingLabelInput from "../../components/common/input/FloatingLabelInput";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -31,8 +31,6 @@ const LoginPage: React.FC = () => {
   const isLoginButtonDisabled: boolean =
     !email || !password || !isValidEmail(email) || password.length < 8;
 
-  // 소셜 로그인 (페이스북)
-
   return (
     <>
       <Header hasBackicon={true} title="" hasCartIcon={false} />
@@ -42,16 +40,16 @@ const LoginPage: React.FC = () => {
             <img src={logoImage} width="128px" height="128px" />
           </div>
           <section className="loginInputForm">
-            <LoginInput
+            <FloatingLabelInput
               inputType="email"
               placeHolder="E-mail"
-              text="E-MAIL"
+              label="E-MAIL"
               onInputChange={handleEmailChange}
             />
-            <LoginInput
+            <FloatingLabelInput
               inputType="password"
               placeHolder="password"
-              text="PASSWORD"
+              label="PASSWORD"
               onInputChange={handlePasswordChange}
             />
           </section>

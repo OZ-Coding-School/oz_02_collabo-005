@@ -1,0 +1,42 @@
+.accountMainContainer {
+  height: 100vh;
+  margin: 10px 15px 10px 10px;
+}
+
+.editButtonSection {
+  display: flex;
+  justify-content: end;
+}
+
+.changePasswordSection input {
+  width: 145px;
+  height: 30px;
+}
+
+.currentPasswordSection {
+  display: flex;
+  column-gap: 10px;
+}
+
+.verifyButtonSection {
+  position: relative;
+  top: 31px;
+}
+
+.cardManagementSection {
+  margin-top: 20px;
+  display: grid;
+  row-gap: 5px;
+}
+
+.signOutSection {
+  margin-top: 10px;
+  display: flex;
+  column-gap: 5px;
+  width: 100%;
+  justify-content: center;
+}
+
+.signOutSection .smallButton {
+  width: 100%;
+}

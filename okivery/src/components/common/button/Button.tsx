@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../styles/common/Button.css";
+import "./Button.css";
 import { Link } from "react-router-dom";
 
 interface ButtonProps {
@@ -18,7 +18,10 @@ const Button: React.FC<ButtonProps> = ({
   return (
     // 로그인 버튼 비활성화 상태일 경우 다음 페이지로 넘어가지 못하도록
     <Link to={disabled ? "#" : to}>
-      <button style={{ backgroundColor: disabled ? "#ccc" : backgroundColor }}>
+      <button
+        style={{ backgroundColor: disabled ? "#ccc" : backgroundColor }}
+        className="commonButton"
+      >
         {name}
       </button>
     </Link>

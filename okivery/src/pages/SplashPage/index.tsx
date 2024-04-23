@@ -1,9 +1,9 @@
 import React from "react";
 import logoImage from "../../assets/images/AppLogo.png";
-import "../../styles/splashpage/page/SplashPage.css";
+import "./SplashPage.css";
 import Button from "../../components/common/button/Button";
 
-const index: React.FC = () => {
+const SplashPage: React.FC = () => {
   return (
     <>
       <div className="splashMainContainer">
@@ -32,4 +32,4 @@ const index: React.FC = () => {
   );
 };
 
-export default index;
+export default SplashPage;

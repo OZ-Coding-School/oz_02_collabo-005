@@ -1,17 +1,17 @@
 import React from "react";
-import "../../styles/login/component/LoginInput.css";
+import "./FloatingLabelInput.css";
 
 interface LoginInputProps {
   inputType: string;
   placeHolder: string;
-  text: string;
+  label: string;
   onInputChange: (value: string) => void;
 }
 
-const LoginInput: React.FC<LoginInputProps> = ({
+const FloatingLabelInput: React.FC<LoginInputProps> = ({
   inputType,
   placeHolder,
-  text,
+  label,
   onInputChange,
 }) => {
   // 입력값 변경 시 호출되는 콜백 함수
@@ -22,16 +22,16 @@ const LoginInput: React.FC<LoginInputProps> = ({
 
   return (
     <>
-      <div className="form-group">
+      <div className="formGroup">
         <input
           type={inputType}
           placeholder={placeHolder}
           onChange={handleInputChange}
         />
-        <label className="form-label">{text}</label>
+        <label className="formLabel">{label}</label>
       </div>
     </>
   );
 };
 
-export default LoginInput;
+export default FloatingLabelInput;

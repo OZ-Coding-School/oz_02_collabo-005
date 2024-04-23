@@ -1,0 +1,10 @@
+button.smallButton {
+  background-color: #ff6347;
+  width: 72px;
+  height: 30px;
+  border-radius: 6px;
+  font-size: 15px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}

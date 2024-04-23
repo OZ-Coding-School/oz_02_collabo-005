@@ -1,25 +1,36 @@
-.signup-title {
+.signupTitle {
   font-size: 2rem;
 }
 
-.signup-container {
+.signupContainer {
   margin: 10px;
 }
-.term-container {
+
+.passwordNotMatch {
+  font-size: 0.8rem;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.hide {
+  display: none;
+}
+
+.termContainer {
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
 }
 
-.term-container > label {
+.termContainer > label {
   margin-bottom: 10px;
 }
 
-.term-container > label > span {
+.termContainer > label > span {
   color: red;
 }
 
-.term-content {
+.termContent {
   display: flex;
   align-items: start;
 }
@@ -28,6 +39,6 @@
   margin-right: 10px;
 }
 
-.signup-btn {
+.signupBtn {
   text-align: center;
 }

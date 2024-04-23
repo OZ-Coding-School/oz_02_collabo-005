@@ -1,28 +1,33 @@
 import { Link } from "react-router-dom";
 import BackIcon from "../../../assets/icons/back-icon.png";
 import CartIcon from "../../../assets/icons/cart-icon.png";
-
-import "../../../styles/common/header/Header.css";
+import "./Header.css";
 
 interface HeaderProps {
-  hasBackicon: boolean;
+  hasBackIcon: boolean;
+  to: string;
   title: string;
   hasCartIcon: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ hasBackicon, title, hasCartIcon }) => {
+const Header: React.FC<HeaderProps> = ({
+  hasBackIcon,
+  to,
+  title,
+  hasCartIcon,
+}) => {
   return (
-    <div className="header-container">
-      {hasBackicon && (
-        <Link to="/login">
-          <img src={BackIcon} className="back-icon" />
+    <div className="headerContainer">
+      {hasBackIcon && (
+        <Link to={to}>
+          <img src={BackIcon} className="backIcon" />
         </Link>
       )}
-      <div className="header-title">{title}</div>
+      <div className="headerTitle">{title}</div>
       {hasCartIcon && (
-        <div className="header-cart">
-          <img src={CartIcon} className="cart-iocn" />
-          <div className="cart-quantity">0</div>
+        <div className="headerCart">
+          <img src={CartIcon} className="cartIcon" />
+          <div className="cartQuantity">0</div>
         </div>
       )}
     </div>

@@ -1,30 +1,30 @@
-import "../../styles/signup/component/BirthdayInputForm.css";
+import "./BirthdayInputForm.css";
 
 const BirthdayInputForm = () => {
   return (
-    <div className="birthInput-container">
+    <div className="birthInputContainer">
       <label>Birthday</label>
-      <p className="event-explain">
+      <p className="eventExplain">
         We will send you a birthday coupon an your special day!
       </p>
-      <div className="birthInput-form">
+      <div className="birthInputForm">
         <input
-          type="text"
+          type="number"
           name="year"
           placeholder="YEAR"
-          className="birth-input"
+          className="birthInput"
         ></input>
         <input
           type="text"
           name="month"
-          placeholder="Month"
-          className="birth-input"
+          placeholder="MONTH"
+          className="birthInput"
         ></input>
         <input
           type="text"
           name="day"
-          placeholder="Day"
-          className="birth-input"
+          placeholder="DAY"
+          className="birthInput"
         ></input>
       </div>
     </div>

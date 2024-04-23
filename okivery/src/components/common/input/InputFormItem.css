@@ -1,15 +1,19 @@
-.input-container {
+.inputContainer {
   display: flex;
   flex-direction: column;
 }
-.input-container > label {
+.inputContainer > label {
   margin-bottom: 10px;
 }
 
-.input-container > label > span {
+.inputContainer > label > span {
   color: red;
 }
-.input-container input {
+
+.hideSpan {
+  display: none;
+}
+.inputContainer input {
   height: 5vh;
   border: 1px solid #c4c4c4;
   border-radius: 6px;

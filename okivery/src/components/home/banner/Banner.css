@@ -1,0 +1,5 @@
+.bannerRow {
+  white-space: nowrap;
+  overflow-x: scroll;
+  display: flex;
+}

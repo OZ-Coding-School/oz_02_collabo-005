@@ -1,0 +1,11 @@
+.restaurantItem {
+  width: 300px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.restaurantImg {
+  width: 280px;
+  height: 200px;
+  border-radius: 20px;
+}

@@ -1,0 +1,9 @@
+.restaurantRow {
+  white-space: nowrap;
+  overflow-x: auto;
+  display: flex;
+}
+
+/* .restaurantRow::-webkit-scrollbar {
+  display: none;
+} */

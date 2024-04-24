@@ -2,12 +2,18 @@ import "./BirthdayInputForm.css";
 
 interface BirthdayInputProps {
   isEdit?: boolean;
+  isMust?: boolean;
 }
 
-const BirthdayInputForm: React.FC<BirthdayInputProps> = ({ isEdit }) => {
+const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
+  isEdit,
+  isMust,
+}) => {
   return (
     <div className="birthInputContainer">
-      <label>Birthday</label>
+      <label>
+        Birthday <span className={isMust ? "" : "hideSpan"}>*</span>
+      </label>
       <p className="eventExplain">
         We will send you a birthday coupon an your special day!
       </p>

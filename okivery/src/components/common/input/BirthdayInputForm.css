@@ -2,6 +2,14 @@
   margin-bottom: 10px;
 }
 
+.hideSpan {
+  display: none;
+}
+
+.birthInputContainer > label > span {
+  color: red;
+}
+
 .eventExplain {
   margin: 10px 0;
   font-size: 11px;

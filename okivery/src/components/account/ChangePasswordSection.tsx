@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import InputFormItem from "../signup/InputFormItem";
 import SmallButton from "../common/button/SmallButton";
+import InputFormItem from "../common/input/InputFormItem";
 
 interface UserPassword {
   currentPassword: string;
   newPassword: string;
 }
 
-const ChangePasswordSection: React.FC = () => {
+interface isEditProps {
+  isEdit: boolean;
+}
+
+const ChangePasswordSection: React.FC<isEditProps> = ({ isEdit }) => {
   const [isVerified, setIsVerified] = useState<boolean>(false);
   const [userPassword, setUserPassword] = useState<UserPassword>({
     currentPassword: "디비에 저장된 비밀번호",
@@ -47,6 +51,9 @@ const ChangePasswordSection: React.FC = () => {
           label="Current Password"
           name="currentPassword"
           type="password"
+          isMust={false}
+          value=""
+          place="Current Password"
         />
         <div className="verifyButtonSection">
           <SmallButton name="verify" handleEditChange={handleVerify} />
@@ -56,6 +63,10 @@ const ChangePasswordSection: React.FC = () => {
         label="Confirm new Password"
         name="newPassword"
         type="password"
+        isMust={false}
+        value=""
+        place="new Password"
+        isEdit={isEdit}
       />
     </div>
   );

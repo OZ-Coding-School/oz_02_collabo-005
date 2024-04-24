@@ -3,16 +3,13 @@ import "./SmallButton.css";
 
 interface SmallButtonProps {
   name: string;
-  handleEditChange: () => void;
+  handleClick: () => void;
 }
 
-const SmallButton: React.FC<SmallButtonProps> = ({
-  name,
-  handleEditChange,
-}) => {
+const SmallButton: React.FC<SmallButtonProps> = ({ name, handleClick }) => {
   return (
     <>
-      <button onClick={handleEditChange} className="smallButton">
+      <button onClick={handleClick} className="smallButton">
         {name}
       </button>
     </>

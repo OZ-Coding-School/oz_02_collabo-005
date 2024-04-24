@@ -31,7 +31,7 @@ const index: React.FC = () => {
   ];
   return (
     <div>
-      <Header hasBackIcon={true} title="Home" hasCartIcon={true} />
+      <Header hasBackIcon={false} title="Home" hasCartIcon={true} />
       <AddressBar />
       <main className="mainContainer">
         <Banner banners={banners} />

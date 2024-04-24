@@ -4,7 +4,7 @@ interface InputFormIemProps {
   label: string;
   name: string;
   type: string;
-  value: string;
+  value: string | number;
   place: string;
   isMust: boolean;
   isEdit?: boolean;

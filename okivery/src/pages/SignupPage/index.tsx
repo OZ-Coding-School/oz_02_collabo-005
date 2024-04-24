@@ -5,9 +5,17 @@ import BirthdayInputForm from "../../components/signup/BirthdayInputForm";
 import InputFormItem from "../../components/common/input/InputFormItem";
 import "./SignupPage.css";
 
+type userDataType = {
+  name: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
+  phone: string;
+};
+
 const SignupPage: React.FC = () => {
   const terms = "I agree that I have fully read Okivery’s Terms of Use and ";
-  const userInitialData = {
+  const userInitialData: userDataType = {
     name: "",
     email: "",
     password: "",

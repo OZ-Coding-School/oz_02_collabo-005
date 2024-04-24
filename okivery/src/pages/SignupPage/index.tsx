@@ -13,14 +13,6 @@ type userDataType = {
   phone: string;
 };
 
-type userDataType = {
-  name: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-  phone: string;
-};
-
 const SignupPage: React.FC = () => {
   const terms = "I agree that I have fully read Okivery’s Terms of Use and ";
   const userInitialData: userDataType = {

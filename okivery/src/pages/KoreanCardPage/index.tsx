@@ -6,27 +6,28 @@ import InputFormItem from "../../components/common/input/InputFormItem";
 import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
 import "./CardPage.css";
 
-interface koreanCardDataType {
-  cardNumber: string;
-  expirationDateMonth: string;
-  expirationDateYear: string;
+type koreanCardDataType = {
+  cardNumber: number;
+  expirationDateMonth: number;
+  expirationDateYear: number;
   cardholderName: string;
-  cvv: string;
-  pinNumber: string;
-  birthday: string;
-}
+  cvv: number;
+  pinNumber: number;
+  birthday: number;
+};
 
 const KoreanCardPage: React.FC = () => {
   const navigate = useNavigate();
-  const [cardData, setCardData] = useState<koreanCardDataType>({
-    cardNumber: "",
-    expirationDateMonth: "",
-    expirationDateYear: "",
+  const initialCardData = {
+    cardNumber: 0,
+    expirationDateMonth: 0,
+    expirationDateYear: 0,
     cardholderName: "",
-    cvv: "",
-    pinNumber: "",
-    birthday: "",
-  });
+    cvv: 0,
+    pinNumber: 0,
+    birthday: 0,
+  };
+  const [cardData, setCardData] = useState<koreanCardDataType>(initialCardData);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -87,7 +88,6 @@ const KoreanCardPage: React.FC = () => {
               value={cardData.expirationDateYear}
               placeholder="YY"
               onChange={handleInputChange}
-              maxLength={2}
             />
           </div>
           <InputFormItem

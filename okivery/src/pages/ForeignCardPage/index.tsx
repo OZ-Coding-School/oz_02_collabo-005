@@ -6,27 +6,29 @@ import InputFormItem from "../../components/common/input/InputFormItem";
 import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
 import "../KoreanCardPage/CardPage.css";
 
-interface foreignCardDataType {
-  cardNumber: string;
-  expirationDateMonth: string;
-  expirationDateYear: string;
+type foreignCardDataType = {
+  cardNumber: number;
+  expirationDateMonth: number;
+  expirationDateYear: number;
   cardholderName: string;
-  cvv: string;
-  pinNumber: string;
-  birthday: string;
-}
+  cvv: number;
+  pinNumber: number;
+  birthday: number;
+};
 
 const ForeignCardPage: React.FC = () => {
   const navigate = useNavigate();
-  const [cardData, setCardData] = useState<foreignCardDataType>({
-    cardNumber: "",
-    expirationDateMonth: "",
-    expirationDateYear: "",
+  const initialCardData = {
+    cardNumber: 0,
+    expirationDateMonth: 0,
+    expirationDateYear: 0,
     cardholderName: "",
-    cvv: "",
-    pinNumber: "",
-    birthday: "",
-  });
+    cvv: 0,
+    pinNumber: 0,
+    birthday: 0,
+  };
+  const [cardData, setCardData] =
+    useState<foreignCardDataType>(initialCardData);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>

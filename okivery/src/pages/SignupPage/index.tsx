@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/common/button/Button";
 import Header from "../../components/common/header/Header";
-import BirthdayInputForm from "../../components/signup/BirthdayInputForm";
 import InputFormItem from "../../components/common/input/InputFormItem";
 import "./SignupPage.css";
+import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
+
+type userDataType = {
+  name: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
+  phone: string;
+};
 
 type userDataType = {
   name: string;

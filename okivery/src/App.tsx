@@ -19,6 +19,9 @@ import OrderSheetPage from "./pages/OrderSheetPage";
 import OrderStatusPage from "./pages/OrderStatusPage";
 import OrdersPage from "./pages/OrdersPage";
 import PaymentPage from "./pages/PaymentPage";
+import ErrorPage from "./pages/ErrorPage";
+import KoreanCardPage from "./pages/KoreanCardPage";
+import ForeignCardPage from "./pages/ForeignCardPage";
 
 const App: React.FC = () => {
   const isLogined: boolean = false;
@@ -143,6 +146,23 @@ const App: React.FC = () => {
             </Layout>
           }
         />
+        <Route
+          path="/account/koreanCard"
+          element={
+            <Layout>
+              <KoreanCardPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/account/foreignCard"
+          element={
+            <Layout>
+              <ForeignCardPage />
+            </Layout>
+          }
+        />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>
   );

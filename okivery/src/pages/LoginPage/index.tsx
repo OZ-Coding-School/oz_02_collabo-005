@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Header from "../../components/common/header/Header";
 import logoImage from "../../assets/images/AppLogo.png";
-import LoginInput from "../../components/login/LoginInput";
 import Button from "../../components/common/button/Button";
-import "../../styles/login/page/LoginPage.css";
+import "./LoginPage.css";
 import facebookLogoImage from "../../assets/images/FacebookLogoImage.png";
 import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
+import FloatingLabelInput from "../../components/common/input/FloatingLabelInput";
+// import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
+  // const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -31,27 +33,54 @@ const LoginPage: React.FC = () => {
   const isLoginButtonDisabled: boolean =
     !email || !password || !isValidEmail(email) || password.length < 8;
 
-  // 소셜 로그인 (페이스북)
+  // 디비로 입력한 이메일과 패스워드를 보내 일치여부 확인 후 일치 시 로그인 성공
+  // const handleLogin = (): void => {
+  //   fetch("http://api주소.com/api/login", {
+  //     method: "Post",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ email, password }),
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       }
+  //       throw new Error("Network response was not ok");
+  //     })
+  //     .then((data) => {
+  //       // 서버로 응답 받음
+  //       if (data.success) {
+  //         navigate("/home");
+  //       } else {
+  //         // 로그인 실패
+  //         alert("login failed: It's not correct email or password");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("There was an error logging in: ", error);
+  //     });
+  // };
 
   return (
     <>
-      <Header hasBackicon={true} title="" hasCartIcon={false} />
+      <Header hasBackIcon={true} to="/" title="" hasCartIcon={false} />
       <div className="loginMainContainer">
         <div className="loginSubContainer">
           <div className="logoContainer">
             <img src={logoImage} width="128px" height="128px" />
           </div>
           <section className="loginInputForm">
-            <LoginInput
+            <FloatingLabelInput
               inputType="email"
               placeHolder="E-mail"
-              text="E-MAIL"
+              label="E-MAIL"
               onInputChange={handleEmailChange}
             />
-            <LoginInput
+            <FloatingLabelInput
               inputType="password"
               placeHolder="password"
-              text="PASSWORD"
+              label="PASSWORD"
               onInputChange={handlePasswordChange}
             />
           </section>
@@ -62,6 +91,7 @@ const LoginPage: React.FC = () => {
                 backgroundColor="#FF6347"
                 to="/home"
                 disabled={isLoginButtonDisabled}
+                // handleClick={handleLogin}
               />
             </div>
             <div className="signUpButton">

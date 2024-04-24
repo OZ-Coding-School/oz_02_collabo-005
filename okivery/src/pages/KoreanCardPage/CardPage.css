@@ -1,0 +1,25 @@
+.CardMainContainer {
+  height: 100vh;
+  margin: 10px 15px 10px 10px;
+}
+
+.CardButtonSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expirationDateInputSection input {
+  height: 5vh;
+  border: 1px solid #c4c4c4;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  width: 50px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.expirationDateInputSection {
+  display: flex;
+  margin-top: 10px;
+}

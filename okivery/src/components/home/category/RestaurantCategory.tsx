@@ -1,7 +1,7 @@
 import React from "react";
 import RestaurantItem from "./RestaurantItem";
 import { Restaurant } from "../../../pages/HomePage";
-import "./Category.css";
+import "./RestaurantCategory.css";
 
 interface CategoryProps {
   title: string;

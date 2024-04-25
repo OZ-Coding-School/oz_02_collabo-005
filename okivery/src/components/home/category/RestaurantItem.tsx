@@ -21,8 +21,8 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
     <div className="restaurantItem" key={key} onClick={handleRestaurantClick}>
       <img
         src={RestaurantImage}
-        className="restaurantImg"
-        alt="restaurant image"
+        className="restaurantMainImg"
+        alt="restaurant main image"
       />
       <div>
         <p>{name}</p>

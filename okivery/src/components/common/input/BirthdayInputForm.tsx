@@ -9,6 +9,17 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
   isEdit,
   isMust,
 }) => {
+  // 각 birthday의 입력 값이 최대 길이보다 긴 경우 자르기
+  const handleOnInput = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    maxLength: number
+  ): void => {
+    const inputValue: string = event.target.value;
+    if (inputValue.length > maxLength) {
+      event.target.value = inputValue.slice(0, maxLength);
+    }
+  };
+
   return (
     <div className="birthInputContainer">
       <label>
@@ -24,6 +35,7 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
           placeholder="YEAR"
           className="birthInput"
           readOnly={!isEdit}
+          onChange={(e) => handleOnInput(e, 4)}
         ></input>
         <input
           type="text"
@@ -31,6 +43,7 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
           placeholder="MONTH"
           className="birthInput"
           readOnly={!isEdit}
+          onChange={(e) => handleOnInput(e, 2)}
         ></input>
         <input
           type="text"
@@ -38,6 +51,7 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
           placeholder="DAY"
           className="birthInput"
           readOnly={!isEdit}
+          onChange={(e) => handleOnInput(e, 2)}
         ></input>
       </div>
     </div>

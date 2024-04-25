@@ -1,9 +1,13 @@
-.CardMainContainer {
-  height: 100vh;
-  margin: 10px 15px 10px 10px;
+.cardMainContainer {
+  margin: 0 10px 0 10px;
+  display: flex;
 }
 
-.CardButtonSection {
+.cardSubContainer {
+  margin-top: 70px;
+}
+
+.cardButtonSection {
   display: flex;
   justify-content: space-between;
   align-items: center;

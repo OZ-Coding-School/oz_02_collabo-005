@@ -1,7 +1,7 @@
 import React from "react";
 
-const index: React.FC = () => {
-  return <div>index</div>;
+const MapPage: React.FC = () => {
+  return <div>MapPage</div>;
 };
 
-export default index;
+export default MapPage;

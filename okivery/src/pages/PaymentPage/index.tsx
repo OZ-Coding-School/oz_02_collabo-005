@@ -4,7 +4,7 @@ import CardManagementSection from "../../components/common/addcard/CardManagemen
 import "./PaymentPage.css";
 import Button from "../../components/common/button/Button";
 
-const index: React.FC = () => {
+const PaymentPage: React.FC = () => {
   return (
     <>
       <Header
@@ -14,19 +14,25 @@ const index: React.FC = () => {
         hasCartIcon={false}
       />
       <div className="paymentMainContainer">
-        <div className="cardContainer">
-          <CardManagementSection />
-        </div>
-        <div className="totalAccount">
-          <span className="totalText">Your Total:</span>
-          <span className="totalValue">41,600원</span>
-        </div>
-        <div className="payNowButtonSection">
-          <Button name="Pay now" backgroundColor="#FF6347" to="/order/status" />
+        <div className="paymentSubContainer">
+          <div className="cardContainer">
+            <CardManagementSection />
+          </div>
+          <div className="totalAccount">
+            <span className="totalText">Your Total:</span>
+            <span className="totalValue">41,600원</span>
+          </div>
+          <div className="payNowButtonSection">
+            <Button
+              name="Pay now"
+              backgroundColor="#FF6347"
+              to="/order/status"
+            />
+          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default index;
+export default PaymentPage;

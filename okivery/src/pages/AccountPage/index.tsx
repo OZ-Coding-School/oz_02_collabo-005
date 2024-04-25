@@ -36,22 +36,24 @@ const AccountPage: React.FC = () => {
         hasCartIcon={false}
       />
       <div className="accountMainContainer">
-        <div className="editButtonSection">
-          <SmallButton
-            name={isEdit ? "Save" : "Edit"}
-            handleEditChange={handleEditChange}
-          />
-        </div>
-        <UserInfoSection isEdit={isEdit} />
-        <div className="cardManagementSection">
-          <CardManagementSection />
-        </div>
-        <div className="signOutSection">
-          <SmallButton name="Log Out" handleEditChange={handleLogOut} />
-          <SmallButton
-            name="Delete Account"
-            handleEditChange={handleDeleteAccount}
-          />
+        <div className="accountSubContainer">
+          <div className="editButtonSection">
+            <SmallButton
+              name={isEdit ? "Save" : "Edit"}
+              handleClick={handleEditChange}
+            />
+          </div>
+          <UserInfoSection isEdit={isEdit} />
+          <div className="cardManagementSection">
+            <CardManagementSection />
+          </div>
+          <div className="signOutSection">
+            <SmallButton name="Log Out" handleClick={handleLogOut} />
+            <SmallButton
+              name="Delete Account"
+              handleClick={handleDeleteAccount}
+            />
+          </div>
         </div>
       </div>
     </>

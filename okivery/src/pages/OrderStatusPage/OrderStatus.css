@@ -1,0 +1,28 @@
+.statusMainContainer {
+  margin: 0 10px 0 10px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.statusSubContainer {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.statusText {
+  text-align: center;
+
+  margin-bottom: 250px;
+}
+
+.statusText h2 {
+  margin: 0;
+}
+
+.sorryText h2 {
+  display: flex;
+  justify-content: left;
+}

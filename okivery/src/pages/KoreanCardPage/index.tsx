@@ -41,6 +41,14 @@ const KoreanCardPage: React.FC = () => {
     });
   };
 
+  // Expiration Date의 입력 값이 최대 길이인 2보다 긴 경우 자르기
+  const handleOnInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const inputValue: string = event.target.value;
+    if (inputValue.length > 2) {
+      event.target.value = inputValue.slice(0, 2);
+    }
+  };
+
   const handleSave = (): void => {
     navigate(-1);
   };
@@ -80,6 +88,7 @@ const KoreanCardPage: React.FC = () => {
                 value={cardData.expirationDateMonth}
                 placeholder="MM"
                 onChange={handleInputChange}
+                onInput={handleOnInput}
               />
               <label htmlFor="expirationDateYear"></label>
               <input
@@ -89,6 +98,7 @@ const KoreanCardPage: React.FC = () => {
                 value={cardData.expirationDateYear}
                 placeholder="YY"
                 onChange={handleInputChange}
+                onInput={handleOnInput}
               />
             </div>
             <InputFormItem

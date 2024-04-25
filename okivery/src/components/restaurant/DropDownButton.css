@@ -1,0 +1,25 @@
+.dropdownContainer {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdownTitle {
+  display: flex;
+}
+
+.dropbtn {
+  display: flex;
+  align-self: center;
+  padding: 0px;
+}
+
+.dropdownContent {
+  position: absolute;
+  border: 1px solid black;
+  z-index: 1;
+  background-color: white;
+}
+
+.dropdownContent ul {
+  padding: 20px;
+}

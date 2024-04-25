@@ -1,0 +1,45 @@
+.restaurantContainer {
+  margin-top: 100px;
+}
+
+.restaurantInfoContainer {
+  position: relative;
+}
+
+.restaurantBackgroundImg {
+  width: 100%;
+}
+
+.restaurantImgContainer {
+  position: relative;
+}
+
+.restaurantLogoImg {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  position: absolute;
+  left: 20px;
+  bottom: -20px;
+  box-shadow: 0px 3px 5px 0px #717171;
+}
+
+.restaurantProfile,
+.menuContainer {
+  padding: 0px 10px;
+}
+
+.restaurantProfile {
+  margin: 10px 0px;
+}
+
+.restaurantDetails {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notificationMessage {
+  color: #a3a3a3;
+  margin-top: 10px;
+}

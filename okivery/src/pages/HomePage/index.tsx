@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../components/common/header/Header";
 import "./HomePage.css";
 import FooterNavigationBar from "../../components/common/footer/FooterNavigationBar";
-import Category from "../../components/home/category/Category";
+import RestaurantCategory from "../../components/home/category/RestaurantCategory";
 import Banner from "../../components/home/banner/Banner";
 import AddressBar from "../../components/address/AddressBar";
 
@@ -15,7 +15,7 @@ export type BannerType = {
   name: string;
 };
 
-const index: React.FC = () => {
+const HomePage: React.FC = () => {
   const restaurants: Restaurant[] = [
     { name: "가게1", intro: "설명 1" },
     { name: "가게2", intro: "설명 2" },
@@ -36,13 +36,17 @@ const index: React.FC = () => {
       <main className="mainContainer">
         <Banner banners={banners} />
         <div className="CategoryList">
-          <Category
+          <RestaurantCategory
             title="American & Grills"
             id="AG"
             restaurants={restaurants}
           />
-          <Category title="Korean & Fusion" id="KF" restaurants={restaurants} />
-          <Category
+          <RestaurantCategory
+            title="Korean & Fusion"
+            id="KF"
+            restaurants={restaurants}
+          />
+          <RestaurantCategory
             title="Dessert & Drinks"
             id="DD"
             restaurants={restaurants}
@@ -54,4 +58,4 @@ const index: React.FC = () => {
   );
 };
 
-export default index;
+export default HomePage;

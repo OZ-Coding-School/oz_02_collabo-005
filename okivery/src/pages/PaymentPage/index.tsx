@@ -18,16 +18,18 @@ const PaymentPage: React.FC = () => {
           <div className="cardContainer">
             <CardManagementSection />
           </div>
-          <div className="totalAccount">
-            <span className="totalText">Your Total:</span>
-            <span className="totalValue">41,600원</span>
-          </div>
-          <div className="payNowButtonSection">
-            <Button
-              name="Pay now"
-              backgroundColor="#FF6347"
-              to="/order/status"
-            />
+          <div className="bottomSection">
+            <div className="totalAccount">
+              <span className="totalText">Your Total:</span>
+              <span className="totalValue">41,600원</span>
+            </div>
+            <div className="payNowButtonSection">
+              <Button
+                name="Pay now"
+                backgroundColor="#FF6347"
+                to="/order/status"
+              />
+            </div>
           </div>
         </div>
       </div>

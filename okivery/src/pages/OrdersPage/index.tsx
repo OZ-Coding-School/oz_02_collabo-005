@@ -1,7 +1,7 @@
 import React from "react";
 
-const index: React.FC = () => {
-  return <div>index</div>;
+const OrdersPage: React.FC = () => {
+  return <div>OrdersPage</div>;
 };
 
-export default index;
+export default OrdersPage;

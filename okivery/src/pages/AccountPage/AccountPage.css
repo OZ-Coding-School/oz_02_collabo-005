@@ -1,6 +1,10 @@
 .accountMainContainer {
-  height: 100vh;
-  margin: 10px 15px 10px 10px;
+  margin: 0 10px 0 10px;
+  display: flex;
+}
+
+.accountSubContainer {
+  margin-top: 70px;
 }
 
 .editButtonSection {
@@ -35,6 +39,7 @@
   column-gap: 5px;
   width: 100%;
   justify-content: center;
+  margin-bottom: 30px;
 }
 
 .signOutSection .smallButton {

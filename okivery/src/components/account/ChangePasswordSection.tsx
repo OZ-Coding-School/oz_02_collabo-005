@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import SmallButton from "../common/button/SmallButton";
 import InputFormItem from "../common/input/InputFormItem";
 
-interface UserPassword {
+type UserPassword = {
   currentPassword: string;
   newPassword: string;
-}
+};
 
 interface isEditProps {
   isEdit: boolean;
@@ -13,10 +13,24 @@ interface isEditProps {
 
 const ChangePasswordSection: React.FC<isEditProps> = ({ isEdit }) => {
   const [isVerified, setIsVerified] = useState<boolean>(false);
-  const [userPassword, setUserPassword] = useState<UserPassword>({
-    currentPassword: "디비에 저장된 비밀번호",
+  const initialUserPassword = {
+    currentPassword: "",
     newPassword: "",
-  });
+  };
+  const [userPassword, setUserPassword] =
+    useState<UserPassword>(initialUserPassword);
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    event.preventDefault();
+    const inputName = event.target.name;
+    const inputValue = event.target.value;
+    setUserPassword({
+      ...userPassword,
+      [inputName]: inputValue,
+    });
+  };
 
   // 사용자 입력 비밀번호화 현재 디비에 저장되어 있는 비밀번호가 같은지 검사 후 새로운 비밀번호 입력할 수 있도록 하는 함수
   const handleVerify = (): void => {
@@ -52,11 +66,13 @@ const ChangePasswordSection: React.FC<isEditProps> = ({ isEdit }) => {
           name="currentPassword"
           type="password"
           isMust={false}
-          value=""
+          isEdit={isEdit}
+          value={userPassword.currentPassword}
           place="Current Password"
+          handleInputChange={handleInputChange}
         />
         <div className="verifyButtonSection">
-          <SmallButton name="verify" handleEditChange={handleVerify} />
+          <SmallButton name="verify" handleClick={handleVerify} />
         </div>
       </div>
       <InputFormItem
@@ -64,9 +80,10 @@ const ChangePasswordSection: React.FC<isEditProps> = ({ isEdit }) => {
         name="newPassword"
         type="password"
         isMust={false}
-        value=""
+        value={userPassword.newPassword}
         place="new Password"
         isEdit={isEdit}
+        handleInputChange={handleInputChange}
       />
     </div>
   );

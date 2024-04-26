@@ -1,3 +1,7 @@
+.restaurantContainer {
+  margin-bottom: 10px;
+}
+
 .restaurantInfoContainer {
   position: relative;
 }
@@ -27,6 +31,12 @@
 
 .restaurantProfile {
   margin: 10px 0px;
+}
+
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .restaurantDetails {

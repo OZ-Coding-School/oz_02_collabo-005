@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+import React, { useState } from "react";
+import Header from "../../components/common/header/Header";
+import AddressBar from "../../components/address/AddressBar";
+import BackgroundImg from "../../assets/images/restaurantBackgroundImg.png";
+import LogoImg from "../../assets/images/restaurantLogoImg.jpg";
+
+import MenuCategory from "../../components/restaurant/MenuCategory";
+import "./RestaurantPage.css";
+import DropDownButton from "../../components/restaurant/DropDownButton";
+import MenuList from "../../components/restaurant/MenuList";
+
+=======
 import React from "react";
 import Header from "../../components/common/header/Header";
 import AddressBar from "../../components/address/AddressBar";
@@ -9,17 +22,34 @@ import MenuCategory from "../../components/restaurant/MenuCategory";
 import "./RestaurantPage.css";
 import DropDownButton from "../../components/restaurant/DropDownButton";
 
+>>>>>>> 90654b8464aadb272ce9c51b515bd3b02d03805e
 const RestaurantPage: React.FC = () => {
   const categories = [
     "Bestseller",
     "Appetizers",
     "BBQ Bowls",
+<<<<<<< HEAD
+    "Coffee",
+    "Coffee",
+    "Coffee",
+    "Coffee",
+    "Drinks",
+    "Bestsellerssssszz",
+  ];
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const handleMenuCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+  };
+=======
     "Coffe",
     "Coffe",
     "Coffe",
     "Coffe",
     "Drinks",
   ];
+>>>>>>> 90654b8464aadb272ce9c51b515bd3b02d03805e
   return (
     <div>
       <Header hasBackIcon={true} title="restaurant name" hasCartIcon={true} />
@@ -50,11 +80,13 @@ const RestaurantPage: React.FC = () => {
           </div>
         </div>
         <div className="menuContainer">
-          <MenuCategory categories={categories} />
-          <div className="menuListContainer">
-            <MenuItem />
-            <MenuItem />
-          </div>
+          <MenuCategory
+            categories={categories}
+            handleMenuCategoryClick={handleMenuCategoryClick}
+          />
+          {/* {selectedCategory && <MenuList category={selectedCategory} />} */}
+          <MenuList />
+          {/* <MenuList category="Appetizers" /> */}
         </div>
       </div>
     </div>

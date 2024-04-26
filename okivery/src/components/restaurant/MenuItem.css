@@ -1,6 +1,7 @@
 .MenuItemContainer {
   display: flex;
   margin-top: 10px;
+  cursor: pointer;
 }
 .menuTitle {
   display: flex;

@@ -2,13 +2,18 @@ import React from "react";
 import "./MenuItem.css";
 import MenuImg from "../../assets/images/menuImg.png";
 
-const MenuItem: React.FC = () => {
+interface MenuItemProps {
+  label?: string;
+  handleClick: () => void;
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({ label, handleClick }) => {
   return (
-    <div className="MenuItemContainer">
+    <div className="MenuItemContainer" onClick={handleClick}>
       <div className="menuInformation">
         <div className="menuTitle">
           <p className="menuName">Menu name</p>
-          <div className="menuLabel">Bestseller</div>
+          {label && <div className="menuLabel">{label}</div>}
         </div>
         <p className="menuPrice">14,900 won</p>
         <div className="menuDescription">

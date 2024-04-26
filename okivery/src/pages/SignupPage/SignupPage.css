@@ -1,9 +1,10 @@
 .signupTitle {
   font-size: 2rem;
+  margin-top: 0px;
 }
 
 .signupContainer {
-  margin: 50px 10px 10px 10px;
+  margin: 10px 10px 10px 10px;
 }
 
 .passwordNotMatch {

@@ -3,23 +3,22 @@ import "./Button.css";
 
 interface ButtonProps {
   name: string;
-  backgroundColor: string;
+  backgroundColor?: string;
   handleClick: (e: React.MouseEvent) => void;
-  disabled?: boolean;
+  buttonType: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
   name,
   backgroundColor,
   handleClick,
-  disabled,
+  buttonType,
 }) => {
   return (
     <button
       style={{ backgroundColor: backgroundColor }}
-      className="commonButton"
+      className={buttonType}
       onClick={handleClick}
-      disabled={disabled}
     >
       {name}
     </button>

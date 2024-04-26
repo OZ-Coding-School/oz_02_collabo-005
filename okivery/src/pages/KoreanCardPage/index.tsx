@@ -1,31 +1,31 @@
 import React, { useState } from "react";
 import Header from "../../components/common/header/Header";
-import SmallButton from "../../components/common/button/SmallButton";
 import { useNavigate } from "react-router-dom";
 import InputFormItem from "../../components/common/input/InputFormItem";
 import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
 import "./CardPage.css";
+import Button from "../../components/common/button/Button";
 
 type koreanCardDataType = {
-  cardNumber: number;
-  expirationDateMonth: number;
-  expirationDateYear: number;
+  cardNumber: string;
+  expirationDateMonth: string;
+  expirationDateYear: string;
   cardholderName: string;
-  cvv: number;
-  pinNumber: number;
-  birthday: number;
+  cvv: string;
+  pinNumber: string;
+  birthday: string;
 };
 
 const KoreanCardPage: React.FC = () => {
   const navigate = useNavigate();
   const initialCardData = {
-    cardNumber: 0,
-    expirationDateMonth: 0,
-    expirationDateYear: 0,
+    cardNumber: "",
+    expirationDateMonth: "",
+    expirationDateYear: "",
     cardholderName: "",
-    cvv: 0,
-    pinNumber: 0,
-    birthday: 0,
+    cvv: "",
+    pinNumber: "",
+    birthday: "",
   };
   const [cardData, setCardData] = useState<koreanCardDataType>(initialCardData);
 
@@ -39,14 +39,6 @@ const KoreanCardPage: React.FC = () => {
       ...cardData,
       [inputName]: inputValue,
     });
-  };
-
-  // Expiration Date의 입력 값이 최대 길이인 2보다 긴 경우 자르기
-  const handleOnInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const inputValue: string = event.target.value;
-    if (inputValue.length > 2) {
-      event.target.value = inputValue.slice(0, 2);
-    }
   };
 
   const handleSave = (): void => {
@@ -64,13 +56,17 @@ const KoreanCardPage: React.FC = () => {
       <div className="cardMainContainer">
         <div className="cardButtonSection">
           <h2>Korean credit card</h2>
-          <SmallButton name="Save" handleClick={handleSave} />
+          <Button
+            name="Save"
+            handleClick={handleSave}
+            buttonType="smallButton"
+          />
         </div>
         <form>
           <InputFormItem
             label="Card Number"
             name="cardNumber"
-            type="number"
+            type="text"
             isMust={true}
             value={cardData.cardNumber}
             isEdit={true}
@@ -81,23 +77,23 @@ const KoreanCardPage: React.FC = () => {
           <div className="expirationDateInputSection">
             <label htmlFor="expirationDateMonth"></label>
             <input
-              type="number"
+              type="text"
               name="expirationDateMonth"
               id="expirationDateMonth"
               value={cardData.expirationDateMonth}
               placeholder="MM"
               onChange={handleInputChange}
-              onInput={handleOnInput}
+              maxLength={2}
             />
             <label htmlFor="expirationDateYear"></label>
             <input
-              type="number"
+              type="text"
               name="expirationDateYear"
               id="expirationDateYear"
               value={cardData.expirationDateYear}
               placeholder="YY"
               onChange={handleInputChange}
-              onInput={handleOnInput}
+              maxLength={2}
             />
           </div>
           <InputFormItem
@@ -113,7 +109,7 @@ const KoreanCardPage: React.FC = () => {
           <InputFormItem
             label="CVV/CVC"
             name="cvv"
-            type="number"
+            type="text"
             isMust={true}
             value={cardData.cvv}
             isEdit={true}
@@ -123,7 +119,7 @@ const KoreanCardPage: React.FC = () => {
           <InputFormItem
             label="Pin number"
             name="pinNumber"
-            type="number"
+            type="text"
             isMust={true}
             value={cardData.pinNumber}
             isEdit={true}

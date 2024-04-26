@@ -4,6 +4,7 @@ import Header from "../../components/common/header/Header";
 import InputFormItem from "../../components/common/input/InputFormItem";
 import "./SignupPage.css";
 import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
+import { useNavigate } from "react-router-dom";
 
 type userDataType = {
   name: string;
@@ -82,6 +83,12 @@ const SignupPage: React.FC = () => {
     setIsFormValid(isAllFieldsFilled);
   }, [userData, isTermChecked]);
 
+  // 버튼 props 때문에 임시 작성했음, 여기에 유효성 검사 넣으면 될듯
+  const navigate = useNavigate();
+  const handleSignUp = (): void => {
+    navigate(-1);
+  };
+
   return (
     <>
       <Header hasBackIcon={true} to="/login" title="" hasCartIcon={false} />
@@ -127,8 +134,8 @@ const SignupPage: React.FC = () => {
           <div className="passwordNotMatch hide">Your password dismatches</div>
           <InputFormItem
             label="Phone Number"
-            name=""
-            type="phone"
+            name="phone"
+            type="text"
             value={userData.phone}
             place="Please enter except for hyphen (-)"
             isMust={true}
@@ -160,7 +167,8 @@ const SignupPage: React.FC = () => {
             <Button
               name="Sign up"
               backgroundColor={isFormValid ? "#FF6347" : "#767676"}
-              to="/login"
+              handleClick={handleSignUp}
+              buttonType="bigButton"
             />
           </div>
         </form>

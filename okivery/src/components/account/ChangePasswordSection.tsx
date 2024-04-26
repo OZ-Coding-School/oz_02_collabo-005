@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import SmallButton from "../common/button/SmallButton";
 import InputFormItem from "../common/input/InputFormItem";
+import Button from "../common/button/Button";
 
 type UserPassword = {
   currentPassword: string;
@@ -72,7 +72,11 @@ const ChangePasswordSection: React.FC<isEditProps> = ({ isEdit }) => {
           handleInputChange={handleInputChange}
         />
         <div className="verifyButtonSection">
-          <SmallButton name="verify" handleClick={handleVerify} />
+          <Button
+            name="verify"
+            handleClick={handleVerify}
+            buttonType="smallButton"
+          />
         </div>
       </div>
       <InputFormItem

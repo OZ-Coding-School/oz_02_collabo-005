@@ -119,6 +119,7 @@ const LoginPage: React.FC = () => {
               name="Login"
               backgroundColor={isFormValid ? "#FF6347" : "#767676"}
               handleClick={handleLogin}
+              buttonType="bigButton"
             />
           </div>
           <div className="signUpButton">
@@ -126,6 +127,7 @@ const LoginPage: React.FC = () => {
               name="Create an account"
               backgroundColor="#FF6347"
               handleClick={handleGoSignUp}
+              buttonType="bigButton"
             />
           </div>
         </div>

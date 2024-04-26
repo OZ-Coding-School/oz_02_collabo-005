@@ -21,6 +21,7 @@
 
 .statusText {
   text-align: center;
+  margin: 0 13px 0 13px;
 }
 
 .statusText img {

@@ -3,8 +3,14 @@ import Header from "../../components/common/header/Header";
 import CardManagementSection from "../../components/common/addcard/CardManagementSection";
 import "./PaymentPage.css";
 import Button from "../../components/common/button/Button";
+import { useNavigate } from "react-router-dom";
 
 const PaymentPage: React.FC = () => {
+  const navigate = useNavigate();
+  const handlePayNow = (): void => {
+    navigate("/order/status");
+  };
+
   return (
     <>
       <Header
@@ -25,8 +31,8 @@ const PaymentPage: React.FC = () => {
           <div className="payNowButtonSection">
             <Button
               name="Pay now"
-              backgroundColor="#FF6347"
-              to="/order/status"
+              handleClick={handlePayNow}
+              buttonType="bigButton"
             />
           </div>
         </div>

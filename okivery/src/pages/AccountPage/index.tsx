@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Header from "../../components/common/header/Header";
 import "./AccountPage.css";
-import SmallButton from "../../components/common/button/SmallButton";
 import UserInfoSection from "../../components/account/UserInfoSection";
 import CardManagementSection from "../../components/common/addcard/CardManagementSection";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/common/button/Button";
 
 const AccountPage: React.FC = () => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -38,9 +38,10 @@ const AccountPage: React.FC = () => {
       <div className="accountMainContainer">
         <div className="accountSubContainer">
           <div className="editButtonSection">
-            <SmallButton
+            <Button
               name={isEdit ? "Save" : "Edit"}
               handleClick={handleEditChange}
+              buttonType="smallButton"
             />
           </div>
           <UserInfoSection isEdit={isEdit} />
@@ -48,10 +49,15 @@ const AccountPage: React.FC = () => {
             <CardManagementSection />
           </div>
           <div className="signOutSection">
-            <SmallButton name="Log Out" handleClick={handleLogOut} />
-            <SmallButton
+            <Button
+              name="Log Out"
+              handleClick={handleLogOut}
+              buttonType="smallButton"
+            />
+            <Button
               name="Delete Account"
               handleClick={handleDeleteAccount}
+              buttonType="smallButton"
             />
           </div>
         </div>

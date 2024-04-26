@@ -10,14 +10,14 @@ interface isEditProps {
 type UserDataType = {
   name: string;
   email: string;
-  phone: number;
+  phone: string;
 };
 
 const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
   const initialUserData = {
     name: "",
     email: "",
-    phone: 0,
+    phone: "",
   };
   const [userData, setUserData] = useState<UserDataType>(initialUserData);
 
@@ -59,7 +59,7 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
         <InputFormItem
           label="Phone Number"
           name="phone"
-          type="number"
+          type="string"
           isMust={isEdit ? true : false}
           value={userData.phone}
           place="Phone Number"

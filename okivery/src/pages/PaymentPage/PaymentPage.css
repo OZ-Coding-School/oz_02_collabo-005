@@ -1,16 +1,12 @@
 .paymentMainContainer {
-  margin: 0 20px 0 20px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
 }
 
-.paymentSubContainer {
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
+.cardContainer {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .bottomSection {

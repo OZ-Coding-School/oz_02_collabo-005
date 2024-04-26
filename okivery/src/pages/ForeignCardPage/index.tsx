@@ -63,80 +63,78 @@ const ForeignCardPage: React.FC = () => {
         hasCartIcon={false}
       />
       <div className="cardMainContainer">
-        <div className="cardSubContainer">
-          <div className="cardButtonSection">
-            <h2>Foreign credit card</h2>
-            <SmallButton name="Save" handleClick={handleSave} />
-          </div>
-          <form>
-            <InputFormItem
-              label="Card Number"
-              name="cardNumber"
-              type="number"
-              isMust={true}
-              value={cardData.cardNumber}
-              isEdit={true}
-              place="Enter 16-digit card number"
-              handleInputChange={handleInputChange}
-            />
-            Expiration Date <span style={{ color: "red" }}>*</span>
-            <div className="expirationDateInputSection">
-              <label htmlFor="expirationDateMonth">
-                <input
-                  type="number"
-                  name="expirationDateMonth"
-                  id="expirationDateMonth"
-                  value={cardData.expirationDateMonth}
-                  placeholder="MM"
-                  onChange={handleInputChange}
-                  onInput={handleOnInput}
-                />
-              </label>
-              <label htmlFor="expirationDateYear">
-                <input
-                  type="number"
-                  name="expirationDateYear"
-                  id="expirationDateYear"
-                  value={cardData.expirationDateYear}
-                  placeholder="YY"
-                  onChange={handleInputChange}
-                  onInput={handleOnInput}
-                />
-              </label>
-            </div>
-            <InputFormItem
-              label="Cardholder Name"
-              name="cardholderName"
-              type="text"
-              isMust={true}
-              value={cardData.cardholderName}
-              isEdit={true}
-              place=""
-              handleInputChange={handleInputChange}
-            />
-            <InputFormItem
-              label="CVV/CVC"
-              name="cvv"
-              type="number"
-              isMust={true}
-              value={cardData.cvv}
-              isEdit={true}
-              place=""
-              handleInputChange={handleInputChange}
-            />
-            <InputFormItem
-              label="Pin number"
-              name="pinNumber"
-              type="number"
-              isMust={true}
-              value={cardData.pinNumber}
-              isEdit={true}
-              place="Enter in the first two pins here"
-              handleInputChange={handleInputChange}
-            />
-            <BirthdayInputForm isEdit={true} isMust={true} />
-          </form>
+        <div className="cardButtonSection">
+          <h2>Foreign credit card</h2>
+          <SmallButton name="Save" handleClick={handleSave} />
         </div>
+        <form>
+          <InputFormItem
+            label="Card Number"
+            name="cardNumber"
+            type="number"
+            isMust={true}
+            value={cardData.cardNumber}
+            isEdit={true}
+            place="Enter 16-digit card number"
+            handleInputChange={handleInputChange}
+          />
+          Expiration Date <span style={{ color: "red" }}>*</span>
+          <div className="expirationDateInputSection">
+            <label htmlFor="expirationDateMonth">
+              <input
+                type="number"
+                name="expirationDateMonth"
+                id="expirationDateMonth"
+                value={cardData.expirationDateMonth}
+                placeholder="MM"
+                onChange={handleInputChange}
+                onInput={handleOnInput}
+              />
+            </label>
+            <label htmlFor="expirationDateYear">
+              <input
+                type="number"
+                name="expirationDateYear"
+                id="expirationDateYear"
+                value={cardData.expirationDateYear}
+                placeholder="YY"
+                onChange={handleInputChange}
+                onInput={handleOnInput}
+              />
+            </label>
+          </div>
+          <InputFormItem
+            label="Cardholder Name"
+            name="cardholderName"
+            type="text"
+            isMust={true}
+            value={cardData.cardholderName}
+            isEdit={true}
+            place=""
+            handleInputChange={handleInputChange}
+          />
+          <InputFormItem
+            label="CVV/CVC"
+            name="cvv"
+            type="number"
+            isMust={true}
+            value={cardData.cvv}
+            isEdit={true}
+            place=""
+            handleInputChange={handleInputChange}
+          />
+          <InputFormItem
+            label="Pin number"
+            name="pinNumber"
+            type="number"
+            isMust={true}
+            value={cardData.pinNumber}
+            isEdit={true}
+            place="Enter in the first two pins here"
+            handleInputChange={handleInputChange}
+          />
+          <BirthdayInputForm isEdit={true} isMust={true} />
+        </form>
       </div>
     </>
   );

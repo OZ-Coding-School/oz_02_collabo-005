@@ -1,40 +1,23 @@
-.loginMainContainer {
-  margin: 0 10px 0 10px;
+.logoContainer {
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 }
 
-.loginSubContainer {
-  margin-top: 70px;
-}
-
-section.loginInputForm {
+form.loginInputForm {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100%;
   flex-flow: column;
   margin-top: 20px;
-}
-
-.loginSubContainer .logoContainer {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
 }
 
 .loginButtonSection,
 .socialLoginButtonSection {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   row-gap: 25px;
   margin-top: 60px;
-}
-
-.loginButton {
-  margin: 0;
 }
 
 .googleButton button {
@@ -65,7 +48,16 @@ section.loginInputForm {
 img.facebookLogoImage,
 img.googleLogoImage {
   border-radius: 50%;
-  margin-right: 10px;
   width: 25px;
   height: 25px;
+}
+
+img.facebookLogoImage {
+  position: absolute;
+  transform: translateX(-132px);
+}
+
+img.googleLogoImage {
+  position: absolute;
+  transform: translateX(-118px);
 }

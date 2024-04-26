@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./OrderStatus.css";
 import Header from "../../components/common/header/Header";
 import Button from "../../components/common/button/Button";
+import orderSuccussIcon from "../../assets/icons/orderSuccessIcon.png";
 import { PacmanLoader } from "react-spinners";
 
 const OrderStatusPage: React.FC = () => {
@@ -26,7 +27,7 @@ const OrderStatusPage: React.FC = () => {
     <>
       <Header hasBackIcon={true} to="/home" title="" hasCartIcon={false} />
 
-      <div className="statusMainContainer">
+      <div>
         <div>
           {isLoading ? (
             <div className="loadingBar">
@@ -38,29 +39,30 @@ const OrderStatusPage: React.FC = () => {
             </div>
           ) : (
             <>
-              <div className="statusText">
-                {isOrderStatus ? (
-                  <>
-                    <h1>
-                      "Order successfully
-                      <br />
-                      completed."
-                    </h1>
-                  </>
-                ) : (
-                  <>
-                    <div className="sorryText">
-                      <h1>"Sorry,</h1>
-                    </div>
-                    <h1>
-                      we encountered an issue
-                      <br /> processing your order."
-                    </h1>
-                    <span style={{ textDecoration: "underline" }}>
-                      error message
-                    </span>
-                  </>
-                )}
+              <div className="statusContentContainer">
+                <div className="statusText">
+                  {isOrderStatus ? (
+                    <>
+                      <img src={orderSuccussIcon} />
+                      <h1>
+                        "Order successfully
+                        <br />
+                        completed."
+                      </h1>
+                    </>
+                  ) : (
+                    <>
+                      <div className="sorryText">
+                        <h1>"Sorry,</h1>
+                      </div>
+                      <h1>
+                        we encountered an issue
+                        <br /> processing your order."
+                      </h1>
+                      <span className="errorMessage">error message</span>
+                    </>
+                  )}
+                </div>
                 <button
                   style={{
                     width: "100px",

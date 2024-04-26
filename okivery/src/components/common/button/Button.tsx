@@ -1,33 +1,28 @@
 import React from "react";
 import "./Button.css";
-import { Link } from "react-router-dom";
 
 interface ButtonProps {
   name: string;
   backgroundColor: string;
-  to: string;
+  handleClick: (e: React.MouseEvent) => void;
   disabled?: boolean;
-  handleClick?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
   name,
   backgroundColor,
-  to,
-  disabled,
   handleClick,
+  disabled,
 }) => {
   return (
-    // 로그인 버튼 비활성화 상태일 경우 다음 페이지로 넘어가지 못하도록
-    <Link to={disabled ? "#" : to}>
-      <button
-        style={{ backgroundColor: disabled ? "#ccc" : backgroundColor }}
-        className="commonButton"
-        onClick={handleClick}
-      >
-        {name}
-      </button>
-    </Link>
+    <button
+      style={{ backgroundColor: backgroundColor }}
+      className="commonButton"
+      onClick={handleClick}
+      disabled={disabled}
+    >
+      {name}
+    </button>
   );
 };
 

@@ -1,17 +1,5 @@
-.menuCategoryRow {
-  white-space: nowrap;
-  overflow-x: auto;
-  display: flex;
-  gap: 10px;
-}
-
-.menuCategoryRow::-webkit-scrollbar {
-  display: none;
-}
-
 .menuCategory {
-  display: flex;
-  align-items: center;
-  height: 30px;
-  border-bottom: 1px solid #717171;
+  /* width: 100%; */
+  width: fit-content !important;
+  text-align: center;
 }

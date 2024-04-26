@@ -1,10 +1,8 @@
 .headerFixedContainer {
   max-width: 500px;
   width: 100%;
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 50%; /* 화면의 가운데를 기준으로 */
-  transform: translateX(-50%); /* 가운데 정렬을 위한 변형 */
   z-index: 1000;
 }
 

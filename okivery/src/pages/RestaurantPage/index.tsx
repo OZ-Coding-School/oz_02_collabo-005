@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/common/header/Header";
 import AddressBar from "../../components/address/AddressBar";
-import MenuItem from "../../components/restaurant/MenuItem";
 import BackgroundImg from "../../assets/images/restaurantBackgroundImg.png";
 import LogoImg from "../../assets/images/restaurantLogoImg.jpg";
-// import MenuImg from "../../assets/images/menuImg.png";
+
 import MenuCategory from "../../components/restaurant/MenuCategory";
 import "./RestaurantPage.css";
 import DropDownButton from "../../components/restaurant/DropDownButton";
+import MenuList from "../../components/restaurant/MenuList";
 
 const RestaurantPage: React.FC = () => {
   const categories = [
     "Bestseller",
     "Appetizers",
     "BBQ Bowls",
-    "Coffe",
-    "Coffe",
-    "Coffe",
-    "Coffe",
+    "Coffee",
+    "Coffee",
+    "Coffee",
+    "Coffee",
     "Drinks",
+    "Bestsellerssssszz",
   ];
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const handleMenuCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+  };
   return (
     <div>
       <Header hasBackIcon={true} title="restaurant name" hasCartIcon={true} />
@@ -50,11 +57,13 @@ const RestaurantPage: React.FC = () => {
           </div>
         </div>
         <div className="menuContainer">
-          <MenuCategory categories={categories} />
-          <div className="menuListContainer">
-            <MenuItem />
-            <MenuItem />
-          </div>
+          <MenuCategory
+            categories={categories}
+            handleMenuCategoryClick={handleMenuCategoryClick}
+          />
+          {/* {selectedCategory && <MenuList category={selectedCategory} />} */}
+          <MenuList />
+          {/* <MenuList category="Appetizers" /> */}
         </div>
       </div>
     </div>

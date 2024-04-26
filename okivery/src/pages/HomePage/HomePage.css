@@ -1,3 +1,9 @@
 .mainContainer {
   padding: 0 10px;
 }
+.categoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 20px;
+}

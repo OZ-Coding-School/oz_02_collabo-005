@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
       <AddressBar />
       <main className="mainContainer">
         <Banner banners={banners} />
-        <div className="CategoryList">
+        <div className="categoryList">
           <RestaurantCategory
             title="American & Grills"
             id="AG"

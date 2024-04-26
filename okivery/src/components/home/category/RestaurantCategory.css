@@ -1,9 +1,13 @@
-.restaurantRow {
-  white-space: nowrap;
-  overflow-x: auto;
+.categoryContainer {
+  margin-top: 20px;
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.restaurantCategoryTitle {
+  margin: 0px;
 }
 
-/* .restaurantRow::-webkit-scrollbar {
-  display: none;
-} */
+.restaurantItem {
+  width: fit-content !important;
+}

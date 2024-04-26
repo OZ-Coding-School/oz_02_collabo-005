@@ -30,7 +30,6 @@ const AddCardItem: React.FC = () => {
       <img
         src={addCardImage}
         onClick={openModal}
-        alt="Add Card"
         style={{ cursor: "pointer" }}
       />
       {isModalOpen && (

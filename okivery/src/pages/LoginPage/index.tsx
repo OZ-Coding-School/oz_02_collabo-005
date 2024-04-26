@@ -7,6 +7,7 @@ import facebookLogoImage from "../../assets/images/FacebookLogoImage.png";
 import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
 import FloatingLabelInput from "../../components/common/input/FloatingLabelInput";
 import { useNavigate } from "react-router-dom";
+import SocialLoginButton from "../../components/login/SocialLoginButton";
 
 type userDataType = {
   email: string;
@@ -133,16 +134,18 @@ const LoginPage: React.FC = () => {
         </div>
         <div className="socialLoginButtonSection">
           <div className="googleButton">
-            <button>
-              <img className="googleLogoImage" src={googleLogoImage} />
-              Continue with Google
-            </button>
+            <SocialLoginButton
+              name="googleLogoImage"
+              text="Continue with Google"
+              imageUrl={googleLogoImage}
+            />
           </div>
           <div className="facebookButton">
-            <button>
-              <img className="facebookLogoImage" src={facebookLogoImage} />
-              Continue with Facebook
-            </button>
+            <SocialLoginButton
+              name="facebookLogoImage"
+              text="Continue with Facebook"
+              imageUrl={facebookLogoImage}
+            />
           </div>
         </div>
       </div>

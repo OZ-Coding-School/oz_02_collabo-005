@@ -1,4 +1,4 @@
-import "./BirthdayInputForm.css";
+import "./BirthdayInput.css";
 
 interface BirthdayInputProps {
   isEdit?: boolean;

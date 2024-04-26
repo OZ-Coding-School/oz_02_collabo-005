@@ -5,12 +5,17 @@ import "./Header.css";
 
 interface HeaderProps {
   hasBackIcon: boolean;
-  to?: string;
   title: string;
   hasCartIcon: boolean;
+  isFixed: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ hasBackIcon, title, hasCartIcon }) => {
+const Header: React.FC<HeaderProps> = ({
+  hasBackIcon,
+  title,
+  hasCartIcon,
+  isFixed,
+}) => {
   const navigate = useNavigate();
   const handleBackIconClick = () => {
     navigate(-1);
@@ -19,23 +24,21 @@ const Header: React.FC<HeaderProps> = ({ hasBackIcon, title, hasCartIcon }) => {
     navigate("/order/sheet");
   };
   return (
-    <div className="headerFixedContainer">
-      <div className="headerContainer">
-        {hasBackIcon && (
-          <img
-            src={BackIcon}
-            className="backIcon"
-            onClick={handleBackIconClick}
-          />
-        )}
-        <div className="headerTitle">{title}</div>
-        {hasCartIcon && (
-          <div className="headerCart" onClick={handleCartIcon}>
-            <img src={CartIcon} className="cartIcon" />
-            <div className="cartQuantity">0</div>
-          </div>
-        )}
-      </div>
+    <div className={`headerContainer ${isFixed ? "headerFixed" : ""}`}>
+      {hasBackIcon && (
+        <img
+          src={BackIcon}
+          className="backIcon"
+          onClick={handleBackIconClick}
+        />
+      )}
+      <div className="headerTitle">{title}</div>
+      {hasCartIcon && (
+        <div className="headerCart" onClick={handleCartIcon}>
+          <img src={CartIcon} className="cartIcon" />
+          <div className="cartQuantity">0</div>
+        </div>
+      )}
     </div>
   );
 };

@@ -31,7 +31,12 @@ const HomePage: React.FC = () => {
   ];
   return (
     <div>
-      <Header hasBackIcon={false} title="Home" hasCartIcon={true} />
+      <Header
+        hasBackIcon={false}
+        title="Home"
+        hasCartIcon={true}
+        isFixed={true}
+      />
       <AddressBar />
       <main className="mainContainer">
         <Banner banners={banners} />

@@ -3,7 +3,7 @@ import Button from "../../components/common/button/Button";
 import Header from "../../components/common/header/Header";
 import InputFormItem from "../../components/common/input/InputFormItem";
 import "./SignupPage.css";
-import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
+import BirthdayInputForm from "../../components/common/input/BirthdayInput";
 
 type userDataType = {
   name: string;
@@ -84,7 +84,7 @@ const SignupPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackIcon={true} to="/login" title="" hasCartIcon={false} />
+      <Header hasBackIcon={true} title="" hasCartIcon={false} isFixed={false} />
       <div className="signupContainer">
         <h1 className="signupTitle">Sign Up</h1>
         <form>

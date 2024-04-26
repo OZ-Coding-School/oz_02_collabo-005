@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/common/header/Header";
 import SmallButton from "../../components/common/button/SmallButton";
 import InputFormItem from "../../components/common/input/InputFormItem";
-import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
+import BirthdayInputForm from "../../components/common/input/BirthdayInput";
 import "../KoreanCardPage/CardPage.css";
 
 type foreignCardDataType = {

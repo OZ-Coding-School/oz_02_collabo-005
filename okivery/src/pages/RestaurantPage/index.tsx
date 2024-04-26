@@ -1,34 +1,18 @@
-<<<<<<< HEAD
 import React, { useState } from "react";
 import Header from "../../components/common/header/Header";
 import AddressBar from "../../components/address/AddressBar";
 import BackgroundImg from "../../assets/images/restaurantBackgroundImg.png";
 import LogoImg from "../../assets/images/restaurantLogoImg.jpg";
-
 import MenuCategory from "../../components/restaurant/MenuCategory";
 import "./RestaurantPage.css";
 import DropDownButton from "../../components/restaurant/DropDownButton";
 import MenuList from "../../components/restaurant/MenuList";
 
-=======
-import React from "react";
-import Header from "../../components/common/header/Header";
-import AddressBar from "../../components/address/AddressBar";
-import MenuItem from "../../components/restaurant/MenuItem";
-import BackgroundImg from "../../assets/images/restaurantBackgroundImg.png";
-import LogoImg from "../../assets/images/restaurantLogoImg.jpg";
-// import MenuImg from "../../assets/images/menuImg.png";
-import MenuCategory from "../../components/restaurant/MenuCategory";
-import "./RestaurantPage.css";
-import DropDownButton from "../../components/restaurant/DropDownButton";
-
->>>>>>> 90654b8464aadb272ce9c51b515bd3b02d03805e
 const RestaurantPage: React.FC = () => {
   const categories = [
     "Bestseller",
     "Appetizers",
     "BBQ Bowls",
-<<<<<<< HEAD
     "Coffee",
     "Coffee",
     "Coffee",
@@ -42,17 +26,14 @@ const RestaurantPage: React.FC = () => {
   const handleMenuCategoryClick = (category: string) => {
     setSelectedCategory(category);
   };
-=======
-    "Coffe",
-    "Coffe",
-    "Coffe",
-    "Coffe",
-    "Drinks",
-  ];
->>>>>>> 90654b8464aadb272ce9c51b515bd3b02d03805e
   return (
     <div>
-      <Header hasBackIcon={true} title="restaurant name" hasCartIcon={true} />
+      <Header
+        hasBackIcon={true}
+        title="restaurant name"
+        hasCartIcon={true}
+        isFixed={true}
+      />
       <AddressBar />
       <div className="restaurantContainer">
         <div className="restaurantInfoContainer">

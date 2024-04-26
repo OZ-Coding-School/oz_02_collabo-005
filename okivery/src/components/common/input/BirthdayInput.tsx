@@ -1,13 +1,15 @@
 import "./BirthdayInput.css";
 
 interface BirthdayInputProps {
-  isEdit?: boolean;
+  readOnly?: boolean;
   isMust?: boolean;
+  value?: string;
 }
 
 const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
-  isEdit,
+  readOnly,
   isMust,
+  value,
 }) => {
   // 각 birthday의 입력 값이 최대 길이보다 긴 경우 자르기
   const handleOnInput = (
@@ -34,7 +36,8 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
           name="year"
           placeholder="YEAR"
           className="birthInput"
-          readOnly={!isEdit}
+          value={value}
+          readOnly={readOnly}
           onChange={(e) => handleOnInput(e, 4)}
         ></input>
         <input
@@ -42,7 +45,8 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
           name="month"
           placeholder="MONTH"
           className="birthInput"
-          readOnly={!isEdit}
+          value={value}
+          readOnly={readOnly}
           onChange={(e) => handleOnInput(e, 2)}
         ></input>
         <input
@@ -50,7 +54,8 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
           name="day"
           placeholder="DAY"
           className="birthInput"
-          readOnly={!isEdit}
+          value={value}
+          readOnly={readOnly}
           onChange={(e) => handleOnInput(e, 2)}
         ></input>
       </div>

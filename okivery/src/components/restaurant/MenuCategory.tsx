@@ -23,7 +23,6 @@ const MenuCategory: React.FC<MenuCategoryProps> = ({
         spaceBetween={15}
         freeMode={true}
         modules={[FreeMode]}
-        className="menuCategorySwiper"
       >
         {categories.map((category, index) => (
           <SwiperSlide

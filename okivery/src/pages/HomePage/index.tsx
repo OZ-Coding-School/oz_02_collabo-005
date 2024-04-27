@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../../components/common/header/Header";
-import "./HomePage.css";
 import FooterNavigationBar from "../../components/common/footer/FooterNavigationBar";
 import RestaurantCategory from "../../components/home/category/RestaurantCategory";
 import Banner from "../../components/home/banner/Banner";
 import AddressBar from "../../components/address/AddressBar";
+import "./HomePage.css";
 
 export type Restaurant = {
   name: string;
@@ -31,11 +31,16 @@ const HomePage: React.FC = () => {
   ];
   return (
     <div>
-      <Header hasBackIcon={false} title="Home" hasCartIcon={true} />
+      <Header
+        hasBackIcon={false}
+        title="Home"
+        hasCartIcon={true}
+        isFixed={true}
+      />
       <AddressBar />
       <main className="mainContainer">
         <Banner banners={banners} />
-        <div className="CategoryList">
+        <div className="categoryList">
           <RestaurantCategory
             title="American & Grills"
             id="AG"

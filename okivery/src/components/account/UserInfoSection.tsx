@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ChangePasswordSection from "./ChangePasswordSection";
-import InputFormItem from "../common/input/InputFormItem";
-import BirthdayInputForm from "../common/input/BirthdayInputForm";
+import InputFormItem from "../common/input/InputItem";
+import BirthdayInput from "../common/input/BirthdayInput";
 
 interface isEditProps {
   isEdit: boolean;
@@ -66,7 +66,7 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
           isEdit={isEdit}
           handleInputChange={handleInputChange}
         />
-        <BirthdayInputForm isEdit={isEdit} />
+        <BirthdayInput isEdit={isEdit} />
         {!isEdit ? null : <ChangePasswordSection isEdit={isEdit} />}
       </form>
     </div>

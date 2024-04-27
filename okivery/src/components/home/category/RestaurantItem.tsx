@@ -18,13 +18,17 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
     navigate("/restaurant");
   };
   return (
-    <div className="restaurantItem" key={key} onClick={handleRestaurantClick}>
+    <div
+      className="restaurantItemContainer"
+      key={key}
+      onClick={handleRestaurantClick}
+    >
       <img
         src={RestaurantImage}
         className="restaurantMainImg"
         alt="restaurant main image"
       />
-      <div>
+      <div className="restaurantInfoSection">
         <p>{name}</p>
         <p>{intro}</p>
       </div>

@@ -1,13 +1,12 @@
-import "./InputFormItem.css";
+import "./InputItem.css";
 
 interface InputFormIemProps {
   label: string;
   name: string;
   type: string;
-  value: string | number;
   place: string;
-  isMust: boolean;
-  isEdit?: boolean;
+  value?: string;
+  readOnly?: boolean;
   handleInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -17,14 +16,13 @@ const InputFormItem: React.FC<InputFormIemProps> = ({
   type,
   value,
   place,
-  isMust,
-  isEdit,
+  readOnly,
   handleInputChange,
 }) => {
   return (
     <div className="inputContainer">
       <label htmlFor={name}>
-        {label} <span className={isMust ? "" : "hideSpan"}>*</span>
+        {label} <span className={!readOnly ? "" : "hideSpan"}>*</span>
       </label>
       <input
         type={type}
@@ -33,7 +31,7 @@ const InputFormItem: React.FC<InputFormIemProps> = ({
         value={value}
         placeholder={place}
         onChange={handleInputChange}
-        readOnly={!isEdit}
+        readOnly={readOnly}
       ></input>
     </div>
   );

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/common/header/Header";
 import SmallButton from "../../components/common/button/SmallButton";
-import InputFormItem from "../../components/common/input/InputFormItem";
-import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
+import InputFormItem from "../../components/common/input/InputItem";
+import BirthdayInputForm from "../../components/common/input/BirthdayInput";
 import "../KoreanCardPage/CardPage.css";
 
 type foreignCardDataType = {

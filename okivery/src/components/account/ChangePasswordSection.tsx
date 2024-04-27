@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SmallButton from "../common/button/SmallButton";
-import InputFormItem from "../common/input/InputFormItem";
+import InputFormItem from "../common/input/InputItem";
 
 type UserPassword = {
   currentPassword: string;

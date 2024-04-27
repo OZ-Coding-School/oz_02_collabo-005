@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/common/button/Button";
 import Header from "../../components/common/header/Header";
-import InputFormItem from "../../components/common/input/InputFormItem";
+import InputFormItem from "../../components/common/input/InputItem";
 import "./SignupPage.css";
-import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
+import BirthdayInputForm from "../../components/common/input/BirthdayInput";
 
 type userDataType = {
   name: string;
@@ -42,7 +42,7 @@ const SignupPage: React.FC = () => {
 
   // trem의 토글 상태를 체크하는 함수
   const handleTermCheck = () => {
-    setIsTermChecked((prevChecked) => !prevChecked);
+    setIsTermChecked((prev) => !prev);
   };
 
   // const validateEmail = (email: string): boolean => {
@@ -84,7 +84,7 @@ const SignupPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackIcon={true} to="/login" title="" hasCartIcon={false} />
+      <Header hasBackIcon={true} title="" hasCartIcon={false} isFixed={false} />
       <div className="signupContainer">
         <h1 className="signupTitle">Sign Up</h1>
         <form>
@@ -92,46 +92,36 @@ const SignupPage: React.FC = () => {
             label="Name"
             name="name"
             type="text"
-            value={userData.name}
             place="Please enter your name"
-            isMust={true}
             handleInputChange={handleInputChange}
           />
           <InputFormItem
             label="E-Mail"
             name="email"
             type="email"
-            value={userData.email}
             place="ex) abcd1234@gmail.com"
-            isMust={true}
             handleInputChange={handleInputChange}
           />
           <InputFormItem
             label="Password"
             name="password"
             type="password"
-            value={userData.password}
             place="Please enter a password of at least 8 characters"
-            isMust={true}
             handleInputChange={handleInputChange}
           />
           <InputFormItem
             label="Repeat Password"
             name="repeatPassword"
             type="password"
-            value={userData.repeatPassword}
             place="Please re-enter your password"
-            isMust={true}
             handleInputChange={handleInputChange}
           />
           <div className="passwordNotMatch hide">Your password dismatches</div>
           <InputFormItem
             label="Phone Number"
-            name=""
+            name="phone"
             type="phone"
-            value={userData.phone}
             place="Please enter except for hyphen (-)"
-            isMust={true}
             handleInputChange={handleInputChange}
           />
           <BirthdayInputForm />
@@ -146,7 +136,7 @@ const SignupPage: React.FC = () => {
                 value="agree"
                 id="term"
                 checked={isTermChecked}
-                onChange={handleTermCheck}
+                onClick={handleTermCheck}
               />
               <div>
                 {terms}

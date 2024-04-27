@@ -61,50 +61,48 @@ const AccountPage: React.FC = () => {
         hasCartIcon={false}
       />
       <div className="accountMainContainer">
-        <div className="accountSubContainer">
-          <div className="editButtonSection">
-            <Button
-              name={isEdit ? "Save" : "Edit"}
-              handleClick={handleEditChange}
-              buttonType="smallButton"
+        <div className="editButtonSection">
+          <Button
+            name={isEdit ? "Save" : "Edit"}
+            handleClick={handleEditChange}
+            buttonType="smallButton"
+          />
+        </div>
+        <UserInfoSection isEdit={isEdit} />
+        <div className="cardManagementSection">
+          <CardManagementSection />
+        </div>
+        <div className="signOutSection">
+          <Button
+            name="Log Out"
+            handleClick={openLogoutModal}
+            buttonType="smallButton"
+          />
+          {isLogoutModalOpen && (
+            <ProceedModal
+              onClose={closeLogoutModal}
+              proceedQuestionText="Are you sure you want to proceed?"
+              leftButtonText="No, cancel"
+              rightButtonText="Yes, confirm"
+              handleLeftClick={handleLeftClick}
+              handleRightClick={handleLogOut}
             />
-          </div>
-          <UserInfoSection isEdit={isEdit} />
-          <div className="cardManagementSection">
-            <CardManagementSection />
-          </div>
-          <div className="signOutSection">
-            <Button
-              name="Log Out"
-              handleClick={openLogoutModal}
-              buttonType="smallButton"
+          )}
+          <Button
+            name="Delete Account"
+            handleClick={openDeleteModal}
+            buttonType="smallButton"
+          />
+          {isDeleteModalOpen && (
+            <ProceedModal
+              onClose={closeDeleteModal}
+              proceedQuestionText="Are you sure you want to proceed?"
+              leftButtonText="No, cancel"
+              rightButtonText="Yes, confirm"
+              handleLeftClick={handleLeftClick}
+              handleRightClick={handleDeleteAccount}
             />
-            {isLogoutModalOpen && (
-              <ProceedModal
-                onClose={closeLogoutModal}
-                proceedQuestionText="Are you sure you want to proceed?"
-                leftButtonText="No, cancel"
-                rightButtonText="Yes, confirm"
-                handleLeftClick={handleLeftClick}
-                handleRightClick={handleLogOut}
-              />
-            )}
-            <Button
-              name="Delete Account"
-              handleClick={openDeleteModal}
-              buttonType="smallButton"
-            />
-            {isDeleteModalOpen && (
-              <ProceedModal
-                onClose={closeDeleteModal}
-                proceedQuestionText="Are you sure you want to proceed?"
-                leftButtonText="No, cancel"
-                rightButtonText="Yes, confirm"
-                handleLeftClick={handleLeftClick}
-                handleRightClick={handleDeleteAccount}
-              />
-            )}
-          </div>
+          )}
         </div>
       </div>
     </>

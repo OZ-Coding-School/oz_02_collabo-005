@@ -1,10 +1,7 @@
 .accountMainContainer {
-  margin: 0 10px 0 10px;
+  margin: 10px 10px 0 10px;
   display: flex;
-}
-
-.accountSubContainer {
-  margin-top: 10px;
+  flex-direction: column;
 }
 
 .editButtonSection {

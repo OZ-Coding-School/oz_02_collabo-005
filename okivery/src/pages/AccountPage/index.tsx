@@ -5,9 +5,12 @@ import UserInfoSection from "../../components/account/UserInfoSection";
 import CardManagementSection from "../../components/common/addcard/CardManagementSection";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/button/Button";
+import ProceedModal from "../../components/common/modal/ProceedModal";
 
 const AccountPage: React.FC = () => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
 
   // edit이나 save버튼을 눌렀을때 호출되는 함수
   const handleEditChange = (): void => {
@@ -25,6 +28,28 @@ const AccountPage: React.FC = () => {
   const handleDeleteAccount = (): void => {
     // 계정삭제 로직 미구현
     navigate("/");
+  };
+
+  const handleLeftClick = (): void => {
+    isDeleteModalOpen
+      ? setIsDeleteModalOpen(false)
+      : setIsLogoutModalOpen(false);
+  };
+
+  const openDeleteModal = (): void => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = (): void => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const openLogoutModal = (): void => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const closeLogoutModal = (): void => {
+    setIsLogoutModalOpen(false);
   };
 
   return (
@@ -51,14 +76,34 @@ const AccountPage: React.FC = () => {
           <div className="signOutSection">
             <Button
               name="Log Out"
-              handleClick={handleLogOut}
+              handleClick={openLogoutModal}
               buttonType="smallButton"
             />
+            {isLogoutModalOpen && (
+              <ProceedModal
+                onClose={closeLogoutModal}
+                proceedQuestionText="Are you sure you want to proceed?"
+                leftButtonText="No, cancel"
+                rightButtonText="Yes, confirm"
+                handleLeftClick={handleLeftClick}
+                handleRightClick={handleLogOut}
+              />
+            )}
             <Button
               name="Delete Account"
-              handleClick={handleDeleteAccount}
+              handleClick={openDeleteModal}
               buttonType="smallButton"
             />
+            {isDeleteModalOpen && (
+              <ProceedModal
+                onClose={closeDeleteModal}
+                proceedQuestionText="Are you sure you want to proceed?"
+                leftButtonText="No, cancel"
+                rightButtonText="Yes, confirm"
+                handleLeftClick={handleLeftClick}
+                handleRightClick={handleDeleteAccount}
+              />
+            )}
           </div>
         </div>
       </div>

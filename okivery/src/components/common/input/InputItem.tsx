@@ -1,4 +1,4 @@
-import "./InputFormItem.css";
+import "./InputItem.css";
 
 interface InputFormIemProps {
   label: string;

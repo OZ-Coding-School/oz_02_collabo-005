@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../../components/common/button/Button";
 import Header from "../../components/common/header/Header";
-import InputFormItem from "../../components/common/input/InputFormItem";
+import InputFormItem from "../../components/common/input/InputItem";
 import "./SignupPage.css";
 import BirthdayInputForm from "../../components/common/input/BirthdayInput";
 

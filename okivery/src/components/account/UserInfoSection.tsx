@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChangePasswordSection from "./ChangePasswordSection";
-import InputFormItem from "../common/input/InputFormItem";
+import InputFormItem from "../common/input/InputItem";
 import BirthdayInput from "../common/input/BirthdayInput";
 
 interface isEditProps {

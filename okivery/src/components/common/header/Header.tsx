@@ -7,7 +7,7 @@ interface HeaderProps {
   hasBackIcon: boolean;
   title: string;
   hasCartIcon: boolean;
-  isFixed: boolean;
+  isFixed?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({

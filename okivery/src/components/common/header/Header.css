@@ -7,11 +7,12 @@
 }
 
 .headerContainer {
+  position: sticky;
+  z-index: 1000;
   background-color: #ff6347;
   display: flex;
   align-items: center;
   height: 50px;
-  position: relative;
 }
 
 .backIcon {

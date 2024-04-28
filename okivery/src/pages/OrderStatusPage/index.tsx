@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./OrderStatus.css";
 import Header from "../../components/common/header/Header";
 import Button from "../../components/common/button/Button";
-import orderSuccussIcon from "../../assets/icons/orderSuccessIcon.png";
 import { PacmanLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import orderSuccessIcon from "../../assets/icons/orderSuccessIcon.png";
 
 const OrderStatusPage: React.FC = () => {
   const [isOrderStatus, setIsOrderStatus] = useState<boolean>(true);
@@ -34,7 +34,7 @@ const OrderStatusPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackIcon={true} to="/home" title="" hasCartIcon={false} />
+      <Header hasBackIcon={true} title="" hasCartIcon={false} />
 
       <div>
         {isLoading ? (
@@ -51,7 +51,7 @@ const OrderStatusPage: React.FC = () => {
               <div className="statusText">
                 {isOrderStatus ? (
                   <>
-                    <img src={orderSuccussIcon} />
+                    <img src={orderSuccessIcon} />
                     <h1>
                       "Order successfully
                       <br />

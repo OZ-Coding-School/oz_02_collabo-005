@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/common/header/Header";
+import "../KoreanCardPage/CardPage.css";
 import InputFormItem from "../../components/common/input/InputFormItem";
 import BirthdayInputForm from "../../components/common/input/BirthdayInputForm";
-import "../KoreanCardPage/CardPage.css";
 import Button from "../../components/common/button/Button";
 
 type foreignCardDataType = {
@@ -76,24 +76,28 @@ const ForeignCardPage: React.FC = () => {
           />
           Expiration Date <span style={{ color: "red" }}>*</span>
           <div className="expirationDateInputSection">
-            <input
-              type="text"
-              name="expirationDateMonth"
-              id="expirationDateMonth"
-              value={cardData.expirationDateMonth}
-              placeholder="MM"
-              onChange={handleInputChange}
-              maxLength={2}
-            />
-            <input
-              type="text"
-              name="expirationDateYear"
-              id="expirationDateYear"
-              value={cardData.expirationDateYear}
-              placeholder="YY"
-              onChange={handleInputChange}
-              maxLength={2}
-            />
+            <label htmlFor="expirationDateMonth">
+              <input
+                type="number"
+                name="expirationDateMonth"
+                id="expirationDateMonth"
+                value={cardData.expirationDateMonth}
+                placeholder="MM"
+                onChange={handleInputChange}
+                maxLength={2}
+              />
+            </label>
+            <label htmlFor="expirationDateYear">
+              <input
+                type="number"
+                name="expirationDateYear"
+                id="expirationDateYear"
+                value={cardData.expirationDateYear}
+                placeholder="YY"
+                onChange={handleInputChange}
+                maxLength={2}
+              />
+            </label>
           </div>
           <InputFormItem
             label="Cardholder Name"

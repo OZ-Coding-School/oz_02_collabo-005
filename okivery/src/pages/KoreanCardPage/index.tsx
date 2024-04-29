@@ -1,31 +1,31 @@
 import React, { useState } from "react";
 import Header from "../../components/common/header/Header";
-import SmallButton from "../../components/common/button/SmallButton";
 import { useNavigate } from "react-router-dom";
-import InputFormItem from "../../components/common/input/InputItem";
-import BirthdayInputForm from "../../components/common/input/BirthdayInput";
+import InputItem from "../../components/common/input/InputItem";
+import BirthdayInput from "../../components/common/input/BirthdayInput";
 import "./CardPage.css";
+import Button from "../../components/common/button/Button";
 
 type koreanCardDataType = {
-  cardNumber: number;
-  expirationDateMonth: number;
-  expirationDateYear: number;
+  cardNumber: string;
+  expirationDateMonth: string;
+  expirationDateYear: string;
   cardholderName: string;
-  cvv: number;
-  pinNumber: number;
-  birthday: number;
+  cvv: string;
+  pinNumber: string;
+  birthday: string;
 };
 
 const KoreanCardPage: React.FC = () => {
   const navigate = useNavigate();
   const initialCardData = {
-    cardNumber: 0,
-    expirationDateMonth: 0,
-    expirationDateYear: 0,
+    cardNumber: "",
+    expirationDateMonth: "",
+    expirationDateYear: "",
     cardholderName: "",
-    cvv: 0,
-    pinNumber: 0,
-    birthday: 0,
+    cvv: "",
+    pinNumber: "",
+    birthday: "",
   };
   const [cardData, setCardData] = useState<koreanCardDataType>(initialCardData);
 
@@ -41,99 +41,80 @@ const KoreanCardPage: React.FC = () => {
     });
   };
 
-  // Expiration Date의 입력 값이 최대 길이인 2보다 긴 경우 자르기
-  const handleOnInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const inputValue: string = event.target.value;
-    if (inputValue.length > 2) {
-      event.target.value = inputValue.slice(0, 2);
-    }
-  };
-
   const handleSave = (): void => {
     navigate(-1);
   };
 
   return (
     <>
-      <Header
-        hasBackIcon={true}
-        to="/account"
-        title="Register Card"
-        hasCartIcon={false}
-      />
+      <Header hasBackIcon={true} title="Register Card" hasCartIcon={false} />
       <div className="cardMainContainer">
-        <div className="cardSubContainer">
-          <div className="cardButtonSection">
-            <h2>Korean credit card</h2>
-            <SmallButton name="Save" handleClick={handleSave} />
-          </div>
-          <form>
-            <InputFormItem
-              label="Card Number"
-              name="cardNumber"
-              type="number"
-              isMust={true}
-              value={cardData.cardNumber}
-              isEdit={true}
-              place="Enter 16-digit card number"
-              handleInputChange={handleInputChange}
-            />
-            Expiration Date <span style={{ color: "red" }}>*</span>
-            <div className="expirationDateInputSection">
-              <label htmlFor="expirationDateMonth"></label>
-              <input
-                type="number"
-                name="expirationDateMonth"
-                id="expirationDateMonth"
-                value={cardData.expirationDateMonth}
-                placeholder="MM"
-                onChange={handleInputChange}
-                onInput={handleOnInput}
-              />
-              <label htmlFor="expirationDateYear"></label>
-              <input
-                type="number"
-                name="expirationDateYear"
-                id="expirationDateYear"
-                value={cardData.expirationDateYear}
-                placeholder="YY"
-                onChange={handleInputChange}
-                onInput={handleOnInput}
-              />
-            </div>
-            <InputFormItem
-              label="Cardholder Name"
-              name="cardholderName"
-              type="text"
-              isMust={true}
-              value={cardData.cardholderName}
-              isEdit={true}
-              place=""
-              handleInputChange={handleInputChange}
-            />
-            <InputFormItem
-              label="CVV/CVC"
-              name="cvv"
-              type="number"
-              isMust={true}
-              value={cardData.cvv}
-              isEdit={true}
-              place=""
-              handleInputChange={handleInputChange}
-            />
-            <InputFormItem
-              label="Pin number"
-              name="pinNumber"
-              type="number"
-              isMust={true}
-              value={cardData.pinNumber}
-              isEdit={true}
-              place="Enter in the first two pins here"
-              handleInputChange={handleInputChange}
-            />
-            <BirthdayInputForm isEdit={true} isMust={true} />
-          </form>
+        <div className="cardButtonSection">
+          <h2>Korean credit card</h2>
+          <Button
+            name="Save"
+            handleClick={handleSave}
+            buttonType="smallButton"
+          />
         </div>
+        <form>
+          <InputItem
+            label="Card Number"
+            name="cardNumber"
+            type="text"
+            value={cardData.cardNumber}
+            place="Enter 16-digit card number"
+            handleInputChange={handleInputChange}
+          />
+          Expiration Date <span style={{ color: "red" }}>*</span>
+          <div className="expirationDateInputSection">
+            <label htmlFor="expirationDateMonth"></label>
+            <input
+              type="text"
+              name="expirationDateMonth"
+              id="expirationDateMonth"
+              value={cardData.expirationDateMonth}
+              placeholder="MM"
+              onChange={handleInputChange}
+              maxLength={2}
+            />
+            <label htmlFor="expirationDateYear"></label>
+            <input
+              type="text"
+              name="expirationDateYear"
+              id="expirationDateYear"
+              value={cardData.expirationDateYear}
+              placeholder="YY"
+              onChange={handleInputChange}
+              maxLength={2}
+            />
+          </div>
+          <InputItem
+            label="Cardholder Name"
+            name="cardholderName"
+            type="text"
+            value={cardData.cardholderName}
+            place=""
+            handleInputChange={handleInputChange}
+          />
+          <InputItem
+            label="CVV/CVC"
+            name="cvv"
+            type="text"
+            value={cardData.cvv}
+            place=""
+            handleInputChange={handleInputChange}
+          />
+          <InputItem
+            label="Pin number"
+            name="pinNumber"
+            type="text"
+            value={cardData.pinNumber}
+            place="Enter in the first two pins here"
+            handleInputChange={handleInputChange}
+          />
+          <BirthdayInput isMust={true} />
+        </form>
       </div>
     </>
   );

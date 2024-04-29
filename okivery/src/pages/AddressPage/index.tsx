@@ -1,6 +1,6 @@
 import React from "react";
 import "./AddressPage.css";
-import Header from "../../components/common/header/Header";
+import Header from "@components/common/header/Header";
 import selectMapIcon from "../../assets/icons/selectMapIcon.png";
 import { Link } from "react-router-dom";
 

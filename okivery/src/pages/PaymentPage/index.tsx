@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../../components/common/header/Header";
-import CardManagementSection from "../../components/common/addcard/CardManagementSection";
+import Header from "@components/common/header/Header";
+import CardManagementSection from "@components/common/addcard/CardManagementSection";
 import "./PaymentPage.css";
-import Button from "../../components/common/button/Button";
+import Button from "@components/common/button/Button";
 
 const PaymentPage: React.FC = () => {
   return (

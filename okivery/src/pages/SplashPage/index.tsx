@@ -1,7 +1,7 @@
 import React from "react";
 import logoImage from "../../assets/images/AppLogo.png";
 import "./SplashPage.css";
-import Button from "../../components/common/button/Button";
+import Button from "@components/common/button/Button";
 
 const SplashPage: React.FC = () => {
   return (

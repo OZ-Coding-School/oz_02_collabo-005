@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Header from "../../components/common/header/Header";
+import Header from "@components/common/header/Header";
 import "./AccountPage.css";
-import SmallButton from "../../components/common/button/SmallButton";
-import UserInfoSection from "../../components/account/UserInfoSection";
-import CardManagementSection from "../../components/common/addcard/CardManagementSection";
+import SmallButton from "@components/common/button/SmallButton";
+import UserInfoSection from "@components/account/UserInfoSection";
+import CardManagementSection from "@components/common/addcard/CardManagementSection";
 import { useNavigate } from "react-router-dom";
 
 const AccountPage: React.FC = () => {

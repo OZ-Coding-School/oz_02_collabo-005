@@ -1,9 +1,9 @@
 import React from "react";
-import Header from "../../components/common/header/Header";
-import FooterNavigationBar from "../../components/common/footer/FooterNavigationBar";
-import RestaurantCategory from "../../components/home/category/RestaurantCategory";
-import Banner from "../../components/home/banner/Banner";
-import AddressBar from "../../components/address/AddressBar";
+import Header from "@components/common/header/Header";
+import FooterNavigationBar from "@components/common/footer/FooterNavigationBar";
+import RestaurantCategory from "@components/home/category/RestaurantCategory";
+import Banner from "@components/home/banner/Banner";
+import AddressBar from "@components/address/AddressBar";
 import "./HomePage.css";
 
 export type Restaurant = {

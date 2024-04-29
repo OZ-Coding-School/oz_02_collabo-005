@@ -1,8 +1,12 @@
-import { ReactNode } from "react";
 import "./Layout.css";
+import { Outlet } from "react-router-dom";
 
-const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="layoutContainer">{children}</div>;
+const Layout: React.FC = () => {
+  return (
+    <div className="layoutContainer">
+      <Outlet />
+    </div>
+  );
 };
 
 export default Layout;

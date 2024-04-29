@@ -5,7 +5,7 @@ import "./Header.css";
 
 interface HeaderProps {
   hasBackIcon: boolean;
-  title: string;
+  title?: string;
   hasCartIcon: boolean;
   isFixed?: boolean;
 }

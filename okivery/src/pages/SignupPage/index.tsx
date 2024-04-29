@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Button from "../../components/common/button/Button";
-import Header from "../../components/common/header/Header";
-import InputFormItem from "../../components/common/input/InputItem";
+import Button from "@components/common/button/Button";
+import Header from "@components/common/header/Header";
+import InputItem from "@components/common/input/InputItem";
+import BirthdayInputForm from "@components/common/input/BirthdayInput";
 import "./SignupPage.css";
-import BirthdayInputForm from "../../components/common/input/BirthdayInput";
 
 type userDataType = {
   name: string;
@@ -88,28 +88,28 @@ const SignupPage: React.FC = () => {
       <div className="signupContainer">
         <h1 className="signupTitle">Sign Up</h1>
         <form>
-          <InputFormItem
+          <InputItem
             label="Name"
             name="name"
             type="text"
             place="Please enter your name"
             handleInputChange={handleInputChange}
           />
-          <InputFormItem
+          <InputItem
             label="E-Mail"
             name="email"
             type="email"
             place="ex) abcd1234@gmail.com"
             handleInputChange={handleInputChange}
           />
-          <InputFormItem
+          <InputItem
             label="Password"
             name="password"
             type="password"
             place="Please enter a password of at least 8 characters"
             handleInputChange={handleInputChange}
           />
-          <InputFormItem
+          <InputItem
             label="Repeat Password"
             name="repeatPassword"
             type="password"
@@ -117,7 +117,7 @@ const SignupPage: React.FC = () => {
             handleInputChange={handleInputChange}
           />
           <div className="passwordNotMatch hide">Your password dismatches</div>
-          <InputFormItem
+          <InputItem
             label="Phone Number"
             name="phone"
             type="phone"

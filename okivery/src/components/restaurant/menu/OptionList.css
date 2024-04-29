@@ -1,0 +1,29 @@
+.optionListContainer {
+  display: grid;
+  gap: 10px;
+}
+
+.optionTitleSection {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  gap: 10px;
+}
+
+.optionLabel {
+  font-size: 0.7rem;
+  line-height: 1.5;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 0px 5px 1px 5px;
+}
+
+.Required {
+  color: #ff6347;
+  background-color: #ff63474f;
+}
+
+.Optional {
+  color: #949494;
+  background-color: #00000009;
+}

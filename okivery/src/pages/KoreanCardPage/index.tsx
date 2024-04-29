@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Header from "../../components/common/header/Header";
-import SmallButton from "../../components/common/button/SmallButton";
+import Header from "@components/common/header/Header";
+import SmallButton from "@components/common/button/SmallButton";
 import { useNavigate } from "react-router-dom";
-import InputFormItem from "../../components/common/input/InputItem";
-import BirthdayInputForm from "../../components/common/input/BirthdayInput";
+import InputItem from "@components/common/input/InputItem";
+import BirthdayInput from "@components/common/input/BirthdayInput";
 import "./CardPage.css";
 
 type koreanCardDataType = {
@@ -68,7 +68,7 @@ const KoreanCardPage: React.FC = () => {
             <SmallButton name="Save" handleClick={handleSave} />
           </div>
           <form>
-            <InputFormItem
+            <InputItem
               label="Card Number"
               name="cardNumber"
               type="number"
@@ -101,7 +101,7 @@ const KoreanCardPage: React.FC = () => {
                 onInput={handleOnInput}
               />
             </div>
-            <InputFormItem
+            <InputItem
               label="Cardholder Name"
               name="cardholderName"
               type="text"
@@ -111,7 +111,7 @@ const KoreanCardPage: React.FC = () => {
               place=""
               handleInputChange={handleInputChange}
             />
-            <InputFormItem
+            <InputItem
               label="CVV/CVC"
               name="cvv"
               type="number"
@@ -121,7 +121,7 @@ const KoreanCardPage: React.FC = () => {
               place=""
               handleInputChange={handleInputChange}
             />
-            <InputFormItem
+            <InputItem
               label="Pin number"
               name="pinNumber"
               type="number"
@@ -131,7 +131,7 @@ const KoreanCardPage: React.FC = () => {
               place="Enter in the first two pins here"
               handleInputChange={handleInputChange}
             />
-            <BirthdayInputForm isEdit={true} isMust={true} />
+            <BirthdayInput isEdit={true} isMust={true} />
           </form>
         </div>
       </div>

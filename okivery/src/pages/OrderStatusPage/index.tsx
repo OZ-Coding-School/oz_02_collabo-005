@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./OrderStatus.css";
-import Header from "../../components/common/header/Header";
-import Button from "../../components/common/button/Button";
+import Header from "@components/common/header/Header";
+import Button from "@components/common/button/Button";
 import { PacmanLoader } from "react-spinners";
 
 const OrderStatusPage: React.FC = () => {

@@ -1,0 +1,40 @@
+.MenuBackImg {
+  width: 100%;
+}
+
+.menuPageTitle {
+  display: grid;
+  gap: 20px;
+  margin: 10px 10px;
+}
+
+.menuPageName {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.devidingLine {
+  background-color: #0000001d;
+  height: 5px;
+}
+
+.menuPageOptionContainer {
+  margin: 10px 10px;
+  display: grid;
+  gap: 15px;
+}
+
+.menuQuantitySection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quantityText {
+  font-weight: 600;
+}
+
+.AddToBasketBtn {
+  display: flex;
+  justify-content: center;
+}

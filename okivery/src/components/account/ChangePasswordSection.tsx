@@ -64,6 +64,7 @@ const ChangePasswordSection: React.FC = () => {
           value={userPassword.currentPassword}
           place="Current Password"
           handleInputChange={handleInputChange}
+          isNoStar={true}
         />
         <div className="verifyButtonSection">
           <Button
@@ -80,6 +81,8 @@ const ChangePasswordSection: React.FC = () => {
         value={userPassword.newPassword}
         place="new Password"
         handleInputChange={handleInputChange}
+        isNoStar={true}
+        readOnly={true}
       />
     </div>
   );

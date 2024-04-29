@@ -4,6 +4,7 @@ import Header from "@components/common/header/Header";
 import InputItem from "@components/common/input/InputItem";
 import BirthdayInputForm from "@components/common/input/BirthdayInput";
 import "./SignupPage.css";
+import { useNavigate } from "react-router-dom";
 
 type userDataType = {
   name: string;
@@ -25,6 +26,7 @@ const SignupPage: React.FC = () => {
   const [userData, setUserData] = useState(userInitialData);
   const [isFormValid, setIsFormValid] = useState(false);
   const [isTermChecked, setIsTermChecked] = useState(false);
+  const navigate = useNavigate();
 
   // input에 입력된 값들을 userData에 저장하는 함수
   const handleInputChange = (
@@ -43,6 +45,10 @@ const SignupPage: React.FC = () => {
   // trem의 토글 상태를 체크하는 함수
   const handleTermCheck = () => {
     setIsTermChecked((prev) => !prev);
+  };
+
+  const handleButtonClick = () => {
+    navigate("/login");
   };
 
   // const validateEmail = (email: string): boolean => {
@@ -150,7 +156,8 @@ const SignupPage: React.FC = () => {
             <Button
               name="Sign up"
               backgroundColor={isFormValid ? "#FF6347" : "#767676"}
-              to="/login"
+              buttonType="bigButton"
+              handleClick={handleButtonClick}
             />
           </div>
         </form>

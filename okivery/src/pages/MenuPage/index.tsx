@@ -5,6 +5,7 @@ import OptionList from "@components/restaurant/menu/OptionList";
 import "./MenuPage.css";
 import Button from "@components/common/button/Button";
 import QuantityButton from "@components/common/button/QuantityButton";
+import { useNavigate } from "react-router-dom";
 
 export type optionType = {
   type: string;
@@ -64,6 +65,7 @@ const MenuPage: React.FC = () => {
   ];
 
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
 
   const handlePlusBtnClick = (): void => {
     setQuantity((prev) => prev + 1);
@@ -72,6 +74,10 @@ const MenuPage: React.FC = () => {
   const handleMinusBtnClick = (): void => {
     if (quantity == 1) return;
     setQuantity((prev) => prev - 1);
+  };
+
+  const handleAddToBasketBtnClick = (): void => {
+    navigate("/restaurant");
   };
 
   return (
@@ -104,7 +110,8 @@ const MenuPage: React.FC = () => {
             <Button
               name="Add to Basket"
               backgroundColor="#ff6347"
-              to="/order/sheet"
+              buttonType="bigButton"
+              handleClick={handleAddToBasketBtnClick}
             />
           </div>
         </div>

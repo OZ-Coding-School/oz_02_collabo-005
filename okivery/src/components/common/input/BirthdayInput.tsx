@@ -21,7 +21,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
       </p>
       <div className="birthInputForm">
         <input
-          type="number"
+          type="text"
           name="year"
           placeholder="YEAR"
           className="birthInput"

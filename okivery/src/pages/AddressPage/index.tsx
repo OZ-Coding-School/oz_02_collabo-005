@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "./AddressPage.css";
 import Header from "@components/common/header/Header";
 import selectMapIcon from "../../assets/icons/selectMapIcon.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import mapSearchIcon from "../../assets/icons/searchIcon.png";
 import InputItem from "@components/common/input/InputItem";
 import ServiceableMapImage from "../../assets/images/mapRadius.png";
 import Button from "@components/common/button/Button";
+import GoogleMapModal from "@components/address/GoogleMapModal";
 
 type AddressType = {
   mainAddress: string;
@@ -23,6 +24,8 @@ const AddressPage: React.FC = () => {
     subAddress: "",
   };
   const [addressData, setAddressData] = useState(initialAddressData);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -40,6 +43,14 @@ const AddressPage: React.FC = () => {
     navigate(-1);
   };
 
+  const openMapModal = (): void => {
+    setIsModalOpen(true);
+  };
+
+  const closeMapModal = (): void => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <Header hasBackIcon={true} title="" hasCartIcon={false} />
@@ -49,21 +60,28 @@ const AddressPage: React.FC = () => {
         </div>
         <div>
           <div className="selectMapSection">
-            <Link to="/address/select-map">
-              <button>
-                <img src={selectMapIcon} />
-                Find your location on the map
-              </button>
-            </Link>
+            <button onClick={openMapModal}>
+              <img src={selectMapIcon} />
+              Find your location on the map
+            </button>
+            {isModalOpen && (
+              <GoogleMapModal
+                onClose={closeMapModal}
+                value={addressData.mainAddress}
+                handleInputChange={handleInputChange}
+              />
+            )}
             <div className="selectAddressTextInput">
               <div className="mainAddressInput">
                 <img src={mapSearchIcon} />
-                <input
+                <InputItem
+                  label=""
+                  isNoStar={true}
                   name="mainAddress"
                   type="text"
                   value={addressData.mainAddress}
-                  onChange={handleInputChange}
-                  placeholder="Type in your address"
+                  handleInputChange={handleInputChange}
+                  place="Type in your address"
                 />
               </div>
             </div>

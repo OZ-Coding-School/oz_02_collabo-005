@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../components/common/header/Header";
+import Header from "@components/common/header/Header";
 import logoImage from "../../assets/images/AppLogo.png";
-import Button from "../../components/common/button/Button";
+import Button from "@components/common/button/Button";
 import "./LoginPage.css";
 import facebookLogoImage from "../../assets/images/FacebookLogoImage.png";
 import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
-import FloatingLabelInput from "../../components/common/input/FloatingLabelInput";
+import FloatingLabelInput from "@components/common/input/FloatingLabelInput";
 import { useNavigate } from "react-router-dom";
 import SocialLoginButton from "../../components/login/SocialLoginButton";
 

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Header from "../../components/common/header/Header";
+import Header from "@components/common/header/Header";
 import "./AccountPage.css";
-import UserInfoSection from "../../components/account/UserInfoSection";
-import CardManagementSection from "../../components/common/addcard/CardManagementSection";
+import UserInfoSection from "@components/account/UserInfoSection";
+import CardManagementSection from "@components/common/addcard/CardManagementSection";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/common/button/Button";
-import ProceedModal from "../../components/common/modal/ProceedModal";
+import Button from "@components/common/button/Button";
+import ProceedModal from "@components/common/modal/ProceedModal";
 
 const AccountPage: React.FC = () => {
   const [isEdit, setIsEdit] = useState<boolean>(false);

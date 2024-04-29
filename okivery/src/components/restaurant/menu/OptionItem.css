@@ -1,0 +1,9 @@
+.optionItemContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.optionSelectSection {
+  display: flex;
+  justify-content: center;
+}

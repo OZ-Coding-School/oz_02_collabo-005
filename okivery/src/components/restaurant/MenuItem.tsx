@@ -10,13 +10,13 @@ interface MenuItemProps {
 const MenuItem: React.FC<MenuItemProps> = ({ label, handleClick }) => {
   return (
     <div className="MenuItemContainer" onClick={handleClick}>
-      <div className="menuInformation">
-        <div className="menuTitle">
-          <p className="menuName">Menu name</p>
-          {label && <div className="menuLabel">{label}</div>}
+      <div className="menuItemInformation">
+        <div className="menuItemTitle">
+          <p className="menuItemName">Menu name</p>
+          {label && <div className="menuItemLabel">{label}</div>}
         </div>
-        <p className="menuPrice">14,900 won</p>
-        <div className="menuDescription">
+        <p className="menuItemPrice">14,900 won</p>
+        <div className="menuItemDescription">
           Bowl of rice topped with bulgogi beef and sauce.
         </div>
       </div>

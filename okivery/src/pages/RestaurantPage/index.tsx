@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Header from "../../components/common/header/Header";
-import AddressBar from "../../components/address/AddressBar";
+import Header from "@components/common/header/Header";
+import AddressBar from "@components/address/AddressBar";
 import BackgroundImg from "../../assets/images/restaurantBackgroundImg.png";
 import LogoImg from "../../assets/images/restaurantLogoImg.jpg";
-import MenuCategory from "../../components/restaurant/MenuCategory";
+import MenuCategory from "@components/restaurant/MenuCategory";
 import "./RestaurantPage.css";
-import DropDownButton from "../../components/restaurant/DropDownButton";
-import MenuList from "../../components/restaurant/MenuList";
+import DropDownButton from "@components/restaurant/DropDownButton";
+import MenuList from "@components/restaurant/MenuList";
 
 const RestaurantPage: React.FC = () => {
   const categories = [

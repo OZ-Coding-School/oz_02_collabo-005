@@ -2,10 +2,10 @@
   display: flex;
   cursor: pointer;
 }
-.menuTitle {
+.menuItemTitle {
   display: flex;
 }
-.menuLabel {
+.menuItemLabel {
   font-size: 0.7rem;
   display: inline-block;
   color: #ff6347;
@@ -16,16 +16,16 @@
   margin-left: 10px;
 }
 
-.menuName {
+.menuItemName {
   font-weight: 600;
 }
 
-.menuPrice {
+.menuItemPrice {
   font-size: 1rem;
 }
 
-.menuName,
-.menuPrice {
+.menuItemName,
+.menuItemPrice {
   margin: 0;
 }
 

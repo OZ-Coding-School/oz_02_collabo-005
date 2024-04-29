@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import InputItem from "../common/input/InputItem";
-import Button from "../common/button/Button";
+import Button from "@components/common/button/Button";
+import InputItem from "@components/common/input/InputItem";
 
 type UserPassword = {
   currentPassword: string;
@@ -64,6 +64,7 @@ const ChangePasswordSection: React.FC = () => {
           value={userPassword.currentPassword}
           place="Current Password"
           handleInputChange={handleInputChange}
+          isNoStar={true}
         />
         <div className="verifyButtonSection">
           <Button
@@ -80,6 +81,8 @@ const ChangePasswordSection: React.FC = () => {
         value={userPassword.newPassword}
         place="new Password"
         handleInputChange={handleInputChange}
+        isNoStar={true}
+        readOnly={true}
       />
     </div>
   );

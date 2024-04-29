@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./AddressPage.css";
-import Header from "../../components/common/header/Header";
+import Header from "@components/common/header/Header";
 import selectMapIcon from "../../assets/icons/selectMapIcon.png";
 import { Link, useNavigate } from "react-router-dom";
 import mapSearchIcon from "../../assets/icons/searchIcon.png";
-import InputItem from "../../components/common/input/InputItem";
+import InputItem from "@components/common/input/InputItem";
 import ServiceableMapImage from "../../assets/images/mapRadius.png";
-import Button from "../../components/common/button/Button";
+import Button from "@components/common/button/Button";
 
 type AddressType = {
   mainAddress: string;

@@ -5,7 +5,7 @@ import Button from "@components/common/button/Button";
 import "./LoginPage.css";
 import facebookLogoImage from "../../assets/images/FacebookLogoImage.png";
 import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
-import FloatingLabelInput from "../../components/common/input/FloatingLabelInput";
+import FloatingLabelInput from "@components/common/input/FloatingLabelInput";
 import { useNavigate } from "react-router-dom";
 import SocialLoginButton from "../../components/login/SocialLoginButton";
 

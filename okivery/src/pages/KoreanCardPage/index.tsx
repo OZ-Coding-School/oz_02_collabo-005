@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Header from "../../components/common/header/Header";
+import Header from "@components/common/header/Header";
 import { useNavigate } from "react-router-dom";
-import InputItem from "../../components/common/input/InputItem";
-import BirthdayInput from "../../components/common/input/BirthdayInput";
+import InputItem from "@components/common/input/InputItem";
+import BirthdayInput from "@components/common/input/BirthdayInput";
 import "./CardPage.css";
-import Button from "../../components/common/button/Button";
+import Button from "@components/common/button/Button";
 
 type koreanCardDataType = {
   cardNumber: string;

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/common/header/Header";
-import InputItem from "../../components/common/input/InputItem";
-import BirthdayInput from "../../components/common/input/BirthdayInput";
+import Header from "@components/common/header/Header";
+import InputItem from "@components/common/input/InputItem";
+import BirthdayInput from "@components/common/input/BirthdayInput";
 import "../KoreanCardPage/CardPage.css";
-import Button from "../../components/common/button/Button";
+import Button from "@components/common/button/Button";
 
 type foreignCardDataType = {
   cardNumber: string;

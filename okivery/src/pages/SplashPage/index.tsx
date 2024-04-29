@@ -2,8 +2,13 @@ import React from "react";
 import logoImage from "../../assets/images/AppLogo.png";
 import "./SplashPage.css";
 import Button from "../../components/common/button/Button";
+import { useNavigate } from "react-router-dom";
 
 const SplashPage: React.FC = () => {
+  const navigate = useNavigate();
+  const handleGoLogin = (): void => {
+    navigate("/login");
+  };
   return (
     <>
       <div className="splashMainContainer">
@@ -24,7 +29,12 @@ const SplashPage: React.FC = () => {
             </div>
           </div>
           <div className="splashLoginButton">
-            <Button name="Login" backgroundColor="#414f42" to="/login" />
+            <Button
+              name="Login"
+              backgroundColor="#414f42"
+              handleClick={handleGoLogin}
+              buttonType="bigButton"
+            />
           </div>
         </div>
       </div>

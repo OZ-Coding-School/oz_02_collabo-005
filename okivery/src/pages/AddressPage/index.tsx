@@ -53,15 +53,16 @@ const AddressPage: React.FC = () => {
               </button>
             </Link>
             <div className="selectAddressTextInput">
-              <img src={mapSearchIcon} />
-              <InputItem
-                label=""
-                name="mainAddress"
-                type="text"
-                value={addressData.mainAddress}
-                handleInputChange={handleInputChange}
-                place="Type in your address"
-              />
+              <div className="mainAddressInput">
+                <img src={mapSearchIcon} />
+                <input
+                  name="mainAddress"
+                  type="text"
+                  value={addressData.mainAddress}
+                  onChange={handleInputChange}
+                  placeholder="Type in your address"
+                />
+              </div>
             </div>
           </div>
           <div className="detailAddress">

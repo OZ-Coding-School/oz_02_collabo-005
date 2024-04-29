@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Button from "@components/common/button/Button";
 import InputItem from "@components/common/input/InputItem";
+import "./ChangePasswordSection.css";
 
 type UserPassword = {
   currentPassword: string;
@@ -31,10 +32,11 @@ const ChangePasswordSection: React.FC = () => {
   // 사용자 입력 비밀번호화 현재 디비에 저장되어 있는 비밀번호가 같은지 검사 후 새로운 비밀번호 입력할 수 있도록 하는 함수
   const handleVerify = (): void => {
     const isPasswordEqual: boolean =
-      userPassword.currentPassword === "디비에 저장된 비밀번호";
+      userPassword.currentPassword === "12345678";
     if (isPasswordEqual) {
       // 현재 비밀번호와 디비에 저장되어있는 비밀번호가 같으면 new password input을 수정 가능 상태로 변경
       setIsVerified(true);
+      alert("일치합니다.");
     } else {
       alert("비밀번호가 틀렸습니다.");
     }
@@ -62,7 +64,6 @@ const ChangePasswordSection: React.FC = () => {
           name="currentPassword"
           type="password"
           value={userPassword.currentPassword}
-          place="Current Password"
           handleInputChange={handleInputChange}
           isNoStar={true}
         />
@@ -76,13 +77,12 @@ const ChangePasswordSection: React.FC = () => {
       </div>
       <InputItem
         label="Confirm new Password"
-        name="newPassword"
+        name={isVerified ? "verifiedPassword" : "newPassword"}
         type="password"
         value={userPassword.newPassword}
-        place="new Password"
         handleInputChange={handleInputChange}
         isNoStar={true}
-        readOnly={true}
+        readOnly={isVerified ? false : true}
       />
     </div>
   );

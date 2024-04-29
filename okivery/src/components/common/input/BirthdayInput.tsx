@@ -6,22 +6,11 @@ interface BirthdayInputProps {
   value?: string;
 }
 
-const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
+const BirthdayInput: React.FC<BirthdayInputProps> = ({
   readOnly,
   isMust,
   value,
 }) => {
-  // 각 birthday의 입력 값이 최대 길이보다 긴 경우 자르기
-  const handleOnInput = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    maxLength: number
-  ): void => {
-    const inputValue: string = event.target.value;
-    if (inputValue.length > maxLength) {
-      event.target.value = inputValue.slice(0, maxLength);
-    }
-  };
-
   return (
     <div className="birthInputContainer">
       <label>
@@ -38,7 +27,7 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
           className="birthInput"
           value={value}
           readOnly={readOnly}
-          onChange={(e) => handleOnInput(e, 4)}
+          maxLength={4}
         ></input>
         <input
           type="text"
@@ -47,7 +36,7 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
           className="birthInput"
           value={value}
           readOnly={readOnly}
-          onChange={(e) => handleOnInput(e, 2)}
+          maxLength={2}
         ></input>
         <input
           type="text"
@@ -56,11 +45,11 @@ const BirthdayInputForm: React.FC<BirthdayInputProps> = ({
           className="birthInput"
           value={value}
           readOnly={readOnly}
-          onChange={(e) => handleOnInput(e, 2)}
+          maxLength={2}
         ></input>
       </div>
     </div>
   );
 };
 
-export default BirthdayInputForm;
+export default BirthdayInput;

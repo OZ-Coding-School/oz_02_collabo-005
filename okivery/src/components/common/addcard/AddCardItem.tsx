@@ -30,7 +30,6 @@ const AddCardItem: React.FC = () => {
       <img
         src={addCardImage}
         onClick={openModal}
-        alt="Add Card"
         style={{ cursor: "pointer" }}
       />
       {isModalOpen && (
@@ -39,8 +38,8 @@ const AddCardItem: React.FC = () => {
           proceedQuestionText="Which type of card do you have?"
           leftButtonText="Korean card"
           rightButtonText="Foreign card"
-          handleGoKoreanCard={handleGoKoreanCard}
-          handleGoForeignCard={handleGoForeignCard}
+          handleLeftClick={handleGoKoreanCard}
+          handleRightClick={handleGoForeignCard}
         />
       )}
     </>

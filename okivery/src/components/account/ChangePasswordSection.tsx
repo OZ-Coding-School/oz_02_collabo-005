@@ -1,17 +1,13 @@
 import React, { useState } from "react";
-import SmallButton from "../common/button/SmallButton";
-import InputFormItem from "../common/input/InputItem";
+import InputItem from "../common/input/InputItem";
+import Button from "../common/button/Button";
 
 type UserPassword = {
   currentPassword: string;
   newPassword: string;
 };
 
-interface isEditProps {
-  isEdit: boolean;
-}
-
-const ChangePasswordSection: React.FC<isEditProps> = ({ isEdit }) => {
+const ChangePasswordSection: React.FC = () => {
   const [isVerified, setIsVerified] = useState<boolean>(false);
   const initialUserPassword = {
     currentPassword: "",
@@ -61,28 +57,28 @@ const ChangePasswordSection: React.FC<isEditProps> = ({ isEdit }) => {
   return (
     <div className="changePasswordSection">
       <div className="currentPasswordSection">
-        <InputFormItem
+        <InputItem
           label="Current Password"
           name="currentPassword"
           type="password"
-          isMust={false}
-          isEdit={isEdit}
           value={userPassword.currentPassword}
           place="Current Password"
           handleInputChange={handleInputChange}
         />
         <div className="verifyButtonSection">
-          <SmallButton name="verify" handleClick={handleVerify} />
+          <Button
+            name="verify"
+            handleClick={handleVerify}
+            buttonType="smallButton"
+          />
         </div>
       </div>
-      <InputFormItem
+      <InputItem
         label="Confirm new Password"
         name="newPassword"
         type="password"
-        isMust={false}
         value={userPassword.newPassword}
         place="new Password"
-        isEdit={isEdit}
         handleInputChange={handleInputChange}
       />
     </div>

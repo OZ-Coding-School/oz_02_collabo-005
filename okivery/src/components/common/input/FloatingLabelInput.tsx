@@ -5,21 +5,19 @@ interface LoginInputProps {
   inputType: string;
   placeHolder: string;
   label: string;
-  onInputChange: (value: string) => void;
+  name: string;
+  value: string;
+  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const FloatingLabelInput: React.FC<LoginInputProps> = ({
   inputType,
   placeHolder,
   label,
-  onInputChange,
+  name,
+  value,
+  handleInputChange,
 }) => {
-  // 입력값 변경 시 호출되는 콜백 함수
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    onInputChange(value);
-  };
-
   return (
     <>
       <div className="formGroup">
@@ -27,6 +25,9 @@ const FloatingLabelInput: React.FC<LoginInputProps> = ({
           type={inputType}
           placeholder={placeHolder}
           onChange={handleInputChange}
+          name={name}
+          id={name}
+          value={value}
         />
         <label className="formLabel">{label}</label>
       </div>

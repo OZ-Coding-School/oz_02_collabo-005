@@ -33,11 +33,6 @@
   margin: 0;
 }
 
-.sorryText {
-  display: flex;
-  justify-content: left;
-}
-
 .errorMessage {
   text-decoration: underline;
 }

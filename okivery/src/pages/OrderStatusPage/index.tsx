@@ -60,9 +60,7 @@ const OrderStatusPage: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    <div className="sorryText">
-                      <h1>"Sorry,</h1>
-                    </div>
+                    <h1>"Sorry,</h1>
                     <h1>
                       we encountered an issue
                       <br /> processing your order."

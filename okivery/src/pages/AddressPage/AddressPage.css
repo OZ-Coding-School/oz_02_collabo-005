@@ -12,7 +12,7 @@
 
 .selectMapSection {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: grid;
   gap: 20px;
 }
@@ -49,6 +49,10 @@
   padding-left: 30px;
 }
 
+.addressErrorMessage {
+  color: red;
+}
+
 .selectAddressTextInput img {
   position: absolute;
   top: 50%;
@@ -64,7 +68,7 @@
 }
 
 .detailAddress {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .mapImageSection img {
@@ -72,9 +76,12 @@
   height: 350px;
 }
 
+.saveAddressButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .saveAddressButton button {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translate(-50%, -20px);
+  width: 90%;
 }

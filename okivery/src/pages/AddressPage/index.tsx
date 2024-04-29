@@ -15,6 +15,9 @@ type AddressType = {
 
 const AddressPage: React.FC = () => {
   const navigate = useNavigate();
+  const errorMessage: string =
+    "(*)Sorry, for now our service is only available in the SED area but we are working on it to expand very soon!";
+  const [isAvailableService, setIsAvailableService] = useState<boolean>(true);
   const initialAddressData: AddressType = {
     mainAddress: "",
     subAddress: "",
@@ -66,14 +69,22 @@ const AddressPage: React.FC = () => {
             </div>
           </div>
           <div className="detailAddress">
-            <InputItem
-              label="Delivery detail"
-              name="subAddress"
-              type="text"
-              value={addressData.subAddress}
-              place="Please enter the details address."
-              handleInputChange={handleInputChange}
-            />
+            {isAvailableService ? (
+              <>
+                <InputItem
+                  label="Delivery detail"
+                  name="subAddress"
+                  type="text"
+                  value={addressData.subAddress}
+                  place="Please enter the details address."
+                  handleInputChange={handleInputChange}
+                />
+              </>
+            ) : (
+              <>
+                <span className="addressErrorMessage">{errorMessage}</span>
+              </>
+            )}
           </div>
           <div className="mapImageSection">
             <div>Serviceable area</div>

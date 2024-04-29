@@ -6,8 +6,8 @@ interface ModalProps {
   proceedQuestionText: string;
   leftButtonText: string;
   rightButtonText: string;
-  handleGoForeignCard?: () => void;
-  handleGoKoreanCard?: () => void;
+  handleRightClick?: () => void;
+  handleLeftClick?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -15,8 +15,8 @@ const Modal: React.FC<ModalProps> = ({
   proceedQuestionText,
   leftButtonText,
   rightButtonText,
-  handleGoKoreanCard,
-  handleGoForeignCard,
+  handleLeftClick,
+  handleRightClick,
 }) => {
   return (
     <div className="modalOverlay" onClick={onClose}>
@@ -31,10 +31,10 @@ const Modal: React.FC<ModalProps> = ({
         </div>
 
         <div className="twoButtonSection">
-          <button className="koreanCardButton" onClick={handleGoKoreanCard}>
+          <button className="leftButton" onClick={handleLeftClick}>
             {leftButtonText}
           </button>
-          <button className="foreignCardButton" onClick={handleGoForeignCard}>
+          <button className="rightButton" onClick={handleRightClick}>
             {rightButtonText}
           </button>
         </div>

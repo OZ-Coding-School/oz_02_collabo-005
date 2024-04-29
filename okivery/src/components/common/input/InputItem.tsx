@@ -1,6 +1,6 @@
 import "./InputItem.css";
 
-interface InputFormIemProps {
+interface InputItemProps {
   label: string;
   name: string;
   type: string;
@@ -10,7 +10,7 @@ interface InputFormIemProps {
   handleInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const InputFormItem: React.FC<InputFormIemProps> = ({
+const InputItem: React.FC<InputItemProps> = ({
   label,
   name,
   type,
@@ -37,4 +37,4 @@ const InputFormItem: React.FC<InputFormIemProps> = ({
   );
 };
 
-export default InputFormItem;
+export default InputItem;

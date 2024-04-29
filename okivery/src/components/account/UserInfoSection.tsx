@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChangePasswordSection from "./ChangePasswordSection";
-import InputFormItem from "../common/input/InputItem";
+import InputItem from "../common/input/InputItem";
 import BirthdayInput from "../common/input/BirthdayInput";
 
 interface isEditProps {
@@ -10,14 +10,14 @@ interface isEditProps {
 type UserDataType = {
   name: string;
   email: string;
-  phone: number;
+  phone: string;
 };
 
 const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
   const initialUserData = {
     name: "",
     email: "",
-    phone: 0,
+    phone: "",
   };
   const [userData, setUserData] = useState<UserDataType>(initialUserData);
 
@@ -36,38 +36,32 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
   return (
     <div className="signUpContainer">
       <form>
-        <InputFormItem
+        <InputItem
           label="Name"
           name="name"
           type="text"
-          isMust={isEdit ? true : false}
           value={userData.name}
           place="name"
-          isEdit={isEdit}
           handleInputChange={handleInputChange}
         />
-        <InputFormItem
+        <InputItem
           label="E-Mail"
           name="email"
           type="email"
-          isMust={isEdit ? true : false}
           value={userData.email}
           place="E-Mail"
-          isEdit={isEdit}
           handleInputChange={handleInputChange}
         />
-        <InputFormItem
+        <InputItem
           label="Phone Number"
           name="phone"
           type="number"
-          isMust={isEdit ? true : false}
           value={userData.phone}
           place="Phone Number"
-          isEdit={isEdit}
           handleInputChange={handleInputChange}
         />
-        <BirthdayInput isEdit={isEdit} />
-        {!isEdit ? null : <ChangePasswordSection isEdit={isEdit} />}
+        <BirthdayInput />
+        {!isEdit ? null : <ChangePasswordSection />}
       </form>
     </div>
   );

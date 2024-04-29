@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import Header from "@components/common/header/Header";
 import "./AccountPage.css";
-import SmallButton from "@components/common/button/SmallButton";
-import UserInfoSection from "@components/account/UserInfoSection";
-import CardManagementSection from "@components/common/addcard/CardManagementSection";
+import UserInfoSection from "../../components/account/UserInfoSection";
+import CardManagementSection from "../../components/common/addcard/CardManagementSection";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/common/button/Button";
+import ProceedModal from "../../components/common/modal/ProceedModal";
 
 const AccountPage: React.FC = () => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
 
   // edit이나 save버튼을 눌렀을때 호출되는 함수
   const handleEditChange = (): void => {
@@ -27,33 +30,74 @@ const AccountPage: React.FC = () => {
     navigate("/");
   };
 
+  const handleLeftClick = (): void => {
+    isDeleteModalOpen
+      ? setIsDeleteModalOpen(false)
+      : setIsLogoutModalOpen(false);
+  };
+
+  const openDeleteModal = (): void => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = (): void => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const openLogoutModal = (): void => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const closeLogoutModal = (): void => {
+    setIsLogoutModalOpen(false);
+  };
+
   return (
     <>
-      <Header
-        hasBackIcon={true}
-        to="/home"
-        title="Account"
-        hasCartIcon={false}
-      />
+      <Header hasBackIcon={true} title="Account" hasCartIcon={false} />
       <div className="accountMainContainer">
-        <div className="accountSubContainer">
-          <div className="editButtonSection">
-            <SmallButton
-              name={isEdit ? "Save" : "Edit"}
-              handleClick={handleEditChange}
+        <div className="editButtonSection">
+          <Button
+            name={isEdit ? "Save" : "Edit"}
+            handleClick={handleEditChange}
+            buttonType="smallButton"
+          />
+        </div>
+        <UserInfoSection isEdit={isEdit} />
+        <div className="cardManagementSection">
+          <CardManagementSection />
+        </div>
+        <div className="signOutSection">
+          <Button
+            name="Log Out"
+            handleClick={openLogoutModal}
+            buttonType="smallButton"
+          />
+          {isLogoutModalOpen && (
+            <ProceedModal
+              onClose={closeLogoutModal}
+              proceedQuestionText="Are you sure you want to proceed?"
+              leftButtonText="No, cancel"
+              rightButtonText="Yes, confirm"
+              handleLeftClick={handleLeftClick}
+              handleRightClick={handleLogOut}
             />
-          </div>
-          <UserInfoSection isEdit={isEdit} />
-          <div className="cardManagementSection">
-            <CardManagementSection />
-          </div>
-          <div className="signOutSection">
-            <SmallButton name="Log Out" handleClick={handleLogOut} />
-            <SmallButton
-              name="Delete Account"
-              handleClick={handleDeleteAccount}
+          )}
+          <Button
+            name="Delete Account"
+            handleClick={openDeleteModal}
+            buttonType="smallButton"
+          />
+          {isDeleteModalOpen && (
+            <ProceedModal
+              onClose={closeDeleteModal}
+              proceedQuestionText="Are you sure you want to proceed?"
+              leftButtonText="No, cancel"
+              rightButtonText="Yes, confirm"
+              handleLeftClick={handleLeftClick}
+              handleRightClick={handleDeleteAccount}
             />
-          </div>
+          )}
         </div>
       </div>
     </>

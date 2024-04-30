@@ -1,92 +1,69 @@
-import { useEffect, useState } from "react";
-import Button from "@components/common/button/Button";
-import Header from "@components/common/header/Header";
-import InputItem from "@components/common/input/InputItem";
-import BirthdayInputForm from "@components/common/input/BirthdayInput";
-import "./SignupPage.css";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import Button from '@components/common/button/Button';
+import Header from '@components/common/header/Header';
+import InputItem from '@components/common/input/InputItem';
+import BirthdayInputForm from '@components/common/input/BirthdayInput';
+import './SignupPage.css';
+import { useNavigate } from 'react-router-dom';
+
+export type Input = {
+  value: string;
+  error: string;
+};
 
 type userDataType = {
-  name: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-  phone: string;
+  email: Input;
+  password: Input;
+  repeatPassword: Input;
+  birthDay: Input;
 };
 
 const SignupPage: React.FC = () => {
-  const terms = "I agree that I have fully read Okivery’s Terms of Use and ";
+  const terms = 'I agree that I have fully read Okivery’s Terms of Use and ';
   const userInitialData: userDataType = {
-    name: "",
-    email: "",
-    password: "",
-    repeatPassword: "",
-    phone: "",
+    email: { value: '', error: '' },
+    password: { value: '', error: '' },
+    repeatPassword: { value: '', error: '' },
+    birthDay: { value: '', error: '' },
   };
   const [userData, setUserData] = useState(userInitialData);
-  const [isFormValid, setIsFormValid] = useState(false);
   const [isTermChecked, setIsTermChecked] = useState(false);
   const navigate = useNavigate();
 
-  // input에 입력된 값들을 userData에 저장하는 함수
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    event.preventDefault();
-
-    const inputName = event.target.name;
-    const inputData = event.target.value;
-    setUserData({
-      ...userData,
-      [inputName]: inputData,
-    });
-  };
-
-  // trem의 토글 상태를 체크하는 함수
-  const handleTermCheck = () => {
-    setIsTermChecked((prev) => !prev);
-  };
-
   const handleButtonClick = () => {
-    navigate("/login");
+    navigate('/login');
+  };
+  const handleChangeEmail = (_, value: string) => {
+    const error = !isValidateEmail(value) ? '에러' : '';
+
+    setUserData((prev) => ({
+      ...prev,
+      email: { value, error },
+    }));
   };
 
-  // const validateEmail = (email: string): boolean => {
-  //   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  //   return !regex.test(email);
-  // };
+  const handleChangePassword = (_, value: string) => {
+    const error = !isValidatePassword(value) ? '에러' : '';
 
-  // const validatePassword = (password: string): boolean => {
-  //   const regex =
-  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  //   return !regex.test(password);
-  // };
+    setUserData((prev) => ({
+      ...prev,
+      password: { value, error },
+    }));
+  };
+  const handleChangePasswordConfirm = (_, value: string) => {
+    const error = !isValidatePasswordMatch(value, userData.password.value)
+      ? '에러'
+      : '';
 
-  // const validatePasswordMatch = (
-  //   password: string,
-  //   confirmPassword: string
-  // ): boolean => {
-  //   return password === confirmPassword;
-  // };
+    setUserData((prev) => ({
+      ...prev,
+      repeatPassword: { value, error },
+    }));
+  };
 
-  // const validatePhoneNumber = (phoneNumber: string): boolean => {
-  //   const hasHyphen = phoneNumber.includes("-");
-  //   return (
-  //     !hasHyphen && (phoneNumber.length === 10 || phoneNumber.length === 11)
-  //   );
-  // };
-
-  useEffect(() => {
-    // 모든 입력란에 값이 있을 때만 isFormValid 상태를 true로 업데이트
-    const isAllFieldsFilled =
-      userData.name !== "" &&
-      userData.email !== "" &&
-      userData.password !== "" &&
-      userData.phone !== "" &&
-      isTermChecked;
-
-    setIsFormValid(isAllFieldsFilled);
-  }, [userData, isTermChecked]);
+  const buttonDisabled = !Object.values(userData).every(
+    (d) => d.value.length > 0 && d.error.length === 0
+  );
 
   return (
     <>
@@ -95,42 +72,38 @@ const SignupPage: React.FC = () => {
         <h1 className="signupTitle">Sign Up</h1>
         <form>
           <InputItem
-            label="Name"
-            name="name"
-            type="text"
-            place="Please enter your name"
-            handleInputChange={handleInputChange}
-          />
-          <InputItem
             label="E-Mail"
             name="email"
             type="email"
             place="ex) abcd1234@gmail.com"
-            handleInputChange={handleInputChange}
+            value={userData.email.value}
+            className={userData.email.error ? 'error' : ''}
+            handleInputChange={handleChangeEmail}
           />
           <InputItem
             label="Password"
             name="password"
             type="password"
             place="Please enter a password of at least 8 characters"
-            handleInputChange={handleInputChange}
+            handleInputChange={handleChangePassword}
+            value={userData.password.value}
+            className={userData.password.error ? 'error' : ''}
           />
           <InputItem
             label="Repeat Password"
             name="repeatPassword"
             type="password"
             place="Please re-enter your password"
-            handleInputChange={handleInputChange}
+            handleInputChange={handleChangePasswordConfirm}
+            value={userData.repeatPassword.value}
+            className={userData.repeatPassword.error ? 'error' : ''}
           />
           <div className="passwordNotMatch hide">Your password dismatches</div>
-          <InputItem
-            label="Phone Number"
-            name="phone"
-            type="phone"
-            place="Please enter except for hyphen (-)"
-            handleInputChange={handleInputChange}
+          <BirthdayInputForm
+            handleBirthChange={(birthDay) =>
+              setUserData((prev) => ({ ...prev, birthDay }))
+            }
           />
-          <BirthdayInputForm />
           <div className="termContainer">
             <label>
               Terms <span>*</span>
@@ -142,7 +115,6 @@ const SignupPage: React.FC = () => {
                 value="agree"
                 id="term"
                 checked={isTermChecked}
-                onClick={handleTermCheck}
               />
               <div>
                 {terms}
@@ -154,8 +126,8 @@ const SignupPage: React.FC = () => {
           </div>
           <div className="signupBtn">
             <Button
+              disabled={buttonDisabled}
               name="Sign up"
-              backgroundColor={isFormValid ? "#FF6347" : "#767676"}
               buttonType="bigButton"
               handleClick={handleButtonClick}
             />
@@ -167,3 +139,28 @@ const SignupPage: React.FC = () => {
 };
 
 export default SignupPage;
+
+const isValidateEmail = (email: string): boolean => {
+  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return regex.test(email);
+};
+
+const isValidatePassword = (password: string): boolean => {
+  const regex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return regex.test(password);
+};
+
+const isValidatePasswordMatch = (
+  password: string,
+  confirmPassword: string
+): boolean => {
+  return password === confirmPassword;
+};
+
+// const validatePhoneNumber = (phoneNumber: string): boolean => {
+//   const hasHyphen = phoneNumber.includes("-");
+//   return (
+//     !hasHyphen && (phoneNumber.length === 10 || phoneNumber.length === 11)
+//   );
+// };

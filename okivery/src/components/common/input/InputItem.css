@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
 }
+.inputContainer.error > input {
+  border-color: red;
+}
 .inputContainer > label {
   margin-bottom: 10px;
 }

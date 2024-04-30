@@ -1,0 +1,9 @@
+.addressDetailsContainer {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+}
+
+.addressDetailsTitle {
+  font-weight: 600;
+}

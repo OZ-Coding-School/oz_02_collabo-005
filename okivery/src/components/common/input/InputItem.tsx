@@ -4,7 +4,7 @@ interface InputItemProps {
   label: string;
   name: string;
   type: string;
-  place: string;
+  place?: string;
   value?: string;
   readOnly?: boolean;
   isNoStar?: boolean;

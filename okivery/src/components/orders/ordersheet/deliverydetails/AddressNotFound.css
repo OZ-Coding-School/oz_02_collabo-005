@@ -1,0 +1,12 @@
+.addressNotFoundContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 70px;
+  padding: 10px;
+  background-color: rgba(126, 126, 126, 0.434);
+}
+
+.notFountText2 {
+  color: red;
+}

@@ -1,0 +1,36 @@
+.orderSheetContainer {
+  display: grid;
+  gap: 20px;
+  padding: 10px;
+}
+
+.orderSection {
+  display: grid;
+  margin-top: 10px;
+  gap: 15px;
+}
+
+.addmoreBtn {
+  font-size: 1.2rem;
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+}
+
+.deliveryDetailsTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.OSsection {
+  display: grid;
+  gap: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.329);
+}
+
+.ordersheetSubmitBtn {
+  display: flex;
+  justify-content: center;
+}

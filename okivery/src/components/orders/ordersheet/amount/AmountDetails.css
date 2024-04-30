@@ -1,0 +1,28 @@
+.amountDetailsContainer {
+  display: grid;
+  gap: 10px;
+}
+
+.amountText,
+.amountDetailsItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.amountDetailsItemSection,
+.amountDetailsSection {
+  display: grid;
+  gap: 5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(100, 100, 100, 0.329);
+}
+
+.totalText {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.deliveryNotification {
+  font-size: 0.9rem;
+  color: rgb(133, 133, 133);
+}

@@ -1,0 +1,78 @@
+.mapModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20000;
+}
+
+.mapModalContent {
+  background-color: white;
+  padding: 10px;
+  border-radius: none;
+  position: relative;
+  width: 400px;
+  height: 600px;
+}
+
+.closeModalSection {
+  position: absolute;
+  top: 2.5px;
+  right: 6px;
+  cursor: pointer;
+}
+
+button.closeModalButton {
+  background: none;
+  border: none;
+  font-size: 20px;
+  height: 10px;
+}
+
+.googleMap {
+  width: 100%;
+  height: 510px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 30px;
+}
+
+.loadingSpinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  row-gap: 20px;
+  font-size: 25px;
+}
+
+button.selectAddressButton {
+  background-color: #ff6347;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+div#map {
+  width: 100%;
+  height: 100%;
+}
+
+button.gm-control-active.gm-fullscreen-control img {
+  position: absolute;
+  left: 78%;
+  top: 30%;
+}
+
+div.gmnoprint img {
+  position: absolute;
+  top: 30%;
+  left: 78%;
+}

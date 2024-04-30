@@ -16,6 +16,7 @@ type AddressType = {
 
 const AddressPage: React.FC = () => {
   const navigate = useNavigate();
+
   const errorMessage: string =
     "(*)Sorry, for now our service is only available in the SED area but we are working on it to expand very soon!";
   const [isAvailableService, setIsAvailableService] = useState<boolean>(true);
@@ -64,13 +65,7 @@ const AddressPage: React.FC = () => {
               <img src={selectMapIcon} />
               Find your location on the map
             </button>
-            {isModalOpen && (
-              <GoogleMapModal
-                onClose={closeMapModal}
-                value={addressData.mainAddress}
-                handleInputChange={handleInputChange}
-              />
-            )}
+            {isModalOpen && <GoogleMapModal onClose={closeMapModal} />}
             <div className="selectAddressTextInput">
               <div className="mainAddressInput">
                 <img src={mapSearchIcon} />

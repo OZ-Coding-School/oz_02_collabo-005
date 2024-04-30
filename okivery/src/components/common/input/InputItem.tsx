@@ -1,4 +1,5 @@
-import "./InputItem.css";
+import { forwardRef } from 'react';
+import './InputItem.css';
 
 interface InputItemProps {
   label: string;
@@ -11,33 +12,35 @@ interface InputItemProps {
   handleInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const InputItem: React.FC<InputItemProps> = ({
-  label,
-  name,
-  type,
-  value,
-  place,
-  readOnly,
-  isNoStar,
-  handleInputChange,
-}) => {
-  return (
-    <div className="inputContainer">
-      <label htmlFor={name}>
-        {label}{" "}
-        <span className={!readOnly && !isNoStar ? "" : "hideSpan"}>*</span>
-      </label>
-      <input
-        type={type}
-        name={name}
-        id={name}
-        value={value}
-        placeholder={place}
-        onChange={handleInputChange}
-        readOnly={readOnly}
-      ></input>
-    </div>
-  );
-};
+const InputItem: React.FC<
+  InputItemProps & React.InputHTMLAttributes<HTMLInputElement>
+> = forwardRef(
+  (
+    { label, type, place, readOnly, isNoStar, handleInputChange, ...props },
+    ref
+  ) => {
+    return (
+      <div className="inputContainer">
+        <label htmlFor={props.name}>
+          {label}{' '}
+          <span className={!readOnly && !isNoStar ? '' : 'hideSpan'}>*</span>
+        </label>
+        <input
+          ref={ref}
+          type={type}
+          value={props.value}
+          id={props.name}
+          placeholder={place}
+          onChange={(e) => {
+            handleInputChange?.(e);
+            props.onChange?.(e);
+          }}
+          readOnly={readOnly}
+          {...props}
+        ></input>
+      </div>
+    );
+  }
+);
 
 export default InputItem;

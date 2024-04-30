@@ -6,6 +6,8 @@ import BirthdayInputForm from '@components/common/input/BirthdayInput';
 import './SignupPage.css';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type userDataType = {
   name: string;
@@ -15,6 +17,19 @@ type userDataType = {
   phone: string;
 };
 
+const schema = z
+  .object({
+    email: z.string(),
+    name: z.string(),
+    password: z.string(),
+    phone: z.string(),
+    repeatPassword: z.string(),
+  })
+  .refine(({ password, repeatPassword }) => password === repeatPassword, {
+    message: '비밀번호 불일치',
+    params: { ㅁㄴㅇ: 'ㅁㄴㅇ' },
+    path: ['repeat-password'],
+  });
 const SignupPage: React.FC = () => {
   const terms = 'I agree that I have fully read Okivery’s Terms of Use and ';
   const userInitialData: userDataType = {
@@ -29,7 +44,9 @@ const SignupPage: React.FC = () => {
   const [isTermChecked, setIsTermChecked] = useState(false);
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState } = useForm<userDataType>();
+  const { register, handleSubmit, formState } = useForm<userDataType>({
+    resolver: zodResolver(schema),
+  });
 
   // input에 입력된 값들을 userData에 저장하는 함수
   const handleInputChange = (
@@ -85,12 +102,7 @@ const SignupPage: React.FC = () => {
             label="Name"
             type="text"
             place="Please enter your name"
-            {...register('name', {
-              required: true,
-              validate: (d) => {
-                return isValidateEmail(d) ? '' : '이메일이 유효하지 않습니다.';
-              },
-            })}
+            {...register('name')}
           />
           {formState.errors['name']?.message}
           <InputItem
@@ -101,25 +113,22 @@ const SignupPage: React.FC = () => {
           />
           <InputItem
             label="Password"
-            name="password"
             type="password"
             place="Please enter a password of at least 8 characters"
-            handleInputChange={handleInputChange}
+            {...register('password')}
           />
           <InputItem
             label="Repeat Password"
-            name="repeatPassword"
             type="password"
             place="Please re-enter your password"
-            handleInputChange={handleInputChange}
+            {...register('repeatPassword')}
           />
           <div className="passwordNotMatch hide">Your password dismatches</div>
           <InputItem
             label="Phone Number"
-            name="phone"
             type="phone"
             place="Please enter except for hyphen (-)"
-            handleInputChange={handleInputChange}
+            {...register('phone')}
           />
           <BirthdayInputForm />
           <div className="termContainer">

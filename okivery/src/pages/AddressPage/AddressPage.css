@@ -80,7 +80,7 @@
 .saveAddressButton {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px 0 15px 0;
 }
 
 .saveAddressButton button {

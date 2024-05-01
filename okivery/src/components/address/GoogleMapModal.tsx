@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import "./GoogleMapModal.css";
 import { Loader } from "@googlemaps/js-api-loader";
 import { PacmanLoader } from "react-spinners";
+import isWithinOneKm from "./CalculateDistance";
+import centerLocation from "../../constants/location";
 
 interface MapModalProps {
   onClose: () => void;
   onSelectAddress: (selectedAddress: string) => void;
+  setIsAvailableService: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 declare global {
@@ -18,6 +21,7 @@ declare global {
 const GoogleMapModal: React.FC<MapModalProps> = ({
   onClose,
   onSelectAddress,
+  setIsAvailableService,
 }) => {
   const apiKey = import.meta.env.VITE_APP_GOOGLE_MAP_API_KEY;
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -59,6 +63,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
             map,
             gmpDraggable: true,
           });
+
           // 사용자 현재 위치 주소정보 주소창으로 표시
           geocoder.geocode(
             { location: userLatLng, language: "en" },
@@ -69,6 +74,14 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
                   setUserAddressData(englishAddress);
                   infoWindow.setContent(englishAddress);
                   infoWindow.open(map, marker);
+                  setIsAvailableService(
+                    isWithinOneKm(
+                      centerLocation.lat,
+                      centerLocation.lng,
+                      userLatLng.lat,
+                      userLatLng.lng
+                    )
+                  );
                 } else {
                   console.log("No results found");
                 }
@@ -83,6 +96,14 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
           marker.addListener("dragend", () => {
             const newPosition = marker.position;
             if (newPosition) {
+              setIsAvailableService(
+                isWithinOneKm(
+                  centerLocation.lat,
+                  centerLocation.lng,
+                  Number(newPosition.lat),
+                  Number(newPosition.lng)
+                )
+              );
               geocoder.geocode(
                 { location: newPosition, language: "en" },
                 (results, status) => {
@@ -106,7 +127,8 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
         (error) => {
           console.error("Error getting user's location: ", error);
           setIsLoading(false);
-        }
+        },
+        {}
       );
     });
   }, []);

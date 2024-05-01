@@ -16,14 +16,5 @@ img.googleLogoImage {
   border-radius: 50%;
   width: 25px;
   height: 25px;
-}
-
-img.facebookLogoImage {
-  position: absolute;
-  transform: translateX(-132px);
-}
-
-img.googleLogoImage {
-  position: absolute;
-  transform: translateX(-118px);
+  margin-right: 10px;
 }

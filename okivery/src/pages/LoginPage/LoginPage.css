@@ -18,6 +18,10 @@ form.loginInputForm {
   margin-top: 60px;
 }
 
+.socialLoginButtonSection {
+  margin-bottom: 15px;
+}
+
 .googleButton button {
   color: black;
   height: 50px;

@@ -7,6 +7,7 @@ import MenuCategory from "@components/restaurant/MenuCategory";
 import "./RestaurantPage.css";
 import DropDownButton from "@components/restaurant/DropDownButton";
 import MenuList from "@components/restaurant/MenuList";
+import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
 
 const RestaurantPage: React.FC = () => {
   const categories = [
@@ -43,7 +44,9 @@ const RestaurantPage: React.FC = () => {
               alt="레스토랑 배경 이미지"
               className="restaurantBackgroundImg"
             />
-            <img src={LogoImg} className="restaurantLogoImg" />
+            <div className="restaurantLogoImgContainer">
+              <RestaurantLogo src={LogoImg} />
+            </div>
           </div>
           <div className="restaurantProfile">
             <div className="restaurantDetails">

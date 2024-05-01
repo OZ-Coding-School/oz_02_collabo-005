@@ -1,0 +1,33 @@
+.myOrderItemContainer {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(100, 100, 100, 0.708);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.myOrderItemTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.myOrderItemMainContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.myOrderItemLogoImg {
+  width: 100px;
+  height: 100px;
+}
+
+.myOrderInfoSection {
+  display: grid;
+  gap: 5px;
+}
+
+.MIresName {
+  font-size: 1.2rem;
+  font-weight: 600;
+}

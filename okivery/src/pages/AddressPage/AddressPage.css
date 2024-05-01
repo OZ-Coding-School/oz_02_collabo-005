@@ -26,6 +26,7 @@
   border: 1px solid #ccc;
   height: 42px;
   position: relative;
+  cursor: pointer;
 }
 
 .selectMapSection img {
@@ -56,7 +57,7 @@
 .selectAddressTextInput img {
   position: absolute;
   top: 50%;
-  transform: translateY(-78%);
+  transform: translateY(-53%);
   left: 10px;
 }
 

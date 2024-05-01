@@ -22,11 +22,13 @@ import PaymentPage from "./pages/PaymentPage";
 import ErrorPage from "./pages/ErrorPage";
 import KoreanCardPage from "./pages/KoreanCardPage";
 import ForeignCardPage from "./pages/ForeignCardPage";
+import ScrollToTop from "@components/scrolltotop/ScrollToTop";
 
 const App: React.FC = () => {
   const isLogined: boolean = false;
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route

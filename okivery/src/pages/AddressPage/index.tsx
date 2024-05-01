@@ -52,6 +52,15 @@ const AddressPage: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  // 모달창의 select버튼을 누르면 mainAddress Input에 주소 표시
+  const handleMapModalSelect = (selectedAddress: string): void => {
+    setAddressData({
+      ...addressData,
+      mainAddress: selectedAddress,
+    });
+    closeMapModal();
+  };
+
   return (
     <>
       <Header hasBackIcon={true} title="" hasCartIcon={false} />
@@ -65,7 +74,12 @@ const AddressPage: React.FC = () => {
               <img src={selectMapIcon} />
               Find your location on the map
             </button>
-            {isModalOpen && <GoogleMapModal onClose={closeMapModal} />}
+            {isModalOpen && (
+              <GoogleMapModal
+                onSelectAddress={handleMapModalSelect}
+                onClose={closeMapModal}
+              />
+            )}
             <div className="selectAddressTextInput">
               <div className="mainAddressInput">
                 <img src={mapSearchIcon} />

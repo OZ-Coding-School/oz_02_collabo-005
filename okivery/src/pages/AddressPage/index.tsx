@@ -41,7 +41,7 @@ const AddressPage: React.FC = () => {
   };
 
   const handleSave = (): void => {
-    navigate(-1);
+    isAvailableService && navigate(-1);
   };
 
   const openMapModal = (): void => {
@@ -78,6 +78,7 @@ const AddressPage: React.FC = () => {
               <GoogleMapModal
                 onSelectAddress={handleMapModalSelect}
                 onClose={closeMapModal}
+                setIsAvailableService={setIsAvailableService}
               />
             )}
             <div className="selectAddressTextInput">
@@ -120,6 +121,7 @@ const AddressPage: React.FC = () => {
           <div className="saveAddressButton">
             <Button
               name="Save your address"
+              backgroundColor={isAvailableService ? "#FF6347" : "#767676"}
               handleClick={handleSave}
               buttonType="bigButton"
             />

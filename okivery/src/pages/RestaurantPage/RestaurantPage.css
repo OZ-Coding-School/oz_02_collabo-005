@@ -14,14 +14,12 @@
   position: relative;
 }
 
-.restaurantLogoImg {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+.restaurantLogoImgContainer {
   position: absolute;
   left: 20px;
   bottom: -20px;
-  box-shadow: 0px 3px 5px 0px #717171;
+  width: 80px;
+  height: 80px;
 }
 
 .restaurantProfile,

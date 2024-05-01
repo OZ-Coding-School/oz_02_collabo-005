@@ -1,0 +1,4 @@
+.myOrderListContainer {
+  display: grid;
+  gap: 15px;
+}

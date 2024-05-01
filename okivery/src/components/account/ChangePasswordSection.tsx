@@ -30,7 +30,8 @@ const ChangePasswordSection: React.FC = () => {
   };
 
   // 사용자 입력 비밀번호화 현재 디비에 저장되어 있는 비밀번호가 같은지 검사 후 새로운 비밀번호 입력할 수 있도록 하는 함수
-  const handleVerify = (): void => {
+  const handleVerify = (e: React.MouseEvent<Element, MouseEvent>): void => {
+    e.preventDefault();
     const isPasswordEqual: boolean =
       userPassword.currentPassword === "12345678";
     if (isPasswordEqual) {

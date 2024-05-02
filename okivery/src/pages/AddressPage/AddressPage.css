@@ -42,8 +42,13 @@
   position: relative;
 }
 
+.mainAddressInput img {
+  position: absolute;
+  transform: translate(11px, 17px);
+}
+
 .mainAddressInput input {
-  height: 5vh;
+  height: 45px;
   border: 1px solid #c4c4c4;
   border-radius: 6px;
   margin-bottom: 10px;
@@ -52,13 +57,6 @@
 
 .addressErrorMessage {
   color: red;
-}
-
-.selectAddressTextInput img {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-53%);
-  left: 10px;
 }
 
 .mapImageSection {

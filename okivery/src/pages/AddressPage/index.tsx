@@ -8,7 +8,6 @@ import InputItem from "@components/common/input/InputItem";
 import ServiceableMapImage from "../../assets/images/mapRadius.png";
 import Button from "@components/common/button/Button";
 import GoogleMapModal from "@components/address/GoogleMapModal";
-import { Loader } from "@googlemaps/js-api-loader";
 
 type AddressType = {
   mainAddress: string;
@@ -16,53 +15,18 @@ type AddressType = {
 };
 
 const AddressPage: React.FC = () => {
-  const apiKey = import.meta.env.VITE_APP_GOOGLE_MAP_API_KEY;
   const navigate = useNavigate();
 
   const errorMessage: string =
     "(*)Sorry, for now our service is only available in the SED area but we are working on it to expand very soon!";
   const [isAvailableService, setIsAvailableService] = useState<boolean>(false);
+  const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
 
   const [addressData, setAddressData] = useState<AddressType>({
     mainAddress: "",
     subAddress: "",
   });
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log(addressData);
-    const loadGoogleMaps = async () => {
-      const loader = new Loader({
-        apiKey: apiKey,
-        language: "en",
-        libraries: ["places"],
-      });
-      await loader.load();
-
-      const mainAddressInput = document.getElementById(
-        "mainAddress"
-      ) as HTMLInputElement;
-      const autocomplete = new google.maps.places.Autocomplete(
-        mainAddressInput,
-        {
-          componentRestrictions: { country: "ko" },
-          fields: ["formatted_address", "geometry", "name"],
-          strictBounds: true,
-          types: ["geocode"],
-        }
-      );
-      autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
-        console.log(place);
-        console.log("여기 왜 안되냐");
-        if (!place.geometry) {
-          console.log("You selected: " + place.formatted_address);
-        }
-      });
-    };
-
-    loadGoogleMaps();
-  }, [addressData, apiKey]);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -74,9 +38,15 @@ const AddressPage: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    if (addressData.mainAddress && addressData.subAddress) {
+      setIsAllFilled(true);
+    }
+  }, [addressData.mainAddress, addressData.subAddress]);
+
   const handleSave = (): void => {
     // db로 post
-    isAvailableService && navigate(-1);
+    isAllFilled && isAvailableService && navigate(-1);
   };
 
   const openMapModal = (): void => {
@@ -117,17 +87,15 @@ const AddressPage: React.FC = () => {
             )}
             <div className="selectAddressTextInput">
               <div className="mainAddressInput">
-                <div className="mainAddressInput">
-                  <img src={mapSearchIcon} alt="Map search" />
-                  <input
-                    id="mainAddress"
-                    name="mainAddress"
-                    type="text"
-                    value={addressData.mainAddress}
-                    onChange={handleInputChange}
-                    placeholder="Type in your address"
-                  />
-                </div>
+                <input
+                  id="mainAddress"
+                  name="mainAddress"
+                  type="text"
+                  readOnly={true}
+                  value={addressData.mainAddress}
+                  onChange={handleInputChange}
+                  placeholder="Press the button above"
+                />
               </div>
             </div>
           </div>
@@ -157,9 +125,7 @@ const AddressPage: React.FC = () => {
             <Button
               name="Save your address"
               backgroundColor={
-                addressData.mainAddress === "" || !isAvailableService
-                  ? "#767676"
-                  : "#FF6347"
+                isAllFilled && isAvailableService ? "#FF6347" : "#767676"
               }
               handleClick={handleSave}
               buttonType="bigButton"

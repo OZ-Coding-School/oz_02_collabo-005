@@ -13,7 +13,6 @@ import SignUpPage from "./pages/SignupPage";
 import RestaurantPage from "./pages/RestaurantPage";
 import AddressPage from "./pages/AddressPage";
 import AccountPage from "./pages/AccountPage";
-import MapPage from "./pages/MapPage";
 import MenuPage from "./pages/MenuPage";
 import OrderSheetPage from "./pages/OrderSheetPage";
 import OrderStatusPage from "./pages/OrderStatusPage";
@@ -44,7 +43,6 @@ const App: React.FC = () => {
           <Route path="/splash" element={<SplashPage />} />
           <Route path="/address" element={<AddressPage />} />
           <Route path="/account" element={<AccountPage />} />
-          <Route path="/address/select-map" element={<MapPage />} />
           <Route path="/restaurant/menu" element={<MenuPage />} />
           <Route path="/order/sheet" element={<OrderSheetPage />} />
           <Route path="/orders" element={<OrdersPage />} />

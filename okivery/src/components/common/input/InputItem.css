@@ -1,9 +1,10 @@
 .inputContainer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: 10px;
 }
-.inputContainer > label {
-  margin-bottom: 10px;
+
+.inputContainer.error > input {
+  border-color: red;
 }
 
 .inputContainer > label > span {
@@ -13,12 +14,16 @@
 .hideSpan {
   display: none;
 }
+
 .inputContainer input {
   height: 5vh;
   border: 1px solid #c4c4c4;
   border-radius: 6px;
-  margin-bottom: 10px;
   padding-left: 10px;
+}
+
+.inputErrorMessage {
+  color: red;
 }
 
 input[readonly]:focus {

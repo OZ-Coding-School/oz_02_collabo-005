@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddressPage.css";
 import Header from "@components/common/header/Header";
 import selectMapIcon from "../../assets/icons/selectMapIcon.png";
 import { useNavigate } from "react-router-dom";
-import mapSearchIcon from "../../assets/icons/searchIcon.png";
 import InputItem from "@components/common/input/InputItem";
 import ServiceableMapImage from "../../assets/images/mapRadius.png";
 import Button from "@components/common/button/Button";
@@ -19,45 +18,49 @@ const AddressPage: React.FC = () => {
 
   const errorMessage: string =
     "(*)Sorry, for now our service is only available in the SED area but we are working on it to expand very soon!";
-  const [isAvailableService, setIsAvailableService] = useState<boolean>(true);
-  const initialAddressData: AddressType = {
+  const [isAvailableService, setIsAvailableService] = useState<boolean>(false);
+  const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
+  const [addressData, setAddressData] = useState<AddressType>({
     mainAddress: "",
     subAddress: "",
-  };
-  const [addressData, setAddressData] = useState(initialAddressData);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  });
+  const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    event.preventDefault();
-
-    const inputName = event.target.name;
-    const inputData = event.target.value;
+    const { name, value } = event.target;
     setAddressData({
       ...addressData,
-      [inputName]: inputData,
+      [name]: value,
     });
   };
 
+  useEffect(() => {
+    if (addressData.mainAddress && addressData.subAddress) {
+      setIsAllFilled(true);
+    }
+  }, [addressData.mainAddress, addressData.subAddress]);
+
   const handleSave = (): void => {
-    isAvailableService && navigate(-1);
+    // db로 post
+    isAllFilled && isAvailableService && navigate(-1);
   };
 
   const openMapModal = (): void => {
-    setIsModalOpen(true);
+    setIsMapModalOpen(true);
   };
 
   const closeMapModal = (): void => {
-    setIsModalOpen(false);
+    setIsMapModalOpen(false);
   };
 
-  // 모달창의 select버튼을 누르면 mainAddress Input에 주소 표시
+  // 모달에서 select버튼을 눌렀을 때 addressData.mainAddress에 값을 저장하고 모달 창 닫기기능
   const handleMapModalSelect = (selectedAddress: string): void => {
-    setAddressData({
-      ...addressData,
+    setAddressData((prevAddressData) => ({
+      ...prevAddressData,
       mainAddress: selectedAddress,
-    });
+    }));
     closeMapModal();
   };
 
@@ -71,10 +74,10 @@ const AddressPage: React.FC = () => {
         <div>
           <div className="selectMapSection">
             <button onClick={openMapModal}>
-              <img src={selectMapIcon} />
+              <img src={selectMapIcon} alt="Select map icon" />
               Find your location on the map
             </button>
-            {isModalOpen && (
+            {isMapModalOpen && (
               <GoogleMapModal
                 onSelectAddress={handleMapModalSelect}
                 onClose={closeMapModal}
@@ -83,21 +86,20 @@ const AddressPage: React.FC = () => {
             )}
             <div className="selectAddressTextInput">
               <div className="mainAddressInput">
-                <img src={mapSearchIcon} />
-                <InputItem
-                  label=""
-                  isNoStar={true}
+                <input
+                  id="mainAddress"
                   name="mainAddress"
                   type="text"
+                  readOnly={true}
                   value={addressData.mainAddress}
-                  handleInputChange={handleInputChange}
-                  place="Type in your address"
+                  onChange={handleInputChange}
+                  placeholder="Press the button above"
                 />
               </div>
             </div>
           </div>
           <div className="detailAddress">
-            {isAvailableService ? (
+            {addressData.mainAddress === "" || isAvailableService ? (
               <>
                 <InputItem
                   label="Delivery detail"
@@ -116,12 +118,14 @@ const AddressPage: React.FC = () => {
           </div>
           <div className="mapImageSection">
             <div>Serviceable area</div>
-            <img src={ServiceableMapImage} />
+            <img src={ServiceableMapImage} alt="Serviceable map" />
           </div>
           <div className="saveAddressButton">
             <Button
               name="Save your address"
-              backgroundColor={isAvailableService ? "#FF6347" : "#767676"}
+              backgroundColor={
+                isAllFilled && isAvailableService ? "#FF6347" : "#767676"
+              }
               handleClick={handleSave}
               buttonType="bigButton"
             />

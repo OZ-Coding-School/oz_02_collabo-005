@@ -14,7 +14,6 @@ interface MapModalProps {
 declare global {
   interface Window {
     google: typeof google;
-    initMap: () => void;
   }
 }
 
@@ -26,7 +25,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
   const apiKey = import.meta.env.VITE_APP_GOOGLE_MAP_API_KEY;
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const mapRef = useRef<HTMLDivElement>(null);
-
+  const [isAvailable, setIsAvailable] = useState<boolean>(false);
   const [userAddressData, setUserAddressData] = useState<string>("");
 
   useEffect(() => {
@@ -74,7 +73,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
                   setUserAddressData(englishAddress);
                   infoWindow.setContent(englishAddress);
                   infoWindow.open(map, marker);
-                  setIsAvailableService(
+                  setIsAvailable(
                     isWithinOneKm(
                       centerLocation.lat,
                       centerLocation.lng,
@@ -96,7 +95,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
           marker.addListener("dragend", () => {
             const newPosition = marker.position;
             if (newPosition) {
-              setIsAvailableService(
+              setIsAvailable(
                 isWithinOneKm(
                   centerLocation.lat,
                   centerLocation.lng,
@@ -127,13 +126,13 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
         (error) => {
           console.error("Error getting user's location: ", error);
           setIsLoading(false);
-        },
-        {}
+        }
       );
     });
   }, []);
 
   const handleSelectAddress = () => {
+    setIsAvailableService(isAvailable);
     onSelectAddress(userAddressData);
   };
 
@@ -146,7 +145,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
               x
             </button>
           </div>
-          <span>Drag the marker to your address</span>
+          <span>Drag the marker on your address</span>
           <div className="googleMap">
             {isLoading && (
               <div className="loadingSpinner">

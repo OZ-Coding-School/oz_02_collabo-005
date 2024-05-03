@@ -3,7 +3,6 @@ import Header from "@components/common/header/Header";
 import logoImage from "../../assets/images/AppLogo.png";
 import Button from "@components/common/button/Button";
 import "./LoginPage.css";
-import facebookLogoImage from "../../assets/images/FacebookLogoImage.png";
 import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
 import FloatingLabelInput from "@components/common/input/FloatingLabelInput";
 import { useNavigate } from "react-router-dom";
@@ -113,13 +112,6 @@ const LoginPage: React.FC = () => {
               name="googleLogoImage"
               text="Continue with Google"
               imageUrl={googleLogoImage}
-            />
-          </div>
-          <div className="facebookButton">
-            <SocialLoginButton
-              name="facebookLogoImage"
-              text="Continue with Facebook"
-              imageUrl={facebookLogoImage}
             />
           </div>
         </div>

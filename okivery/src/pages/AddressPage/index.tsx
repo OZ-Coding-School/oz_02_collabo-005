@@ -3,7 +3,6 @@ import "./AddressPage.css";
 import Header from "@components/common/header/Header";
 import selectMapIcon from "../../assets/icons/selectMapIcon.png";
 import { useNavigate } from "react-router-dom";
-import mapSearchIcon from "../../assets/icons/searchIcon.png";
 import InputItem from "@components/common/input/InputItem";
 import ServiceableMapImage from "../../assets/images/mapRadius.png";
 import Button from "@components/common/button/Button";
@@ -21,12 +20,11 @@ const AddressPage: React.FC = () => {
     "(*)Sorry, for now our service is only available in the SED area but we are working on it to expand very soon!";
   const [isAvailableService, setIsAvailableService] = useState<boolean>(false);
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
-
   const [addressData, setAddressData] = useState<AddressType>({
     mainAddress: "",
     subAddress: "",
   });
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -50,13 +48,14 @@ const AddressPage: React.FC = () => {
   };
 
   const openMapModal = (): void => {
-    setIsModalOpen(true);
+    setIsMapModalOpen(true);
   };
 
   const closeMapModal = (): void => {
-    setIsModalOpen(false);
+    setIsMapModalOpen(false);
   };
 
+  // 모달에서 select버튼을 눌렀을 때 addressData.mainAddress에 값을 저장하고 모달 창 닫기기능
   const handleMapModalSelect = (selectedAddress: string): void => {
     setAddressData((prevAddressData) => ({
       ...prevAddressData,
@@ -78,7 +77,7 @@ const AddressPage: React.FC = () => {
               <img src={selectMapIcon} alt="Select map icon" />
               Find your location on the map
             </button>
-            {isModalOpen && (
+            {isMapModalOpen && (
               <GoogleMapModal
                 onSelectAddress={handleMapModalSelect}
                 onClose={closeMapModal}

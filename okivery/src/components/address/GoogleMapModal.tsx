@@ -14,7 +14,6 @@ interface MapModalProps {
 declare global {
   interface Window {
     google: typeof google;
-    initMap: () => void;
   }
 }
 
@@ -146,7 +145,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
               x
             </button>
           </div>
-          <span>Drag the marker to your address</span>
+          <span>Drag the marker on your address</span>
           <div className="googleMap">
             {isLoading && (
               <div className="loadingSpinner">

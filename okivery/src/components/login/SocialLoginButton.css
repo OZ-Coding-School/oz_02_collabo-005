@@ -1,17 +1,3 @@
-.facebookButton button {
-  background-color: #1877f2;
-  color: white;
-  height: 50px;
-  width: 325px;
-  display: flex;
-  font-size: 20px;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 10px;
-}
-
-img.facebookLogoImage,
 img.googleLogoImage {
   border-radius: 50%;
   width: 25px;

@@ -6,6 +6,7 @@ interface ButtonProps {
   backgroundColor?: string;
   handleClick: (e: React.MouseEvent) => void;
   buttonType: string;
+  disabled: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -13,12 +14,14 @@ const Button: React.FC<ButtonProps> = ({
   backgroundColor,
   handleClick,
   buttonType,
+  disabled,
 }) => {
   return (
     <button
       style={{ backgroundColor: backgroundColor }}
       className={buttonType}
       onClick={handleClick}
+      disabled={disabled}
     >
       {name}
     </button>

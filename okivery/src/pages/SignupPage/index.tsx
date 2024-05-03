@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "@components/common/button/Button";
 import Header from "@components/common/header/Header";
 import InputItem from "@components/common/input/InputItem";
-import "./SignupPage.css";
 import { useNavigate } from "react-router-dom";
 import { emailRegex, passwordRegex, phoneRegex } from "../../utils/regex";
 import BirthdayInput from "@components/common/input/BirthdayInput";
+import Term from "@components/signup/Term";
+import "./SignupPage.css";
 
 export type inputType = {
   value: string;
@@ -18,24 +19,46 @@ type userDataType = {
   password: inputType;
   repeatPassword: inputType;
   phone: inputType;
-  birthday: inputType;
+  birthDay: inputType;
+  [key: string]: inputType;
 };
 
 const SignupPage: React.FC = () => {
-  const terms = "I agree that I have fully read Okivery’s Terms of Use and ";
   const userInitialData: userDataType = {
     name: { value: "", error: "" },
     email: { value: "", error: "" },
     password: { value: "", error: "" },
     repeatPassword: { value: "", error: "" },
     phone: { value: "", error: "" },
-    birthday: { value: "", error: "" },
+    birthDay: { value: "", error: "" },
   };
   const [userData, setUserData] = useState(userInitialData);
   const [isTermChecked, setIsTermChecked] = useState(false);
   const navigate = useNavigate();
 
-  const handleTermCheck = () => {
+  const isAllFieldsFilled = (): boolean => {
+    for (const key in userData) {
+      const value = userData[key].value;
+      if (key !== "birthDay" && value === "") return false;
+    }
+    return true;
+  };
+
+  const isAllFieldsValidated = (): boolean => {
+    for (const key in userData) {
+      const error = userData[key].error;
+      console.log(error);
+      if (error !== "") return false;
+    }
+    return true;
+  };
+
+  console.log(userData);
+
+  const isButtonActive =
+    isAllFieldsFilled() && isAllFieldsValidated() && isTermChecked;
+
+  const handleTermCheck = (): void => {
     setIsTermChecked((prev) => !prev);
   };
 
@@ -107,6 +130,7 @@ const SignupPage: React.FC = () => {
             name="name"
             type="text"
             place="Please enter your name"
+            value={userData.name.value}
             handleInputChange={(e) => {
               handleInputChange("name", e.target.value);
             }}
@@ -159,34 +183,22 @@ const SignupPage: React.FC = () => {
               handleInputChange("phone", e.target.value);
             }}
           />
-          <BirthdayInput />
-          <div className="termContainer">
-            <label>
-              Terms <span>*</span>
-            </label>
-            <div className="termContent">
-              <input
-                type="radio"
-                name="term"
-                value="agree"
-                id="term"
-                checked={isTermChecked}
-                onClick={handleTermCheck}
-              />
-              <div>
-                {terms}
-                <a href="/" target="_blank">
-                  Privacy Policy.
-                </a>
-              </div>
-            </div>
-          </div>
+          <BirthdayInput
+            handleBirthChange={(birthDay) =>
+              setUserData((prev) => ({ ...prev, birthDay }))
+            }
+          />
+          <Term
+            isTermChecked={isTermChecked}
+            handleTermCheck={handleTermCheck}
+          />
           <div className="signupBtn">
             <Button
               name="Sign up"
-              // backgroundColor={isFormValid ? "#FF6347" : "#767676"}
+              backgroundColor={isButtonActive ? "#FF6347" : "#767676"}
               buttonType="bigButton"
               handleClick={handleButtonClick}
+              disabled={!isButtonActive}
             />
           </div>
         </form>

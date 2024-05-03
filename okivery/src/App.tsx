@@ -22,6 +22,7 @@ import ErrorPage from "./pages/ErrorPage";
 import KoreanCardPage from "./pages/KoreanCardPage";
 import ForeignCardPage from "./pages/ForeignCardPage";
 import ScrollToTop from "@components/scrolltotop/ScrollToTop";
+import OrderDetailsPage from "./pages/OrderDetailsPage/index";
 
 const App: React.FC = () => {
   const isLogined: boolean = false;
@@ -45,6 +46,7 @@ const App: React.FC = () => {
           <Route path="/account" element={<AccountPage />} />
           <Route path="/restaurant/menu" element={<MenuPage />} />
           <Route path="/order/sheet" element={<OrderSheetPage />} />
+          <Route path="/order/details" element={<OrderDetailsPage />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/order/status" element={<OrderStatusPage />} />
           <Route path="/payment" element={<PaymentPage />} />

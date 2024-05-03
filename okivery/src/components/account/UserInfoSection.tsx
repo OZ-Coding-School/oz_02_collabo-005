@@ -66,7 +66,7 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
           readOnly={!isEdit ? true : false}
           handleInputChange={handleInputChange}
         />
-        <BirthdayInput readOnly={!isEdit ? true : false} />
+        {/* <BirthdayInput readOnly={!isEdit ? true : false} /> */}
         {!isEdit ? null : <ChangePasswordSection />}
       </form>
     </div>

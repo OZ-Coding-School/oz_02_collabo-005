@@ -8,7 +8,12 @@ interface InputItemProps {
   value?: string;
   readOnly?: boolean;
   isNoStar?: boolean;
-  handleInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+  errorMessage?: string;
+  handleInputChange?: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    value: string
+  ) => void;
 }
 
 const InputItem: React.FC<InputItemProps> = ({
@@ -19,12 +24,14 @@ const InputItem: React.FC<InputItemProps> = ({
   place,
   readOnly,
   isNoStar,
+  className,
+  errorMessage,
   handleInputChange,
 }) => {
   return (
-    <div className="inputContainer">
+    <div className={`inputContainer ${className}`}>
       <label htmlFor={name}>
-        {label}{" "}
+        {label}
         <span className={!readOnly && !isNoStar ? "" : "hideSpan"}>*</span>
       </label>
       <input
@@ -33,9 +40,10 @@ const InputItem: React.FC<InputItemProps> = ({
         id={name}
         value={value}
         placeholder={place}
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange?.(e, e.target.value)}
         readOnly={readOnly}
       ></input>
+      <div className="inputErrorMessage">{errorMessage}</div>
     </div>
   );
 };

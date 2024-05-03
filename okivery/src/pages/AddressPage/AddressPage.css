@@ -43,22 +43,15 @@
 }
 
 .mainAddressInput input {
-  height: 5vh;
+  height: 45px;
   border: 1px solid #c4c4c4;
   border-radius: 6px;
   margin-bottom: 10px;
-  padding-left: 30px;
+  padding: 1px 2px 1px 10px;
 }
 
 .addressErrorMessage {
   color: red;
-}
-
-.selectAddressTextInput img {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-53%);
-  left: 10px;
 }
 
 .mapImageSection {
@@ -72,6 +65,10 @@
   margin-bottom: 20px;
 }
 
+.detailAddress input {
+  height: 45px;
+}
+
 .mapImageSection img {
   width: 350px;
   height: 350px;
@@ -80,7 +77,7 @@
 .saveAddressButton {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px 0 15px 0;
 }
 
 .saveAddressButton button {

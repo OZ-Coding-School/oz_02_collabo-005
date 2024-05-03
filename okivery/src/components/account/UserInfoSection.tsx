@@ -42,6 +42,7 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
           type="text"
           value={userData.name}
           place="name"
+          isNoStar={true}
           readOnly={!isEdit ? true : false}
           handleInputChange={handleInputChange}
         />
@@ -51,6 +52,7 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
           type="email"
           value={userData.email}
           place="E-Mail"
+          isNoStar={true}
           readOnly={!isEdit ? true : false}
           handleInputChange={handleInputChange}
         />
@@ -60,6 +62,7 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
           type="number"
           value={userData.phone}
           place="Phone Number"
+          isNoStar={true}
           readOnly={!isEdit ? true : false}
           handleInputChange={handleInputChange}
         />

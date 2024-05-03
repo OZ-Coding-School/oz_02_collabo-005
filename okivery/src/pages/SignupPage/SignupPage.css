@@ -7,24 +7,15 @@
   margin: 10px 10px 10px 10px;
 }
 
-.passwordNotMatch {
-  font-size: 0.8rem;
-  color: red;
-  margin-bottom: 10px;
-}
-
-.hide {
-  display: none;
+.signupContainer > form {
+  display: grid;
+  gap: 10px;
 }
 
 .termContainer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  gap: 10px;
   margin-bottom: 30px;
-}
-
-.termContainer > label {
-  margin-bottom: 10px;
 }
 
 .termContainer > label > span {

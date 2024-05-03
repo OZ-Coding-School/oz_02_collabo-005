@@ -3,7 +3,6 @@ import Header from "@components/common/header/Header";
 import logoImage from "../../assets/images/AppLogo.png";
 import Button from "@components/common/button/Button";
 import "./LoginPage.css";
-import facebookLogoImage from "../../assets/images/FacebookLogoImage.png";
 import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
 import FloatingLabelInput from "@components/common/input/FloatingLabelInput";
 import { useNavigate } from "react-router-dom";
@@ -62,32 +61,7 @@ const LoginPage: React.FC = () => {
   };
   // 디비로 입력한 이메일과 패스워드를 보내 일치여부 확인 후 일치 시 로그인 성공
   // const handleLogin = (): void => {
-  //   fetch("http://api주소.com/api/login", {
-  //     method: "Post",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ email, password }),
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       }
-  //       throw new Error("Network response was not ok");
-  //     })
-  //     .then((data) => {
-  //       // 서버로 응답 받음
-  //       if (data.success) {
-  //         navigate("/home");
-  //       } else {
-  //         // 로그인 실패
-  //         alert("login failed: It's not correct email or password");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("There was an error logging in: ", error);
-  //     });
-  // };
+  //}
 
   return (
     <>
@@ -138,13 +112,6 @@ const LoginPage: React.FC = () => {
               name="googleLogoImage"
               text="Continue with Google"
               imageUrl={googleLogoImage}
-            />
-          </div>
-          <div className="facebookButton">
-            <SocialLoginButton
-              name="facebookLogoImage"
-              text="Continue with Facebook"
-              imageUrl={facebookLogoImage}
             />
           </div>
         </div>

@@ -7,8 +7,6 @@ const MyOrderList: React.FC = () => {
     <div className="myOrderListContainer">
       <MyOrderItem />
       <MyOrderItem />
-      <MyOrderItem />
-      <MyOrderItem />
     </div>
   );
 };

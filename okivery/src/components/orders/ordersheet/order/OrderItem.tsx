@@ -4,13 +4,16 @@ import { menuType } from "src/pages/OrderSheetPage";
 import { BiSolidTrash } from "react-icons/bi";
 import "./OrderItem.css";
 
-interface OrderItemProps extends menuType {}
+interface OrderItemProps extends menuType {
+  isOnDetailsPage?: boolean;
+}
 
 const OrderItem: React.FC<OrderItemProps> = ({
   name,
   options,
   price,
   quantity,
+  isOnDetailsPage,
 }) => {
   const optionList = options.length === 0 ? "unselected" : options.join(",");
   const [count, setCount] = useState(quantity);
@@ -27,7 +30,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
   return (
     <div className="orderItemContainer">
       <button className="deleteButton">
-        <BiSolidTrash className="deleteBtnIcon" />
+        {!isOnDetailsPage && <BiSolidTrash className="deleteBtnIcon" />}
       </button>
       <div className="orderInfoSection">
         <div className="OImenuName">{name}</div>
@@ -39,6 +42,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
           quantity={count}
           handlePlusBtnClick={handlePlusBtnClick}
           handleMinusBtnClick={handleMinusBtnClick}
+          disabled={isOnDetailsPage}
         />
       </div>
     </div>

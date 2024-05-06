@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "@components/common/header/Header";
 import { useNavigate } from "react-router-dom";
 import InputItem from "@components/common/input/InputItem";
-import BirthdayInput from "@components/common/input/BirthdayInput";
 import "./CardPage.css";
 import Button from "@components/common/button/Button";
 
@@ -13,7 +12,6 @@ type koreanCardDataType = {
   cardholderName: string;
   cvv: string;
   pinNumber: string;
-  birthday: string;
 };
 
 const KoreanCardPage: React.FC = () => {
@@ -25,7 +23,6 @@ const KoreanCardPage: React.FC = () => {
     cardholderName: "",
     cvv: "",
     pinNumber: "",
-    birthday: "",
   };
   const [cardData, setCardData] = useState<koreanCardDataType>(initialCardData);
 
@@ -113,7 +110,6 @@ const KoreanCardPage: React.FC = () => {
             place="Enter in the first two pins here"
             handleInputChange={handleInputChange}
           />
-          <BirthdayInput isMust={true} />
         </form>
       </div>
     </>

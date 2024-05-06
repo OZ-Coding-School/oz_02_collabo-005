@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ChangePasswordSection from "./ChangePasswordSection";
 import InputItem from "@components/common/input/InputItem";
-import BirthdayInput from "@components/common/input/BirthdayInput";
 
 interface isEditProps {
   isEdit: boolean;

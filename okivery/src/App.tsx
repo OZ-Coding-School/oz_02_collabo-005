@@ -37,7 +37,7 @@ const App: React.FC = () => {
               isLogined ? <Navigate to="/home" /> : <Navigate to="/splash" />
             }
           />
-          <Route path="/restaurant/list" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/sign" element={<SignUpPage />} />
           <Route path="/restaurant" element={<RestaurantPage />} />

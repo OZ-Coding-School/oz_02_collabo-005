@@ -7,6 +7,7 @@ import InputItem from "@components/common/input/InputItem";
 import ServiceableMapImage from "../../assets/images/mapRadius.png";
 import Button from "@components/common/button/Button";
 import GoogleMapModal from "@components/address/GoogleMapModal";
+import AutoCompleteInput from "@components/address/AutoCompleteInput";
 
 type AddressType = {
   mainAddress: string;
@@ -34,17 +35,20 @@ const AddressPage: React.FC = () => {
       ...addressData,
       [name]: value,
     });
+    console.log(addressData);
   };
 
   useEffect(() => {
-    if (addressData.mainAddress && addressData.subAddress) {
+    if (addressData.mainAddress !== "" && addressData.subAddress !== "") {
       setIsAllFilled(true);
+    } else {
+      setIsAllFilled(false);
     }
   }, [addressData.mainAddress, addressData.subAddress]);
 
   const handleSave = (): void => {
     // db로 post
-    isAllFilled && isAvailableService && navigate(-1);
+    isAvailableService && isAllFilled && navigate(-1);
   };
 
   const openMapModal = (): void => {
@@ -86,14 +90,14 @@ const AddressPage: React.FC = () => {
             )}
             <div className="selectAddressTextInput">
               <div className="mainAddressInput">
-                <input
-                  id="mainAddress"
-                  name="mainAddress"
-                  type="text"
-                  readOnly={true}
-                  value={addressData.mainAddress}
-                  onChange={handleInputChange}
-                  placeholder="Press the button above"
+                <AutoCompleteInput
+                  setIsAvailableService={setIsAvailableService}
+                  mainAddressData={addressData.mainAddress}
+                  handleInputChange={handleInputChange}
+                  options={{
+                    strictBounds: true,
+                    componentRestrictions: { country: "KR" },
+                  }}
                 />
               </div>
             </div>
@@ -124,7 +128,7 @@ const AddressPage: React.FC = () => {
             <Button
               name="Save your address"
               backgroundColor={
-                isAllFilled && isAvailableService ? "#FF6347" : "#767676"
+                isAvailableService && isAllFilled ? "#FF6347" : "#767676"
               }
               handleClick={handleSave}
               buttonType="bigButton"

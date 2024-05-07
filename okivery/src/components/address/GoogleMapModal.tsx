@@ -22,7 +22,6 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
   onSelectAddress,
   setIsAvailableService,
 }) => {
-  const apiKey = import.meta.env.VITE_APP_GOOGLE_MAP_API_KEY;
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const mapRef = useRef<HTMLDivElement>(null);
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
@@ -30,20 +29,18 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: apiKey,
+      apiKey: import.meta.env.VITE_APP_GOOGLE_MAP_API_KEY,
       language: "en",
-      libraries: ["places"],
     });
 
-    loader.load().then(async () => {
-      // 주소정보 창
+    initLibrary();
+
+    async function initLibrary() {
       const infoWindow = new google.maps.InfoWindow();
       const geocoder = new google.maps.Geocoder();
       // 고급 마커
-      const { AdvancedMarkerElement } =
-        await google.maps.importLibrary("marker");
+      const { AdvancedMarkerElement } = await loader.importLibrary("marker");
 
-      // 처음에 사용자 현재 위치로 지정
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const userLatLng = {
@@ -128,7 +125,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
           setIsLoading(false);
         }
       );
-    });
+    }
   }, []);
 
   const handleSelectAddress = () => {

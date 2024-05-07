@@ -1,4 +1,4 @@
-import { Loader } from "@googlemaps/js-api-loader";
+import loader from "../../services/GoogleMapLoad";
 import { useEffect, useRef } from "react";
 import isWithinOneKm from "./CalculateDistance";
 import centerLocation from "../../constants/location";
@@ -34,10 +34,6 @@ const AutoCompleteInput = ({
 
       return;
     }
-    const loader = new Loader({
-      apiKey: import.meta.env.VITE_APP_GOOGLE_MAP_API_KEY,
-      language: "en",
-    });
 
     initLibrary();
 

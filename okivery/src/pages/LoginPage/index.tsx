@@ -53,15 +53,8 @@ const LoginPage: React.FC = () => {
   };
 
   const handleLogin = () => {
-    if (isFormValid && isValidEmail(userData.email)) {
-      navigate("/home");
-    } else {
-      alert("이메일과 비밀번호를 다시 입력하세요.");
-    }
+    isFormValid && isValidEmail(userData.email) && navigate("/home");
   };
-  // 디비로 입력한 이메일과 패스워드를 보내 일치여부 확인 후 일치 시 로그인 성공
-  // const handleLogin = (): void => {
-  //}
 
   return (
     <>

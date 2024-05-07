@@ -54,7 +54,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
             mapId: "DEMO_MAP_ID",
           });
           // 마커 그리기
-          const marker = new google.maps.marker.AdvancedMarkerElement({
+          const marker = new AdvancedMarkerElement({
             position: userLatLng,
             map,
             gmpDraggable: true,

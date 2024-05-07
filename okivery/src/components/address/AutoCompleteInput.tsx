@@ -69,6 +69,7 @@ const AutoCompleteInput = ({
               console.log("Geocoding failed");
             } else {
               const location = results[0].geometry.location;
+              // 서비스 가능 지역인지 검사
               setIsAvailableService(
                 isWithinOneKm(
                   centerLocation.lat,

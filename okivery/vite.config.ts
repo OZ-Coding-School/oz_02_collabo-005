@@ -13,4 +13,14 @@ export default defineConfig({
       },
     ],
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://118.67.135.218",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+        secure: false,
+      },
+    },
+  },
 });

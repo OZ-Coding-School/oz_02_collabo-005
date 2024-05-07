@@ -7,6 +7,7 @@ import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
 import FloatingLabelInput from "@components/common/input/FloatingLabelInput";
 import { useNavigate } from "react-router-dom";
 import SocialLoginButton from "../../components/login/SocialLoginButton";
+import axios from "axios";
 
 type userDataType = {
   email: string;
@@ -52,16 +53,40 @@ const LoginPage: React.FC = () => {
     navigate("/sign");
   };
 
-  const handleLogin = () => {
-    if (isFormValid && isValidEmail(userData.email)) {
-      navigate("/home");
-    } else {
-      alert("이메일과 비밀번호를 다시 입력하세요.");
-    }
+  const handleLogin = async () => {
+    // try {
+    //   const response = await axios.get("http://118.67.135.218/v1/user/login/");
+    //   console.log(response);
+    // } catch (error) {
+    //   console.log("Error >> ", error);
+    // }
+    // if (isFormValid && isValidEmail(userData.email)) {
+    //   navigate("/home");
+    // } else {
+    //   alert("이메일과 비밀번호를 다시 입력하세요.");
+    // }
   };
-  // 디비로 입력한 이메일과 패스워드를 보내 일치여부 확인 후 일치 시 로그인 성공
-  // const handleLogin = (): void => {
-  //}
+  const token =
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1MTYwOTEyLCJpYXQiOjE3MTUwNzQ1MTIsImp0aSI6IjEyNDExZjNjMmU2YzQwZTViMDIwZGVhZGY5ODA0ZmM4IiwidXNlcl9pZCI6MX0.O-M7iUndzogOqnUnzcKoolP6u4cWdgqlxL7pmnGzjFI";
+  useEffect(() => {
+    const customAxios = axios.create({
+      baseURL: "http://118.67.135.218",
+    });
+    const getRes = async () => {
+      try {
+        const response = await customAxios.get("/api/v1/restaurant/list/", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token,
+          },
+        });
+        console.log(response);
+      } catch (error) {
+        console.error("Error >> ", error);
+      }
+    };
+    getRes();
+  }, []);
 
   return (
     <>

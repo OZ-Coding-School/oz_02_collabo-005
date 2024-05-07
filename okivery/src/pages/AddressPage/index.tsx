@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEventHandler, useEffect, useState } from "react";
 import "./AddressPage.css";
 import Header from "@components/common/header/Header";
 import selectMapIcon from "../../assets/icons/selectMapIcon.png";
@@ -9,7 +9,7 @@ import Button from "@components/common/button/Button";
 import GoogleMapModal from "@components/address/GoogleMapModal";
 import AutoCompleteInput from "@components/address/AutoCompleteInput";
 
-type AddressType = {
+export type AddressType = {
   mainAddress: string;
   subAddress: string;
 };
@@ -27,7 +27,7 @@ const AddressPage: React.FC = () => {
   });
   const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
 
-  const handleInputChange = (
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const { name, value } = event.target;
@@ -35,7 +35,6 @@ const AddressPage: React.FC = () => {
       ...addressData,
       [name]: value,
     });
-    console.log(addressData);
   };
 
   useEffect(() => {
@@ -48,6 +47,8 @@ const AddressPage: React.FC = () => {
 
   const handleSave = (): void => {
     // db로 post
+    alert(`mainAddress: ${addressData.mainAddress},
+    subAddress: ${addressData.subAddress}`);
     isAvailableService && isAllFilled && navigate(-1);
   };
 
@@ -91,13 +92,14 @@ const AddressPage: React.FC = () => {
             <div className="selectAddressTextInput">
               <div className="mainAddressInput">
                 <AutoCompleteInput
+                  addressData={addressData}
+                  setAddressData={setAddressData}
                   setIsAvailableService={setIsAvailableService}
-                  mainAddressData={addressData.mainAddress}
-                  handleInputChange={handleInputChange}
                   options={{
                     strictBounds: true,
                     componentRestrictions: { country: "KR" },
                   }}
+                  handleInputChange={handleInputChange}
                 />
               </div>
             </div>

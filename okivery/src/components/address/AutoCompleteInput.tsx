@@ -2,24 +2,27 @@ import { Loader } from "@googlemaps/js-api-loader";
 import { useEffect, useRef } from "react";
 import isWithinOneKm from "./CalculateDistance";
 import centerLocation from "../../constants/location";
+import { AddressType } from "../../pages/AddressPage";
 
 interface AutoCompleteInputProps {
   // 옵션은 props로 관리 필요하면 더 추가하기.
+  addressData: AddressType;
+  setAddressData: React.Dispatch<React.SetStateAction<AddressType>>;
   options: google.maps.places.AutocompleteOptions;
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  mainAddressData: string | undefined;
   setIsAvailableService: React.Dispatch<React.SetStateAction<boolean>>;
+  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // 자동 검색 인풋을 컴포넌트로 추상화
 const AutoCompleteInput = ({
+  setAddressData,
+  addressData,
   options = {
     types: ["establishment"],
     fields: ["place_id", "geometry", "name"],
   },
   setIsAvailableService,
   handleInputChange,
-  mainAddressData,
 }: AutoCompleteInputProps) => {
   // 구글에서 제공해주는 기능들을 input과 연결하기위해 ref사용
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,17 +50,16 @@ const AutoCompleteInput = ({
         options
       );
 
-      // 클릭했을때 그 주소를 AddressData.mainAddress에 값 저장
+      // 자동완성된 주소를 AddressData.mainAddress에 값 저장
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
         const address = place.formatted_address || "";
-        handleInputChange({
-          // 타입 에러
-          target: {
-            name: "mainAddress",
-            value: address,
-          },
+
+        setAddressData({
+          ...addressData,
+          mainAddress: address,
         });
+
         // 선택한 주소 위도 경도로 변환
         const geocoder = new google.maps.Geocoder();
         geocoder.geocode(
@@ -88,7 +90,7 @@ const AutoCompleteInput = ({
       id="mainAddress"
       name="mainAddress"
       type="text"
-      value={mainAddressData}
+      value={addressData.mainAddress}
       onChange={handleInputChange}
       placeholder="Type in your address or Press the button above"
     />

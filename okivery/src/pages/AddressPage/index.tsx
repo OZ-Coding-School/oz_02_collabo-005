@@ -134,6 +134,7 @@ const AddressPage: React.FC = () => {
               }
               handleClick={handleSave}
               buttonType="bigButton"
+              type="submit"
             />
           </div>
         </div>

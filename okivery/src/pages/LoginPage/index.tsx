@@ -95,6 +95,7 @@ const LoginPage: React.FC = () => {
               backgroundColor="#FF6347"
               handleClick={handleGoSignUp}
               buttonType="bigButton"
+              type="button"
             />
           </div>
         </div>

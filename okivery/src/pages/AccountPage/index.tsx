@@ -61,6 +61,7 @@ const AccountPage: React.FC = () => {
             name={isEdit ? "Save" : "Edit"}
             handleClick={handleEditChange}
             buttonType="smallButton"
+            type={isEdit ? "submit" : "button"}
           />
         </div>
         <UserInfoSection isEdit={isEdit} />

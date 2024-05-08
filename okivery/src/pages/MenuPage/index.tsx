@@ -112,6 +112,7 @@ const MenuPage: React.FC = () => {
               backgroundColor="#ff6347"
               buttonType="bigButton"
               handleClick={handleAddToBasketBtnClick}
+              type="button"
             />
           </div>
         </div>

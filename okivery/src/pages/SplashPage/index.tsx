@@ -34,6 +34,7 @@ const SplashPage: React.FC = () => {
               backgroundColor="#414f42"
               handleClick={handleGoLogin}
               buttonType="bigButton"
+              type="button"
             />
           </div>
         </div>

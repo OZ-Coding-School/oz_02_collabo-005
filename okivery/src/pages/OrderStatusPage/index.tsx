@@ -85,6 +85,7 @@ const OrderStatusPage: React.FC = () => {
                 name={isOrderStatus ? "Check your order" : "Ask for help"}
                 handleClick={isOrderStatus ? handleSuccess : handleFailed}
                 buttonType="bigButton"
+                type="button"
               />
             </div>
           </>

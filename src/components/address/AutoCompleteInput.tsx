@@ -1,7 +1,7 @@
 import loader from "../../services/GoogleMapLoad";
 import { useEffect, useRef } from "react";
 import isWithinOneKm from "./CalculateDistance";
-import centerLocation from "../../constants/location";
+import centerLocation from "./../../constants/location";
 import { AddressType } from "../../pages/AddressPage";
 
 interface AutoCompleteInputProps {

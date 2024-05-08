@@ -1,0 +1,36 @@
+.MenuItemContainer {
+  display: flex;
+  cursor: pointer;
+}
+.menuItemTitle {
+  display: flex;
+}
+.menuItemLabel {
+  font-size: 0.7rem;
+  display: inline-block;
+  color: #ff6347;
+  background-color: #ff63474f;
+  border: 1px solid #ff6347;
+  border-radius: 5px;
+  padding: 1px 5px 0px 5px;
+  margin-left: 10px;
+}
+
+.menuItemName {
+  font-weight: 600;
+}
+
+.menuItemPrice {
+  font-size: 1rem;
+}
+
+.menuItemName,
+.menuItemPrice {
+  margin: 0;
+}
+
+.menuMainImg {
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+}

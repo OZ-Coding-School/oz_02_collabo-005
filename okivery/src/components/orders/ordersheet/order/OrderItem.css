@@ -1,0 +1,36 @@
+.orderItemContainer {
+  position: relative;
+}
+
+.orderInfoSection {
+  display: grid;
+  gap: 5px;
+}
+
+.OImenuName {
+  font-weight: 600;
+}
+
+.OIoptionList {
+  color: rgb(125, 125, 125);
+  max-width: 90%;
+}
+
+.orderBtnSection {
+  display: flex;
+  justify-content: end;
+}
+
+.deleteButton {
+  position: absolute;
+  right: 0px;
+  border: none;
+  background-color: white;
+  display: flex;
+}
+
+.deleteBtnIcon {
+  width: 15px;
+  height: 15px;
+  color: #ff6347;
+}

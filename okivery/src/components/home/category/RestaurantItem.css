@@ -1,0 +1,15 @@
+.restaurantItemContainer {
+  cursor: pointer;
+  display: grid;
+  gap: 10px;
+}
+
+.restaurantMainImg {
+  width: 280px;
+  height: 200px;
+  border-radius: 20px;
+}
+
+.restaurantInfoSection > p {
+  margin: 0px;
+}

@@ -1,0 +1,41 @@
+.dropdownContainer {
+  position: relative;
+  height: 25px;
+}
+
+.dropdownTitle {
+  display: flex;
+  position: absolute;
+  right: 0px;
+  gap: 5px;
+  color: rgb(155, 155, 155);
+}
+
+.dropbtn {
+  display: flex;
+  align-self: center;
+  padding: 0px;
+}
+
+.dropdownContent {
+  display: none;
+  border: 1px solid black;
+  max-width: 80%;
+  position: absolute;
+  top: 30px;
+  right: 0px;
+  z-index: 1000;
+  background-color: white;
+}
+
+.open {
+  display: block;
+}
+
+.dropdownList {
+  padding: 0px 40px;
+}
+
+.dropdownList > li {
+  overflow-wrap: break-word;
+}

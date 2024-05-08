@@ -1,0 +1,43 @@
+.formGroup {
+  position: relative;
+  margin: 12px 0;
+}
+
+.formGroup input {
+  padding: 8px 10px;
+  height: 40px;
+  width: 285px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: 1.5px solid black;
+  background-color: transparent;
+  color: black;
+  transition: 0.15s all ease;
+}
+
+.formGroup input:focus {
+  border-color: #eee;
+}
+
+.formGroup input::placeholder {
+  color: transparent;
+}
+
+.formGroup .formLabel {
+  position: absolute;
+  top: 19px;
+  left: 3px;
+  font-size: 20px;
+  padding: 0 8px 0 10px;
+  color: #acacac;
+  pointer-events: none;
+  transition: 0.15s all ease;
+}
+
+.formGroup input:focus + .formLabel,
+.formGroup input:not(:placeholder-shown) + .formLabel {
+  transform: translate(5px, -25px);
+  background-color: white;
+  font-size: 16px;
+  color: #acacac;
+}

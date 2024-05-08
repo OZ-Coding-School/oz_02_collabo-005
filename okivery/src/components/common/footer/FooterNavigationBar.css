@@ -1,0 +1,15 @@
+.footerFixedContainer {
+  max-width: 500px;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: white;
+  height: 50px;
+}

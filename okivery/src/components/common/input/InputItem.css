@@ -1,0 +1,31 @@
+.inputContainer {
+  display: grid;
+  gap: 10px;
+}
+
+.inputContainer.error > input {
+  border-color: red;
+}
+
+.inputContainer > label > span {
+  color: red;
+}
+
+.hideSpan {
+  display: none;
+}
+
+.inputContainer input {
+  height: 5vh;
+  border: 1px solid #c4c4c4;
+  border-radius: 6px;
+  padding-left: 10px;
+}
+
+.inputErrorMessage {
+  color: red;
+}
+
+input[readonly]:focus {
+  outline: #c4c4c4;
+}

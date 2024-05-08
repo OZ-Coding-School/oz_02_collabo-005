@@ -1,0 +1,35 @@
+.logoContainer {
+  margin-top: 20px;
+}
+
+form.loginInputForm {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  margin-top: 20px;
+}
+
+.loginButtonSection,
+.socialLoginButtonSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 25px;
+  margin-top: 60px;
+}
+
+.socialLoginButtonSection {
+  margin-bottom: 15px;
+}
+
+.googleButton button {
+  color: black;
+  height: 50px;
+  width: 325px;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

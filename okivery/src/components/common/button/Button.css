@@ -1,0 +1,22 @@
+button.bigButton {
+  width: 325px;
+  height: 45px;
+  border-radius: 10px;
+  background-color: #ff6347;
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button.smallButton {
+  background-color: #ff6347;
+  width: 72px;
+  height: 30px;
+  border-radius: 6px;
+  font-size: 15px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}

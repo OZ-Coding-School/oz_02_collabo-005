@@ -1,0 +1,44 @@
+.myOrderItemContainer {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(100, 100, 100, 0.329);
+  border-radius: 5px;
+  padding: 10px 15px;
+}
+
+.myOrderItemTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.myOrderDate {
+  color: rgb(122, 122, 122);
+}
+
+.viewOrderBtn {
+  border: none;
+  text-align: center;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.myOrderItemMainContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.myOrderItemLogoImg {
+  width: 90px;
+  height: 90px;
+}
+
+.myOrderInfoSection {
+  display: grid;
+  gap: 5px;
+}
+
+.MIresName {
+  font-size: 1.2rem;
+  font-weight: 600;
+}

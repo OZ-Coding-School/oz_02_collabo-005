@@ -1,0 +1,46 @@
+.headerFixed {
+  top: 0px;
+}
+
+.headerContainer {
+  position: sticky;
+  z-index: 1000;
+  background-color: #ff6347;
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.backIcon {
+  height: 35px;
+  width: 35px;
+  margin-left: 10px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.headerTitle {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  margin-left: 10px;
+}
+
+.headerCart {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 35px;
+  width: 70px;
+  background-color: #eeeeee;
+  border-radius: 99px;
+  cursor: pointer;
+}
+
+.cartIcon {
+  height: 30px;
+  width: 30px;
+}

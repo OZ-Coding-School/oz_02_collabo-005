@@ -1,0 +1,12 @@
+.categoryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.restaurantCategoryTitle {
+  margin: 0px;
+}
+
+.restaurantItem {
+  width: fit-content !important;
+}

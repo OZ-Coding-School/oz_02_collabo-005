@@ -1,0 +1,10 @@
+.bannerItemContainer {
+  padding: 10px;
+}
+
+.bannerItem {
+  width: 280px;
+  height: 140px;
+  border-radius: 20px;
+  background-color: blue;
+}

@@ -1,0 +1,21 @@
+.quantityButtonContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ff6347;
+  color: white;
+  width: 100px;
+  height: 30px;
+  border-radius: 100px;
+}
+
+.Btns {
+  border-style: none;
+  background-color: #ff6347;
+  color: white;
+  font-size: 1rem;
+}
+
+.minus {
+  padding-bottom: 4px;
+}

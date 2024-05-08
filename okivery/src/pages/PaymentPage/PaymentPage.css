@@ -1,0 +1,36 @@
+.paymentMainContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.cardContainer {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.bottomSection {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.totalAccount {
+  font-size: 22px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 20px 0;
+}
+
+.payNowButtonSection {
+  display: flex;
+  justify-content: center;
+}
+
+.payNowButtonSection button {
+  height: 55px;
+  font-size: 28px;
+  font-weight: bold;
+}

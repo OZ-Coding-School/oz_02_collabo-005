@@ -1,0 +1,13 @@
+.footerNavigation {
+  text-align: center;
+  color: #767676;
+  cursor: pointer;
+}
+.footerNavTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.activeTitle {
+  color: #ff0505;
+}

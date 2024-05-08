@@ -1,7 +1,7 @@
-import { inputType } from "src/pages/SignupPage";
-import "./BirthdayInput.css";
-import { useEffect, useState } from "react";
-import { dayRegex, monthRegex, yearRegex } from "../../../utils/regex";
+import { inputType } from 'src/pages/SignupPage';
+import './BirthdayInput.css';
+import { useEffect, useState } from 'react';
+import { dayRegex, monthRegex, yearRegex } from '../../../utils/regex';
 
 interface BirthdayInputProps {
   readOnly?: boolean;
@@ -23,9 +23,9 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
   };
 
   const birthDayInitialData: birthType = {
-    year: "",
-    month: "",
-    day: "",
+    year: '',
+    month: '',
+    day: '',
   };
 
   const [birthDay, setBirthDay] = useState(birthDayInitialData);
@@ -39,7 +39,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
     const inputName = event.target.name;
     const inputData = event.target.value;
 
-    if (inputName === "year") {
+    if (inputName === 'year') {
       const error = !yearRegex.test(inputData);
       if (error) {
         setIsError(true);
@@ -53,7 +53,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
       }));
     }
 
-    if (inputName === "month") {
+    if (inputName === 'month') {
       const error = !monthRegex.test(inputData);
       if (error) {
         setIsError(true);
@@ -67,7 +67,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
       }));
     }
 
-    if (inputName === "day") {
+    if (inputName === 'day') {
       const error = !dayRegex.test(inputData);
       if (error) {
         setIsError(true);
@@ -84,15 +84,15 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
 
   useEffect(() => {
     const birth = birthDay.year + birthDay.month + birthDay.day;
-    const error =
-      isError || birth.length < 8 ? "생년월일이 올바르지 않습니다." : "";
+    const error = isValidBirthDay(isError, birth);
+
     handleBirthChange({ value: birth, error });
   }, [birthDay]);
 
   return (
     <div className="birthInputContainer">
       <label>
-        Birthday <span className={isMust ? "" : "hideSpan"}>*</span>
+        Birthday <span className={isMust ? '' : 'hideSpan'}>*</span>
       </label>
       <p className="eventExplain">
         We will send you a birthday coupon an your special day!
@@ -137,3 +137,16 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
 };
 
 export default BirthdayInput;
+const isValidBirthDay = (isError: boolean, birth: string) => {
+  // optional 일 때 통과 예외처리 먼저
+  if (birth.length === 0) {
+    return '';
+  }
+  // 유효성 검사
+  if (isError || birth.length < 8) {
+    return '생년월일이 올바르지 않습니다.';
+  }
+
+  // 통과하면 pass
+  return '';
+};

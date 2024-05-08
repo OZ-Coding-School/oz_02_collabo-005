@@ -53,8 +53,6 @@ const SignupPage: React.FC = () => {
     return true;
   };
 
-  console.log(userData);
-
   const isButtonActive =
     isAllFieldsFilled() && isAllFieldsValidated() && isTermChecked;
 

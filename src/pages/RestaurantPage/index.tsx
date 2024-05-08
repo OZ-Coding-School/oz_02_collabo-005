@@ -8,6 +8,8 @@ import "./RestaurantPage.css";
 import DropDownButton from "@components/restaurant/DropDownButton";
 import MenuList from "@components/restaurant/MenuList";
 import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
+import { useGet } from "../../hooks/useFetch";
+import apiRoutes from "../../api/apiRoutes";
 
 const RestaurantPage: React.FC = () => {
   const categories = [
@@ -27,6 +29,9 @@ const RestaurantPage: React.FC = () => {
   const handleMenuCategoryClick = (category: string) => {
     setSelectedCategory(category);
   };
+
+  const res = useGet(apiRoutes.restaurantList);
+  console.log(res);
 
   console.log(selectedCategory);
   return (

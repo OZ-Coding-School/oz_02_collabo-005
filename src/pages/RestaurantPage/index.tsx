@@ -27,6 +27,8 @@ const RestaurantPage: React.FC = () => {
   const handleMenuCategoryClick = (category: string) => {
     setSelectedCategory(category);
   };
+
+  console.log(selectedCategory);
   return (
     <div>
       <Header

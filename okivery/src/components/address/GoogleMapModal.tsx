@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import "./GoogleMapModal.css";
-import { PacmanLoader as LoadingIcon } from "react-spinners";
-import SelectLocationMap from "./SelectLocationMap";
+import React, { useState } from 'react';
+import './GoogleMapModal.css';
+import { PacmanLoader as LoadingIcon } from 'react-spinners';
+import SelectLocationMap from './SelectLocationMap';
+import isWithinOneKm from './CalculateDistance';
+import centerLocation from 'src/constants/location';
 
 interface MapModalProps {
   onClose: () => void;
@@ -17,7 +19,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // 사용자 입력 주소가 배달가능한 지역인지
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
-  const [userAddressData, setUserAddressData] = useState<string>("");
+  const [userAddressData, setUserAddressData] = useState<string>('');
 
   const handleSelectAddress = () => {
     setIsAvailableService(isAvailable);
@@ -42,8 +44,17 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
             )}
             <SelectLocationMap
               setIsLoading={setIsLoading}
-              setIsAvailable={setIsAvailable}
-              setUserAddressData={setUserAddressData}
+              onChangePosition={({ englishAddress, lat, lng }) => {
+                setIsAvailable(
+                  isWithinOneKm(
+                    centerLocation.lat,
+                    centerLocation.lng,
+                    lat,
+                    lng
+                  )
+                );
+                setUserAddressData(englishAddress);
+              }}
             />
           </div>
           <div className="saveButtonSection">

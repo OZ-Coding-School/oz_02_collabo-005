@@ -1,19 +1,24 @@
-import { useCallback } from "react";
-import { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
 import customAxios from "../api/axios";
 
 const useGet = (url: string) => {
-  const get = useCallback(async () => {
+  const [payload, setPayload] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const callUrl = async () => {
     try {
-      const response: AxiosResponse = await customAxios.get(url);
-      return response.data;
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+      const { data } = await customAxios.get(url);
+      setPayload(data);
+    } catch {
+      setError("something is worng!");
+    } finally {
+      setLoading(false);
     }
-  }, [url]);
-
-  return get;
+  };
+  useEffect(() => {
+    callUrl();
+  }, []);
+  return { payload, loading, error };
 };
 
 export { useGet };

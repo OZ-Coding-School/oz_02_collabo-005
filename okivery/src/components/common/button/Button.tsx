@@ -7,7 +7,10 @@ interface ButtonProps {
   handleClick: (e: React.MouseEvent) => void;
   buttonType: string;
   disabled?: boolean;
+  type?: Type;
 }
+
+type Type = "submit" | "reset" | "button" | undefined;
 
 const Button: React.FC<ButtonProps> = ({
   name,
@@ -15,6 +18,7 @@ const Button: React.FC<ButtonProps> = ({
   handleClick,
   buttonType,
   disabled,
+  type,
 }) => {
   return (
     <button
@@ -22,6 +26,7 @@ const Button: React.FC<ButtonProps> = ({
       className={buttonType}
       onClick={handleClick}
       disabled={disabled}
+      type={type}
     >
       {name}
     </button>

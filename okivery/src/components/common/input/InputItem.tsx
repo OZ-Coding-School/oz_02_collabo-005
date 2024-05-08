@@ -42,6 +42,7 @@ const InputItem: React.FC<InputItemProps> = ({
         placeholder={place}
         onChange={(e) => handleInputChange?.(e, e.target.value)}
         readOnly={readOnly}
+        autoComplete="off"
       ></input>
       <div className="inputErrorMessage">{errorMessage}</div>
     </div>

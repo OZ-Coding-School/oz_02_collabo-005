@@ -15,20 +15,21 @@ type userDataType = {
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const [isFormValid, setIsFormValid] = useState<boolean>(false);
   const initialUserData: userDataType = {
     email: "",
     password: "",
   };
+  const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
   const [userData, setUserData] = useState(initialUserData);
 
   useEffect(() => {
+    // 모두 입력되어있는지 검사 후 로그인 버튼 활성화
     const isAllFieldsFilled =
       userData.email !== "" &&
       userData.password !== "" &&
-      userData.password.length > 8;
+      userData.password.length >= 8;
 
-    setIsFormValid(isAllFieldsFilled);
+    setIsAllFilled(isAllFieldsFilled);
   }, [userData]);
 
   const handleInputChange = (
@@ -43,25 +44,16 @@ const LoginPage: React.FC = () => {
     });
   };
 
-  // 이메일 유효성 검사 함수
-  const isValidEmail = (email: string): boolean => {
-    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
-  };
-
   const handleGoSignUp = () => {
     navigate("/sign");
   };
 
   const handleLogin = () => {
-    if (isFormValid && isValidEmail(userData.email)) {
-      navigate("/home");
-    } else {
-      alert("이메일과 비밀번호를 다시 입력하세요.");
-    }
+    // db에 있는 사용자 정보와 비교해 일치하면 /home으로 이동시킴
+    isAllFilled
+      ? navigate("/home")
+      : alert("Please re-enter your email and password.");
   };
-  // 디비로 입력한 이메일과 패스워드를 보내 일치여부 확인 후 일치 시 로그인 성공
-  // const handleLogin = (): void => {
-  //}
 
   return (
     <>
@@ -92,7 +84,7 @@ const LoginPage: React.FC = () => {
           <div className="loginButton">
             <Button
               name="Login"
-              backgroundColor={isFormValid ? "#FF6347" : "#767676"}
+              backgroundColor={isAllFilled ? "#FF6347" : "#767676"}
               handleClick={handleLogin}
               buttonType="bigButton"
             />
@@ -103,6 +95,7 @@ const LoginPage: React.FC = () => {
               backgroundColor="#FF6347"
               handleClick={handleGoSignUp}
               buttonType="bigButton"
+              type="button"
             />
           </div>
         </div>

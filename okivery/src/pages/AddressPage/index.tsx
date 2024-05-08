@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEventHandler, useEffect, useState } from "react";
 import "./AddressPage.css";
 import Header from "@components/common/header/Header";
 import selectMapIcon from "../../assets/icons/selectMapIcon.png";
@@ -7,8 +7,9 @@ import InputItem from "@components/common/input/InputItem";
 import ServiceableMapImage from "../../assets/images/mapRadius.png";
 import Button from "@components/common/button/Button";
 import GoogleMapModal from "@components/address/GoogleMapModal";
+import AutoCompleteInput from "@components/address/AutoCompleteInput";
 
-type AddressType = {
+export type AddressType = {
   mainAddress: string;
   subAddress: string;
 };
@@ -26,7 +27,7 @@ const AddressPage: React.FC = () => {
   });
   const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
 
-  const handleInputChange = (
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const { name, value } = event.target;
@@ -37,14 +38,18 @@ const AddressPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (addressData.mainAddress && addressData.subAddress) {
+    if (addressData.mainAddress !== "" && addressData.subAddress !== "") {
       setIsAllFilled(true);
+    } else {
+      setIsAllFilled(false);
     }
   }, [addressData.mainAddress, addressData.subAddress]);
 
   const handleSave = (): void => {
     // db로 post
-    isAllFilled && isAvailableService && navigate(-1);
+    alert(`mainAddress: ${addressData.mainAddress},
+    subAddress: ${addressData.subAddress}`);
+    isAvailableService && isAllFilled && navigate(-1);
   };
 
   const openMapModal = (): void => {
@@ -86,14 +91,15 @@ const AddressPage: React.FC = () => {
             )}
             <div className="selectAddressTextInput">
               <div className="mainAddressInput">
-                <input
-                  id="mainAddress"
-                  name="mainAddress"
-                  type="text"
-                  readOnly={true}
-                  value={addressData.mainAddress}
-                  onChange={handleInputChange}
-                  placeholder="Press the button above"
+                <AutoCompleteInput
+                  addressData={addressData}
+                  setAddressData={setAddressData}
+                  setIsAvailableService={setIsAvailableService}
+                  options={{
+                    strictBounds: true,
+                    componentRestrictions: { country: "KR" },
+                  }}
+                  handleInputChange={handleInputChange}
                 />
               </div>
             </div>
@@ -124,10 +130,11 @@ const AddressPage: React.FC = () => {
             <Button
               name="Save your address"
               backgroundColor={
-                isAllFilled && isAvailableService ? "#FF6347" : "#767676"
+                isAvailableService && isAllFilled ? "#FF6347" : "#767676"
               }
               handleClick={handleSave}
               buttonType="bigButton"
+              type="submit"
             />
           </div>
         </div>

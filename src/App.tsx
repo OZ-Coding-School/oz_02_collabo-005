@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
 import LoginPage from "./pages/LoginPage";
 import SplashPage from "./pages/SplashPage";
@@ -23,25 +18,20 @@ import KoreanCardPage from "./pages/KoreanCardPage";
 import ForeignCardPage from "./pages/ForeignCardPage";
 import ScrollToTop from "@components/scrolltotop/ScrollToTop";
 import OrderDetailsPage from "./pages/OrderDetailsPage/index";
+// import useLoginStore from "./store/useStore";
 
 const App: React.FC = () => {
-  const isLogined: boolean = false;
+  // const isLogin: boolean = useLoginStore.getState().isLogin;
   return (
     <Router>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route
-            path="/"
-            element={
-              isLogined ? <Navigate to="/home" /> : <Navigate to="/splash" />
-            }
-          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/sign" element={<SignUpPage />} />
           <Route path="/restaurant" element={<RestaurantPage />} />
-          <Route path="/splash" element={<SplashPage />} />
+          <Route path="/" element={<SplashPage />} />
           <Route path="/address" element={<AddressPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/restaurant/menu" element={<MenuPage />} />

@@ -82,10 +82,21 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
     }
   };
 
+  const isValidBirthDay = (isError: boolean, birth: string) => {
+    if (birth.length === 0) {
+      return "";
+    }
+
+    if (isError || birth.length < 8) {
+      return "생년월일이 올바르지 않습니다.";
+    }
+
+    return "";
+  };
   useEffect(() => {
     const birth = birthDay.year + birthDay.month + birthDay.day;
-    const error =
-      isError || birth.length < 8 ? "생년월일이 올바르지 않습니다." : "";
+    const error = isValidBirthDay(isError, birth);
+
     handleBirthChange({ value: birth, error });
   }, [birthDay]);
 
@@ -130,7 +141,9 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
         ></input>
       </div>
       {isError && (
-        <div>Please enter your date of birth in the format "2024 01 02"</div>
+        <div className="birthErrorMessage">
+          Please enter your date of birth in the format "2024 01 02"
+        </div>
       )}
     </div>
   );

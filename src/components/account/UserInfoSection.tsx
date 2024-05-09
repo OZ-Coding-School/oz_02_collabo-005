@@ -13,7 +13,6 @@ type UserDataType = {
   name: string;
   email: string;
   phone: string;
-  // password: string;
 };
 
 const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
@@ -27,7 +26,6 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
           name: response.data.name,
           email: response.data.email,
           phone: response.data.phone_number,
-          // password: response.data.password,
         });
         console.log(response.data);
       };
@@ -39,7 +37,6 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
     name: "",
     email: "",
     phone: "",
-    // password: "",
   };
   const [userData, setUserData] = useState<UserDataType>(initialUserData);
 

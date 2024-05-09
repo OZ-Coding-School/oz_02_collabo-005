@@ -1,4 +1,6 @@
 import React from "react";
+import "./Term.css";
+import { TermsOfUse } from "./../../constants/terms";
 
 interface TermProps {
   isTermChecked: boolean;
@@ -6,13 +8,15 @@ interface TermProps {
 }
 
 const Term: React.FC<TermProps> = ({ isTermChecked, handleTermCheck }) => {
-  const terms = "I agree that I have fully read Okivery’s Terms of Use and ";
+  const termsMessage =
+    "I agree that I have fully read Okivery’s Terms of Use and Privacy Policy.";
+
   return (
     <div className="termContainer">
       <label>
         Terms <span>*</span>
       </label>
-      <div className="termContent">
+      <div className="termContentContainer">
         <input
           type="radio"
           name="term"
@@ -21,13 +25,9 @@ const Term: React.FC<TermProps> = ({ isTermChecked, handleTermCheck }) => {
           checked={isTermChecked}
           onClick={handleTermCheck}
         />
-        <div>
-          {terms}
-          <a href="/" target="_blank">
-            Privacy Policy.
-          </a>
-        </div>
+        <div className="termContent">{termsMessage}</div>
       </div>
+      <textarea readOnly={true}>{TermsOfUse}</textarea>
     </div>
   );
 };

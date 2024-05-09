@@ -12,25 +12,6 @@
   gap: 10px;
 }
 
-.termContainer {
-  display: grid;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-
-.termContainer > label > span {
-  color: red;
-}
-
-.termContent {
-  display: flex;
-  align-items: start;
-}
-
-#term {
-  margin-right: 10px;
-}
-
 .signupBtn {
   text-align: center;
 }

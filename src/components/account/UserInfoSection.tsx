@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChangePasswordSection from "./ChangePasswordSection";
 import InputItem from "@components/common/input/InputItem";
+import customAxios from "../../api/axios";
+import apiRoutes from "../../api/apiRoutes";
+import useLoginStore from "../../store/useStore";
 
 interface isEditProps {
   isEdit: boolean;
@@ -10,13 +13,33 @@ type UserDataType = {
   name: string;
   email: string;
   phone: string;
+  // password: string;
 };
 
 const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
+  useEffect(() => {
+    const loginToken = useLoginStore.getState().loginToken;
+    if (loginToken !== null) {
+      const getUserData = async () => {
+        const response = await customAxios.get(apiRoutes.user);
+        setUserData({
+          ...userData,
+          name: response.data.name,
+          email: response.data.email,
+          phone: response.data.phone_number,
+          // password: response.data.password,
+        });
+        console.log(response.data);
+      };
+      getUserData();
+    }
+  }, []);
+
   const initialUserData = {
     name: "",
     email: "",
     phone: "",
+    // password: "",
   };
   const [userData, setUserData] = useState<UserDataType>(initialUserData);
 

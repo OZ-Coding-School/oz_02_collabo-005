@@ -20,7 +20,7 @@ const useLoginStore = create<LoginState>((set) => {
     loginToken: initialLoginToken,
     setLoginState: (isLogin, loginToken) => {
       set({ isLogin, loginToken });
-      // 로컬 스토리지에 로그인 상태 저장
+      // 로컬 스토리지에 로그인 상태 저장(페이지 새로고침하면 상태가 초기화되는것을 방지)
       localStorage.setItem("isLogin", JSON.stringify(isLogin));
       localStorage.setItem("loginToken", loginToken || ""); // 토큰이 null일 경우를 대비하여 빈 문자열로 저장
     },

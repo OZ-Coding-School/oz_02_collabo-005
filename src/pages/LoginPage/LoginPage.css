@@ -1,5 +1,5 @@
 .logoContainer {
-  margin-top: 20px;
+  margin: 20px 0;
 }
 
 form.loginInputForm {
@@ -7,6 +7,7 @@ form.loginInputForm {
   align-items: center;
   flex-flow: column;
   margin-top: 20px;
+  gap: 30px;
 }
 
 .loginButtonSection,

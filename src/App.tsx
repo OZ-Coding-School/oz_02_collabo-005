@@ -27,11 +27,11 @@ const App: React.FC = () => {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path="/" element={<SplashPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/sign" element={<SignUpPage />} />
           <Route path="/restaurant" element={<RestaurantPage />} />
-          <Route path="/" element={<SplashPage />} />
           <Route path="/address" element={<AddressPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/restaurant/menu" element={<MenuPage />} />

@@ -133,6 +133,8 @@ const SignupPage: React.FC = () => {
     }));
   };
 
+  console.log(userData);
+
   const isValidateEmail = (email: string): boolean => {
     return emailRegex.test(email);
   };

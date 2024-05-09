@@ -30,6 +30,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
 
   const [birthDay, setBirthDay] = useState(birthDayInitialData);
   const [isError, setIsError] = useState(false);
+  const [isErrorMessage, setIsErrorMeassage] = useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -93,9 +94,13 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
 
     return "";
   };
+
   useEffect(() => {
     const birth = birthDay.year + birthDay.month + birthDay.day;
     const error = isValidBirthDay(isError, birth);
+
+    if (error) setIsErrorMeassage(true);
+    else setIsErrorMeassage(false);
 
     handleBirthChange({ value: birth, error });
   }, [birthDay]);
@@ -118,6 +123,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           readOnly={readOnly}
           maxLength={4}
           onChange={handleInputChange}
+          autoComplete="off"
         ></input>
         <input
           type="text"
@@ -128,6 +134,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           readOnly={readOnly}
           maxLength={2}
           onChange={handleInputChange}
+          autoComplete="off"
         ></input>
         <input
           type="text"
@@ -138,9 +145,10 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           readOnly={readOnly}
           maxLength={2}
           onChange={handleInputChange}
+          autoComplete="off"
         ></input>
       </div>
-      {isError && (
+      {isErrorMessage && (
         <div className="birthErrorMessage">
           Please enter your date of birth in the format "2024 01 02"
         </div>

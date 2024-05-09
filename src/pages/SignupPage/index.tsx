@@ -61,14 +61,15 @@ const SignupPage: React.FC = () => {
     setIsTermChecked((prev) => !prev);
   };
 
-  const handleSubmit = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
 
     const userPostData = {
       name: userData.name.value,
       password: userData.password.value,
       email: userData.email.value,
       phone_number: userData.phone.value,
+      birthday: userData.birthDay.value,
     };
 
     try {
@@ -78,9 +79,11 @@ const SignupPage: React.FC = () => {
           apiRoutes.userCreate,
           userPostData
         );
-        // if (response.status === 200) {
-        //   navigate("/login");
-        // }
+        console.log(response);
+        if (response.status === 200) {
+          alert("Membership registration is complete.");
+          navigate("/login");
+        }
       } else {
         alert("Your email has been duplicated.");
         setUserData((prev) => ({
@@ -126,6 +129,8 @@ const SignupPage: React.FC = () => {
       [field]: { value, error },
     }));
   };
+
+  console.log(userData);
 
   const isValidateEmail = (email: string): boolean => {
     return emailRegex.test(email);

@@ -69,11 +69,14 @@ const SignupPage: React.FC = () => {
       password: userData.password.value,
       email: userData.email.value,
       phone_number: userData.phone.value,
-      birthday: userData.birthDay.value,
+      birthday: userData.birthDay.value || null,
     };
+
+    console.log(userPostData);
 
     try {
       const isUnique = await isEmailUnique(userPostData.email);
+      console.log(isUnique);
       if (!isUnique) {
         const response = await customAxios.post(
           apiRoutes.userCreate,
@@ -102,26 +105,26 @@ const SignupPage: React.FC = () => {
   const handleInputChange = (field: string, value: string): void => {
     let error = "";
 
-    switch (field) {
-      case "email":
-        error = !isValidateEmail(value) ? "Invalid email address." : "";
-        console.log(error);
-        break;
-      case "password":
-        error = !isValidatePassword(value)
-          ? "Password must be at least 8 characters long."
-          : "";
-        break;
-      case "repeatPassword":
-        error = !isPasswordMatch(userData.password.value, value)
+    if (field === "email") {
+      error = !isValidateEmail(value) ? "Invalid email address." : "";
+    } else if (field === "password") {
+      if (userData.repeatPassword.value !== "") {
+        userData.repeatPassword.error = !isPasswordMatch(
+          value,
+          userData.repeatPassword.value
+        )
           ? "Passwords do not match."
           : "";
-        break;
-      case "phone":
-        error = !isValidatePhone(value) ? "Invalid phone number." : "";
-        break;
-      default:
-        break;
+      }
+      error = !isValidatePassword(value)
+        ? "Password must be at least 8 characters long."
+        : "";
+    } else if (field === "repeatPassword") {
+      error = !isPasswordMatch(userData.password.value, value)
+        ? "Passwords do not match."
+        : "";
+    } else if (field === "phone") {
+      error = !isValidatePhone(value) ? "Invalid phone number." : "";
     }
 
     setUserData((prev) => ({
@@ -129,8 +132,6 @@ const SignupPage: React.FC = () => {
       [field]: { value, error },
     }));
   };
-
-  console.log(userData);
 
   const isValidateEmail = (email: string): boolean => {
     return emailRegex.test(email);

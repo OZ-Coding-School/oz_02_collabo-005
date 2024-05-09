@@ -6,6 +6,7 @@ import CardManagementSection from "@components/common/addcard/CardManagementSect
 import { useNavigate } from "react-router-dom";
 import Button from "@components/common/button/Button";
 import ProceedModal from "@components/common/modal/ProceedModal";
+import useLoginStore from "../../store/useStore";
 
 const AccountPage: React.FC = () => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -19,8 +20,8 @@ const AccountPage: React.FC = () => {
   const navigate = useNavigate();
 
   // 로그아웃 버튼을 눌렀을 때 호출되는 함수
-  const handleLogOut = (): void => {
-    // 로그아웃 로직 미구현
+  const handleLogOut = async () => {
+    useLoginStore.getState().setLoginState(false, null);
     navigate("/");
   };
 

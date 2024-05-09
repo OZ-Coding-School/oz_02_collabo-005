@@ -2,7 +2,6 @@ const apiRoutes = {
   userCreate: "/user/",
   userCheck: "/user/check/",
   userLogin: "/user/login/",
-  userLogout: "/user/logout/",
   userUpdate: "/user/update/",
   userDelete: "/user/delete/",
   user: "/user/",

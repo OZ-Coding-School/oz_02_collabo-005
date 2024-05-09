@@ -78,9 +78,14 @@ const AccountPage: React.FC = () => {
   };
 
   // 계정삭제 버튼을 눌렀을 때 호출되는 함수
-  const handleDeleteAccount = (): void => {
-    // 계정삭제 로직 미구현
-    navigate("/");
+  const handleDeleteAccount = async () => {
+    try {
+      await customAxios.post(apiRoutes.userDelete);
+      useLoginStore.getState().setLoginState(false, null);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleLeftClick = (): void => {

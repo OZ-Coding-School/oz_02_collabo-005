@@ -30,6 +30,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
 
   const [birthDay, setBirthDay] = useState(birthDayInitialData);
   const [isError, setIsError] = useState(false);
+  const [isErrorMessage, setIsErrorMeassage] = useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -82,10 +83,25 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
     }
   };
 
+  const isValidBirthDay = (isError: boolean, birth: string) => {
+    if (birth.length === 0) {
+      return "";
+    }
+
+    if (isError || birth.length < 8) {
+      return "생년월일이 올바르지 않습니다.";
+    }
+
+    return "";
+  };
+
   useEffect(() => {
     const birth = birthDay.year + birthDay.month + birthDay.day;
-    const error =
-      isError || birth.length < 8 ? "생년월일이 올바르지 않습니다." : "";
+    const error = isValidBirthDay(isError, birth);
+
+    if (error) setIsErrorMeassage(true);
+    else setIsErrorMeassage(false);
+
     handleBirthChange({ value: birth, error });
   }, [birthDay]);
 
@@ -107,6 +123,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           readOnly={readOnly}
           maxLength={4}
           onChange={handleInputChange}
+          autoComplete="off"
         ></input>
         <input
           type="text"
@@ -117,6 +134,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           readOnly={readOnly}
           maxLength={2}
           onChange={handleInputChange}
+          autoComplete="off"
         ></input>
         <input
           type="text"
@@ -127,10 +145,13 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           readOnly={readOnly}
           maxLength={2}
           onChange={handleInputChange}
+          autoComplete="off"
         ></input>
       </div>
-      {isError && (
-        <div>Please enter your date of birth in the format "2024 01 02"</div>
+      {isErrorMessage && (
+        <div className="birthErrorMessage">
+          Please enter your date of birth in the format "2024 01 02"
+        </div>
       )}
     </div>
   );

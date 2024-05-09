@@ -4,7 +4,7 @@ import "./Button.css";
 interface ButtonProps {
   name: string;
   backgroundColor?: string;
-  handleClick: (e: React.MouseEvent) => void;
+  handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   buttonType: string;
   disabled?: boolean;
   type?: Type;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import AddressBar from "@components/address/AddressBar";
 import BackgroundImg from "../../assets/images/restaurantBackgroundImg.png";
@@ -8,6 +8,8 @@ import "./RestaurantPage.css";
 import DropDownButton from "@components/restaurant/DropDownButton";
 import MenuList from "@components/restaurant/MenuList";
 import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
+import apiRoutes from "../../api/apiRoutes";
+import customAxios from "./../../api/axios";
 
 const RestaurantPage: React.FC = () => {
   const categories = [
@@ -23,12 +25,20 @@ const RestaurantPage: React.FC = () => {
   ];
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  console.log(selectedCategory);
 
   const handleMenuCategoryClick = (category: string) => {
     setSelectedCategory(category);
   };
 
-  console.log(selectedCategory);
+  useEffect(() => {
+    const getList = async () => {
+      const response = await customAxios.get(apiRoutes.restaurantList);
+      console.log(response.data);
+    };
+    getList();
+  });
+
   return (
     <div>
       <Header

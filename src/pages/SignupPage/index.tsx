@@ -7,6 +7,8 @@ import { emailRegex, passwordRegex, phoneRegex } from "../../utils/regex";
 import BirthdayInput from "@components/common/input/BirthdayInput";
 import Term from "@components/signup/Term";
 import "./SignupPage.css";
+import customAxios from "./../../api/axios";
+import apiRoutes from "./../../api/apiRoutes";
 
 export type inputType = {
   value: string;
@@ -47,13 +49,10 @@ const SignupPage: React.FC = () => {
   const isAllFieldsValidated = (): boolean => {
     for (const key in userData) {
       const error = userData[key].error;
-      console.log(error);
       if (error !== "") return false;
     }
     return true;
   };
-
-  console.log(userData);
 
   const isButtonActive =
     isAllFieldsFilled() && isAllFieldsValidated() && isTermChecked;
@@ -62,8 +61,42 @@ const SignupPage: React.FC = () => {
     setIsTermChecked((prev) => !prev);
   };
 
-  const handleButtonClick = () => {
-    navigate("/login");
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const userPostData = {
+      name: userData.name.value,
+      password: userData.password.value,
+      email: userData.email.value,
+      phone_number: userData.phone.value,
+      birthday: userData.birthDay.value,
+    };
+
+    try {
+      const isUnique = await isEmailUnique(userPostData.email);
+      if (!isUnique) {
+        const response = await customAxios.post(
+          apiRoutes.userCreate,
+          userPostData
+        );
+        console.log(response);
+        if (response.status === 200) {
+          alert("Membership registration is complete.");
+          navigate("/login");
+        }
+      } else {
+        alert("Your email has been duplicated.");
+        setUserData((prev) => ({
+          ...prev,
+          email: {
+            value: userPostData.email,
+            error: "Your email has been duplicated.",
+          },
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleInputChange = (field: string, value: string): void => {
@@ -71,22 +104,21 @@ const SignupPage: React.FC = () => {
 
     switch (field) {
       case "email":
-        error = !isValidateEmail(value) ? "이메일이 유효하지 않습니다." : "";
+        error = !isValidateEmail(value) ? "Invalid email address." : "";
+        console.log(error);
         break;
       case "password":
         error = !isValidatePassword(value)
-          ? "비밀번호는 8글자 이상 입력해주십시오"
+          ? "Password must be at least 8 characters long."
           : "";
         break;
       case "repeatPassword":
         error = !isPasswordMatch(userData.password.value, value)
-          ? "비밀번호가 일치하지 않습니다."
+          ? "Passwords do not match."
           : "";
         break;
       case "phone":
-        error = !isValidatePhone(value)
-          ? "핸드폰 번호가 유효하지 않습니다."
-          : "";
+        error = !isValidatePhone(value) ? "Invalid phone number." : "";
         break;
       default:
         break;
@@ -98,8 +130,21 @@ const SignupPage: React.FC = () => {
     }));
   };
 
+  console.log(userData);
+
   const isValidateEmail = (email: string): boolean => {
     return emailRegex.test(email);
+  };
+
+  const isEmailUnique = async (email: string) => {
+    try {
+      const response = await customAxios.get(
+        `${apiRoutes.userCheck}?email=${email}`
+      );
+      if (response.status === 200) return response.data.exists;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const isValidatePassword = (password: string): boolean => {
@@ -116,8 +161,6 @@ const SignupPage: React.FC = () => {
   const isValidatePhone = (phone: string): boolean => {
     return phoneRegex.test(phone);
   };
-
-  console.log(userData);
 
   return (
     <>
@@ -197,7 +240,7 @@ const SignupPage: React.FC = () => {
               name="Sign up"
               backgroundColor={isButtonActive ? "#FF6347" : "#767676"}
               buttonType="bigButton"
-              handleClick={handleButtonClick}
+              handleClick={handleSubmit}
               disabled={!isButtonActive}
             />
           </div>

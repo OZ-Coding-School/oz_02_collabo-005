@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ChangePasswordSection from "./ChangePasswordSection";
 import InputItem from "@components/common/input/InputItem";
 import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
 import useLoginStore from "../../store/useStore";
+import { UserDataType } from "../../pages/AccountPage";
 
 interface isEditProps {
   isEdit: boolean;
+  userData: UserDataType;
+  setUserData: React.Dispatch<React.SetStateAction<UserDataType>>;
 }
 
-type UserDataType = {
-  name: string;
-  email: string;
-  phone: string;
-};
-
-const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
+const UserInfoSection: React.FC<isEditProps> = ({
+  isEdit,
+  userData,
+  setUserData,
+}) => {
+  // 처음에 회원가입에서 입력했던 유저 정보(name, email, phone number) 보여주기
   useEffect(() => {
     const loginToken = useLoginStore.getState().loginToken;
     if (loginToken !== null) {
@@ -32,13 +34,6 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
       getUserData();
     }
   }, []);
-
-  const initialUserData = {
-    name: "",
-    email: "",
-    phone: "",
-  };
-  const [userData, setUserData] = useState<UserDataType>(initialUserData);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -86,7 +81,12 @@ const UserInfoSection: React.FC<isEditProps> = ({ isEdit }) => {
           handleInputChange={handleInputChange}
         />
         {/* <BirthdayInput readOnly={!isEdit ? true : false} /> */}
-        {!isEdit ? null : <ChangePasswordSection />}
+        {!isEdit ? null : (
+          <ChangePasswordSection
+            handleInputChange={handleInputChange}
+            userData={userData}
+          />
+        )}
       </form>
     </div>
   );

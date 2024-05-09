@@ -1,34 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import InputItem from "@components/common/input/InputItem";
 import "./ChangePasswordSection.css";
 import { RiInformation2Line } from "react-icons/ri";
+import { UserDataType } from "../../pages/AccountPage";
 
-type UserPassword = {
-  currentPassword: string;
-  newPassword: string;
-};
+interface ChangePasswordSectionProps {
+  userData: UserDataType;
+  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-const ChangePasswordSection: React.FC = () => {
-  false;
-  const initialUserPassword = {
-    currentPassword: "",
-    newPassword: "",
-  };
-  const [userPassword, setUserPassword] =
-    useState<UserPassword>(initialUserPassword);
-
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    event.preventDefault();
-    const inputName = event.target.name;
-    const inputValue = event.target.value;
-    setUserPassword({
-      ...userPassword,
-      [inputName]: inputValue,
-    });
-  };
-
+const ChangePasswordSection: React.FC<ChangePasswordSectionProps> = ({
+  handleInputChange,
+  userData,
+}) => {
   return (
     <div className="changePasswordSection">
       <div className="currentPasswordSection">
@@ -40,7 +24,7 @@ const ChangePasswordSection: React.FC = () => {
           label="Current Password"
           name="currentPassword"
           type="password"
-          value={userPassword.currentPassword}
+          value={userData.currentPassword}
           handleInputChange={handleInputChange}
           isNoStar={true}
           place="Current Password"
@@ -50,7 +34,7 @@ const ChangePasswordSection: React.FC = () => {
         label="Confirm new Password"
         name="newPassword"
         type="password"
-        value={userPassword.newPassword}
+        value={userData.newPassword}
         handleInputChange={handleInputChange}
         isNoStar={true}
         place="New Password"

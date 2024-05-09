@@ -7,6 +7,9 @@ import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
 import FloatingLabelInput from "@components/common/input/FloatingLabelInput";
 import { useNavigate } from "react-router-dom";
 import SocialLoginButton from "../../components/login/SocialLoginButton";
+import apiRoutes from "../../api/apiRoutes";
+import customAxios from "../../api/axios";
+import useLoginStore from "../../store/useStore";
 
 type userDataType = {
   email: string;
@@ -47,12 +50,36 @@ const LoginPage: React.FC = () => {
   const handleGoSignUp = () => {
     navigate("/sign");
   };
+  // console.log(
+  //   useLoginStore.getState().loginToken,
+  //   useLoginStore.getState().isLogin
+  // );
+  const handleLoginButtonClick = async (
+    e: React.MouseEvent<Element, MouseEvent>
+  ) => {
+    e.preventDefault();
+    const postUserData = {
+      email: userData.email,
+      password: userData.password,
+    };
+    try {
+      const response = await customAxios.post(
+        apiRoutes.userLogin,
+        postUserData
+      );
+      if (response.status === 200) {
+        const loginToken = response.data.token.access;
+        useLoginStore.getState().setLoginState(true, loginToken);
+        alert("Login Success!!");
+        navigate("/home");
+      }
+    } catch {
+      alert("Please re-enter your email and password");
+    }
 
-  const handleLogin = () => {
-    // db에 있는 사용자 정보와 비교해 일치하면 /home으로 이동시킴
-    isAllFilled
-      ? navigate("/home")
-      : alert("Please re-enter your email and password.");
+    // 성공응답 받으면 로그인 여부와 token값 저장하고 /home 페이지로 이동(수정해야함)
+    //
+    // navigate("/home");
   };
 
   return (
@@ -85,8 +112,9 @@ const LoginPage: React.FC = () => {
             <Button
               name="Login"
               backgroundColor={isAllFilled ? "#FF6347" : "#767676"}
-              handleClick={handleLogin}
+              handleClick={handleLoginButtonClick}
               buttonType="bigButton"
+              disabled={isAllFilled ? false : true}
             />
           </div>
           <div className="signUpButton">

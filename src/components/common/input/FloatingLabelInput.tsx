@@ -28,6 +28,7 @@ const FloatingLabelInput: React.FC<LoginInputProps> = ({
           name={name}
           id={name}
           value={value}
+          autoComplete="off"
         />
         <label className="formLabel">{label}</label>
       </div>

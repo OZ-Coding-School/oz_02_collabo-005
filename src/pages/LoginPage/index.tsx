@@ -50,10 +50,7 @@ const LoginPage: React.FC = () => {
   const handleGoSignUp = () => {
     navigate("/sign");
   };
-  // console.log(
-  //   useLoginStore.getState().loginToken,
-  //   useLoginStore.getState().isLogin
-  // );
+
   const handleLoginButtonClick = async (
     e: React.MouseEvent<Element, MouseEvent>
   ) => {
@@ -76,10 +73,6 @@ const LoginPage: React.FC = () => {
     } catch {
       alert("Please re-enter your email and password");
     }
-
-    // 성공응답 받으면 로그인 여부와 token값 저장하고 /home 페이지로 이동(수정해야함)
-    //
-    // navigate("/home");
   };
 
   return (

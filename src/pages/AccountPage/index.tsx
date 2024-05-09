@@ -19,6 +19,7 @@ export type UserDataType = {
 };
 
 const AccountPage: React.FC = () => {
+  const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
@@ -35,9 +36,9 @@ const AccountPage: React.FC = () => {
     const putUserData = {
       name: userData.name,
       email: userData.email,
-      phone: userData.phone,
-      currentPassword: userData.currentPassword,
-      newPassword: userData.newPassword,
+      phone_number: userData.phone,
+      current_password: userData.currentPassword,
+      new_password: userData.newPassword,
     };
 
     // edit버튼 클릭했을때
@@ -47,23 +48,28 @@ const AccountPage: React.FC = () => {
     // save버튼을 클릭했을 때
     else {
       const putRes = async () => {
-        const response = await customAxios.put(
-          apiRoutes.userUpdate,
-          putUserData
-        );
-        if (response.status === 200) {
-          alert("Personal information modification successful!");
-          console.log(response);
-        } else {
+        try {
+          const response = await customAxios.put(
+            apiRoutes.userUpdate,
+            putUserData
+          );
+          if (response.status === 200) {
+            alert("Update Complete!!");
+            setIsEdit(false);
+            setUserData({
+              ...userData,
+              currentPassword: "",
+              newPassword: "",
+            });
+            console.log(response);
+          }
+        } catch (error) {
           alert("Current password error");
-          console.log(response);
         }
       };
       putRes();
-      console.log(putUserData);
     }
   };
-  const navigate = useNavigate();
 
   // 로그아웃 버튼을 눌렀을 때 호출되는 함수
   const handleLogOut = async () => {

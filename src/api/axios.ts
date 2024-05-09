@@ -1,11 +1,15 @@
 import axios from "axios";
+import useLoginStore from "../store/useStore";
+
+const loginToken = useLoginStore.getState().loginToken;
+const isLogin = useLoginStore.getState().isLogin;
 
 const customAxios = (() =>
   axios.create({
-    baseURL: import.meta.env.DEV ? "" : "/api",
+    baseURL: import.meta.env.DEV ? "/api/v1" : "",
     headers: {
       "Content-Type": "application/json",
-      Authorization: import.meta.env.VITE_APP_API_TOKEN,
+      Authorization: isLogin ? `Bearer ${loginToken}` : null,
     },
   }))();
 

@@ -1,19 +1,23 @@
-import { useCallback } from "react";
-import { AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
 import customAxios from "../api/axios";
 
 const useGet = (url: string) => {
-  const get = useCallback(async () => {
-    try {
-      const response: AxiosResponse = await customAxios.get(url);
-      return response.data;
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [url]);
+  const [payload, setPayload] = useState(null);
 
-  return get;
+  useEffect(() => {
+    const callUrl = async () => {
+      try {
+        const { data } = await customAxios.get(url);
+        setPayload(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    callUrl();
+  }, [url]); // url이 변경될 때만 호출
+
+  return payload;
 };
 
-export { useGet };
+export default useGet;

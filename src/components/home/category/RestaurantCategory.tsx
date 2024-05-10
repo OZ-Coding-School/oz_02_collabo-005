@@ -10,18 +10,16 @@ import "./RestaurantCategory.css";
 
 interface RestaurantCategoryProps {
   title: string;
-  id?: string;
   restaurants: RestaurantType[];
 }
 
 const RestaurantCategory: React.FC<RestaurantCategoryProps> = ({
   title,
-  id,
   restaurants,
 }) => {
   return (
-    <div className="RestaurantcategoryContainer" id={id}>
-      <h2 className="restaurantRestaurantCategoryTitle">{title}</h2>
+    <div className="restaurantCategoryContainer">
+      <h2 className="restaurantCategoryTitle">{title}</h2>
       <div className="restaurantRow">
         <Swiper
           slidesPerView="auto"

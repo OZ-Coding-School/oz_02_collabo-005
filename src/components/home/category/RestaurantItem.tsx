@@ -16,7 +16,8 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
   const handleRestaurantClick = () => {
     navigate("/restaurant");
   };
-  const descroption = hashtag ? hashtag.join("") : "";
+
+  const description = hashtag ? hashtag.join("") : "";
 
   return (
     <div
@@ -31,7 +32,7 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
       />
       <div className="restaurantInfoSection">
         <p>{name}</p>
-        <p>{descroption}</p>
+        <p>{description}</p>
       </div>
     </div>
   );

@@ -1,36 +1,37 @@
 import React from "react";
 import RestaurantImage from "../../../assets/images/restaurantImg.jpg";
 import "./RestaurantItem.css";
-import { Restaurant } from "../../../pages/HomePage";
 import { useNavigate } from "react-router-dom";
+import { RestaurantType } from "../../../types/types";
 
-interface RestaurantItemProps extends Restaurant {
-  key: number;
-}
+interface RestaurantItemProps extends Omit<RestaurantType, "category"> {}
 
 const RestaurantItem: React.FC<RestaurantItemProps> = ({
+  id,
   name,
-  intro,
-  key,
+  image,
+  hashtag,
 }) => {
   const navigate = useNavigate();
   const handleRestaurantClick = () => {
     navigate("/restaurant");
   };
+  const descroption = hashtag ? hashtag.join("") : "";
+
   return (
     <div
       className="restaurantItemContainer"
-      key={key}
+      key={id}
       onClick={handleRestaurantClick}
     >
       <img
         src={RestaurantImage}
         className="restaurantMainImg"
-        alt="restaurant main image"
+        alt="restaurant main image" //image로 대체
       />
       <div className="restaurantInfoSection">
         <p>{name}</p>
-        <p>{intro}</p>
+        <p>{descroption}</p>
       </div>
     </div>
   );

@@ -1,26 +1,29 @@
 import React from "react";
 import "./MenuItem.css";
 import MenuImg from "../../assets/images/menuImg.png";
+import { MenuType } from "src/types/types";
 
 interface MenuItemProps {
-  label?: string;
+  menu: MenuType;
   handleClick: () => void;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ label, handleClick }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ menu, handleClick }) => {
   return (
     <div className="MenuItemContainer" onClick={handleClick}>
       <div className="menuItemInformation">
         <div className="menuItemTitle">
-          <p className="menuItemName">Menu name</p>
-          {label && <div className="menuItemLabel">{label}</div>}
+          <p className="menuItemName">{menu.name}</p>
+          {menu.represent && (
+            <div className="menuItemLabel">{menu.represent}</div>
+          )}
         </div>
-        <p className="menuItemPrice">14,900 won</p>
-        <div className="menuItemDescription">
-          Bowl of rice topped with bulgogi beef and sauce.
-        </div>
+        <p className="menuItemPrice">{menu.price} won</p>
+        {menu.description && (
+          <div className="menuItemDescription">{menu.description}</div>
+        )}
       </div>
-      <img src={MenuImg} className="menuMainImg" />
+      {menu.picture && <img src={MenuImg} className="menuMainImg" />}
     </div>
   );
 };

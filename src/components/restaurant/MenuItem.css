@@ -1,10 +1,13 @@
 .MenuItemContainer {
   display: flex;
+  justify-content: space-between;
   cursor: pointer;
 }
+
 .menuItemTitle {
   display: flex;
 }
+
 .menuItemLabel {
   font-size: 0.7rem;
   display: inline-block;
@@ -14,6 +17,7 @@
   border-radius: 5px;
   padding: 1px 5px 0px 5px;
   margin-left: 10px;
+  max-height: 22px;
 }
 
 .menuItemName {
@@ -22,6 +26,10 @@
 
 .menuItemPrice {
   font-size: 1rem;
+}
+
+.menuItemDescription {
+  color: grey;
 }
 
 .menuItemName,

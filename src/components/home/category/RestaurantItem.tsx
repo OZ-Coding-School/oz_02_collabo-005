@@ -13,18 +13,15 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
   hashtag,
 }) => {
   const navigate = useNavigate();
-  const handleRestaurantClick = () => {
-    navigate("/restaurant");
+
+  const handleClick = () => {
+    navigate(`/restaurant/${id}`);
   };
 
   const description = hashtag ? hashtag.join("") : "";
 
   return (
-    <div
-      className="restaurantItemContainer"
-      key={id}
-      onClick={handleRestaurantClick}
-    >
+    <div className="restaurantItemContainer" key={id} onClick={handleClick}>
       <img
         src={RestaurantImage}
         className="restaurantMainImg"

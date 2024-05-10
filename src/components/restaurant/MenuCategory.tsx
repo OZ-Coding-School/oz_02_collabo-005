@@ -1,19 +1,20 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
-
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "./MenuCategory.css";
 
 interface MenuCategoryProps {
-  categories: string[];
+  categories: string[] | undefined;
+  selectedCategory?: string;
   handleMenuCategoryClick: (category: string) => void;
 }
 
 const MenuCategory: React.FC<MenuCategoryProps> = ({
   categories,
+  selectedCategory,
   handleMenuCategoryClick,
 }) => {
   return (
@@ -24,10 +25,10 @@ const MenuCategory: React.FC<MenuCategoryProps> = ({
         freeMode={true}
         modules={[FreeMode]}
       >
-        {categories.map((category, index) => (
+        {categories?.map((category) => (
           <SwiperSlide
-            key={index}
-            className="menuCategory"
+            key={category}
+            className={`menuCategory ${selectedCategory === category ? "selected" : ""}`}
             onClick={() => {
               handleMenuCategoryClick(category);
             }}

@@ -31,8 +31,8 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
         alt="restaurant main image" //image로 대체
       />
       <div className="restaurantInfoSection">
-        <p>{name}</p>
-        <p>{description}</p>
+        <p className="RIname">{name}</p>
+        <p className="RIintro">{description}</p>
       </div>
     </div>
   );

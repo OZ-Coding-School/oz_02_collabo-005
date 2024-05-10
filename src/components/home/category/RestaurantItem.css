@@ -10,6 +10,19 @@
   border-radius: 20px;
 }
 
+.restaurantInfoSection {
+  display: grid;
+  gap: 5px;
+}
+
 .restaurantInfoSection > p {
   margin: 0px;
+}
+
+.RIname {
+  font-size: 1.2rem;
+}
+
+.RIintro {
+  color: grey;
 }

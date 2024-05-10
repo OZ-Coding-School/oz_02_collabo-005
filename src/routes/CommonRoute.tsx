@@ -2,19 +2,19 @@ import React from "react";
 import useLoginStore from "../store/useStore";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const ProtectedRoute: React.FC = () => {
+const CommonRoute: React.FC = () => {
   const isLogin = useLoginStore.getState().isLogin;
   const currentLocation = useLocation();
-  // 로그인 상태가 아니면 무조건 로그인 페이지로 리디렉션
+  // 로그인 상태면 무조건 홈으로 리디렉션
   return isLogin ? (
-    <Outlet />
-  ) : (
     <Navigate
-      to={"/login"}
+      to={"/home"}
       replace
       state={{ redirectedFrom: currentLocation }}
     />
+  ) : (
+    <Outlet />
   );
 };
 
-export default ProtectedRoute;
+export default CommonRoute;

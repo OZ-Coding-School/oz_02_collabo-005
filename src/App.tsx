@@ -19,18 +19,19 @@ import ForeignCardPage from "./pages/ForeignCardPage";
 import ScrollToTop from "@components/scrolltotop/ScrollToTop";
 import OrderDetailsPage from "./pages/OrderDetailsPage/index";
 import ProtectedRoute from "./routes/ProtectedRoute";
-// import useLoginStore from "./store/useStore";
+import CommonRoute from "./routes/CommonRoute";
 
 const App: React.FC = () => {
-  // const isLogin: boolean = useLoginStore.getState().isLogin;
   return (
     <Router>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<SplashPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/sign" element={<SignUpPage />} />
+          <Route element={<CommonRoute />}>
+            <Route path="/" element={<SplashPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/sign" element={<SignUpPage />} />
+          </Route>
           {/* 유저 전용 */}
           <Route element={<ProtectedRoute />}>
             <Route path="/home" element={<HomePage />} />

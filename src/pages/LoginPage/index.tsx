@@ -25,8 +25,9 @@ const LoginPage: React.FC = () => {
   };
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
   const [userData, setUserData] = useState(initialUserData);
+  // 현재 페이지의 경로를 가져옴
   const location = useLocation();
-  const from = location?.state?.redirectedFrom?.pathname || "/";
+  const from = location?.state?.redirectedFrom?.pathname || "/home";
 
   useEffect(() => {
     // 모두 입력되어있는지 검사 후 로그인 버튼 활성화

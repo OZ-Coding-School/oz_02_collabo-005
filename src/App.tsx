@@ -18,6 +18,7 @@ import KoreanCardPage from "./pages/KoreanCardPage";
 import ForeignCardPage from "./pages/ForeignCardPage";
 import ScrollToTop from "@components/scrolltotop/ScrollToTop";
 import OrderDetailsPage from "./pages/OrderDetailsPage/index";
+import ProtectedRoute from "./routes/ProtectedRoute";
 // import useLoginStore from "./store/useStore";
 
 const App: React.FC = () => {
@@ -29,19 +30,22 @@ const App: React.FC = () => {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<SplashPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
           <Route path="/sign" element={<SignUpPage />} />
-          <Route path="/restaurant" element={<RestaurantPage />} />
-          <Route path="/address" element={<AddressPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/restaurant/menu" element={<MenuPage />} />
-          <Route path="/order/sheet" element={<OrderSheetPage />} />
-          <Route path="/order/details" element={<OrderDetailsPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/order/status" element={<OrderStatusPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/account/koreanCard" element={<KoreanCardPage />} />
-          <Route path="/account/foreignCard" element={<ForeignCardPage />} />
+          {/* 유저 전용 */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/restaurant" element={<RestaurantPage />} />
+            <Route path="/address" element={<AddressPage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/restaurant/menu" element={<MenuPage />} />
+            <Route path="/order/sheet" element={<OrderSheetPage />} />
+            <Route path="/order/details" element={<OrderDetailsPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/order/status" element={<OrderStatusPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/account/koreanCard" element={<KoreanCardPage />} />
+            <Route path="/account/foreignCard" element={<ForeignCardPage />} />
+          </Route>
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

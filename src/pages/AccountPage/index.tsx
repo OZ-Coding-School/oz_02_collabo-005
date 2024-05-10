@@ -7,17 +7,69 @@ import { useNavigate } from "react-router-dom";
 import Button from "@components/common/button/Button";
 import ProceedModal from "@components/common/modal/ProceedModal";
 import useLoginStore from "../../store/useStore";
+import customAxios from "../../api/axios";
+import apiRoutes from "../../api/apiRoutes";
+
+export type UserDataType = {
+  name: string;
+  email: string;
+  phone: string;
+  currentPassword: string;
+  newPassword: string;
+};
 
 const AccountPage: React.FC = () => {
+  const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
+  const [userData, setUserData] = useState<UserDataType>({
+    name: "",
+    email: "",
+    phone: "",
+    currentPassword: "",
+    newPassword: "",
+  });
 
   // edit이나 save버튼을 눌렀을때 호출되는 함수
   const handleEditChange = (): void => {
-    setIsEdit(!isEdit);
+    const putUserData = {
+      name: userData.name,
+      email: userData.email,
+      phone_number: userData.phone,
+      current_password: userData.currentPassword,
+      new_password: userData.newPassword,
+    };
+
+    // edit버튼 클릭했을때
+    if (isEdit === false) {
+      setIsEdit(true);
+    }
+    // save버튼을 클릭했을 때
+    else {
+      const putRes = async () => {
+        try {
+          const response = await customAxios.put(
+            apiRoutes.userUpdate,
+            putUserData
+          );
+          if (response.status === 200) {
+            alert("Update Complete!!");
+            setIsEdit(false);
+            setUserData({
+              ...userData,
+              currentPassword: "",
+              newPassword: "",
+            });
+            console.log(response);
+          }
+        } catch (error) {
+          alert("Current password error");
+        }
+      };
+      putRes();
+    }
   };
-  const navigate = useNavigate();
 
   // 로그아웃 버튼을 눌렀을 때 호출되는 함수
   const handleLogOut = async () => {
@@ -26,9 +78,14 @@ const AccountPage: React.FC = () => {
   };
 
   // 계정삭제 버튼을 눌렀을 때 호출되는 함수
-  const handleDeleteAccount = (): void => {
-    // 계정삭제 로직 미구현
-    navigate("/");
+  const handleDeleteAccount = async () => {
+    try {
+      await customAxios.post(apiRoutes.userDelete);
+      useLoginStore.getState().setLoginState(false, null);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleLeftClick = (): void => {
@@ -65,7 +122,11 @@ const AccountPage: React.FC = () => {
             type={isEdit ? "submit" : "button"}
           />
         </div>
-        <UserInfoSection isEdit={isEdit} />
+        <UserInfoSection
+          isEdit={isEdit}
+          userData={userData}
+          setUserData={setUserData}
+        />
         <div className="cardManagementSection">
           <CardManagementSection />
         </div>

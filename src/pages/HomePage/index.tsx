@@ -45,7 +45,7 @@ const HomePage: React.FC = () => {
         setCategories({});
         return;
       }
-
+      console.log(restaurants);
       const categoriesSet = new Set();
 
       restaurants.forEach((restaurant) => {

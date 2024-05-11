@@ -22,6 +22,7 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
 
   return (
     <div className="restaurantItemContainer" key={id} onClick={handleClick}>
+      <div className="restaurantMainImg resPreparing">Preparing</div>
       <img
         src={RestaurantImage}
         className="restaurantMainImg"

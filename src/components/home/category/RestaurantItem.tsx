@@ -11,6 +11,7 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
   name,
   image,
   hashtag,
+  status,
 }) => {
   const navigate = useNavigate();
 
@@ -19,9 +20,14 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
   };
 
   const description = hashtag ? hashtag.join("") : "";
+  const isOpen = status === 1;
+  const noticeMessage = status !== 1 && status === 2 ? "Close" : "Preparing";
 
   return (
     <div className="restaurantItemContainer" key={id} onClick={handleClick}>
+      {!isOpen && (
+        <div className="restaurantMainImg resPreparing">{noticeMessage}</div>
+      )}
       <img
         src={RestaurantImage}
         className="restaurantMainImg"

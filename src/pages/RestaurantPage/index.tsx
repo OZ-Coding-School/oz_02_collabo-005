@@ -11,7 +11,7 @@ import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
 import { useParams } from "react-router-dom";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
-import { MenuGroupType, RestaurantInfoType } from "src/types/types";
+import { MenuGroupType, RestaurantInfoType } from "src/types/restaurantTypes";
 
 const RestaurantPage: React.FC = () => {
   const { restaurantId } = useParams();

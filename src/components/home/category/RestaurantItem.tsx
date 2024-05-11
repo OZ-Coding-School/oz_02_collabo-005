@@ -2,7 +2,7 @@ import React from "react";
 import RestaurantImage from "../../../assets/images/restaurantImg.jpg";
 import "./RestaurantItem.css";
 import { useNavigate } from "react-router-dom";
-import { RestaurantType } from "../../../types/types";
+import { RestaurantType } from "../../../types/restaurantTypes";
 
 interface RestaurantItemProps extends Omit<RestaurantType, "category"> {}
 

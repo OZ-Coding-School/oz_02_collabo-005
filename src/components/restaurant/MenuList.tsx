@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import MenuItem from "./MenuItem";
 import "./MenuList.css";
-import { MenuGroupType } from "src/types/types";
+import { MenuGroupType } from "src/types/restaurantTypes";
 
 interface MenuListProps {
   selectedMenuList: MenuGroupType | undefined;

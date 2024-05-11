@@ -1,7 +1,7 @@
 import React from "react";
 import "./MenuItem.css";
 import MenuImg from "../../assets/images/menuImg.png";
-import { MenuType } from "src/types/types";
+import { MenuType } from "src/types/restaurantTypes";
 
 interface MenuItemProps {
   menu: MenuType;
@@ -23,7 +23,10 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu, handleClick }) => {
           <div className="menuItemDescription">{menu.description}</div>
         )}
       </div>
-      {menu.picture && <img src={MenuImg} className="menuMainImg" />}
+      <div className="menuMainImgContainer menuSoldOut">Sold Out</div>
+      {menu.picture && (
+        <img src={MenuImg} className="menuMainImgContainer menuMainImg" />
+      )}
     </div>
   );
 };

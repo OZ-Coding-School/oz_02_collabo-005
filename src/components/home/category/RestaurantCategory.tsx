@@ -2,7 +2,7 @@ import React from "react";
 import RestaurantItem from "./RestaurantItem";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
-import { RestaurantType } from "../../../types/types";
+import { RestaurantType } from "../../../types/restaurantTypes";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";

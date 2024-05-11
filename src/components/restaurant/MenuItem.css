@@ -37,8 +37,20 @@
   margin: 0;
 }
 
-.menuMainImg {
+.menuMainImgContainer {
   width: 120px;
   height: 120px;
   border-radius: 5px;
+}
+
+.menuSoldOut {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.596);
+  opacity: 100;
+  color: white;
+  z-index: 900;
 }

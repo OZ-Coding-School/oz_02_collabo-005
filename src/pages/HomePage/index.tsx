@@ -7,7 +7,7 @@ import AddressBar from "@components/address/AddressBar";
 import apiRoutes from "../../api/apiRoutes";
 import customAxios from "./../../api/axios";
 import "./HomePage.css";
-import { RestaurantType } from "../../types/types";
+import { RestaurantType } from "../../types/restaurantTypes";
 
 export type BannerType = {
   name: string;

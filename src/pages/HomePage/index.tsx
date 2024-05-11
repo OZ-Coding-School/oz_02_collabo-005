@@ -21,11 +21,11 @@ const HomePage: React.FC = () => {
   ];
 
   const [restaurants, setRestaurants] = useState<RestaurantType[]>();
-
   const [categories, setCategories] = useState<{
     [key: string]: RestaurantType[];
   }>({});
 
+  // 레스토랑 리스트 get해오는 함수
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
@@ -39,32 +39,51 @@ const HomePage: React.FC = () => {
     fetchRestaurants();
   }, []);
 
+  // 레스토랑 리스트에서 카테고리만 추출 & 카테고리에 따라 재정렬
   useEffect(() => {
-    const extractCategories = () => {
-      if (!restaurants || restaurants.length === 0) {
-        setCategories({});
-        return;
-      }
-      console.log(restaurants);
-      const categoriesSet = new Set();
+    if (restaurants !== undefined) {
+      const extractCategories = () => {
+        const categoriesSet = new Set();
 
-      restaurants.forEach((restaurant) => {
-        restaurant.category.forEach((category) => {
-          categoriesSet.add(category);
+        restaurants.forEach((restaurant) => {
+          restaurant.category.forEach((category) => {
+            categoriesSet.add(category);
+          });
         });
-      });
 
-      const updatedCategories: { [key: string]: RestaurantType[] } = {};
+        const updatedCategories: { [key: string]: RestaurantType[] } = {};
 
-      Array.from(categoriesSet).forEach((category) => {
-        const categoryRes = restaurants.filter((restaurant) =>
-          restaurant.category.includes(category)
-        );
-        updatedCategories[category] = categoryRes;
-      });
-      setCategories(updatedCategories);
-    };
-    extractCategories();
+        Array.from(categoriesSet).forEach((category) => {
+          const categoryResWithOpeningStatus = restaurants.filter(
+            (restaurant) => {
+              return (
+                restaurant.category.includes(category) &&
+                restaurant.status === 1
+              );
+            }
+          );
+
+          const categoryResWithOtherStatus = restaurants.filter(
+            (restaurant) => {
+              return (
+                restaurant.category.includes(category) &&
+                restaurant.status !== 1
+              );
+            }
+          );
+
+          const categoryRes = categoryResWithOpeningStatus.concat(
+            categoryResWithOtherStatus
+          );
+
+          console.log(categoryRes);
+
+          updatedCategories[category] = categoryRes;
+        });
+        setCategories(updatedCategories);
+      };
+      extractCategories();
+    }
   }, [restaurants]);
 
   return (

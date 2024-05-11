@@ -5,21 +5,27 @@ import { MenuType } from "src/types/restaurantTypes";
 
 interface MenuItemProps {
   menu: MenuType;
+  isPreparing: boolean;
   handleClick: () => void;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ menu, handleClick }) => {
+const MenuItem: React.FC<MenuItemProps> = ({
+  menu,
+  handleClick,
+  isPreparing,
+}) => {
   // 메뉴 품절 여부
   const isSoldOut = menu.status === 2;
   // 메뉴 숨김 여부
   const isHidden = menu.status === 3;
   if (isHidden) return;
 
+  console.log(isPreparing);
   return (
     <div
       className="MenuItemContainer"
       onClick={() => {
-        if (!isSoldOut) handleClick();
+        if (!isSoldOut && !isPreparing) handleClick();
       }}
     >
       <div className="menuItemInformation">

@@ -19,6 +19,7 @@ const RestaurantPage: React.FC = () => {
   const [categories, setCategories] = useState<string[]>();
   const [selectedMenuList, setSelectedMenuList] = useState<MenuGroupType>();
   const [operatingHours, setOperatingHours] = useState<string>();
+  const [isPreparing, setIsPreparing] = useState<boolean>(true);
 
   const handleMenuCategoryClick = (event: string) => {
     setSelectedMenuList(getMenuList(event));
@@ -69,14 +70,17 @@ const RestaurantPage: React.FC = () => {
 
   // 메뉴 카테고리 추출 & 카테고리 초기값 설정해주는 함수
   useEffect(() => {
+    console.log(isPreparing);
     console.log(restaurantInfo);
-    const extractCategories = () => {
-      const menuCategories = restaurantInfo?.menu_group_list.map(
-        (menuGroup) => menuGroup.name
-      );
-      setCategories(menuCategories);
-    };
-    extractCategories();
+    if (restaurantInfo !== undefined) {
+      const extractCategories = () => {
+        const menuCategories = restaurantInfo?.menu_group_list.map(
+          (menuGroup) => menuGroup.name
+        );
+        setCategories(menuCategories);
+      };
+      extractCategories();
+    }
   }, [restaurantInfo]);
 
   useEffect(() => {
@@ -87,8 +91,14 @@ const RestaurantPage: React.FC = () => {
 
     const openingTime = checkAmOrPm(openHour, openMin);
     const closingTime = checkAmOrPm(closeHour, closeMin);
-    console.log(restaurantInfo?.opening_time, restaurantInfo?.closing_time);
+
     setOperatingHours(`${openingTime} ~ ${closingTime}`);
+  }, [restaurantInfo]);
+
+  useEffect(() => {
+    if (restaurantInfo !== undefined && restaurantInfo.status !== undefined) {
+      setIsPreparing(restaurantInfo.status !== 1);
+    }
   }, [restaurantInfo]);
 
   return (
@@ -123,8 +133,19 @@ const RestaurantPage: React.FC = () => {
               {restaurantInfo?.description}
             </div>
             <div className="notificationMessage">
-              *Free delivery minimum fee {restaurantInfo?.minimum_order_amount}
-              won
+              {isPreparing && (
+                <div>
+                  Operating Status:{" "}
+                  <span className="preparingMessage">
+                    Currently under preparation
+                  </span>
+                </div>
+              )}
+              <div className="deliveryMinimumFee">
+                *Free delivery minimum fee{" "}
+                {restaurantInfo?.minimum_order_amount}
+                won
+              </div>
             </div>
             <DropDownButton origin={restaurantInfo?.notice} />
           </div>
@@ -135,7 +156,10 @@ const RestaurantPage: React.FC = () => {
             selectedCategory={selectedMenuList?.name}
             handleMenuCategoryClick={handleMenuCategoryClick}
           />
-          <MenuList selectedMenuList={selectedMenuList} />
+          <MenuList
+            selectedMenuList={selectedMenuList}
+            isPreparing={isPreparing}
+          />
         </div>
       </div>
     </div>

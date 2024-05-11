@@ -44,6 +44,16 @@
 }
 
 .notificationMessage {
+  display: grid;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.preparingMessage {
+  color: red;
+  font-weight: 600;
+}
+
+.deliveryMinimumFee {
   color: #a3a3a3;
-  margin-top: 10px;
 }

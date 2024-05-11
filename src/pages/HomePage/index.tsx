@@ -30,6 +30,7 @@ const HomePage: React.FC = () => {
     const fetchRestaurants = async () => {
       try {
         const response = await customAxios.get(apiRoutes.restaurantList);
+        console.log(response);
         if (response.status !== 200) throw new Error("예외가 발생했습니다.");
         setRestaurants(response.data);
       } catch (error) {

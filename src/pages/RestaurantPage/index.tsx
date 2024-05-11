@@ -18,6 +18,7 @@ const RestaurantPage: React.FC = () => {
   const [restaurantInfo, setRestaurantInfo] = useState<RestaurantInfoType>();
   const [categories, setCategories] = useState<string[]>();
   const [selectedMenuList, setSelectedMenuList] = useState<MenuGroupType>();
+  const [operatingHours, setOperatingHours] = useState<string>();
 
   const handleMenuCategoryClick = (event: string) => {
     setSelectedMenuList(getMenuList(event));
@@ -30,6 +31,26 @@ const RestaurantPage: React.FC = () => {
     return menuList;
   };
 
+  const checkAmOrPm = (
+    hour: string | undefined,
+    min: string | undefined
+  ): string => {
+    let openingTime = "";
+    if (hour !== undefined && parseInt(hour)) {
+      if (parseInt(hour) < 12) {
+        openingTime = `am ${hour}:${min}`;
+      } else if (parseInt(hour) === 12) {
+        openingTime = `pm ${String(parseInt(hour))}:${min}`;
+      } else if (parseInt(hour) === 24) {
+        openingTime = `am 00:${min}`;
+      } else {
+        openingTime = `pm ${String(parseInt(hour) - 12)}:${min}`;
+      }
+    }
+    return openingTime;
+  };
+
+  // 레스토랑 메뉴 가져오는 함수
   useEffect(() => {
     const getRestaurantMenus = async () => {
       try {
@@ -38,6 +59,7 @@ const RestaurantPage: React.FC = () => {
         );
         if (response.status !== 200) throw new Error("예외가 발생했습니다.");
         setRestaurantInfo(response.data);
+        setSelectedMenuList(response.data?.menu_group_list[0]);
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);
       }
@@ -45,8 +67,8 @@ const RestaurantPage: React.FC = () => {
     getRestaurantMenus();
   }, []);
 
+  // 메뉴 카테고리 추출 & 카테고리 초기값 설정해주는 함수
   useEffect(() => {
-    setSelectedMenuList(restaurantInfo?.menu_group_list[0]);
     console.log(restaurantInfo);
     const extractCategories = () => {
       const menuCategories = restaurantInfo?.menu_group_list.map(
@@ -55,6 +77,18 @@ const RestaurantPage: React.FC = () => {
       setCategories(menuCategories);
     };
     extractCategories();
+  }, [restaurantInfo]);
+
+  useEffect(() => {
+    const openHour = restaurantInfo?.opening_time.slice(0, 2);
+    const openMin = restaurantInfo?.opening_time.slice(3, 5);
+    const closeHour = restaurantInfo?.closing_time.slice(0, 2);
+    const closeMin = restaurantInfo?.closing_time.slice(3, 5);
+
+    const openingTime = checkAmOrPm(openHour, openMin);
+    const closingTime = checkAmOrPm(closeHour, closeMin);
+    console.log(restaurantInfo?.opening_time, restaurantInfo?.closing_time);
+    setOperatingHours(`${openingTime} ~ ${closingTime}`);
   }, [restaurantInfo]);
 
   return (
@@ -71,17 +105,19 @@ const RestaurantPage: React.FC = () => {
           <div className="restaurantImgContainer">
             <img
               src={BackgroundImg}
-              alt="레스토랑 배경 이미지"
+              alt="레스토랑 배경 이미지" // 추후에 restaurantInfo.image로 교체
               className="restaurantBackgroundImg"
             />
             <div className="restaurantLogoImgContainer">
-              <RestaurantLogo src={LogoImg} />
+              <RestaurantLogo
+                src={LogoImg} // 추후에 restaurantInfo.logo로 교체
+              />
             </div>
           </div>
           <div className="restaurantProfile">
             <div className="restaurantDetails">
               <h2 className="restaurantName">{restaurantInfo?.name}</h2>
-              <p className="businessHours">10 a.m~20 p.m</p>
+              <p className="businessHours">{operatingHours}</p>
             </div>
             <div className="restaurantIntroduction">
               {restaurantInfo?.description}

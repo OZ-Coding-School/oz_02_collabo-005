@@ -9,8 +9,19 @@ interface MenuItemProps {
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({ menu, handleClick }) => {
+  // 메뉴 품절 여부
+  const isSoldOut = menu.status === 2;
+  // 메뉴 숨김 여부
+  const isHidden = menu.status === 3;
+  if (isHidden) return;
+
   return (
-    <div className="MenuItemContainer" onClick={handleClick}>
+    <div
+      className="MenuItemContainer"
+      onClick={() => {
+        if (!isSoldOut) handleClick();
+      }}
+    >
       <div className="menuItemInformation">
         <div className="menuItemTitle">
           <p className="menuItemName">{menu.name}</p>
@@ -23,8 +34,11 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu, handleClick }) => {
           <div className="menuItemDescription">{menu.description}</div>
         )}
       </div>
-      <div className="menuMainImgContainer menuSoldOut">Sold Out</div>
+      {isSoldOut && (
+        <div className="menuMainImgContainer menuSoldOut">Sold Out</div>
+      )}
       {menu.picture && (
+        // img src 추후에 menu.picture로 교체
         <img src={MenuImg} className="menuMainImgContainer menuMainImg" />
       )}
     </div>

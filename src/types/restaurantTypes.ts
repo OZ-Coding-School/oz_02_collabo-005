@@ -11,7 +11,11 @@ export type RestaurantInfoType = {
   name: string;
   notice: string;
   image: string;
+  logo: string;
   description: string;
+  status: number;
+  opening_time: string;
+  closing_time: string;
   minimum_order_amount: number;
   menu_group_list: MenuGroupType[];
 };

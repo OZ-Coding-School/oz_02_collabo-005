@@ -2,6 +2,7 @@ export type RestaurantType = {
   id: number;
   name: string;
   image: string;
+  status: number;
   category: string[];
   hashtag: string[];
 };

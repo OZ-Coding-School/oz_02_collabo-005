@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import "./AccountPage.css";
 import UserInfoSection from "@components/account/UserInfoSection";
@@ -9,36 +9,85 @@ import ProceedModal from "@components/common/modal/ProceedModal";
 import useLoginStore from "../../store/useStore";
 import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
+import { inputType } from "../SignupPage";
 
 export type UserDataType = {
-  name: string;
-  email: string;
-  phone: string;
-  currentPassword: string;
-  newPassword: string;
+  name: inputType;
+  email: inputType;
+  phone: inputType;
+  currentPassword: inputType;
+  newPassword: inputType;
+  birthDay: inputType;
+  [key: string]: inputType;
 };
 
 const AccountPage: React.FC = () => {
   const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [preEmail, setPreEmail] = useState<string>("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserDataType>({
-    name: "",
-    email: "",
-    phone: "",
-    currentPassword: "",
-    newPassword: "",
+    name: { value: "", error: "" },
+    email: { value: "", error: "" },
+    currentPassword: { value: "", error: "" },
+    newPassword: { value: "", error: "" },
+    phone: { value: "", error: "" },
+    birthDay: { value: "", error: "" },
   });
 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  useEffect(() => {
+    const loginToken = useLoginStore.getState().loginToken;
+    if (loginToken !== null) {
+      const getUserData = async () => {
+        const response = await customAxios.get(apiRoutes.user);
+        setPreEmail(response.data.email);
+        setUserData({
+          ...userData,
+          name: { value: response.data.name, error: "" },
+          email: { value: response.data.email, error: "" },
+          phone: { value: response.data.phone_number, error: "" },
+          birthDay: { value: response.data.birthday, error: "" },
+        });
+        setIsLoading(false);
+      };
+      getUserData();
+    }
+  }, []);
+
+  const isAllFieldsValidated = (): boolean => {
+    for (const key in userData) {
+      const error = userData[key].error;
+      if (error !== "") return false;
+    }
+    return true;
+  };
+
+  const isEmailUnique = async (email: string) => {
+    if (preEmail === email) {
+      return true;
+    } else {
+      try {
+        const response = await customAxios.get(
+          `${apiRoutes.userCheck}?email=${email}`
+        );
+        if (response.status === 200) return !response.data.exists;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   // edit이나 save버튼을 눌렀을때 호출되는 함수
-  const handleEditChange = (): void => {
+  const handleEditChange = async () => {
     const putUserData = {
-      name: userData.name,
-      email: userData.email,
-      phone_number: userData.phone,
-      current_password: userData.currentPassword,
-      new_password: userData.newPassword,
+      name: userData.name.value,
+      email: userData.email.value,
+      phone_number: userData.phone.value,
+      current_password: userData.currentPassword.value,
+      new_password: userData.newPassword.value,
+      birthDay: userData.birthDay.value || null,
     };
 
     // edit버튼 클릭했을때
@@ -47,27 +96,58 @@ const AccountPage: React.FC = () => {
     }
     // save버튼을 클릭했을 때
     else {
-      const putRes = async () => {
+      if (
+        isAllFieldsValidated() &&
+        userData.email.value !== "" &&
+        userData.name.value !== "" &&
+        userData.phone.value !== ""
+      ) {
         try {
-          const response = await customAxios.put(
-            apiRoutes.userUpdate,
-            putUserData
-          );
-          if (response.status === 200) {
-            alert("Update Complete!!");
-            setIsEdit(false);
-            setUserData({
-              ...userData,
-              currentPassword: "",
-              newPassword: "",
-            });
+          const isUnique = await isEmailUnique(putUserData.email);
+          if (isUnique) {
+            const response = await customAxios.put(
+              apiRoutes.userUpdate,
+              putUserData
+            );
             console.log(response);
+            if (response.status === 200) {
+              alert("Update Complete!!");
+              setIsEdit(false);
+              setUserData({
+                ...userData,
+                currentPassword: { value: "", error: "" },
+                newPassword: { value: "", error: "" },
+              });
+              console.log(response);
+            }
+          } else {
+            alert("Your email has been duplicated.");
+            setUserData((prev) => ({
+              ...prev,
+              email: {
+                value: putUserData.email,
+                error: "Your email has been duplicated.",
+              },
+            }));
           }
         } catch (error) {
-          alert("Current password error");
+          console.log(userData);
+          if (
+            userData.currentPassword.value !== "" &&
+            userData.newPassword.value !== ""
+          ) {
+            alert("Current password error");
+          } else {
+            alert(
+              "You must enter both the current password and the new password."
+            );
+          }
         }
-      };
-      putRes();
+      } else {
+        alert(
+          "Please fill in all the fields for name, email, and phone number correctly.."
+        );
+      }
     }
   };
 
@@ -111,59 +191,62 @@ const AccountPage: React.FC = () => {
   };
 
   return (
-    <>
-      <Header hasBackIcon={true} title="Account" hasCartIcon={false} />
-      <div className="accountMainContainer">
-        <div className="editButtonSection">
-          <Button
-            name={isEdit ? "Save" : "Edit"}
-            handleClick={handleEditChange}
-            buttonType="smallButton"
-            type={isEdit ? "submit" : "button"}
-          />
-        </div>
-        <UserInfoSection
-          isEdit={isEdit}
-          userData={userData}
-          setUserData={setUserData}
-        />
-        <div className="cardManagementSection">
-          <CardManagementSection />
-        </div>
-        <div className="signOutSection">
-          <Button
-            name="Log Out"
-            handleClick={openLogoutModal}
-            buttonType="smallButton"
-          />
-          {isLogoutModalOpen && (
-            <ProceedModal
-              onClose={closeLogoutModal}
-              proceedQuestionText="Are you sure you want to proceed?"
-              leftButtonText="No, cancel"
-              rightButtonText="Yes, confirm"
-              handleLeftClick={handleLeftClick}
-              handleRightClick={handleLogOut}
+    !isLoading && (
+      <>
+        <Header hasBackIcon={true} title="Account" hasCartIcon={false} />
+        <div className="accountMainContainer">
+          <div className="editButtonSection">
+            <Button
+              name={isEdit ? "Save" : "Edit"}
+              handleClick={handleEditChange}
+              buttonType="smallButton"
+              disabled={isAllFieldsValidated() ? false : true}
+              type={isEdit ? "submit" : "button"}
             />
-          )}
-          <Button
-            name="Delete Account"
-            handleClick={openDeleteModal}
-            buttonType="smallButton"
+          </div>
+          <UserInfoSection
+            isEdit={isEdit}
+            userData={userData}
+            setUserData={setUserData}
           />
-          {isDeleteModalOpen && (
-            <ProceedModal
-              onClose={closeDeleteModal}
-              proceedQuestionText="Are you sure you want to proceed?"
-              leftButtonText="No, cancel"
-              rightButtonText="Yes, confirm"
-              handleLeftClick={handleLeftClick}
-              handleRightClick={handleDeleteAccount}
+          <div className="cardManagementSection">
+            <CardManagementSection />
+          </div>
+          <div className="signOutSection">
+            <Button
+              name="Log Out"
+              handleClick={openLogoutModal}
+              buttonType="smallButton"
             />
-          )}
+            {isLogoutModalOpen && (
+              <ProceedModal
+                onClose={closeLogoutModal}
+                proceedQuestionText="Are you sure you want to proceed?"
+                leftButtonText="No, cancel"
+                rightButtonText="Yes, confirm"
+                handleLeftClick={handleLeftClick}
+                handleRightClick={handleLogOut}
+              />
+            )}
+            <Button
+              name="Delete Account"
+              handleClick={openDeleteModal}
+              buttonType="smallButton"
+            />
+            {isDeleteModalOpen && (
+              <ProceedModal
+                onClose={closeDeleteModal}
+                proceedQuestionText="Are you sure you want to proceed?"
+                leftButtonText="No, cancel"
+                rightButtonText="Yes, confirm"
+                handleLeftClick={handleLeftClick}
+                handleRightClick={handleDeleteAccount}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    )
   );
 };
 

@@ -1,17 +1,17 @@
+import centerLocation from "../../constants/location";
+
 const calculateDistance = (
-  originLat: number,
-  originLng: number,
   destinationLat: number,
   destinationLng: number
 ): number => {
   // 지구 반지름(km)
   const R: number = 6371;
   // 위도와 경도 차이를 라디안 단위로 변환
-  const dLat = deg2rad(destinationLat - originLat);
-  const dLon = deg2rad(destinationLng - originLng);
+  const dLat = deg2rad(destinationLat - centerLocation.lat);
+  const dLon = deg2rad(destinationLng - centerLocation.lng);
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(deg2rad(originLat)) *
+    Math.cos(deg2rad(centerLocation.lat)) *
       Math.cos(deg2rad(destinationLat)) *
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2);
@@ -26,17 +26,10 @@ const deg2rad = (deg: number): number => {
 
 // 두 지점 사이의 거리를 계산
 const isWithinOneKm = (
-  originLat: number,
-  originLng: number,
   destinationLat: number,
   destinationLng: number
 ): boolean => {
-  const distance = calculateDistance(
-    originLat,
-    originLng,
-    destinationLat,
-    destinationLng
-  );
+  const distance = calculateDistance(destinationLat, destinationLng);
   return distance <= 1;
 };
 

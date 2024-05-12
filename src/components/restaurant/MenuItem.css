@@ -1,10 +1,13 @@
 .MenuItemContainer {
   display: flex;
+  justify-content: space-between;
   cursor: pointer;
 }
+
 .menuItemTitle {
   display: flex;
 }
+
 .menuItemLabel {
   font-size: 0.7rem;
   display: inline-block;
@@ -14,6 +17,7 @@
   border-radius: 5px;
   padding: 1px 5px 0px 5px;
   margin-left: 10px;
+  max-height: 22px;
 }
 
 .menuItemName {
@@ -24,13 +28,29 @@
   font-size: 1rem;
 }
 
+.menuItemDescription {
+  color: grey;
+}
+
 .menuItemName,
 .menuItemPrice {
   margin: 0;
 }
 
-.menuMainImg {
+.menuMainImgContainer {
   width: 120px;
   height: 120px;
   border-radius: 5px;
+}
+
+.menuSoldOut {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.596);
+  opacity: 100;
+  color: white;
+  z-index: 900;
 }

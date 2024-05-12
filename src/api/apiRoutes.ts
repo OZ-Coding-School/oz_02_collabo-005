@@ -8,7 +8,7 @@ const apiRoutes = {
   address: "/address/",
   addressUpdate: "/address/update/",
   restaurantList: "/restaurant/list/",
-  menuList: "/menu/list/",
+  menuList: "/restaurant/detail",
   menuCheck: "/menu/check/",
   optionList: "/option/list/",
   payRead: "/pay/read/",

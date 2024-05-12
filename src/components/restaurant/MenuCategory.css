@@ -1,4 +1,11 @@
 .menuCategory {
   width: fit-content !important;
   text-align: center;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.selected {
+  font-weight: 600;
+  border-bottom: 3px solid gray;
 }

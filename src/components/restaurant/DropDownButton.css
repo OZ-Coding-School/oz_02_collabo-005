@@ -11,7 +11,7 @@
   color: rgb(155, 155, 155);
 }
 
-.dropbtn {
+.dropBtn {
   display: flex;
   align-self: center;
   padding: 0px;
@@ -26,16 +26,10 @@
   right: 0px;
   z-index: 1000;
   background-color: white;
+  padding: 20px;
+  word-wrap: break-word;
 }
 
 .open {
   display: block;
-}
-
-.dropdownList {
-  padding: 0px 40px;
-}
-
-.dropdownList > li {
-  overflow-wrap: break-word;
 }

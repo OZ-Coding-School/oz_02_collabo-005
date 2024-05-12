@@ -35,9 +35,12 @@ const App: React.FC = () => {
           {/* 유저 전용 */}
           <Route element={<ProtectedRoute />}>
             <Route path="/home" element={<HomePage />} />
-            <Route path="/restaurant" element={<RestaurantPage />} />
             <Route path="/address" element={<AddressPage />} />
             <Route path="/account" element={<AccountPage />} />
+            <Route
+            path="/restaurant/:restaurantId"
+            element={<RestaurantPage />}
+          />
             <Route path="/restaurant/menu" element={<MenuPage />} />
             <Route path="/order/sheet" element={<OrderSheetPage />} />
             <Route path="/order/details" element={<OrderDetailsPage />} />

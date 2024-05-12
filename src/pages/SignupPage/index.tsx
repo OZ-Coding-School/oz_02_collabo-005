@@ -77,7 +77,7 @@ const SignupPage: React.FC = () => {
     try {
       const isUnique = await isEmailUnique(userPostData.email);
       console.log(isUnique);
-      if (!isUnique) {
+      if (isUnique) {
         const response = await customAxios.post(
           apiRoutes.userCreate,
           userPostData
@@ -144,7 +144,7 @@ const SignupPage: React.FC = () => {
       const response = await customAxios.get(
         `${apiRoutes.userCheck}?email=${email}`
       );
-      if (response.status === 200) return response.data.exists;
+      if (response.status === 200) return !response.data.exists;
     } catch (error) {
       console.log(error);
     }

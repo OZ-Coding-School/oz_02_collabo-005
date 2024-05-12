@@ -54,12 +54,12 @@ const SignupPage: React.FC = () => {
     return true;
   };
 
-  const isButtonActive =
-    isAllFieldsFilled() && isAllFieldsValidated() && isTermChecked;
-
   const handleTermCheck = (): void => {
     setIsTermChecked((prev) => !prev);
   };
+
+  const isButtonActive =
+    isAllFieldsFilled() && isAllFieldsValidated() && isTermChecked;
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ChangePasswordSection from "./ChangePasswordSection";
 import InputItem from "@components/common/input/InputItem";
-import customAxios from "../../api/axios";
-import apiRoutes from "../../api/apiRoutes";
-import useLoginStore from "../../store/useStore";
 import { UserDataType } from "../../pages/AccountPage";
+import { emailRegex, passwordRegex, phoneRegex } from "../../utils/regex";
+import BirthdayInput from "@components/common/input/BirthdayInput";
 
 interface isEditProps {
   isEdit: boolean;
@@ -17,34 +16,45 @@ const UserInfoSection: React.FC<isEditProps> = ({
   userData,
   setUserData,
 }) => {
-  // 처음에 회원가입에서 입력했던 유저 정보(name, email, phone number) 보여주기
-  useEffect(() => {
-    const loginToken = useLoginStore.getState().loginToken;
-    if (loginToken !== null) {
-      const getUserData = async () => {
-        const response = await customAxios.get(apiRoutes.user);
-        setUserData({
-          ...userData,
-          name: response.data.name,
-          email: response.data.email,
-          phone: response.data.phone_number,
-        });
-        console.log(response.data);
-      };
-      getUserData();
-    }
-  }, []);
+  const handleInputChange = (field: string, value: string): void => {
+    let error = "";
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    event.preventDefault();
-    const inputName = event.target.name;
-    const inputValue = event.target.value;
-    setUserData({
-      ...userData,
-      [inputName]: inputValue,
-    });
+    if (field === "email") {
+      error = !isValidateEmail(value) ? "Invalid email address." : "";
+    } else if (value && field === "currentPassword") {
+      error = !isValidatePassword(value)
+        ? "Password must be at least 8 characters long."
+        : "";
+    } else if (value && field === "newPassword") {
+      error = !isValidatePassword(value)
+        ? "Password must be at least 8 characters long."
+        : "";
+
+      if (userData.currentPassword.value) {
+        if (userData.currentPassword.value === value) {
+          error = "It has to be different from the current password.";
+        }
+      }
+    } else if (field === "phone") {
+      error = !isValidatePhone(value) ? "Invalid phone number." : "";
+    }
+
+    setUserData((prev) => ({
+      ...prev,
+      [field]: { value, error },
+    }));
+  };
+
+  const isValidateEmail = (email: string): boolean => {
+    return emailRegex.test(email);
+  };
+
+  const isValidatePassword = (password: string): boolean => {
+    return passwordRegex.test(password);
+  };
+
+  const isValidatePhone = (phone: string): boolean => {
+    return phoneRegex.test(phone);
   };
 
   return (
@@ -54,33 +64,49 @@ const UserInfoSection: React.FC<isEditProps> = ({
           label="Name"
           name="name"
           type="text"
-          value={userData.name}
-          place="name"
+          value={userData.name.value}
           isNoStar={true}
+          place="Please enter your name"
           readOnly={!isEdit ? true : false}
-          handleInputChange={handleInputChange}
+          handleInputChange={(e) => {
+            handleInputChange("name", e.target.value);
+          }}
         />
         <InputItem
           label="E-Mail"
           name="email"
           type="email"
-          value={userData.email}
-          place="E-Mail"
+          value={userData.email.value}
+          className={userData.email.error ? "error" : ""}
+          errorMessage={userData.email.error}
           isNoStar={true}
+          place="ex) abcd1234@gmail.com"
           readOnly={!isEdit ? true : false}
-          handleInputChange={handleInputChange}
+          handleInputChange={(e) => {
+            handleInputChange("email", e.target.value);
+          }}
         />
         <InputItem
           label="Phone Number"
           name="phone"
-          type="number"
-          value={userData.phone}
-          place="Phone Number"
+          type="text"
+          value={userData.phone.value}
+          className={userData.phone.error ? "error" : ""}
+          errorMessage={userData.phone.error}
           isNoStar={true}
+          place="Please enter except for hyphen (-)"
           readOnly={!isEdit ? true : false}
-          handleInputChange={handleInputChange}
+          handleInputChange={(e) => {
+            handleInputChange("phone", e.target.value);
+          }}
         />
-        {/* <BirthdayInput readOnly={!isEdit ? true : false} /> */}
+        <BirthdayInput
+          readOnly={!isEdit ? true : false}
+          handleBirthChange={(birthDay) =>
+            setUserData((prev) => ({ ...prev, birthDay }))
+          }
+          value={userData.birthDay.value}
+        />
         {!isEdit ? null : (
           <ChangePasswordSection
             handleInputChange={handleInputChange}

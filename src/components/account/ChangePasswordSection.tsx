@@ -6,7 +6,7 @@ import { UserDataType } from "../../pages/AccountPage";
 
 interface ChangePasswordSectionProps {
   userData: UserDataType;
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (field: string, value: string) => void;
 }
 
 const ChangePasswordSection: React.FC<ChangePasswordSectionProps> = ({
@@ -24,20 +24,28 @@ const ChangePasswordSection: React.FC<ChangePasswordSectionProps> = ({
           label="Current Password"
           name="currentPassword"
           type="password"
-          value={userData.currentPassword}
-          handleInputChange={handleInputChange}
+          value={userData.currentPassword.value}
+          className={userData.currentPassword.error ? "error" : ""}
+          errorMessage={userData.currentPassword.error}
+          handleInputChange={(e) => {
+            handleInputChange("currentPassword", e.target.value);
+          }}
           isNoStar={true}
-          place="Current Password"
+          place="Type Current Password"
         />
       </div>
       <InputItem
         label="Confirm new Password"
         name="newPassword"
         type="password"
-        value={userData.newPassword}
-        handleInputChange={handleInputChange}
+        value={userData.newPassword.value}
+        className={userData.newPassword.error ? "error" : ""}
+        errorMessage={userData.newPassword.error}
+        handleInputChange={(e) => {
+          handleInputChange("newPassword", e.target.value);
+        }}
         isNoStar={true}
-        place="New Password"
+        place="Type New Password"
       />
     </div>
   );

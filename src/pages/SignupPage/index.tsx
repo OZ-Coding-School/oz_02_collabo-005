@@ -220,7 +220,7 @@ const SignupPage: React.FC = () => {
           <InputItem
             label="Phone Number"
             name="phone"
-            type="phone"
+            type="text"
             place="Please enter except for hyphen (-)"
             value={userData.phone.value}
             className={userData.phone.error ? "error" : ""}

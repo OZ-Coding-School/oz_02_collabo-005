@@ -1,15 +1,15 @@
 import loader from "../../services/GoogleMapLoad";
 import { useEffect, useRef } from "react";
-import isWithinOneKm from "./CalculateDistance";
-import { AddressType } from "../../pages/AddressPage";
-// import PostalCodeChange from "./PostalCodeChange";
+// import isWithinOneKm from "./CalculateDistance";
+import { AddressType } from "../../types/addressType";
+import { Geocoding } from "./Geocoding";
 
 interface AutoCompleteInputProps {
   // 옵션은 props로 관리 필요하면 더 추가하기.
   addressData: AddressType;
   setAddressData: React.Dispatch<React.SetStateAction<AddressType>>;
   options: google.maps.places.AutocompleteOptions;
-  setIsAvailableService: React.Dispatch<React.SetStateAction<boolean>>;
+  // setIsAvailableService: React.Dispatch<React.SetStateAction<boolean>>;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,8 +21,8 @@ const AutoCompleteInput = ({
     types: ["establishment"],
     fields: ["place_id", "geometry", "name"],
   },
-  setIsAvailableService,
   handleInputChange,
+  // setIsAvailableService,
 }: AutoCompleteInputProps) => {
   // 구글에서 제공해주는 기능들을 input과 연결하기위해 ref사용
   const inputRef = useRef<HTMLInputElement>(null);
@@ -30,7 +30,6 @@ const AutoCompleteInput = ({
     // input이 ref에 담겼을 때만 콜백 실행
     if (!inputRef.current) {
       console.log("input not ready");
-
       return;
     }
 
@@ -55,26 +54,26 @@ const AutoCompleteInput = ({
           mainAddress: address,
         });
 
-        // 선택한 주소 위도 경도로 변환
+        // 선택한 주소 위도 경도로 변환(지오코딩 : 주소를 이용해 위도경도로 변환)
         const geocoder = new google.maps.Geocoder();
         geocoder.geocode(
-          { address: place.formatted_address },
+          { address: address },
           (results: google.maps.GeocoderResult[] | null) => {
             if (results === null) {
               console.log("Geocoding failed");
             } else {
               const location = results[0].geometry.location;
+              localStorage.setItem("userAddressLat", String(location.lat()));
+              localStorage.setItem("userAddressLng", String(location.lng()));
+
               // 서비스 가능 지역인지 검사
-              setIsAvailableService(
-                isWithinOneKm(location.lat(), location.lng())
-              );
-              // 우편번호 확인
-              // const postalCode = PostalCodeChange(
-              //   results[0].address_components
+              // setIsAvailableService(
+              //   isWithinOneKm(location.lat(), location.lng())
               // );
             }
           }
         );
+        Geocoding(address);
       });
     }
   }, []);

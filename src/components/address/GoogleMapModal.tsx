@@ -6,21 +6,21 @@ import SelectLocationMap from "./SelectLocationMap";
 interface MapModalProps {
   onClose: () => void;
   onSelectAddress: (selectedAddress: string) => void;
-  setIsAvailableService: React.Dispatch<React.SetStateAction<boolean>>;
+  // setIsAvailableService: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const GoogleMapModal: React.FC<MapModalProps> = ({
   onClose,
   onSelectAddress,
-  setIsAvailableService,
+  // setIsAvailableService,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // 사용자 입력 주소가 배달가능한 지역인지
-  const [isAvailable, setIsAvailable] = useState<boolean>(false);
+  // const [isAvailable, setIsAvailable] = useState<boolean>(false);
   const [userAddressData, setUserAddressData] = useState<string>("");
 
   const handleSelectAddress = () => {
-    setIsAvailableService(isAvailable);
+    // setIsAvailableService(isAvailable);
     onSelectAddress(userAddressData);
   };
 
@@ -42,7 +42,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
             )}
             <SelectLocationMap
               setIsLoading={setIsLoading}
-              setIsAvailable={setIsAvailable}
+              // setIsAvailable={setIsAvailable}
               setUserAddressData={setUserAddressData}
             />
           </div>

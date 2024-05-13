@@ -6,15 +6,15 @@ import { dayRegex, monthRegex, yearRegex } from "../../../utils/regex";
 interface BirthdayInputProps {
   readOnly?: boolean;
   isMust?: boolean;
-  value?: string;
   handleBirthChange: (birthDay: inputType) => void;
+  value?: string;
 }
 
 const BirthdayInput: React.FC<BirthdayInputProps> = ({
   readOnly,
   isMust,
-  value,
   handleBirthChange,
+  value,
 }) => {
   type birthType = {
     year: string;
@@ -105,6 +105,16 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
     handleBirthChange({ value: birth, error });
   }, [birthDay]);
 
+  useEffect(() => {
+    if (typeof value === "string") {
+      setBirthDay({
+        year: value.slice(0, 4),
+        month: value.slice(4, 6),
+        day: value.slice(6, 8),
+      });
+    }
+  }, []);
+
   return (
     <div className="birthInputContainer">
       <label>
@@ -119,7 +129,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           name="year"
           placeholder="YEAR"
           className="birthInput"
-          value={value}
+          value={birthDay.year}
           readOnly={readOnly}
           maxLength={4}
           onChange={handleInputChange}
@@ -130,7 +140,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           name="month"
           placeholder="MONTH"
           className="birthInput"
-          value={value}
+          value={birthDay.month}
           readOnly={readOnly}
           maxLength={2}
           onChange={handleInputChange}
@@ -141,7 +151,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           name="day"
           placeholder="DAY"
           className="birthInput"
-          value={value}
+          value={birthDay.day}
           readOnly={readOnly}
           maxLength={2}
           onChange={handleInputChange}

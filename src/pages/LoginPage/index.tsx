@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SocialLoginButton from "../../components/login/SocialLoginButton";
 import apiRoutes from "../../api/apiRoutes";
 import customAxios from "../../api/axios";
-import useLoginStore from "../../store/useStore";
+import useLoginStore from "../../store/useLoginStore";
 
 type userDataType = {
   email: string;

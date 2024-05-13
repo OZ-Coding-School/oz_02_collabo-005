@@ -1,5 +1,5 @@
 import React from "react";
-import useLoginStore from "../store/useStore";
+import useLoginStore from "../store/useLoginStore";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const CommonRoute: React.FC = () => {

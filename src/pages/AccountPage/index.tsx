@@ -6,7 +6,7 @@ import CardManagementSection from "@components/common/addcard/CardManagementSect
 import { useNavigate } from "react-router-dom";
 import Button from "@components/common/button/Button";
 import ProceedModal from "@components/common/modal/ProceedModal";
-import useLoginStore from "../../store/useStore";
+import useLoginStore from "../../store/useLoginStore";
 import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
 import { inputType } from "../SignupPage";

@@ -77,8 +77,6 @@ const HomePage: React.FC = () => {
             categoryResWithOtherStatus
           );
 
-          console.log(categoryRes);
-
           updatedCategories[category] = categoryRes;
         });
         setCategories(updatedCategories);

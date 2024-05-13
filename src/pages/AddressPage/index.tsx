@@ -10,25 +10,20 @@ import GoogleMapModal from "@components/address/GoogleMapModal";
 import AutoCompleteInput from "@components/address/AutoCompleteInput";
 import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
-
-export type AddressType = {
-  mainAddress: string;
-  subAddress: string;
-};
+import { AddressType } from "../../types/addressType";
 
 const AddressPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const errorMessage: string =
-    "(*)Sorry, for now our service is only available in the SED area but we are working on it to expand very soon!";
-  const [isAvailableService, setIsAvailableService] = useState<boolean>(false);
+  const errorMessage: string = "Please enter your delivery address";
+  // const [isAvailableService, setIsAvailableService] = useState<boolean>(false);
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
   const [addressData, setAddressData] = useState<AddressType>({
     mainAddress: "",
     subAddress: "",
   });
   const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
-
+  const [isAddressExist, setIsAddressExist] = useState<boolean>(false);
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -38,6 +33,26 @@ const AddressPage: React.FC = () => {
       [name]: value,
     });
   };
+
+  // 처음 사용자가 주소 입력할때 저장된 주소가 없어서 에러가 나는데 예외처리 하는 방법
+  useEffect(() => {
+    const getRes = async () => {
+      const response = await customAxios.get(apiRoutes.address);
+      if (response.status === 200) {
+        // 저장된 주소가 있으면
+        if (!response.data.error) {
+          setAddressData({
+            mainAddress: response.data.base,
+            subAddress: response.data.detail,
+          });
+          // setIsAvailableService(true);
+          setIsAllFilled(true);
+          setIsAddressExist(true);
+        }
+      }
+    };
+    getRes();
+  }, []);
 
   useEffect(() => {
     if (addressData.mainAddress !== "" && addressData.subAddress !== "") {
@@ -54,9 +69,16 @@ const AddressPage: React.FC = () => {
       detail: addressData.subAddress,
     };
     try {
-      const getRes = await customAxios.get(apiRoutes.address);
+      const userAddressLatLng = {
+        lat: localStorage.getItem("userAddressLat"),
+        lng: localStorage.getItem("userAddressLng"),
+      };
+      const response = await customAxios.get(
+        `/user/address/check-coordinate/?lat=${userAddressLatLng.lat}&lng=${userAddressLatLng.lng}`
+      );
+      console.log(response);
       // 등록된 주소가 있을 때
-      if (getRes.status === 200) {
+      if (isAddressExist) {
         const postRes = await customAxios.post(
           apiRoutes.addressUpdate,
           postAddressData
@@ -115,7 +137,7 @@ const AddressPage: React.FC = () => {
               <GoogleMapModal
                 onSelectAddress={handleMapModalSelect}
                 onClose={closeMapModal}
-                setIsAvailableService={setIsAvailableService}
+                // setIsAvailableService={setIsAvailableService}
               />
             )}
             <div className="selectAddressTextInput">
@@ -123,7 +145,7 @@ const AddressPage: React.FC = () => {
                 <AutoCompleteInput
                   addressData={addressData}
                   setAddressData={setAddressData}
-                  setIsAvailableService={setIsAvailableService}
+                  // setIsAvailableService={setIsAvailableService}
                   options={{
                     strictBounds: true,
                     componentRestrictions: { country: "KR" },
@@ -134,7 +156,7 @@ const AddressPage: React.FC = () => {
             </div>
           </div>
           <div className="detailAddress">
-            {addressData.mainAddress === "" || isAvailableService ? (
+            {addressData.mainAddress !== "" ? (
               <>
                 <InputItem
                   label="Delivery detail"
@@ -158,13 +180,11 @@ const AddressPage: React.FC = () => {
           <div className="saveAddressButton">
             <Button
               name="Save your address"
-              backgroundColor={
-                isAvailableService && isAllFilled ? "#FF6347" : "#767676"
-              }
+              backgroundColor={isAllFilled ? "#FF6347" : "#767676"}
               handleClick={handleSave}
               buttonType="bigButton"
               type="submit"
-              disabled={isAvailableService && isAllFilled ? false : true}
+              disabled={isAllFilled ? false : true}
             />
           </div>
         </div>

@@ -70,8 +70,6 @@ const RestaurantPage: React.FC = () => {
 
   // 메뉴 카테고리 추출 & 카테고리 초기값 설정해주는 함수
   useEffect(() => {
-    console.log(isPreparing);
-    console.log(restaurantInfo);
     if (restaurantInfo !== undefined) {
       const extractCategories = () => {
         const menuCategories = restaurantInfo?.menu_group_list.map(

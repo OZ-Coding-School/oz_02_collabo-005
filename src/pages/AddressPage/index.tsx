@@ -8,6 +8,8 @@ import ServiceableMapImage from "../../assets/images/mapRadius.png";
 import Button from "@components/common/button/Button";
 import GoogleMapModal from "@components/address/GoogleMapModal";
 import AutoCompleteInput from "@components/address/AutoCompleteInput";
+import customAxios from "../../api/axios";
+import apiRoutes from "../../api/apiRoutes";
 
 export type AddressType = {
   mainAddress: string;
@@ -45,11 +47,38 @@ const AddressPage: React.FC = () => {
     }
   }, [addressData.mainAddress, addressData.subAddress]);
 
-  const handleSave = (): void => {
+  const handleSave = async () => {
     // db로 post
-    alert(`mainAddress: ${addressData.mainAddress},
-    subAddress: ${addressData.subAddress}`);
-    isAvailableService && isAllFilled && navigate(-1);
+    const postAddressData = {
+      base: addressData.mainAddress,
+      detail: addressData.subAddress,
+    };
+    try {
+      const getRes = await customAxios.get(apiRoutes.address);
+      // 등록된 주소가 있을 때
+      if (getRes.status === 200) {
+        const postRes = await customAxios.post(
+          apiRoutes.addressUpdate,
+          postAddressData
+        );
+        if (postRes.status === 200) {
+          navigate(-1);
+        } else {
+          alert("Address update failed");
+        }
+      }
+    } catch (error) {
+      // 현재 등록된 주소 없음
+      const postRes = await customAxios.post(
+        apiRoutes.address,
+        postAddressData
+      );
+      if (postRes.status === 200) {
+        navigate(-1);
+      } else {
+        alert("Address registration failed");
+      }
+    }
   };
 
   const openMapModal = (): void => {
@@ -135,6 +164,7 @@ const AddressPage: React.FC = () => {
               handleClick={handleSave}
               buttonType="bigButton"
               type="submit"
+              disabled={isAvailableService && isAllFilled ? false : true}
             />
           </div>
         </div>

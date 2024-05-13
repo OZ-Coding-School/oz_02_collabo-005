@@ -2,7 +2,7 @@ import loader from "../../services/GoogleMapLoad";
 import { useEffect, useRef } from "react";
 import isWithinOneKm from "./CalculateDistance";
 import { AddressType } from "../../pages/AddressPage";
-import PostalCodeChange from "./PostalCodeChange";
+// import PostalCodeChange from "./PostalCodeChange";
 
 interface AutoCompleteInputProps {
   // 옵션은 props로 관리 필요하면 더 추가하기.
@@ -69,10 +69,9 @@ const AutoCompleteInput = ({
                 isWithinOneKm(location.lat(), location.lng())
               );
               // 우편번호 확인
-              const postalCode = PostalCodeChange(
-                results[0].address_components
-              );
-              console.log(postalCode);
+              // const postalCode = PostalCodeChange(
+              //   results[0].address_components
+              // );
             }
           }
         );

@@ -17,7 +17,6 @@ const MenuList: React.FC<MenuListProps> = ({
   const handleClick = (): void => {
     navigate("/restaurant/menu");
   };
-  console.log(isPreparing);
   return (
     <div className="menuListContainer">
       {selectedMenuList?.menus?.map((menu) => (

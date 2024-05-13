@@ -4,7 +4,7 @@ import Header from "@components/common/header/Header";
 import selectMapIcon from "../../assets/icons/selectMapIcon.png";
 import { useNavigate } from "react-router-dom";
 import InputItem from "@components/common/input/InputItem";
-import ServiceableMapImage from "../../assets/images/mapRadius.png";
+import ServiceableMapImage from "../../assets/images/deliveryAvailable.png";
 import Button from "@components/common/button/Button";
 import GoogleMapModal from "@components/address/GoogleMapModal";
 import AutoCompleteInput from "@components/address/AutoCompleteInput";

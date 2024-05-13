@@ -1,6 +1,7 @@
 import loader from "../../services/GoogleMapLoad";
 import { useEffect, useRef } from "react";
 import { AddressType } from "../../types/addressType";
+import { Geocoding } from "./Geocoding";
 
 interface AutoCompleteInputProps {
   // 옵션은 props로 관리 필요하면 더 추가하기.
@@ -44,11 +45,11 @@ const AutoCompleteInput = ({
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
         const address = place.formatted_address || "";
-
         setAddressData({
           ...addressData,
           mainAddress: address,
         });
+        Geocoding(addressData.mainAddress);
       });
     }
   }, []);

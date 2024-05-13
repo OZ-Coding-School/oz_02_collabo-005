@@ -7,11 +7,11 @@ type LatLngState = {
 };
 
 const useLatLngStore = create<LatLngState>((set) => {
-  const storedLat = localStorage.getItem("addressLat") || "";
-  const storedLng = localStorage.getItem("addressLng") || "";
+  const storedLat = localStorage.getItem("addressLat");
+  const storedLng = localStorage.getItem("addressLng");
 
-  const initialLat = storedLat;
-  const initialLng = storedLng;
+  const initialLat = storedLat || "";
+  const initialLng = storedLng || "";
 
   return {
     lat: initialLat,

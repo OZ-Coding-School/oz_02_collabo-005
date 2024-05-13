@@ -12,7 +12,6 @@ import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
 import { AddressType } from "../../types/addressType";
 import { Geocoding } from "@components/address/Geocoding";
-import useLatLngStore from "../../store/useLatLngStore";
 
 const AddressPage: React.FC = () => {
   const navigate = useNavigate();
@@ -63,19 +62,21 @@ const AddressPage: React.FC = () => {
   }, [addressData.mainAddress, addressData.subAddress]);
 
   const handleSave = async () => {
-    // 주소를 이용해 위도 경도로 변환
-    Geocoding(addressData.mainAddress);
     // db로 post할 데이터
     const postAddressData = {
       base: addressData.mainAddress,
       detail: addressData.subAddress,
     };
     try {
+      // 주소를 이용해 위도 경도로 변환
+      const { lat, lng } = await Geocoding(addressData.mainAddress);
+
       // 배달 가능 지역인지 검사하는 api에 보낼 데이터(위도 경도)
       const userAddressLatLng = {
-        lat: useLatLngStore.getState().lat,
-        lng: useLatLngStore.getState().lng,
+        lat,
+        lng,
       };
+
       const isAvailableDelivery = await customAxios.get(
         `/user/address/check-coordinate/?lat=${userAddressLatLng.lat}&lng=${userAddressLatLng.lng}`
       );
@@ -84,9 +85,8 @@ const AddressPage: React.FC = () => {
         alert(
           "The address you have currently selected is a non-delivery area. Please choose again."
         );
-      }
-      // 배달 가능 지역이고 이미 저장된 주소가 있을때는 update
-      else {
+      } else {
+        // 배달 가능 지역이고 이미 저장된 주소가 있을때는 update
         if (isAddressExist) {
           const postRes = await customAxios.post(
             apiRoutes.addressUpdate,
@@ -128,6 +128,8 @@ const AddressPage: React.FC = () => {
       mainAddress: selectedAddress,
       subAddress: "",
     }));
+    // 주소를 이용해 위도 경도로 변환
+    Geocoding(addressData.mainAddress);
     closeMapModal();
   };
 

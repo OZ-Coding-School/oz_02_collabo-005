@@ -13,7 +13,6 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
   onSelectAddress,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // 사용자 입력 주소가 배달가능한 지역인지
   const [userAddressData, setUserAddressData] = useState<string>("");
 
   const handleSelectAddress = () => {

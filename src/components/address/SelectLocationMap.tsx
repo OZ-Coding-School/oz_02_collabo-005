@@ -6,18 +6,15 @@ import {
   serviceablePolygonOptions,
 } from "./PolygonStyle";
 import { ReverseGeocoding } from "./Geocoding";
-// import isWithinOneKm from "./CalculateDistance";
 
 interface selectLocationMapProps {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setUserAddressData: React.Dispatch<React.SetStateAction<string>>;
-  // setIsAvailable: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SelectLocationMap: React.FC<selectLocationMapProps> = ({
   setIsLoading,
   setUserAddressData,
-  // setIsAvailable
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -36,7 +33,6 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
         serviceablePolygonOptions
       );
 
-      // let postalCode = "";
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const userLatLng: userLatLngType = {
@@ -76,9 +72,6 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
           marker.addListener("dragend", () => {
             const newPosition = marker.position;
             if (newPosition) {
-              localStorage.setItem("userAddressLat", String(newPosition.lat));
-              localStorage.setItem("userAddressLng", String(newPosition.lng));
-
               // 역 지오코딩 : 위도 경도를 이용해 주소 추출
               geocoder.geocode(
                 { location: newPosition, language: "en" },
@@ -89,9 +82,6 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
                       setUserAddressData(englishAddress);
                       infoWindow.setContent(englishAddress);
                       infoWindow.open(map, marker);
-                      // setIsAvailable(
-                      //   isWithinOneKm(Number(newPosition.lat), Number(newPosition.lng))
-                      // );
                     } else {
                       console.log("No results found");
                     }

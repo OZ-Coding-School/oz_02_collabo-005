@@ -6,21 +6,17 @@ import SelectLocationMap from "./SelectLocationMap";
 interface MapModalProps {
   onClose: () => void;
   onSelectAddress: (selectedAddress: string) => void;
-  // setIsAvailableService: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const GoogleMapModal: React.FC<MapModalProps> = ({
   onClose,
   onSelectAddress,
-  // setIsAvailableService,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // 사용자 입력 주소가 배달가능한 지역인지
-  // const [isAvailable, setIsAvailable] = useState<boolean>(false);
   const [userAddressData, setUserAddressData] = useState<string>("");
 
   const handleSelectAddress = () => {
-    // setIsAvailableService(isAvailable);
     onSelectAddress(userAddressData);
   };
 
@@ -36,9 +32,9 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
           <div className="boundsDescriptionSection">
             Drag the marker on your address
             <div className="boundsDescription">
-              <i className="greenArea">green area</i> : free delivery area
+              <i className="greenArea">green area</i> : delivery area
               <br />
-              <i className="redArea">red area</i> : delivery area
+              <i className="redArea">red area</i> : free delivery area
             </div>
           </div>
           <div className="googleMap">

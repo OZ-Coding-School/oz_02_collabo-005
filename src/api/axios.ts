@@ -1,5 +1,5 @@
 import axios from "axios";
-import useLoginStore from "../store/useStore";
+import useLoginStore from "../store/useLoginStore";
 
 const refreshAxios = axios.create({
   baseURL: `/api/v1/token/refresh/`,

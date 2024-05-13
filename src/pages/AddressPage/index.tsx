@@ -11,12 +11,13 @@ import AutoCompleteInput from "@components/address/AutoCompleteInput";
 import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
 import { AddressType } from "../../types/addressType";
+import { Geocoding } from "@components/address/Geocoding";
+import useLatLngStore from "../../store/useLatLngStore";
 
 const AddressPage: React.FC = () => {
   const navigate = useNavigate();
 
   const errorMessage: string = "Please enter your delivery address";
-  // const [isAvailableService, setIsAvailableService] = useState<boolean>(false);
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
   const [addressData, setAddressData] = useState<AddressType>({
     mainAddress: "",
@@ -45,7 +46,6 @@ const AddressPage: React.FC = () => {
             mainAddress: response.data.base,
             subAddress: response.data.detail,
           });
-          // setIsAvailableService(true);
           setIsAllFilled(true);
           setIsAddressExist(true);
         }
@@ -63,34 +63,44 @@ const AddressPage: React.FC = () => {
   }, [addressData.mainAddress, addressData.subAddress]);
 
   const handleSave = async () => {
-    // db로 post
+    // 주소를 이용해 위도 경도로 변환
+    Geocoding(addressData.mainAddress);
+    // db로 post할 데이터
     const postAddressData = {
       base: addressData.mainAddress,
       detail: addressData.subAddress,
     };
     try {
+      // 배달 가능 지역인지 검사하는 api에 보낼 데이터(위도 경도)
       const userAddressLatLng = {
-        lat: localStorage.getItem("userAddressLat"),
-        lng: localStorage.getItem("userAddressLng"),
+        lat: useLatLngStore.getState().lat,
+        lng: useLatLngStore.getState().lng,
       };
-      const response = await customAxios.get(
+      const isAvailableDelivery = await customAxios.get(
         `/user/address/check-coordinate/?lat=${userAddressLatLng.lat}&lng=${userAddressLatLng.lng}`
       );
-      console.log(response);
-      // 등록된 주소가 있을 때
-      if (isAddressExist) {
-        const postRes = await customAxios.post(
-          apiRoutes.addressUpdate,
-          postAddressData
+      // 배달 불가능 지역일때 에러 메시지 알림창으로 띄움
+      if (!isAvailableDelivery.data.data.result) {
+        alert(
+          "The address you have currently selected is a non-delivery area. Please choose again."
         );
-        if (postRes.status === 200) {
-          navigate(-1);
-        } else {
-          alert("Address update failed");
+      }
+      // 배달 가능 지역이고 이미 저장된 주소가 있을때는 update
+      else {
+        if (isAddressExist) {
+          const postRes = await customAxios.post(
+            apiRoutes.addressUpdate,
+            postAddressData
+          );
+          if (postRes.status === 200) {
+            navigate(-1);
+          } else {
+            alert("Address update failed");
+          }
         }
       }
     } catch (error) {
-      // 현재 등록된 주소 없음
+      // 현재 등록된 주소 없을 때
       const postRes = await customAxios.post(
         apiRoutes.address,
         postAddressData
@@ -138,7 +148,6 @@ const AddressPage: React.FC = () => {
               <GoogleMapModal
                 onSelectAddress={handleMapModalSelect}
                 onClose={closeMapModal}
-                // setIsAvailableService={setIsAvailableService}
               />
             )}
             <div className="selectAddressTextInput">
@@ -146,7 +155,6 @@ const AddressPage: React.FC = () => {
                 <AutoCompleteInput
                   addressData={addressData}
                   setAddressData={setAddressData}
-                  // setIsAvailableService={setIsAvailableService}
                   options={{
                     strictBounds: true,
                     componentRestrictions: { country: "KR" },

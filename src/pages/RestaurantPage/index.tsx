@@ -20,6 +20,7 @@ const RestaurantPage: React.FC = () => {
   const [selectedMenuList, setSelectedMenuList] = useState<MenuGroupType>();
   const [operatingHours, setOperatingHours] = useState<string>();
   const [isPreparing, setIsPreparing] = useState<boolean>(true);
+  const [address, setAddress] = useState<string>("");
 
   const handleMenuCategoryClick = (event: string) => {
     setSelectedMenuList(getMenuList(event));
@@ -53,6 +54,14 @@ const RestaurantPage: React.FC = () => {
 
   // 레스토랑 메뉴 가져오는 함수
   useEffect(() => {
+    const getAddress = async () => {
+      const response = await customAxios.get(apiRoutes.address);
+      if (response.status === 200) {
+        if (!response.data.error) {
+          setAddress(response.data.base);
+        }
+      }
+    };
     const getRestaurantMenus = async () => {
       try {
         const response = await customAxios.get(
@@ -65,6 +74,7 @@ const RestaurantPage: React.FC = () => {
         console.error("Failed to fetch restaurants:", error);
       }
     };
+    getAddress();
     getRestaurantMenus();
   }, []);
 
@@ -107,7 +117,7 @@ const RestaurantPage: React.FC = () => {
         hasCartIcon={true}
         isFixed={true}
       />
-      <AddressBar />
+      <AddressBar address={address} />
       <div className="restaurantContainer">
         <div className="restaurantInfoContainer">
           <div className="restaurantImgContainer">

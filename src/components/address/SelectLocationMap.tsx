@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import isWithinOneKm from "./CalculateDistance";
 import loader from "../../services/GoogleMapLoad";
+import PostalCodeChange from "./PostalCodeChange";
 
 interface selectLocationMapProps {
   setIsAvailable: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +24,7 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
       const infoWindow = new google.maps.InfoWindow();
       const geocoder = new google.maps.Geocoder();
       const { AdvancedMarkerElement } = await loader.importLibrary("marker");
+      let postalCode = "";
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const userLatLng = {
@@ -48,6 +50,9 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
             (results, status) => {
               if (status === "OK") {
                 if (results && results.length > 0) {
+                  // 해당 주소의 우편번호 추출
+                  postalCode = PostalCodeChange(results[0].address_components);
+                  console.log(postalCode);
                   const englishAddress = results[0].formatted_address;
                   setUserAddressData(englishAddress);
                   infoWindow.setContent(englishAddress);
@@ -75,6 +80,11 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
                 (results, status) => {
                   if (status === "OK") {
                     if (results && results.length > 0) {
+                      // 해당 주소의 우편번호 추출
+                      postalCode = PostalCodeChange(
+                        results[0].address_components
+                      );
+                      console.log(postalCode);
                       const englishAddress = results[0].formatted_address;
                       setUserAddressData(englishAddress);
                       infoWindow.setContent(englishAddress);

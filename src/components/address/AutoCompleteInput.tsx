@@ -2,6 +2,7 @@ import loader from "../../services/GoogleMapLoad";
 import { useEffect, useRef } from "react";
 import isWithinOneKm from "./CalculateDistance";
 import { AddressType } from "../../pages/AddressPage";
+import PostalCodeChange from "./PostalCodeChange";
 
 interface AutoCompleteInputProps {
   // 옵션은 props로 관리 필요하면 더 추가하기.
@@ -25,7 +26,6 @@ const AutoCompleteInput = ({
 }: AutoCompleteInputProps) => {
   // 구글에서 제공해주는 기능들을 input과 연결하기위해 ref사용
   const inputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     // input이 ref에 담겼을 때만 콜백 실행
     if (!inputRef.current) {
@@ -68,6 +68,11 @@ const AutoCompleteInput = ({
               setIsAvailableService(
                 isWithinOneKm(location.lat(), location.lng())
               );
+              // 우편번호 확인
+              const postalCode = PostalCodeChange(
+                results[0].address_components
+              );
+              console.log(postalCode);
             }
           }
         );

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import isWithinOneKm from "./CalculateDistance";
-import centerLocation from "../../constants/location";
 import loader from "../../services/GoogleMapLoad";
 
 interface selectLocationMapProps {
@@ -53,14 +52,7 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
                   setUserAddressData(englishAddress);
                   infoWindow.setContent(englishAddress);
                   infoWindow.open(map, marker);
-                  setIsAvailable(
-                    isWithinOneKm(
-                      centerLocation.lat,
-                      centerLocation.lng,
-                      userLatLng.lat,
-                      userLatLng.lng
-                    )
-                  );
+                  setIsAvailable(isWithinOneKm(userLatLng.lat, userLatLng.lng));
                 } else {
                   console.log("No results found");
                 }
@@ -76,12 +68,7 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
             const newPosition = marker.position;
             if (newPosition) {
               setIsAvailable(
-                isWithinOneKm(
-                  centerLocation.lat,
-                  centerLocation.lng,
-                  Number(newPosition.lat),
-                  Number(newPosition.lng)
-                )
+                isWithinOneKm(Number(newPosition.lat), Number(newPosition.lng))
               );
               geocoder.geocode(
                 { location: newPosition, language: "en" },

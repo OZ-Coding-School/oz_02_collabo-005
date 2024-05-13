@@ -1,7 +1,6 @@
 import loader from "../../services/GoogleMapLoad";
 import { useEffect, useRef } from "react";
 import isWithinOneKm from "./CalculateDistance";
-import centerLocation from "../../constants/location";
 import { AddressType } from "../../pages/AddressPage";
 
 interface AutoCompleteInputProps {
@@ -67,12 +66,7 @@ const AutoCompleteInput = ({
               const location = results[0].geometry.location;
               // 서비스 가능 지역인지 검사
               setIsAvailableService(
-                isWithinOneKm(
-                  centerLocation.lat,
-                  centerLocation.lng,
-                  location.lat(),
-                  location.lng()
-                )
+                isWithinOneKm(location.lat(), location.lng())
               );
             }
           }
@@ -89,7 +83,7 @@ const AutoCompleteInput = ({
       type="text"
       value={addressData.mainAddress}
       onChange={handleInputChange}
-      placeholder="Type in your address or Press the button above"
+      placeholder="Type in your address in English or Press the button above"
     />
   );
 };

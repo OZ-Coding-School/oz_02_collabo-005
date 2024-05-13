@@ -69,8 +69,10 @@ const LoginPage: React.FC = () => {
         postUserData
       );
       if (response.status === 200) {
+        console.log(response.data.token);
         const loginToken = response.data.token.access;
-        useLoginStore.getState().setLoginState(true, loginToken);
+        const refreshToken = response.data.token.refresh;
+        useLoginStore.getState().setLoginState(true, loginToken, refreshToken);
         alert("Login Success!!");
         navigate(from);
       }

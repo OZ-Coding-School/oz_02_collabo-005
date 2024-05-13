@@ -153,7 +153,7 @@ const AccountPage: React.FC = () => {
 
   // 로그아웃 버튼을 눌렀을 때 호출되는 함수
   const handleLogOut = async () => {
-    useLoginStore.getState().setLoginState(false, null);
+    useLoginStore.getState().setLoginState(false, null, null);
     navigate("/");
   };
 
@@ -161,7 +161,7 @@ const AccountPage: React.FC = () => {
   const handleDeleteAccount = async () => {
     try {
       await customAxios.post(apiRoutes.userDelete);
-      useLoginStore.getState().setLoginState(false, null);
+      useLoginStore.getState().setLoginState(false, null, null);
       navigate("/");
     } catch (error) {
       console.error(error);

@@ -116,6 +116,7 @@ const AddressPage: React.FC = () => {
     setAddressData((prevAddressData) => ({
       ...prevAddressData,
       mainAddress: selectedAddress,
+      subAddress: "",
     }));
     closeMapModal();
   };

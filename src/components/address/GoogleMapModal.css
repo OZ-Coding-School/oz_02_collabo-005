@@ -45,9 +45,27 @@ button.closeModalButton {
 
 .googleMap {
   width: 100%;
-  height: 510px;
+  height: 490px;
   border-radius: 6px;
   border: 1px solid #ccc;
+}
+
+.boundsDescriptionSection {
+  text-align: center;
+  font-size: 18px;
+}
+
+.boundsDescription {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.greenArea {
+  color: #00ff00;
+}
+
+.redArea {
+  color: #ff0000;
 }
 
 .loadingSpinner {

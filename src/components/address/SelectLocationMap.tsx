@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import loader from "../../services/GoogleMapLoad";
 import { userLatLngType } from "../../types/addressType";
-import { freeDeliveryPolygonOptions } from "./PolygonStyle";
+import {
+  freeDeliveryPolygonOptions,
+  serviceablePolygonOptions,
+} from "./PolygonStyle";
 import { ReverseGeocoding } from "./Geocoding";
-// import Geocoding from "./Geocoding";
 // import isWithinOneKm from "./CalculateDistance";
 
 interface selectLocationMapProps {
@@ -30,6 +32,9 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
       const freeDeliveryPolygon = new google.maps.Polygon(
         freeDeliveryPolygonOptions
       );
+      const serviceablePolygon = new google.maps.Polygon(
+        serviceablePolygonOptions
+      );
 
       // let postalCode = "";
       navigator.geolocation.getCurrentPosition(
@@ -53,7 +58,7 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
           });
           // polygon 그리기
           freeDeliveryPolygon.setMap(map);
-
+          serviceablePolygon.setMap(map);
           // 사용자 현재 위치 위도경도를 이용해 주소 추출 후 주소정보 주소창으로 표시
           ReverseGeocoding(userLatLng)
             .then((englishAddress) => {

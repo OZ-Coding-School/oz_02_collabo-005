@@ -33,7 +33,14 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
               x
             </button>
           </div>
-          <span>Drag the marker on your address</span>
+          <div className="boundsDescriptionSection">
+            Drag the marker on your address
+            <div className="boundsDescription">
+              <i className="greenArea">green area</i> : free delivery area
+              <br />
+              <i className="redArea">red area</i> : delivery area
+            </div>
+          </div>
           <div className="googleMap">
             {isLoading && (
               <div className="loadingSpinner">

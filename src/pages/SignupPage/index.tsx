@@ -98,7 +98,9 @@ const SignupPage: React.FC = () => {
         }));
       }
     } catch (error) {
-      console.log(error);
+      alert(
+        "Please check again whether the password contains English characters, numbers, and special characters"
+      );
     }
   };
 
@@ -118,9 +120,6 @@ const SignupPage: React.FC = () => {
       }
       if (value) {
         // 정규표현식에 맞게 문자 입력했는데도 에러메시지가 없어지지 않음
-        console.log(
-          `정규표현식 일치 여부 : ${isValidatePassword(value)}, 비밀번호 입력 값: ${value}`
-        );
         if (isValidatePassword(value)) {
           if (value.length > 16) {
             error = "The password is 8 to 16 characters.";
@@ -134,12 +133,6 @@ const SignupPage: React.FC = () => {
           }
         }
       }
-      // error =
-      //   value && !isValidatePassword(value)
-      //     ? "English letters, numbers, and special symbols(ex. !@#$%^&?_) must be included"
-      //     : "";
-      // error =
-      //   value && value.length > 16 ? "The password is 8 to 16 characters." : "";
     } else if (field === "repeatPassword") {
       error =
         value && !isPasswordMatch(userData.password.value, value)

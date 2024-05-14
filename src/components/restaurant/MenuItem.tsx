@@ -2,18 +2,19 @@ import React from "react";
 import "./MenuItem.css";
 import MenuImg from "../../assets/images/menuImg.png";
 import { MenuType } from "src/types/restaurantTypes";
+import { useNavigate } from "react-router-dom";
 
 interface MenuItemProps {
   menu: MenuType;
   isPreparing: boolean;
-  handleClick: () => void;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({
-  menu,
-  handleClick,
-  isPreparing,
-}) => {
+const MenuItem: React.FC<MenuItemProps> = ({ menu, isPreparing }) => {
+  const navigate = useNavigate();
+  const handleClick = (): void => {
+    navigate(`/restaurant/menu/${menu.id}`);
+  };
+
   // 메뉴 품절 여부
   const isSoldOut = menu.status === 2;
   // 메뉴 숨김 여부

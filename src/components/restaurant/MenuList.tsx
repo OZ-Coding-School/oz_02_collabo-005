@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import MenuItem from "./MenuItem";
 import "./MenuList.css";
 import { MenuGroupType } from "src/types/restaurantTypes";
@@ -13,20 +12,10 @@ const MenuList: React.FC<MenuListProps> = ({
   selectedMenuList,
   isPreparing,
 }) => {
-  const navigate = useNavigate();
-  const handleClick = (): void => {
-    navigate("/restaurant/menu");
-  };
-  console.log(isPreparing);
   return (
     <div className="menuListContainer">
       {selectedMenuList?.menus?.map((menu) => (
-        <MenuItem
-          menu={menu}
-          handleClick={handleClick}
-          key={menu.id}
-          isPreparing={isPreparing}
-        />
+        <MenuItem menu={menu} key={menu.id} isPreparing={isPreparing} />
       ))}
     </div>
   );

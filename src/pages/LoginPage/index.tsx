@@ -68,15 +68,22 @@ const LoginPage: React.FC = () => {
         apiRoutes.userLogin,
         postUserData
       );
+      console.log(response);
       if (response.status === 200) {
-        const loginToken = response.data.token.access;
-        const refreshToken = response.data.token.refresh;
-        useLoginStore.getState().setLoginState(true, loginToken, refreshToken);
-        alert("Login Success!!");
-        navigate(from);
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          const loginToken = response.data.token.access;
+          const refreshToken = response.data.token.refresh;
+          useLoginStore
+            .getState()
+            .setLoginState(true, loginToken, refreshToken);
+          alert("Login Success!!");
+          navigate(from);
+        }
       }
-    } catch {
-      alert("Please re-enter your email and password");
+    } catch (error) {
+      alert("Re-enter your email or password");
     }
   };
 

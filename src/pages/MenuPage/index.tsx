@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
-import Header from "@components/common/header/Header";
-import MenuBackImg from "../../assets/images/menuImg.png";
-import OptionList from "@components/restaurant/menu/OptionList";
-import "./MenuPage.css";
-import Button from "@components/common/button/Button";
-import QuantityButton from "@components/common/button/QuantityButton";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import Header from '@components/common/header/Header';
+import MenuBackImg from '../../assets/images/menuImg.png';
+import OptionList from '@components/restaurant/menu/OptionList';
+import './MenuPage.css';
+import Button from '@components/common/button/Button';
+import QuantityButton from '@components/common/button/QuantityButton';
+import { useParams } from 'react-router-dom';
 import {
   menuOptionType,
   postMenuType,
   postOptionType,
-} from "src/types/menuOptionTypes";
-import customAxios from "./../../api/axios";
-import apiRoutes from "./../../api/apiRoutes";
-import useOrderStore from "./../../store/useOrderStore";
+} from 'src/types/menuOptionTypes';
+import customAxios from './../../api/axios';
+import apiRoutes from './../../api/apiRoutes';
+import useOrderStore from './../../store/useOrderStore';
 
 const MenuPage: React.FC = () => {
   const { menuId } = useParams();
   const [menuData, setMenuData] = useState<menuOptionType>();
   const [quantity, setQuantity] = useState(1);
+  const { setPostOrders, postOrders } = useOrderStore();
 
   const [selectedMenus, setSelectedMenus] = useState<postMenuType>();
   const [selectedOptionList, setSelectedOptionList] = useState<
@@ -38,10 +39,24 @@ const MenuPage: React.FC = () => {
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isValidated) {
-      console.log(selectedMenus);
-      alert("장바구니 담기 성공");
+      const strPostOrders = postOrders.map((menu) => JSON.stringify(menu)); // 문자열화된 기존 메뉴의 배열
+      const strSelectedMenus = JSON.stringify(selectedMenus!);
+
+      const targetIndex = strPostOrders.indexOf(strSelectedMenus);
+
+      if (targetIndex === -1) {
+        setPostOrders([...postOrders, selectedMenus!]);
+      } else {
+        postOrders.map((menu, index) =>
+          index === targetIndex
+            ? { ...menu, quantity: menu.quantity + 1 }
+            : menu
+        );
+      }
+
+      alert('장바구니 담기 성공');
     } else {
-      alert("장바구니 담기 실패");
+      alert('장바구니 담기 실패');
     }
   };
 
@@ -51,10 +66,10 @@ const MenuPage: React.FC = () => {
         const response = await customAxios.get(
           `${apiRoutes.menuOptionList}?menuId=${menuId}`
         );
-        if (response.status !== 200) throw new Error("예외가 발생했습니다.");
+        if (response.status !== 200) throw new Error('예외가 발생했습니다.');
         setMenuData(response.data);
       } catch (error) {
-        console.error("Failed to fetch restaurants:", error);
+        console.error('Failed to fetch restaurants:', error);
       }
     };
     getMenuData();
@@ -114,7 +129,7 @@ const MenuPage: React.FC = () => {
           <div className="AddToBasketBtn">
             <Button
               name="Add to Basket"
-              backgroundColor={isValidated ? "#ff6347" : "#767676"}
+              backgroundColor={isValidated ? '#ff6347' : '#767676'}
               buttonType="bigButton"
               handleClick={handleSubmit}
               type="button"

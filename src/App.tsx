@@ -1,25 +1,25 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
-import LoginPage from "./pages/LoginPage";
-import SplashPage from "./pages/SplashPage";
-import HomePage from "./pages/HomePage";
-import Layout from "./layout/Layout";
-import SignUpPage from "./pages/SignupPage";
-import RestaurantPage from "./pages/RestaurantPage";
-import AddressPage from "./pages/AddressPage";
-import AccountPage from "./pages/AccountPage";
-import MenuPage from "./pages/MenuPage";
-import OrderSheetPage from "./pages/OrderSheetPage";
-import OrderStatusPage from "./pages/OrderStatusPage";
-import OrdersPage from "./pages/OrdersPage";
-import PaymentPage from "./pages/PaymentPage";
-import ErrorPage from "./pages/ErrorPage";
-import KoreanCardPage from "./pages/KoreanCardPage";
-import ForeignCardPage from "./pages/ForeignCardPage";
-import ScrollToTop from "@components/scrolltotop/ScrollToTop";
-import OrderDetailsPage from "./pages/OrderDetailsPage/index";
-import ProtectedRoute from "./routes/ProtectedRoute";
-import CommonRoute from "./routes/CommonRoute";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import LoginPage from './pages/LoginPage';
+import SplashPage from './pages/SplashPage';
+import HomePage from './pages/HomePage';
+import Layout from './layout/Layout';
+import SignUpPage from './pages/SignupPage';
+import RestaurantPage from './pages/RestaurantPage';
+import AddressPage from './pages/AddressPage';
+import AccountPage from './pages/AccountPage';
+import MenuPage from './pages/MenuPage';
+import OrderSheetPage from './pages/OrderSheetPage';
+import OrderStatusPage from './pages/OrderStatusPage';
+import OrdersPage from './pages/OrdersPage';
+import PaymentPage from './pages/PaymentPage';
+import ErrorPage from './pages/ErrorPage';
+import KoreanCardPage from './pages/KoreanCardPage';
+import ForeignCardPage from './pages/ForeignCardPage';
+import ScrollToTop from '@components/scrolltotop/ScrollToTop';
+import OrderDetailsPage from './pages/OrderDetailsPage/index';
+import ProtectedRoute from './routes/ProtectedRoute';
+import CommonRoute from './routes/CommonRoute';
 
 const App: React.FC = () => {
   return (

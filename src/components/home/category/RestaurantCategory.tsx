@@ -17,7 +17,6 @@ const RestaurantCategory: React.FC<RestaurantCategoryProps> = ({
   title,
   restaurants,
 }) => {
-  console.log(restaurants);
   return (
     <div className="restaurantCategoryContainer">
       <h2 className="restaurantCategoryTitle">{title}</h2>

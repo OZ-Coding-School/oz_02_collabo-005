@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import SocialLoginButton from "../../components/login/SocialLoginButton";
 import apiRoutes from "../../api/apiRoutes";
 import customAxios from "../../api/axios";
-import useLoginStore from "../../store/useStore";
+import useLoginStore from "../../store/useLoginStore";
 
 type userDataType = {
   email: string;
@@ -69,7 +69,6 @@ const LoginPage: React.FC = () => {
         postUserData
       );
       if (response.status === 200) {
-        console.log(response.data.token);
         const loginToken = response.data.token.access;
         const refreshToken = response.data.token.refresh;
         useLoginStore.getState().setLoginState(true, loginToken, refreshToken);

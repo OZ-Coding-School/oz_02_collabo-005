@@ -1,71 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import MenuBackImg from "../../assets/images/menuImg.png";
 import OptionList from "@components/restaurant/menu/OptionList";
 import "./MenuPage.css";
 import Button from "@components/common/button/Button";
 import QuantityButton from "@components/common/button/QuantityButton";
-import { useNavigate } from "react-router-dom";
-
-export type optionType = {
-  type: string;
-  isRequired: boolean;
-  optionList: {
-    optionName: string;
-    optionPrice: string;
-  }[];
-};
+import { useParams } from "react-router-dom";
+import {
+  menuOptionType,
+  postMenuType,
+  postOptionType,
+} from "src/types/menuOptionTypes";
+import customAxios from "./../../api/axios";
+import apiRoutes from "./../../api/apiRoutes";
 
 const MenuPage: React.FC = () => {
-  const options: optionType[] = [
-    {
-      type: "Sauce",
-      isRequired: true,
-      optionList: [
-        {
-          optionName: "Cheese sauce",
-          optionPrice: "0",
-        },
-        {
-          optionName: "Mayonaise",
-          optionPrice: "0",
-        },
-        {
-          optionName: "Yum Yum",
-          optionPrice: "0",
-        },
-        {
-          optionName: "Wassabi Mayo",
-          optionPrice: "0",
-        },
-      ],
-    },
-    {
-      type: "Other toppings",
-      isRequired: false,
-      optionList: [
-        {
-          optionName: "Lettuce",
-          optionPrice: "900",
-        },
-        {
-          optionName: "Lettuce",
-          optionPrice: "900",
-        },
-        {
-          optionName: "Lettuce",
-          optionPrice: "900",
-        },
-        {
-          optionName: "Lettuce",
-          optionPrice: "900",
-        },
-      ],
-    },
-  ];
-
+  const { menuId } = useParams();
+  const [menuData, setMenuData] = useState<menuOptionType>();
   const [quantity, setQuantity] = useState(1);
-  const navigate = useNavigate();
+
+  const [postMenu, setPostMenu] = useState<postMenuType>();
+  const [selectedOptionList, setSelectedOptionList] = useState<
+    postOptionType[]
+  >([]);
+  const [isValidated, setIdValidated] = useState<boolean>(false);
 
   const handlePlusBtnClick = (): void => {
     setQuantity((prev) => prev + 1);
@@ -76,9 +34,38 @@ const MenuPage: React.FC = () => {
     setQuantity((prev) => prev - 1);
   };
 
-  const handleAddToBasketBtnClick = (): void => {
-    navigate("/restaurant");
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (isValidated) {
+      alert("제출완료!");
+    } else {
+      alert("유효성 실패");
+    }
   };
+
+  useEffect(() => {
+    const getMenuData = async () => {
+      try {
+        const response = await customAxios.get(
+          `${apiRoutes.menuOptionList}?menuId=${menuId}`
+        );
+        if (response.status !== 200) throw new Error("예외가 발생했습니다.");
+        setMenuData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch restaurants:", error);
+      }
+    };
+    getMenuData();
+  }, []);
+
+  useEffect(() => {
+    setPostMenu({
+      menu_id: menuId,
+      quantity: quantity,
+      option_list: selectedOptionList,
+    });
+  }, [selectedOptionList, quantity]);
 
   return (
     <div>
@@ -87,10 +74,8 @@ const MenuPage: React.FC = () => {
         <div className="menuPageInfo">
           <img src={MenuBackImg} className="MenuBackImg" alt="menuMainImage" />
           <div className="menuPageTitle">
-            <div className="menuPageName">Bulgogi Beef Bowl</div>
-            <div className="menuPageDescription">
-              Bowl of rice topped with bulgogi beef and suace
-            </div>
+            <div className="menuPageName">{menuData?.name}</div>
+            <div className="menuPageDescription">{menuData?.description}</div>
           </div>
         </div>
         <div className="devidingLine"></div>
@@ -103,15 +88,20 @@ const MenuPage: React.FC = () => {
               handleMinusBtnClick={handleMinusBtnClick}
             />
           </div>
-          {options.map((option, index) => (
-            <OptionList option={option} key={index} />
+          {menuData?.option_group_list.map((optionList, index) => (
+            <OptionList
+              optionList={optionList}
+              key={index}
+              selectedOptionList={selectedOptionList}
+              setSelectedOptionList={setSelectedOptionList}
+            />
           ))}
           <div className="AddToBasketBtn">
             <Button
               name="Add to Basket"
               backgroundColor="#ff6347"
               buttonType="bigButton"
-              handleClick={handleAddToBasketBtnClick}
+              handleClick={handleSubmit}
               type="button"
             />
           </div>

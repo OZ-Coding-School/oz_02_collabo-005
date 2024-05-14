@@ -119,7 +119,6 @@ const SignupPage: React.FC = () => {
           : "";
       }
       if (value) {
-        // 정규표현식에 맞게 문자 입력했는데도 에러메시지가 없어지지 않음
         if (isValidatePassword(value)) {
           if (value.length > 16) {
             error = "The password is 8 to 16 characters.";

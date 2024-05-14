@@ -6,7 +6,7 @@ import CardManagementSection from "@components/common/addcard/CardManagementSect
 import { useNavigate } from "react-router-dom";
 import Button from "@components/common/button/Button";
 import ProceedModal from "@components/common/modal/ProceedModal";
-import useLoginStore from "../../store/useStore";
+import useLoginStore from "../../store/useLoginStore";
 import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
 import { inputType } from "../SignupPage";
@@ -154,6 +154,7 @@ const AccountPage: React.FC = () => {
   // 로그아웃 버튼을 눌렀을 때 호출되는 함수
   const handleLogOut = async () => {
     useLoginStore.getState().setLoginState(false, null, null);
+    localStorage.clear();
     navigate("/");
   };
 
@@ -162,6 +163,7 @@ const AccountPage: React.FC = () => {
     try {
       await customAxios.post(apiRoutes.userDelete);
       useLoginStore.getState().setLoginState(false, null, null);
+      localStorage.clear();
       navigate("/");
     } catch (error) {
       console.error(error);

@@ -4,8 +4,11 @@ import ArrowDownIcon from "../../assets/icons/arrow-down.png";
 import "./AddressBar.css";
 import { useNavigate } from "react-router-dom";
 
-const AddressBar: React.FC = () => {
-  const address = "300 Seo Seon-ro, Songpa-gu, Seoul";
+interface addressProps {
+  address: string;
+}
+
+const AddressBar: React.FC<addressProps> = ({ address }) => {
   const navigate = useNavigate();
 
   const handleAddressClick = () => {
@@ -14,10 +17,10 @@ const AddressBar: React.FC = () => {
   return (
     <div className="homeAddressContainer">
       <div className="homeAddressContent" onClick={handleAddressClick}>
-        <img src={MappinIcon} className="mappinIcon"></img>
-        <div className="homeAddressDetail">{address}</div>
+        <img src={MappinIcon} className="mappinIcon" />
+        <div className={address && "homeAddressDetail"}>{address}</div>
       </div>
-      <img src={ArrowDownIcon} className="arrowDownIcon"></img>
+      <img src={ArrowDownIcon} className="arrowDownIcon" />
     </div>
   );
 };

@@ -24,19 +24,28 @@ const HomePage: React.FC = () => {
   const [categories, setCategories] = useState<{
     [key: string]: RestaurantType[];
   }>({});
+  const [address, setAddress] = useState<string>("");
 
   // 레스토랑 리스트 get해오는 함수
   useEffect(() => {
+    const getAddress = async () => {
+      const response = await customAxios.get(apiRoutes.address);
+      if (response.status === 200) {
+        if (!response.data.error) {
+          setAddress(response.data.base);
+        }
+      }
+    };
     const fetchRestaurants = async () => {
       try {
         const response = await customAxios.get(apiRoutes.restaurantList);
-        console.log(response);
         if (response.status !== 200) throw new Error("예외가 발생했습니다.");
         setRestaurants(response.data);
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);
       }
     };
+    getAddress();
     fetchRestaurants();
   }, []);
 
@@ -93,7 +102,7 @@ const HomePage: React.FC = () => {
         hasCartIcon={true}
         isFixed={true}
       />
-      <AddressBar />
+      <AddressBar address={address} />
       <main className="mainContainer">
         <Banner banners={banners} />
         <div className="categoryList">

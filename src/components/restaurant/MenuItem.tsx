@@ -21,7 +21,6 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu, isPreparing }) => {
   const isHidden = menu.status === 3;
   if (isHidden) return;
 
-  console.log(isPreparing);
   return (
     <div
       className="MenuItemContainer"

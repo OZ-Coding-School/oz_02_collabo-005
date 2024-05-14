@@ -53,7 +53,7 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     if (restaurants !== undefined) {
       const extractCategories = () => {
-        const categoriesSet = new Set();
+        const categoriesSet = new Set<string>();
 
         restaurants.forEach((restaurant) => {
           restaurant.category.forEach((category) => {

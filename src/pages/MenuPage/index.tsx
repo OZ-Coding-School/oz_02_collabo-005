@@ -26,6 +26,8 @@ const MenuPage: React.FC = () => {
   >([]);
   const [isValidated, setIsValidated] = useState<boolean>(false);
 
+  const { setPostOrders, postOrders } = useOrderStore();
+
   const handlePlusBtnClick = (): void => {
     setQuantity((prev) => prev + 1);
   };
@@ -35,10 +37,26 @@ const MenuPage: React.FC = () => {
     setQuantity((prev) => prev - 1);
   };
 
+  console.log(postOrders);
+
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isValidated) {
-      console.log(selectedMenus);
+      const strPostOrders = postOrders.map((menu) => JSON.stringify(menu)); // 문자열화된 기존 메뉴의 배열
+      const strSelectedMenus = JSON.stringify(selectedMenus!);
+
+      const targetIndex = strPostOrders.indexOf(strSelectedMenus);
+
+      if (targetIndex === -1) {
+        setPostOrders([...postOrders, selectedMenus!]);
+      } else {
+        postOrders.map((menu, index) =>
+          index === targetIndex
+            ? { ...menu, quantity: menu.quantity + 1 }
+            : menu
+        );
+      }
+
       alert("장바구니 담기 성공");
     } else {
       alert("장바구니 담기 실패");
@@ -61,7 +79,7 @@ const MenuPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (menuData !== undefined) {
+    if (menuData !== undefined && menuData.option_group_list.length !== 0) {
       setSelectedMenus({
         menu_id: menuData?.id,
         quantity: quantity,

@@ -35,10 +35,10 @@ const MenuItem: React.FC<MenuItemProps> = ({ menu, isPreparing }) => {
             <div className="menuItemLabel">{menu.represent}</div>
           )}
         </div>
-        <p className="menuItemPrice">{menu.price} won</p>
         {menu.description && (
           <div className="menuItemDescription">{menu.description}</div>
         )}
+        <p className="menuItemPrice">{menu.price} won</p>
       </div>
       {isSoldOut && (
         <div className="menuMainImgContainer menuSoldOut">Sold Out</div>

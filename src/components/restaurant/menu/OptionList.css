@@ -4,18 +4,33 @@
 }
 
 .optionTitleSection {
+  display: grid;
+  gap: 5px;
+}
+
+.optionTitle {
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
   gap: 10px;
 }
 
+.optionType {
+  font-weight: 600;
+}
+
 .optionLabel {
   font-size: 0.7rem;
+  font-weight: 600;
   line-height: 1.5;
   border-radius: 5px;
   margin-top: 5px;
   padding: 0px 5px 1px 5px;
+}
+
+.choiceNoticeMessage {
+  font-size: 0.8rem;
+  color: gray;
 }
 
 .Required {

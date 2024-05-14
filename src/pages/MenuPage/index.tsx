@@ -13,17 +13,18 @@ import {
 } from "src/types/menuOptionTypes";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
+import useOrderStore from "./../../store/useOrderStore";
 
 const MenuPage: React.FC = () => {
   const { menuId } = useParams();
   const [menuData, setMenuData] = useState<menuOptionType>();
   const [quantity, setQuantity] = useState(1);
 
-  const [postMenu, setPostMenu] = useState<postMenuType>();
+  const [selectedMenus, setSelectedMenus] = useState<postMenuType>();
   const [selectedOptionList, setSelectedOptionList] = useState<
     postOptionType[]
   >([]);
-  const [isValidated, setIdValidated] = useState<boolean>(false);
+  const [isValidated, setIsValidated] = useState<boolean>(false);
 
   const handlePlusBtnClick = (): void => {
     setQuantity((prev) => prev + 1);
@@ -36,11 +37,11 @@ const MenuPage: React.FC = () => {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     if (isValidated) {
-      alert("제출완료!");
+      console.log(selectedMenus);
+      alert("장바구니 담기 성공");
     } else {
-      alert("유효성 실패");
+      alert("장바구니 담기 실패");
     }
   };
 
@@ -60,12 +61,26 @@ const MenuPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    setPostMenu({
-      menu_id: menuId,
-      quantity: quantity,
-      option_list: selectedOptionList,
-    });
-  }, [selectedOptionList, quantity]);
+    if (menuData !== undefined) {
+      setSelectedMenus({
+        menu_id: menuData?.id,
+        quantity: quantity,
+        option_list: selectedOptionList,
+      });
+
+      // 선택된 옵션 리스트에서 mandatory 옵션 그룹 중 선택된 옵션이 있는지 확인
+      const hasAllRequiredOptions = menuData?.option_group_list
+        .filter((optionGroup) => optionGroup.mandatory)
+        .every((optionGroup) =>
+          selectedOptionList.some(
+            (selectedGroup) =>
+              selectedGroup.group_id === optionGroup.option_group_id
+          )
+        );
+
+      setIsValidated(hasAllRequiredOptions);
+    }
+  }, [selectedOptionList, quantity, menuData]);
 
   return (
     <div>
@@ -99,10 +114,11 @@ const MenuPage: React.FC = () => {
           <div className="AddToBasketBtn">
             <Button
               name="Add to Basket"
-              backgroundColor="#ff6347"
+              backgroundColor={isValidated ? "#ff6347" : "#767676"}
               buttonType="bigButton"
               handleClick={handleSubmit}
               type="button"
+              disabled={!isValidated}
             />
           </div>
         </div>

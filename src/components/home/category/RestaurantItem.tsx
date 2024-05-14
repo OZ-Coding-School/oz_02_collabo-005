@@ -19,7 +19,7 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
     navigate(`/restaurant/${id}`);
   };
 
-  const description = hashtag ? hashtag.join(", ") : "";
+  const description = hashtag ? hashtag.join(" ") : "";
   const isOpen = status === 1;
   const noticeMessage = status !== 1 && status === 2 ? "Close" : "Preparing";
 

@@ -106,7 +106,7 @@ const SignupPage: React.FC = () => {
     let error = "";
 
     if (field === "email") {
-      error = !isValidateEmail(value) ? "Invalid email address." : "";
+      error = value && !isValidateEmail(value) ? "Invalid email address." : "";
     } else if (field === "password") {
       if (userData.repeatPassword.value !== "") {
         userData.repeatPassword.error = !isPasswordMatch(
@@ -116,15 +116,37 @@ const SignupPage: React.FC = () => {
           ? "Passwords do not match."
           : "";
       }
-      error = !isValidatePassword(value)
-        ? "Password must be at least 8 characters long."
-        : "";
+      if (value) {
+        // 정규표현식에 맞게 문자 입력했는데도 에러메시지가 없어지지 않음
+        console.log(
+          `정규표현식 일치 여부 : ${isValidatePassword(value)}, 비밀번호 입력 값: ${value}`
+        );
+        if (isValidatePassword(value)) {
+          if (value.length > 16) {
+            error = "The password is 8 to 16 characters.";
+          }
+          error = "";
+        } else {
+          error =
+            "English letters, numbers, and special symbols(ex. !@#$%^&?_) must be included.";
+          if (value.length > 16) {
+            error = "The password is 8 to 16 characters.";
+          }
+        }
+      }
+      // error =
+      //   value && !isValidatePassword(value)
+      //     ? "English letters, numbers, and special symbols(ex. !@#$%^&?_) must be included"
+      //     : "";
+      // error =
+      //   value && value.length > 16 ? "The password is 8 to 16 characters." : "";
     } else if (field === "repeatPassword") {
-      error = !isPasswordMatch(userData.password.value, value)
-        ? "Passwords do not match."
-        : "";
+      error =
+        value && !isPasswordMatch(userData.password.value, value)
+          ? "Passwords do not match."
+          : "";
     } else if (field === "phone") {
-      error = !isValidatePhone(value) ? "Invalid phone number." : "";
+      error = value && !isValidatePhone(value) ? "Invalid phone number." : "";
     }
 
     setUserData((prev) => ({
@@ -132,8 +154,6 @@ const SignupPage: React.FC = () => {
       [field]: { value, error },
     }));
   };
-
-  console.log(userData);
 
   const isValidateEmail = (email: string): boolean => {
     return emailRegex.test(email);
@@ -197,7 +217,7 @@ const SignupPage: React.FC = () => {
             label="Password"
             name="password"
             type="password"
-            place="Please enter a password of at least 8 characters"
+            place="Password must be at least 8 characters long"
             value={userData.password.value}
             className={userData.password.error ? "error" : ""}
             errorMessage={userData.password.error}

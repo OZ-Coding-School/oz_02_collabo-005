@@ -6,6 +6,7 @@ interface OptionItemProps extends Omit<optionType, "id"> {
   inputType: string;
   groupName: string;
   handleCheckChange: (checked: boolean) => void;
+  disabled: boolean;
 }
 
 const OptionItem: React.FC<OptionItemProps> = ({
@@ -14,6 +15,7 @@ const OptionItem: React.FC<OptionItemProps> = ({
   name,
   price,
   handleCheckChange,
+  disabled,
 }) => {
   return (
     <div className="optionItemContainer">
@@ -27,6 +29,7 @@ const OptionItem: React.FC<OptionItemProps> = ({
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             handleCheckChange(e.target.checked);
           }}
+          disabled={disabled}
         />
         <label htmlFor={name}>{name}</label>
       </div>

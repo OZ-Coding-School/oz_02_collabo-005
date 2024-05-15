@@ -88,7 +88,12 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackIcon={true} title="" hasCartIcon={false} />
+      <Header
+        hasBackIcon={true}
+        title=""
+        hasCartIcon={false}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="loginMainContainer">
         <div className="logoContainer">
           <img src={logoImage} width="128px" height="128px" />

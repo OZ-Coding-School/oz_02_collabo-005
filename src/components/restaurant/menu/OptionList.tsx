@@ -1,91 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import OptionItem from "./OptionItem";
 import "./OptionList.css";
-import { optionGroupType, postOptionType } from "src/types/menuOptionTypes";
+import { optionGroupType } from "src/types/menuOptionTypes";
 
 interface OptionListProps {
   optionList: optionGroupType;
-  selectedOptionList: postOptionType[]; // 변경
-  setSelectedOptionList: React.Dispatch<React.SetStateAction<postOptionType[]>>;
+  selectedOptions: number[];
+  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
+  setIsValidated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const OptionList: React.FC<OptionListProps> = ({
   optionList,
-  selectedOptionList,
-  setSelectedOptionList,
+  selectedOptions,
+  setSelectedOptions,
+  setIsValidated,
 }) => {
   const optionLabel = optionList.mandatory ? "Required" : "Optional";
-  const inputType = optionList.choice_mode === 1 ? "radio" : "checkbox";
-  const maxSelectMessage = `Select up to ${optionList.maximum}`;
-  const selectMessage =
-    optionList.mandatory && optionList.choice_mode === 1
-      ? ""
-      : maxSelectMessage;
-  // 각 옵션 그룹의 최대 선택 가능한 개수
-  const maxSelection = optionList.maximum;
+  const inputType = optionList.mandatory ? "radio" : "checkbox";
+  const prevSelectedOption = useRef<number>();
 
-  // 선택된 아이템 개수를 계산하는 함수
-  const calculateCheckedItemCount = (): number => {
-    return selectedOptionList.reduce(
-      (total, group) =>
-        group.group_id === optionList.option_group_id
-          ? total + group.options.length
-          : total,
-      0
-    );
-  };
+  console.log(selectedOptions);
 
-  // 체크된 아이템 개수 상태 변수
-  const [checkedItemCount, setCheckedItemCount] = useState<number>(
-    calculateCheckedItemCount()
-  );
-
-  useEffect(() => {
-    // 선택된 아이템 개수 업데이트
-    setCheckedItemCount(calculateCheckedItemCount());
-  }, [selectedOptionList]);
-
-  const handleCheckChange = (checked: boolean, item: number) => {
-    if (checked) {
-      if (checkedItemCount < maxSelection) {
-        setSelectedOptionList((prevSelectedOptionList) => {
-          const updatedList = [...prevSelectedOptionList];
-          const groupIndex = updatedList.findIndex(
-            (group) => group.group_id === optionList.option_group_id
-          );
-
-          if (checked && groupIndex !== -1) {
-            // 이미 해당 group_id가 존재하는 경우
-            if (updatedList[groupIndex].options.length < maxSelection) {
-              const existingItemIndex =
-                updatedList[groupIndex].options.indexOf(item);
-
-              if (existingItemIndex === -1) {
-                // 중복된 아이템이 없는 경우에만 추가
-                updatedList[groupIndex].options.push(item);
-              }
-            }
-          } else {
-            // 해당 group_id가 존재하지 않는 경우
-            updatedList.push({
-              group_id: optionList.option_group_id,
-              options: [item],
-            });
-          }
-          return updatedList;
-        });
-      }
+  const handleCheckBoxChange = (isChecked: boolean, optionId: number) => {
+    if (isChecked) {
+      setSelectedOptions([...selectedOptions, optionId]);
     } else {
-      setSelectedOptionList((prevSelectedOptionList) => {
-        // 해당 아이템이 속한 그룹의 options 배열에서 현재 아이템을 제거
-        const updatedList = prevSelectedOptionList.map((group) => ({
-          ...group,
-          options: group.options.filter((option) => option !== item),
-        }));
-        return updatedList.filter((group) => group.options.length > 0);
-      });
+      setSelectedOptions(
+        selectedOptions.filter((option) => option !== optionId)
+      );
     }
   };
+
+  const handleRadioChange = (optionId: number) => {
+    let updateData;
+    if (prevSelectedOption.current) {
+      updateData = selectedOptions.filter(
+        (option) => option !== prevSelectedOption.current
+      );
+      setSelectedOptions([...updateData, optionId]);
+      prevSelectedOption.current = optionId;
+    } else {
+      prevSelectedOption.current = optionId;
+      setSelectedOptions([...selectedOptions, optionId]);
+    }
+    setIsValidated(true);
+  };
+
+  useEffect(() => {
+    if (optionList.mandatory && prevSelectedOption.current === undefined) {
+      setIsValidated(false);
+    }
+  }, [selectedOptions]);
 
   return (
     <div className="optionListContainer">
@@ -94,7 +60,7 @@ const OptionList: React.FC<OptionListProps> = ({
           <div className="optionType">{optionList.option_name}</div>
           <div className={`optionLabel ${optionLabel}`}>{optionLabel}</div>
         </div>
-        <div className="choiceNoticeMessage">{selectMessage}</div>
+        <div className="choiceNoticeMessage"></div>
       </div>
 
       {optionList.options.map(({ id, name, price }) => (
@@ -104,18 +70,11 @@ const OptionList: React.FC<OptionListProps> = ({
           name={name}
           price={price}
           key={id}
-          handleCheckChange={(checked: boolean) =>
-            handleCheckChange(checked, id)
-          }
-          // 최대 선택 가능 개수를 초과하면 체크박스를 비활성화
-          disabled={
-            checkedItemCount >= maxSelection &&
-            !selectedOptionList.find(
-              (group) =>
-                group.group_id === optionList.option_group_id &&
-                group.options.includes(id)
-            )
-          }
+          handleCheckChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            optionList.mandatory
+              ? handleRadioChange(id)
+              : handleCheckBoxChange(e.target.checked, id);
+          }}
         />
       ))}
     </div>

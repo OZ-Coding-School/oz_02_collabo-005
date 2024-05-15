@@ -8,6 +8,7 @@ interface HeaderProps {
   title?: string;
   hasCartIcon: boolean;
   isFixed?: boolean;
+  handleBackIconClick?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -15,20 +16,15 @@ const Header: React.FC<HeaderProps> = ({
   title,
   hasCartIcon,
   isFixed,
+  handleBackIconClick,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const handleBackIconClick = () => {
-    // /order/status 페이지에서는 뒤로가기버튼 누르면 /home 페이지로 이동
-    if (location.pathname === "/order/status") {
-      navigate("/home");
-    } else {
-      navigate(-1);
-    }
-  };
   const handleCartIcon = () => {
     navigate("/order/sheet");
   };
+
+  const cartQuantity = localStorage.getItem("cartCount");
+
   return (
     <div className={`headerContainer ${isFixed ? "headerFixed" : ""}`}>
       {hasBackIcon && (
@@ -42,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({
       {hasCartIcon && (
         <div className="headerCart" onClick={handleCartIcon}>
           <img src={CartIcon} className="cartIcon" />
-          <div className="cartQuantity">0</div>
+          <div className="cartQuantity">{cartQuantity ? cartQuantity : 0}</div>
         </div>
       )}
     </div>

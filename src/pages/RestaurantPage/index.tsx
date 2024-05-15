@@ -8,7 +8,7 @@ import "./RestaurantPage.css";
 import DropDownButton from "@components/restaurant/DropDownButton";
 import MenuList from "@components/restaurant/MenuList";
 import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { MenuGroupType, RestaurantInfoType } from "src/types/restaurantTypes";
@@ -21,7 +21,9 @@ const RestaurantPage: React.FC = () => {
   const [operatingHours, setOperatingHours] = useState<string>();
   const [isPreparing, setIsPreparing] = useState<boolean>(true);
   const [address, setAddress] = useState<string>("");
+  const navigate = useNavigate();
 
+  console.log(restaurantInfo);
   const handleMenuCategoryClick = (event: string) => {
     setSelectedMenuList(getMenuList(event));
   };
@@ -120,6 +122,7 @@ const RestaurantPage: React.FC = () => {
         title={restaurantInfo?.name}
         hasCartIcon={true}
         isFixed={true}
+        handleBackIconClick={() => navigate("/home")}
       />
       <AddressBar address={address} />
       <div className="restaurantContainer">
@@ -171,6 +174,7 @@ const RestaurantPage: React.FC = () => {
           <MenuList
             selectedMenuList={selectedMenuList}
             isPreparing={isPreparing}
+            restaurantId={restaurantId!}
           />
         </div>
       </div>

@@ -94,6 +94,7 @@ const OrderSheetPage: React.FC = () => {
         title="My Ordersheet"
         hasCartIcon={false}
         isFixed={true}
+        handleBackIconClick={() => navigate(-1)}
       />
       <div className="orderSheetContainer">
         <div className="orderSection">

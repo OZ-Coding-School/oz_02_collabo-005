@@ -5,25 +5,28 @@ import OptionList from "@components/restaurant/menu/OptionList";
 import "./MenuPage.css";
 import Button from "@components/common/button/Button";
 import QuantityButton from "@components/common/button/QuantityButton";
-import { useParams } from "react-router-dom";
-import {
-  menuOptionType,
-  postMenuType,
-  postOptionType,
-} from "src/types/menuOptionTypes";
+import { useNavigate, useParams } from "react-router-dom";
+import { menuOptionType, selectMenuType } from "src/types/menuOptionTypes";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 
+type Order = {
+  orders: {
+    restaurant_id: number;
+    menus: selectMenuType[];
+  }[];
+};
+
 const MenuPage: React.FC = () => {
-  const { menuId } = useParams();
+  const { restaurantId, menuId } = useParams();
+
   const [menuData, setMenuData] = useState<menuOptionType>();
   const [quantity, setQuantity] = useState(1);
 
-  const [postMenu, setPostMenu] = useState<postMenuType>();
-  const [selectedOptionList, setSelectedOptionList] = useState<
-    postOptionType[]
-  >([]);
-  const [isValidated, setIdValidated] = useState<boolean>(false);
+  const [isValidated, setIsValidated] = useState<boolean>(true);
+  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+
+  const navigate = useNavigate();
 
   const handlePlusBtnClick = (): void => {
     setQuantity((prev) => prev + 1);
@@ -34,14 +37,69 @@ const MenuPage: React.FC = () => {
     setQuantity((prev) => prev - 1);
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const updateCartCount = () => {
+    const cartCount = localStorage.getItem("cartCount");
 
-    if (isValidated) {
-      alert("제출완료!");
-    } else {
-      alert("유효성 실패");
+    if (!cartCount) localStorage.setItem("cartCount", JSON.stringify(quantity));
+    else {
+      const newCount = JSON.parse(cartCount) + quantity;
+      localStorage.setItem("cartCount", JSON.stringify(newCount));
     }
+  };
+
+  const handleSubmit = (): void => {
+    const currentMenu = {
+      id: parseInt(menuId!),
+      options: selectedOptions,
+      quantity: quantity,
+    };
+
+    const orderData = localStorage.getItem("orderData");
+    let updatedOrderData: Order;
+
+    if (orderData === null) {
+      updatedOrderData = {
+        orders: [
+          {
+            restaurant_id: parseInt(restaurantId!),
+            menus: [currentMenu],
+          },
+        ],
+      };
+    } else {
+      updatedOrderData = JSON.parse(orderData);
+
+      //이미 해당 레스토랑이 담겨있는지
+      const restaurantOrder = updatedOrderData.orders.find(
+        (order) => order.restaurant_id === parseInt(restaurantId!)
+      );
+
+      if (restaurantOrder) {
+        const existingMenuIndex = restaurantOrder.menus.findIndex(
+          (menu) =>
+            menu.id === currentMenu.id &&
+            JSON.stringify(menu.options) === JSON.stringify(currentMenu.options)
+        );
+
+        if (existingMenuIndex === -1) {
+          restaurantOrder.menus.push(currentMenu);
+        } else {
+          restaurantOrder.menus[existingMenuIndex].quantity +=
+            currentMenu.quantity;
+        }
+      } else {
+        updatedOrderData.orders.push({
+          restaurant_id: parseInt(restaurantId!),
+          menus: [currentMenu],
+        });
+      }
+    }
+
+    localStorage.setItem("orderData", JSON.stringify(updatedOrderData));
+    updateCartCount();
+
+    alert("Order has been added to the basket.");
+    navigate(`/restaurant/${restaurantId}`);
   };
 
   useEffect(() => {
@@ -59,17 +117,16 @@ const MenuPage: React.FC = () => {
     getMenuData();
   }, []);
 
-  useEffect(() => {
-    setPostMenu({
-      menu_id: menuId,
-      quantity: quantity,
-      option_list: selectedOptionList,
-    });
-  }, [selectedOptionList, quantity]);
+  console.log(menuData);
 
   return (
     <div>
-      <Header hasBackIcon={true} hasCartIcon={true} isFixed={true} />
+      <Header
+        hasBackIcon={true}
+        hasCartIcon={true}
+        isFixed={true}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="menuPageContainer">
         <div className="menuPageInfo">
           <img src={MenuBackImg} className="MenuBackImg" alt="menuMainImage" />
@@ -92,17 +149,19 @@ const MenuPage: React.FC = () => {
             <OptionList
               optionList={optionList}
               key={index}
-              selectedOptionList={selectedOptionList}
-              setSelectedOptionList={setSelectedOptionList}
+              selectedOptions={selectedOptions}
+              setSelectedOptions={setSelectedOptions}
+              setIsValidated={setIsValidated}
             />
           ))}
           <div className="AddToBasketBtn">
             <Button
               name="Add to Basket"
-              backgroundColor="#ff6347"
+              backgroundColor={isValidated ? "#ff6347" : "#767676"}
               buttonType="bigButton"
-              handleClick={handleSubmit}
               type="button"
+              handleClick={handleSubmit}
+              disabled={!isValidated}
             />
           </div>
         </div>

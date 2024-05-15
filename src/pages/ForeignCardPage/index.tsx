@@ -45,7 +45,12 @@ const ForeignCardPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackIcon={true} title="Register Card" hasCartIcon={false} />
+      <Header
+        hasBackIcon={true}
+        title="Register Card"
+        hasCartIcon={false}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="cardMainContainer">
         <div className="cardButtonSection">
           <h2>Foreign credit card</h2>

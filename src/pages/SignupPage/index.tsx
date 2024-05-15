@@ -179,7 +179,13 @@ const SignupPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackIcon={true} title="" hasCartIcon={false} isFixed={false} />
+      <Header
+        hasBackIcon={true}
+        title=""
+        hasCartIcon={false}
+        isFixed={false}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="signupContainer">
         <h1 className="signupTitle">Sign Up</h1>
         <form>

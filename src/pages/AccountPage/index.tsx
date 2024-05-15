@@ -6,10 +6,10 @@ import CardManagementSection from "@components/common/addcard/CardManagementSect
 import { useNavigate } from "react-router-dom";
 import Button from "@components/common/button/Button";
 import ProceedModal from "@components/common/modal/ProceedModal";
-import useLoginStore from "../../store/useLoginStore";
 import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
 import { inputType } from "../SignupPage";
+import { getStoredLoginState, useLoginStore } from "../../store/useLoginStore";
 
 export type UserDataType = {
   name: inputType;
@@ -35,7 +35,7 @@ const AccountPage: React.FC = () => {
     phone: { value: "", error: "" },
     birthDay: { value: "", error: "" },
   });
-  const { loginToken, setLoginState } = useLoginStore();
+  const { loginToken } = getStoredLoginState();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
@@ -153,7 +153,11 @@ const AccountPage: React.FC = () => {
 
   // 로그아웃 버튼을 눌렀을 때 호출되는 함수
   const handleLogOut = async () => {
-    setLoginState(false, null, null);
+    useLoginStore.setState({
+      isLogin: false,
+      loginToken: null,
+      refreshToken: null,
+    });
     localStorage.clear();
     navigate("/");
   };
@@ -161,10 +165,16 @@ const AccountPage: React.FC = () => {
   // 계정삭제 버튼을 눌렀을 때 호출되는 함수
   const handleDeleteAccount = async () => {
     try {
-      await customAxios.post(apiRoutes.userDelete);
-      setLoginState(false, null, null);
-      localStorage.clear();
-      navigate("/");
+      const response = await customAxios.post(apiRoutes.userDelete);
+      if (response.status === 200) {
+        useLoginStore.setState({
+          isLogin: false,
+          loginToken: null,
+          refreshToken: null,
+        });
+        localStorage.clear();
+        navigate("/");
+      }
     } catch (error) {
       console.error(error);
     }

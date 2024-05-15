@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import BackIcon from "../../../assets/icons/back-icon.png";
 import CartIcon from "../../../assets/icons/cart-icon.png";
 import "./Header.css";
+import { useState } from "react";
 
 interface HeaderProps {
   hasBackIcon: boolean;
@@ -26,9 +27,13 @@ const Header: React.FC<HeaderProps> = ({
       navigate(-1);
     }
   };
+
   const handleCartIcon = () => {
     navigate("/order/sheet");
   };
+
+  const cartQuantity = localStorage.getItem("cartCount");
+
   return (
     <div className={`headerContainer ${isFixed ? "headerFixed" : ""}`}>
       {hasBackIcon && (
@@ -42,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({
       {hasCartIcon && (
         <div className="headerCart" onClick={handleCartIcon}>
           <img src={CartIcon} className="cartIcon" />
-          <div className="cartQuantity">0</div>
+          <div className="cartQuantity">{cartQuantity ? cartQuantity : 0}</div>
         </div>
       )}
     </div>

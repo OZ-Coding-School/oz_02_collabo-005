@@ -5,7 +5,7 @@ import OptionList from "@components/restaurant/menu/OptionList";
 import "./MenuPage.css";
 import Button from "@components/common/button/Button";
 import QuantityButton from "@components/common/button/QuantityButton";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { menuOptionType, selectMenuType } from "src/types/menuOptionTypes";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
@@ -19,11 +19,14 @@ type Order = {
 
 const MenuPage: React.FC = () => {
   const { restaurantId, menuId } = useParams();
+
   const [menuData, setMenuData] = useState<menuOptionType>();
   const [quantity, setQuantity] = useState(1);
 
   const [isValidated, setIsValidated] = useState<boolean>(true);
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+
+  const navigate = useNavigate();
 
   const handlePlusBtnClick = (): void => {
     setQuantity((prev) => prev + 1);
@@ -32,6 +35,16 @@ const MenuPage: React.FC = () => {
   const handleMinusBtnClick = (): void => {
     if (quantity == 1) return;
     setQuantity((prev) => prev - 1);
+  };
+
+  const updateCartCount = () => {
+    const cartCount = localStorage.getItem("cartCount");
+
+    if (!cartCount) localStorage.setItem("cartCount", JSON.stringify(quantity));
+    else {
+      const newCount = JSON.parse(cartCount) + quantity;
+      localStorage.setItem("cartCount", JSON.stringify(newCount));
+    }
   };
 
   const handleSubmit = (): void => {
@@ -83,7 +96,10 @@ const MenuPage: React.FC = () => {
     }
 
     localStorage.setItem("orderData", JSON.stringify(updatedOrderData));
+    updateCartCount();
+
     alert("Order has been added to the basket.");
+    navigate(`/restaurant/${restaurantId}`);
   };
 
   useEffect(() => {

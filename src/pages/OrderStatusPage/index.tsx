@@ -35,7 +35,6 @@ const OrderStatusPage: React.FC = () => {
   return (
     <>
       <Header hasBackIcon={true} title="" hasCartIcon={false} />
-
       <div>
         {isLoading ? (
           <div className="loadingBar">

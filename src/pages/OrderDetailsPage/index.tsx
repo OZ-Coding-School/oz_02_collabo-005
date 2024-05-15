@@ -4,6 +4,7 @@ import React from "react";
 import AmountDetails from "@components/orders/ordersheet/amount/AmountDetails";
 import AddressDetails from "@components/orders/ordersheet/deliverydetails/AddressDetails";
 import "./OrderDetailsPage.css";
+import { useNavigate } from "react-router-dom";
 
 export type menuType = {
   name: string;
@@ -76,6 +77,8 @@ export const orders: orderType[] = [
 ];
 
 const OrderDetailsPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <Header
@@ -83,6 +86,7 @@ const OrderDetailsPage: React.FC = () => {
         title="Order Details"
         hasCartIcon={false}
         isFixed={true}
+        handleBackIconClick={() => navigate(-1)}
       />
       <div className="orderSheetContainer">
         <div className="orderSection">

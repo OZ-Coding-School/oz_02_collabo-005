@@ -121,7 +121,12 @@ const MenuPage: React.FC = () => {
 
   return (
     <div>
-      <Header hasBackIcon={true} hasCartIcon={true} isFixed={true} />
+      <Header
+        hasBackIcon={true}
+        hasCartIcon={true}
+        isFixed={true}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="menuPageContainer">
         <div className="menuPageInfo">
           <img src={MenuBackImg} className="MenuBackImg" alt="menuMainImage" />

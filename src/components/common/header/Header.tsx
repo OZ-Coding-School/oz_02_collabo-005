@@ -2,13 +2,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import BackIcon from "../../../assets/icons/back-icon.png";
 import CartIcon from "../../../assets/icons/cart-icon.png";
 import "./Header.css";
-import { useState } from "react";
 
 interface HeaderProps {
   hasBackIcon: boolean;
   title?: string;
   hasCartIcon: boolean;
   isFixed?: boolean;
+  handleBackIconClick?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -16,18 +16,9 @@ const Header: React.FC<HeaderProps> = ({
   title,
   hasCartIcon,
   isFixed,
+  handleBackIconClick,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const handleBackIconClick = () => {
-    // /order/status 페이지에서는 뒤로가기버튼 누르면 /home 페이지로 이동
-    if (location.pathname === "/order/status") {
-      navigate("/home");
-    } else {
-      navigate(-1);
-    }
-  };
-
   const handleCartIcon = () => {
     navigate("/order/sheet");
   };

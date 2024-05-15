@@ -195,7 +195,12 @@ const AccountPage: React.FC = () => {
   return (
     !isLoading && (
       <>
-        <Header hasBackIcon={true} title="Account" hasCartIcon={false} />
+        <Header
+          hasBackIcon={true}
+          title="Account"
+          hasCartIcon={false}
+          handleBackIconClick={() => navigate(-1)}
+        />
         <div className="accountMainContainer">
           <div className="editButtonSection">
             <Button

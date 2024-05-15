@@ -138,7 +138,12 @@ const AddressPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackIcon={true} title="" hasCartIcon={false} />
+      <Header
+        hasBackIcon={true}
+        title=""
+        hasCartIcon={false}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="addressMainContainer">
         <div className="setAddressTextSection">
           <h2>Set delivery address</h2>

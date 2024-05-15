@@ -13,7 +13,12 @@ const PaymentPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackIcon={true} title="Payment" hasCartIcon={false} />
+      <Header
+        hasBackIcon={true}
+        title="Payment"
+        hasCartIcon={false}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="paymentMainContainer">
         <div className="cardContainer">
           <CardManagementSection />

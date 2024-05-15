@@ -1,10 +1,15 @@
 import QuantityButton from "@components/common/button/QuantityButton";
 import React, { useState } from "react";
-import { menuType } from "src/pages/OrderSheetPage";
 import { BiSolidTrash } from "react-icons/bi";
 import "./OrderItem.css";
+import { MenuOption } from "src/types/ordersType";
+import { addCommasToNumberString } from "./../../../../utils/addCommas";
 
-interface OrderItemProps extends menuType {
+interface OrderItemProps {
+  name: string;
+  options: MenuOption[];
+  price: number;
+  quantity: number;
   isOnDetailsPage?: boolean;
 }
 
@@ -15,7 +20,10 @@ const OrderItem: React.FC<OrderItemProps> = ({
   quantity,
   isOnDetailsPage,
 }) => {
-  const optionList = options.length === 0 ? "unselected" : options.join(",");
+  const optionList =
+    options.length === 0
+      ? "unselected"
+      : options.map((option) => option.name).join(", ");
   const [count, setCount] = useState(quantity);
 
   const handlePlusBtnClick = (): void => {
@@ -35,7 +43,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
       <div className="orderInfoSection">
         <div className="OImenuName">{name}</div>
         <div className="OIoptionList">options: {optionList}</div>
-        <div className="OIprice">{price}won</div>
+        <div className="OIprice">{addCommasToNumberString(price)} won</div>
       </div>
       <div className="orderBtnSection">
         <QuantityButton

@@ -45,3 +45,32 @@ export type ViewOrderType = {
   delivery_fee: number;
   total_price: number;
 };
+
+export type CartDataType = {
+  coordinate: boolean;
+  delivery_fee: number;
+  order_price: number;
+  orders: { restaurant: Restaurant; menus: Menu[] }[];
+  total_price: number;
+};
+
+export type Restaurant = {
+  id: number;
+  name: string;
+};
+
+export type Menu = {
+  id: number;
+  menu_total_price: number;
+  name: string;
+  options: MenuOption[];
+  price: number;
+  quantity: number;
+  status: number;
+};
+
+export type MenuOption = {
+  id: number;
+  name: string;
+  price: number;
+};

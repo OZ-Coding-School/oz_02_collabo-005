@@ -117,8 +117,6 @@ const MenuPage: React.FC = () => {
     getMenuData();
   }, []);
 
-  console.log(menuData);
-
   return (
     <div>
       <Header

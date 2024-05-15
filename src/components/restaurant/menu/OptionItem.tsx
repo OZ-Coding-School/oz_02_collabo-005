@@ -5,8 +5,6 @@ import { optionType } from "src/types/menuOptionTypes";
 interface OptionItemProps extends Omit<optionType, "id"> {
   inputType: string;
   groupName: string;
-  handleCheckChange: (checked: boolean) => void;
-  disabled: boolean;
 }
 
 const OptionItem: React.FC<OptionItemProps> = ({
@@ -14,8 +12,6 @@ const OptionItem: React.FC<OptionItemProps> = ({
   groupName,
   name,
   price,
-  handleCheckChange,
-  disabled,
 }) => {
   return (
     <div className="optionItemContainer">
@@ -26,10 +22,6 @@ const OptionItem: React.FC<OptionItemProps> = ({
           value={name}
           id={name}
           className="optionItem"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            handleCheckChange(e.target.checked);
-          }}
-          disabled={disabled}
         />
         <label htmlFor={name}>{name}</label>
       </div>

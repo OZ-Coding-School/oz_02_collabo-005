@@ -6,27 +6,14 @@ import "./MenuPage.css";
 import Button from "@components/common/button/Button";
 import QuantityButton from "@components/common/button/QuantityButton";
 import { useParams } from "react-router-dom";
-import {
-  menuOptionType,
-  postMenuType,
-  postOptionType,
-} from "src/types/menuOptionTypes";
+import { menuOptionType, postOptionType } from "src/types/menuOptionTypes";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
-import useOrderStore from "./../../store/useOrderStore";
 
 const MenuPage: React.FC = () => {
-  const { menuId } = useParams();
+  const { restaurantId, menuId } = useParams();
   const [menuData, setMenuData] = useState<menuOptionType>();
   const [quantity, setQuantity] = useState(1);
-
-  const [selectedMenus, setSelectedMenus] = useState<postMenuType>();
-  const [selectedOptionList, setSelectedOptionList] = useState<
-    postOptionType[]
-  >([]);
-  const [isValidated, setIsValidated] = useState<boolean>(false);
-
-  const { setPostOrders, postOrders } = useOrderStore();
 
   const handlePlusBtnClick = (): void => {
     setQuantity((prev) => prev + 1);
@@ -35,32 +22,6 @@ const MenuPage: React.FC = () => {
   const handleMinusBtnClick = (): void => {
     if (quantity == 1) return;
     setQuantity((prev) => prev - 1);
-  };
-
-  console.log(postOrders);
-
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (isValidated) {
-      const strPostOrders = postOrders.map((menu) => JSON.stringify(menu)); // 문자열화된 기존 메뉴의 배열
-      const strSelectedMenus = JSON.stringify(selectedMenus!);
-
-      const targetIndex = strPostOrders.indexOf(strSelectedMenus);
-
-      if (targetIndex === -1) {
-        setPostOrders([...postOrders, selectedMenus!]);
-      } else {
-        postOrders.map((menu, index) =>
-          index === targetIndex
-            ? { ...menu, quantity: menu.quantity + 1 }
-            : menu
-        );
-      }
-
-      alert("장바구니 담기 성공");
-    } else {
-      alert("장바구니 담기 실패");
-    }
   };
 
   useEffect(() => {
@@ -77,28 +38,6 @@ const MenuPage: React.FC = () => {
     };
     getMenuData();
   }, []);
-
-  useEffect(() => {
-    if (menuData !== undefined && menuData.option_group_list.length !== 0) {
-      setSelectedMenus({
-        menu_id: menuData?.id,
-        quantity: quantity,
-        option_list: selectedOptionList,
-      });
-
-      // 선택된 옵션 리스트에서 mandatory 옵션 그룹 중 선택된 옵션이 있는지 확인
-      const hasAllRequiredOptions = menuData?.option_group_list
-        .filter((optionGroup) => optionGroup.mandatory)
-        .every((optionGroup) =>
-          selectedOptionList.some(
-            (selectedGroup) =>
-              selectedGroup.group_id === optionGroup.option_group_id
-          )
-        );
-
-      setIsValidated(hasAllRequiredOptions);
-    }
-  }, [selectedOptionList, quantity, menuData]);
 
   return (
     <div>
@@ -122,21 +61,14 @@ const MenuPage: React.FC = () => {
             />
           </div>
           {menuData?.option_group_list.map((optionList, index) => (
-            <OptionList
-              optionList={optionList}
-              key={index}
-              selectedOptionList={selectedOptionList}
-              setSelectedOptionList={setSelectedOptionList}
-            />
+            <OptionList optionList={optionList} key={index} />
           ))}
           <div className="AddToBasketBtn">
             <Button
               name="Add to Basket"
-              backgroundColor={isValidated ? "#ff6347" : "#767676"}
+              backgroundColor={"#ff6347"}
               buttonType="bigButton"
-              handleClick={handleSubmit}
               type="button"
-              disabled={!isValidated}
             />
           </div>
         </div>

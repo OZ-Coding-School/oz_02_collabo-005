@@ -7,12 +7,17 @@ import { useNavigate } from "react-router-dom";
 interface MenuItemProps {
   menu: MenuType;
   isPreparing: boolean;
+  restaurantId: string;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ menu, isPreparing }) => {
+const MenuItem: React.FC<MenuItemProps> = ({
+  menu,
+  isPreparing,
+  restaurantId,
+}) => {
   const navigate = useNavigate();
   const handleClick = (): void => {
-    navigate(`/restaurant/menu/${menu.id}`);
+    navigate(`/restaurant/${restaurantId}/menu/${menu.id}`);
   };
 
   // 메뉴 품절 여부

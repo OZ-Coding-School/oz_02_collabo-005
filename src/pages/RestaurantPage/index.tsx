@@ -167,6 +167,7 @@ const RestaurantPage: React.FC = () => {
           <MenuList
             selectedMenuList={selectedMenuList}
             isPreparing={isPreparing}
+            restaurantId={restaurantId!}
           />
         </div>
       </div>

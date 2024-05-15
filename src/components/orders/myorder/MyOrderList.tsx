@@ -4,16 +4,19 @@ import "./MyOrderList.css";
 import customAxios from "../../../api/axios";
 import apiRoutes from "../../../api/apiRoutes";
 import MyOrderEmpty from "./MyOrderEmpty";
+import { OrderHistoryDataType } from "../../../types/ordersType";
 
 const MyOrderList: React.FC = () => {
-  const [isOrdersEmpty, setIsOrdersEmpty] = useState<boolean>(true);
+  // const [isOrdersEmpty, setIsOrdersEmpty] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [orderHistory, setOrderHistory] = useState<OrderHistoryDataType[]>();
   useEffect(() => {
     const getRes = async () => {
       try {
         const response = await customAxios.get(apiRoutes.orderList);
-        response && setIsOrdersEmpty(false);
-        console.log(response);
+        if (response.status === 200) {
+          setOrderHistory(response.data);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -25,12 +28,21 @@ const MyOrderList: React.FC = () => {
   return (
     !isLoading && (
       <div className="myOrderListContainer">
-        {isOrdersEmpty ? (
+        {!orderHistory ? (
           <MyOrderEmpty />
         ) : (
           <>
-            <MyOrderItem />
-            <MyOrderItem />
+            {orderHistory
+              .slice()
+              .reverse()
+              .map((orderHistoryList) => {
+                return (
+                  <MyOrderItem
+                    orderHistoryList={orderHistoryList}
+                    key={orderHistoryList.id}
+                  />
+                );
+              })}
           </>
         )}
       </div>

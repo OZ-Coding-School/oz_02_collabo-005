@@ -15,22 +15,24 @@ type LoginState = {
 export const useLoginStore = create<LoginState>(
   persist(
     (set) => ({
-      // Initialize state
+      // 초기 값
       isLogin: false,
       loginToken: null,
       refreshToken: null,
-      // Set state and persist to localStorage
       setLoginState: (isLogin, loginToken, refreshToken) =>
         set({ isLogin, loginToken, refreshToken }),
     }),
     {
-      name: "login-storage", // Key to use for localStorage
+      // 로컬 스토리지에 문자열 형태로 isLogin, loginToken, refreshToken 저장
+      name: "login-storage",
     }
-  ) as (set: (fn: (state: LoginState) => LoginState) => void) => LoginState // Cast the return type to match
+  ) as (set: (fn: (state: LoginState) => LoginState) => void) => LoginState
 );
 
 export const getStoredLoginState = () => {
+  // 로컬 스토리지의 문자열 형태의 데이터를 저장
   const storedDataString = localStorage.getItem("login-storage");
+  // 문자열 형태의 데이터를 객체 형태로 변환
   const storedData = storedDataString && JSON.parse(storedDataString);
 
   if (storedData) {

@@ -28,21 +28,22 @@ const MyOrderList: React.FC = () => {
   return (
     !isLoading && (
       <div className="myOrderListContainer">
-        {!orderHistory ? (
+        {orderHistory?.length === 0 ? (
           <MyOrderEmpty />
         ) : (
           <>
-            {orderHistory
-              .slice()
-              .reverse()
-              .map((orderHistoryList) => {
-                return (
-                  <MyOrderItem
-                    orderHistoryList={orderHistoryList}
-                    key={orderHistoryList.id}
-                  />
-                );
-              })}
+            {orderHistory &&
+              orderHistory
+                .slice()
+                .reverse()
+                .map((orderHistoryList) => {
+                  return (
+                    <MyOrderItem
+                      orderHistoryList={orderHistoryList}
+                      key={orderHistoryList.id}
+                    />
+                  );
+                })}
           </>
         )}
       </div>

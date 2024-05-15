@@ -34,11 +34,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
       }}
     >
       <div className="menuItemInformation">
+        {menu.represent && (
+          <div className="menuItemLabel">{menu.represent}</div>
+        )}
         <div className="menuItemTitle">
           <p className="menuItemName">{menu.name}</p>
-          {menu.represent && (
-            <div className="menuItemLabel">{menu.represent}</div>
-          )}
         </div>
         {menu.description && (
           <div className="menuItemDescription">{menu.description}</div>

@@ -7,3 +7,7 @@
 .addressDetailsTitle {
   font-weight: 600;
 }
+
+.addressDetailsTitle {
+  line-height: 25px;
+}

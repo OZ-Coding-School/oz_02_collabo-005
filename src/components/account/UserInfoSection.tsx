@@ -21,22 +21,28 @@ const UserInfoSection: React.FC<isEditProps> = ({
 
     if (field === "email") {
       error = !isValidateEmail(value) ? "Invalid email address." : "";
-    } else if (value && field === "currentPassword") {
-      error =
-        userData.newPassword.value && userData.newPassword.value === value
-          ? "It has to be different from the current password."
-          : "";
-
-      if (isValidatePassword(value)) {
-        if (value.length > 16) {
-          error = "The password is 8 to 16 characters.";
-        }
-        error = "";
-      } else {
+    } else if (field === "currentPassword") {
+      if (value) {
         error =
-          "English letters, numbers, and special symbols(ex. !@#$%^&?_) must be included.";
-        if (value.length > 16) {
-          error = "The password is 8 to 16 characters.";
+          userData.newPassword.value && userData.newPassword.value === value
+            ? "It has to be different from the current password."
+            : "";
+
+        if (isValidatePassword(value)) {
+          if (value.length > 16) {
+            error = "The password is 8 to 16 characters.";
+          }
+          error = "";
+        } else {
+          error =
+            "English letters, numbers, and special symbols(ex. !@#$%^&?_) must be included.";
+          if (value.length > 16) {
+            error = "The password is 8 to 16 characters.";
+          }
+        }
+      } else {
+        if (userData.newPassword.value !== "") {
+          error = "Please enter your current password first";
         }
       }
     } else if (value && field === "newPassword") {
@@ -52,12 +58,9 @@ const UserInfoSection: React.FC<isEditProps> = ({
           error = "The password is 8 to 16 characters.";
         }
       }
-
       if (userData.currentPassword.value) {
         if (userData.currentPassword.value === value) {
           error = "It has to be different from the current password.";
-        } else {
-          ("Please enter your current password first");
         }
       }
       console.log(userData.currentPassword);

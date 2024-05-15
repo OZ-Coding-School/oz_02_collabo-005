@@ -12,8 +12,6 @@ export type optionGroupType = {
   mandatory: boolean;
   choice_mode: number;
   options: optionType[];
-  maximum: number;
-  minimum: number;
 };
 
 export type optionType = {
@@ -22,13 +20,8 @@ export type optionType = {
   price: number;
 };
 
-export type postMenuType = {
-  menu_id: number;
-  quantity: number;
-  option_list: postOptionType[];
-};
-
-export type postOptionType = {
-  group_id: number;
+export type selectMenuType = {
+  id: number;
   options: number[];
+  quantity: number;
 };

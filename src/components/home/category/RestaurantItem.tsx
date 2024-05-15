@@ -9,7 +9,6 @@ interface RestaurantItemProps extends Omit<RestaurantType, "category"> {}
 const RestaurantItem: React.FC<RestaurantItemProps> = ({
   id,
   name,
-  image,
   hashtag,
   status,
 }) => {

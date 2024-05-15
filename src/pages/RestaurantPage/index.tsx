@@ -22,6 +22,7 @@ const RestaurantPage: React.FC = () => {
   const [isPreparing, setIsPreparing] = useState<boolean>(true);
   const [address, setAddress] = useState<string>("");
 
+  console.log(restaurantInfo);
   const handleMenuCategoryClick = (event: string) => {
     setSelectedMenuList(getMenuList(event));
   };

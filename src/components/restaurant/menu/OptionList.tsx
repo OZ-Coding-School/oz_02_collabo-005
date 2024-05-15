@@ -1,22 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import OptionItem from "./OptionItem";
 import "./OptionList.css";
 import { optionGroupType } from "src/types/menuOptionTypes";
 
 interface OptionListProps {
   optionList: optionGroupType;
+  selectedOptions: number[];
+  setSelectedOptions: React.Dispatch<React.SetStateAction<number[]>>;
+  setIsValidated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const OptionList: React.FC<OptionListProps> = ({ optionList }) => {
+const OptionList: React.FC<OptionListProps> = ({
+  optionList,
+  selectedOptions,
+  setSelectedOptions,
+  setIsValidated,
+}) => {
   const optionLabel = optionList.mandatory ? "Required" : "Optional";
-  const inputType = optionList.choice_mode === 1 ? "radio" : "checkbox";
-  const selectMessage =
-    optionList.mandatory && optionList.choice_mode === 1
-      ? ""
-      : `Select up to ${optionList.maximum}`;
+  const inputType = optionList.mandatory ? "radio" : "checkbox";
+  const prevSelectedOption = useRef<number>();
 
-  // 각 옵션 그룹의 최대 선택 가능한 개수
-  const maxSelection = optionList.maximum;
+  console.log(selectedOptions);
+
+  const handleCheckBoxChange = (isChecked: boolean, optionId: number) => {
+    if (isChecked) {
+      setSelectedOptions([...selectedOptions, optionId]);
+    } else {
+      setSelectedOptions(
+        selectedOptions.filter((option) => option !== optionId)
+      );
+    }
+  };
+
+  const handleRadioChange = (optionId: number) => {
+    let updateData;
+    if (prevSelectedOption.current) {
+      updateData = selectedOptions.filter(
+        (option) => option !== prevSelectedOption.current
+      );
+      setSelectedOptions([...updateData, optionId]);
+      prevSelectedOption.current = optionId;
+    } else {
+      prevSelectedOption.current = optionId;
+      setSelectedOptions([...selectedOptions, optionId]);
+    }
+    setIsValidated(true);
+  };
+
+  useEffect(() => {
+    if (optionList.mandatory && prevSelectedOption.current === undefined) {
+      setIsValidated(false);
+    }
+  }, [selectedOptions]);
 
   return (
     <div className="optionListContainer">
@@ -25,7 +60,7 @@ const OptionList: React.FC<OptionListProps> = ({ optionList }) => {
           <div className="optionType">{optionList.option_name}</div>
           <div className={`optionLabel ${optionLabel}`}>{optionLabel}</div>
         </div>
-        <div className="choiceNoticeMessage">{selectMessage}</div>
+        <div className="choiceNoticeMessage"></div>
       </div>
 
       {optionList.options.map(({ id, name, price }) => (
@@ -35,6 +70,11 @@ const OptionList: React.FC<OptionListProps> = ({ optionList }) => {
           name={name}
           price={price}
           key={id}
+          handleCheckChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            optionList.mandatory
+              ? handleRadioChange(id)
+              : handleCheckBoxChange(e.target.checked, id);
+          }}
         />
       ))}
     </div>

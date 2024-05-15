@@ -15,3 +15,33 @@ export type OrderHistoryDataType = {
     },
   ];
 };
+
+export type ViewOrderType = {
+  orders: [
+    restaurant: {
+      id: number;
+      name: string;
+    },
+    menus: [
+      {
+        id: number;
+        name: string;
+        status: number;
+        price: number;
+        quantity: number;
+        options: [
+          {
+            id: number;
+            name: string;
+            price: number;
+          },
+        ];
+        menu_total_price: number;
+      },
+    ],
+  ];
+  coordinate: boolean;
+  order_price: number;
+  delivery_fee: number;
+  total_price: number;
+};

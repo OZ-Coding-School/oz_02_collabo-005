@@ -22,19 +22,46 @@ const UserInfoSection: React.FC<isEditProps> = ({
     if (field === "email") {
       error = !isValidateEmail(value) ? "Invalid email address." : "";
     } else if (value && field === "currentPassword") {
-      error = !isValidatePassword(value)
-        ? "Password must be at least 8 characters long."
-        : "";
+      error =
+        userData.newPassword.value && userData.newPassword.value === value
+          ? "It has to be different from the current password."
+          : "";
+
+      if (isValidatePassword(value)) {
+        if (value.length > 16) {
+          error = "The password is 8 to 16 characters.";
+        }
+        error = "";
+      } else {
+        error =
+          "English letters, numbers, and special symbols(ex. !@#$%^&?_) must be included.";
+        if (value.length > 16) {
+          error = "The password is 8 to 16 characters.";
+        }
+      }
     } else if (value && field === "newPassword") {
-      error = !isValidatePassword(value)
-        ? "Password must be at least 8 characters long."
-        : "";
+      if (isValidatePassword(value)) {
+        if (value.length > 16) {
+          error = "The password is 8 to 16 characters.";
+        }
+        error = "";
+      } else {
+        error =
+          "English letters, numbers, and special symbols(ex. !@#$%^&?_) must be included.";
+        if (value.length > 16) {
+          error = "The password is 8 to 16 characters.";
+        }
+      }
 
       if (userData.currentPassword.value) {
         if (userData.currentPassword.value === value) {
           error = "It has to be different from the current password.";
+        } else {
+          ("Please enter your current password first");
         }
       }
+      console.log(userData.currentPassword);
+      console.log(value);
     } else if (field === "phone") {
       error = !isValidatePhone(value) ? "Invalid phone number." : "";
     }

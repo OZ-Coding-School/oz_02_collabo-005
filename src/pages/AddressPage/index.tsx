@@ -34,7 +34,6 @@ const AddressPage: React.FC = () => {
     });
   };
 
-  // 처음 사용자가 주소 입력할때 저장된 주소가 없어서 에러가 나는데 예외처리 하는 방법
   useEffect(() => {
     const getRes = async () => {
       const response = await customAxios.get(apiRoutes.address);
@@ -76,10 +75,12 @@ const AddressPage: React.FC = () => {
         lat,
         lng,
       };
+      console.log(userAddressLatLng);
 
       const isAvailableDelivery = await customAxios.get(
         `/user/address/check-coordinate/?lat=${userAddressLatLng.lat}&lng=${userAddressLatLng.lng}`
       );
+      console.log(isAvailableDelivery);
       // 배달 불가능 지역일때 에러 메시지 알림창으로 띄움
       if (!isAvailableDelivery.data.data.result) {
         alert(
@@ -97,19 +98,21 @@ const AddressPage: React.FC = () => {
           } else {
             alert("Address update failed");
           }
+        } else {
+          // 현재 등록된 주소 없을 때
+          const postRes = await customAxios.post(
+            apiRoutes.address,
+            postAddressData
+          );
+          if (postRes.status === 200) {
+            navigate(-1);
+          } else {
+            alert("Address registration failed");
+          }
         }
       }
     } catch (error) {
-      // 현재 등록된 주소 없을 때
-      const postRes = await customAxios.post(
-        apiRoutes.address,
-        postAddressData
-      );
-      if (postRes.status === 200) {
-        navigate(-1);
-      } else {
-        alert("Address registration failed");
-      }
+      console.log(error);
     }
   };
 

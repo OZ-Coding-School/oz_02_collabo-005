@@ -52,16 +52,20 @@ const RestaurantPage: React.FC = () => {
     return openingTime;
   };
 
-  // 레스토랑 메뉴 가져오는 함수
   useEffect(() => {
     const getAddress = async () => {
-      const response = await customAxios.get(apiRoutes.address);
-      if (response.status === 200) {
-        if (!response.data.error) {
-          setAddress(response.data.base);
+      try {
+        const response = await customAxios.get(apiRoutes.address);
+        if (response.status === 200) {
+          if (!response.data.error) {
+            setAddress(response.data.base);
+          }
         }
+      } catch (error) {
+        setAddress("Please click here and enter your address");
       }
     };
+    // 레스토랑 메뉴 가져오는 함수
     const getRestaurantMenus = async () => {
       try {
         const response = await customAxios.get(

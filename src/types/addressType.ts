@@ -1,4 +1,4 @@
-export type userLatLngType = {
+export type UserLatLngType = {
   lat: number;
   lng: number;
 };

@@ -1,9 +1,9 @@
 import useLatLngStore from "../../store/useLatLngStore";
-import { userLatLngType } from "../../types/addressType";
+import { UserLatLngType } from "../../types/addressType";
 
 // 역지오코딩 : 위도 경도를 이용해 주소로 변환
 export const ReverseGeocoding = (
-  userLatLng: userLatLngType
+  userLatLng: UserLatLngType
 ): Promise<string> => {
   return new Promise((resolve, reject) => {
     const geocoder = new google.maps.Geocoder();

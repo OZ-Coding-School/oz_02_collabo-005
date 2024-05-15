@@ -25,6 +25,7 @@ const LoginPage: React.FC = () => {
   };
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
   const [userData, setUserData] = useState(initialUserData);
+  const { setLoginState } = useLoginStore();
   // 현재 페이지의 경로를 가져옴
   const location = useLocation();
   const from = location?.state?.redirectedFrom?.pathname || "/home";
@@ -71,19 +72,17 @@ const LoginPage: React.FC = () => {
       console.log(response);
       if (response.status === 200) {
         if (response.data.error) {
-          alert(response.data.error);
+          alert("The account you have currently entered is a deleted account.");
         } else {
           const loginToken = response.data.token.access;
           const refreshToken = response.data.token.refresh;
-          useLoginStore
-            .getState()
-            .setLoginState(true, loginToken, refreshToken);
+          setLoginState(true, loginToken, refreshToken);
           alert("Login Success!!");
           navigate(from);
         }
       }
     } catch (error) {
-      alert("Re-enter your email or password");
+      alert("Re-enter your email or password.");
     }
   };
 

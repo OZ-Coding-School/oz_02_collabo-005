@@ -35,10 +35,10 @@ const AccountPage: React.FC = () => {
     phone: { value: "", error: "" },
     birthDay: { value: "", error: "" },
   });
+  const { loginToken, setLoginState } = useLoginStore();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
-    const loginToken = useLoginStore.getState().loginToken;
     if (loginToken !== null) {
       const getUserData = async () => {
         const response = await customAxios.get(apiRoutes.user);
@@ -153,7 +153,7 @@ const AccountPage: React.FC = () => {
 
   // 로그아웃 버튼을 눌렀을 때 호출되는 함수
   const handleLogOut = async () => {
-    useLoginStore.getState().setLoginState(false, null, null);
+    setLoginState(false, null, null);
     localStorage.clear();
     navigate("/");
   };
@@ -162,7 +162,7 @@ const AccountPage: React.FC = () => {
   const handleDeleteAccount = async () => {
     try {
       await customAxios.post(apiRoutes.userDelete);
-      useLoginStore.getState().setLoginState(false, null, null);
+      setLoginState(false, null, null);
       localStorage.clear();
       navigate("/");
     } catch (error) {

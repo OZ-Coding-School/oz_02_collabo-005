@@ -13,7 +13,7 @@ const MyOrderItem: React.FC = () => {
   return (
     <div className="myOrderItemContainer">
       <div className="myOrderItemTop">
-        <div className="myOrderDate">04/17 (Tue)</div>
+        <div className="myOrderDate">2024-04-17</div>
         <button className="viewOrderBtn" onClick={handleViewOrderClick}>
           View order
         </button>

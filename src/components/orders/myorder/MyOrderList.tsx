@@ -15,7 +15,7 @@ const MyOrderList: React.FC = () => {
       try {
         const response = await customAxios.get(apiRoutes.orderList);
         if (response.status === 200) {
-          setOrderHistory(response.data);
+          setOrderHistory(response.data.data);
         }
       } catch (error) {
         console.log(error);

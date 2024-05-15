@@ -142,7 +142,6 @@ const RestaurantPage: React.FC = () => {
           <div className="restaurantProfile">
             <div className="restaurantDetails">
               <h2 className="restaurantName">{restaurantInfo?.name}</h2>
-              <p className="businessHours">{operatingHours}</p>
             </div>
             <div className="restaurantIntroduction">
               {restaurantInfo?.description}
@@ -162,6 +161,10 @@ const RestaurantPage: React.FC = () => {
                 won
               </div>
             </div>
+            <div className="operatingMessage">
+              <p className="businessHours">[ {operatingHours} ]</p>
+            </div>
+
             <DropDownButton origin={restaurantInfo?.notice} />
           </div>
         </div>

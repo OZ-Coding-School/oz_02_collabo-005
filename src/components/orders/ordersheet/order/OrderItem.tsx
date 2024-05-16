@@ -1,8 +1,13 @@
-import QuantityButton from "@components/common/button/QuantityButton";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiSolidTrash } from "react-icons/bi";
+import QuantityButton from "@components/common/button/QuantityButton";
 import "./OrderItem.css";
-import { MenuOption, cartType } from "src/types/ordersType";
+import {
+  MenuOption,
+  CartDataType,
+  cartType,
+  Order,
+} from "src/types/ordersType";
 import { addCommasToNumberString } from "./../../../../utils/addCommas";
 import customAxios from "./../../../../api/axios";
 import apiRoutes from "./../../../../api/apiRoutes";
@@ -14,6 +19,7 @@ interface OrderItemProps {
   options: MenuOption[];
   price: number;
   quantity: number;
+  setCartData: React.Dispatch<React.SetStateAction<CartDataType | null>>;
   isOnDetailsPage?: boolean;
   resId: number;
 }
@@ -24,6 +30,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
   options,
   price,
   quantity,
+  setCartData,
   isOnDetailsPage,
   resId,
 }) => {
@@ -39,20 +46,25 @@ const OrderItem: React.FC<OrderItemProps> = ({
   };
 
   const handleMinusBtnClick = (): void => {
-    if (count == 1) return;
+    if (count === 1) return;
     setCount((prev) => prev - 1);
   };
 
   const handleDeleteClick = async () => {
-    const orders = JSON.parse(localStorage.getItem("orderData")!);
+    const orders: Order = JSON.parse(localStorage.getItem("orderData")!);
     const coordinate =
       lat === "" && lng === "" ? [] : [parseFloat(lat), parseFloat(lng)];
-    console.log(orders);
+
     if (orders !== null && orders !== undefined) {
-      const updatedOrders = orders.orders.filter((order) => {
-        return order.restaurant_id !== resId;
-      });
-      console.log(updatedOrders);
+      const updatedOrders = orders.orders
+        .map((order) => {
+          return {
+            ...order,
+            menus: order.menus.filter((menu) => menu.id !== id),
+          };
+        })
+        .filter((order) => order.menus.length > 0);
+
       const postOrderData: cartType = {
         orders: updatedOrders,
         coordinate,
@@ -60,13 +72,35 @@ const OrderItem: React.FC<OrderItemProps> = ({
 
       try {
         const response = await customAxios.post(apiRoutes.cart, postOrderData);
-        localStorage.setItem("orderData", JSON.stringify(updatedOrders));
+        localStorage.setItem(
+          "orderData",
+          JSON.stringify({ orders: updatedOrders })
+        );
         localStorage.setItem("cartData", JSON.stringify(response.data.data));
-        if (response?.status !== 200) throw new Error("예외가 발생했습니다.");
+
+        setCartData(response.data.data);
+        changeCartCount();
+        if (response?.status !== 200) throw new Error("An error occurred.");
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);
       }
     }
+  };
+
+  const changeCartCount = () => {
+    const orders: Order = JSON.parse(localStorage.getItem("orderData")!);
+
+    const totalQuantity = orders.orders
+      .map((order) =>
+        order.menus.reduce((acc, cur) => {
+          return acc + cur.quantity;
+        }, 0)
+      )
+      .reduce((acc, cur) => {
+        return acc + cur;
+      }, 0);
+
+    localStorage.setItem("cartCount", JSON.stringify(totalQuantity));
   };
 
   return (

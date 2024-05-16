@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 .env
+location.ts
+
 
 
 # Editor directories and files

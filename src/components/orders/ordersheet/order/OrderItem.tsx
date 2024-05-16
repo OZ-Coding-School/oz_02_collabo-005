@@ -77,11 +77,28 @@ const OrderItem: React.FC<OrderItemProps> = ({
         localStorage.setItem("cartData", JSON.stringify(response.data.data));
 
         setCartData(response.data.data);
+        changeCartCount();
         if (response?.status !== 200) throw new Error("An error occurred.");
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);
       }
     }
+  };
+
+  const changeCartCount = () => {
+    const orders: Order = JSON.parse(localStorage.getItem("orderData")!);
+
+    const totalQuantity = orders.orders
+      .map((order) =>
+        order.menus.reduce((acc, cur) => {
+          return acc + cur.quantity;
+        }, 0)
+      )
+      .reduce((acc, cur) => {
+        return acc + cur;
+      }, 0);
+
+    localStorage.setItem("cartCount", JSON.stringify(totalQuantity));
   };
 
   return (

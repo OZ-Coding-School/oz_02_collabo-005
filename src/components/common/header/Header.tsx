@@ -6,6 +6,7 @@ import useLatLngStore from "./../../../store/useLatLngStore";
 import customAxios from "./../../../api/axios";
 import apiRoutes from "./../../../api/apiRoutes";
 import { cartType } from "src/types/ordersType";
+import { useEffect, useState } from "react";
 
 interface HeaderProps {
   hasBackIcon: boolean;
@@ -23,8 +24,9 @@ const Header: React.FC<HeaderProps> = ({
   handleBackIconClick,
 }) => {
   const navigate = useNavigate();
-  const cartQuantity = localStorage.getItem("cartCount");
   const { lat, lng } = useLatLngStore();
+  const [count, setCount] = useState(0);
+  const cartQuantity = localStorage.getItem("cartCount");
 
   const getCartData = () => {
     const cartData = localStorage.getItem("orderData");
@@ -53,6 +55,10 @@ const Header: React.FC<HeaderProps> = ({
     navigate("/order/sheet");
   };
 
+  useEffect(() => {
+    setCount(cartQuantity && JSON.parse(cartQuantity));
+  }, [cartQuantity]);
+
   return (
     <div className={`headerContainer ${isFixed ? "headerFixed" : ""}`}>
       {hasBackIcon && (
@@ -66,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({
       {hasCartIcon && (
         <div className="headerCart" onClick={handleCartIconClick}>
           <img src={CartIcon} className="cartIcon" />
-          <div className="cartQuantity">{cartQuantity ? cartQuantity : 0}</div>
+          <div className="cartQuantity">{count}</div>
         </div>
       )}
     </div>

@@ -18,6 +18,7 @@ const OrderSheetPage: React.FC = () => {
   const navigate = useNavigate();
   const [cartData, setCartData] = useState<CartDataType | null>(null);
   const [addressData, setAddressData] = useState<AddressType | null>(null);
+  const [isValidated, setIsValidated] = useState<boolean>(true);
 
   const handleSubmitClick = () => {
     navigate("/payment");
@@ -47,6 +48,19 @@ const OrderSheetPage: React.FC = () => {
     };
     getAddress();
   }, []);
+
+  useEffect(() => {
+    // cartData가 존재하고, orders 배열이 존재하며, 하나 이상의 주문이 있는 경우
+    if (cartData && cartData.orders.length > 0) {
+      // 모든 주문을 순회하면서 메뉴의 상태가 0인지 확인
+      const hasInvalidMenu = cartData.orders.some((order) =>
+        order.menus.some((menu) => menu.status === 0)
+      );
+
+      // 메뉴의 상태가 0인 것이 있으면 isValidated 값을 false로 설정
+      setIsValidated(!hasInvalidMenu);
+    }
+  }, [cartData]);
 
   return (
     <div>
@@ -96,9 +110,11 @@ const OrderSheetPage: React.FC = () => {
             <Button
               name="Proceed to Payment"
               buttonType="bigButton"
-              backgroundColor={addressData ? "#FF6347" : "#767676"}
+              backgroundColor={
+                addressData && isValidated ? "#FF6347" : "#767676"
+              }
               handleClick={handleSubmitClick}
-              disabled={!addressData}
+              disabled={!addressData || !isValidated}
             />
           </div>
         </div>

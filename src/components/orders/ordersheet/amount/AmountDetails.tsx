@@ -33,7 +33,7 @@ const AmountDetails: React.FC<AmountDetailsProps> = ({
           </div>
         </div>
         <div className="deliveryNotification">
-          * minimum free delivery free 14,900won
+          * minimum free delivery free 16,900 won
         </div>
       </div>
     </div>

@@ -17,6 +17,8 @@ const OrderList: React.FC<OrderListType> = ({
 }) => {
   const navigate = useNavigate();
 
+  console.log(menus);
+
   return (
     <div className="OLContainer">
       <div
@@ -35,6 +37,7 @@ const OrderList: React.FC<OrderListType> = ({
             price={menu.menu_total_price}
             quantity={menu.quantity}
             setCartData={setCartData}
+            status={menu.status}
           />
         ))}
       </div>

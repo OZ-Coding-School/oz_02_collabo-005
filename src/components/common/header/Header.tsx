@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   useEffect(() => {
-    setCount(cartQuantity && JSON.parse(cartQuantity));
+    if (cartQuantity) setCount(JSON.parse(cartQuantity) || 0);
   }, [cartQuantity]);
 
   return (

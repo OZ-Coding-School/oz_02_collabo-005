@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
-import MenuBackImg from "../../assets/images/menuImg.png";
 import OptionList from "@components/restaurant/menu/OptionList";
 import "./MenuPage.css";
 import Button from "@components/common/button/Button";
@@ -10,6 +9,7 @@ import { menuOptionType } from "src/types/menuOptionTypes";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { Order } from "src/types/ordersType";
+import { addCommasToNumberString } from "./../../utils/addCommas";
 
 const MenuPage: React.FC = () => {
   const { restaurantId, menuId } = useParams();
@@ -21,6 +21,7 @@ const MenuPage: React.FC = () => {
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
   const navigate = useNavigate();
+  const menuPrice = menuData?.price || 0;
 
   const handlePlusBtnClick = (): void => {
     setQuantity((prev) => prev + 1);
@@ -113,6 +114,8 @@ const MenuPage: React.FC = () => {
     getMenuData();
   }, []);
 
+  console.log(menuData);
+
   return (
     <div>
       <Header
@@ -123,10 +126,21 @@ const MenuPage: React.FC = () => {
       />
       <div className="menuPageContainer">
         <div className="menuPageInfo">
-          <img src={MenuBackImg} className="MenuBackImg" alt="menuMainImage" />
+          <div>
+            <img
+              src={menuData?.image}
+              className="MenuBackImg"
+              alt="menuMainImage"
+            />
+          </div>
+
           <div className="menuPageTitle">
             <div className="menuPageName">{menuData?.name}</div>
             <div className="menuPageDescription">{menuData?.description}</div>
+            <div className="menuPrice">
+              <div>Price</div>
+              <div>{addCommasToNumberString(menuPrice)} won</div>
+            </div>
           </div>
         </div>
         <div className="devidingLine"></div>

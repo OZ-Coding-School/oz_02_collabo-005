@@ -1,18 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
 import "./OrderList.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, Restaurant } from "src/types/ordersType";
+import { Menu, Restaurant, CartDataType } from "src/types/ordersType";
 
 interface OrderListType {
   restaurant: Restaurant;
   menus: Menu[];
+  setCartData: React.Dispatch<React.SetStateAction<CartDataType | null>>;
 }
 
-const OrderList: React.FC<OrderListType> = ({ restaurant, menus }) => {
-  const { pathname } = useLocation();
+const OrderList: React.FC<OrderListType> = ({
+  restaurant,
+  menus,
+  setCartData,
+}) => {
   const navigate = useNavigate();
-  const isOnDetailsPage = pathname === "/order/details";
 
   return (
     <div className="OLContainer">
@@ -20,22 +23,20 @@ const OrderList: React.FC<OrderListType> = ({ restaurant, menus }) => {
         className="OLrestaurantName"
         onClick={() => navigate(`/restaurant/${restaurant.id}`)}
       >
-        {restaurant?.name}
+        {restaurant.name}
       </div>
       <div className="orderListContainer">
-        {menus.map(
-          ({ id, name, options, menu_total_price, quantity, resId }) => (
-            <OrderItem
-              id={id}
-              name={name}
-              options={options}
-              price={menu_total_price}
-              quantity={quantity}
-              isOnDetailsPage={isOnDetailsPage}
-              resId={restaurant.id}
-            />
-          )
-        )}
+        {menus.map((menu) => (
+          <OrderItem
+            key={menu.id}
+            id={menu.id}
+            name={menu.name}
+            options={menu.options}
+            price={menu.menu_total_price}
+            quantity={menu.quantity}
+            setCartData={setCartData}
+          />
+        ))}
       </div>
     </div>
   );

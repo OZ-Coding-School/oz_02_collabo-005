@@ -77,6 +77,13 @@ export type MenuOption = {
   price: number;
 };
 
+export type Order = {
+  orders: {
+    restaurant_id: number;
+    menus: selectMenuType[];
+  }[];
+};
+
 export type cartType = {
   orders: {
     restaurant_id: number;

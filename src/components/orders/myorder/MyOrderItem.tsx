@@ -4,6 +4,7 @@ import "./MyOrderItem.css";
 import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
 import { useNavigate } from "react-router-dom";
 import { OrderHistoryDataType } from "../../../types/ordersType";
+import { addCommasToNumberString } from "../../../utils/addCommas";
 
 interface MyOrderItemProps {
   orderHistoryList: OrderHistoryDataType;
@@ -15,46 +16,49 @@ const MyOrderItem: React.FC<MyOrderItemProps> = ({ orderHistoryList }) => {
     navigate("/order/details");
   };
 
-  const handleRestaurantClick = (restaurantId: number) => {
+  const handleRestaurantClick = (restaurantId: string) => {
     return () => {
       navigate(`/restaurant/${restaurantId}`);
     };
   };
 
-  const orderDate = new Date(orderHistoryList.order_time);
-  const formattedOrderDate = `${orderDate.getFullYear()}-${String(orderDate.getMonth() + 1).padStart(2, "0")}-${String(orderDate.getDate()).padStart(2, "0")}`;
-
   return (
     <div className="myOrderItemContainer">
       <div className="myOrderItemTop">
-        <div className="myOrderDate">{formattedOrderDate}</div>
+        <div className="myOrderDate">{orderHistoryList.date}</div>
         <button className="viewOrderBtn" onClick={handleViewOrderClick}>
           View order
         </button>
       </div>
-      {orderHistoryList.menus.map((menu, index) => (
-        <div
-          className="myOrderItemMainContainer"
-          key={index}
-          onClick={handleRestaurantClick(menu.restaurant_id)}
-        >
-          <div className="myOrderItemLogoImg">
-            <RestaurantLogo src={ResImg} />
-          </div>
-          <div className="myOrderInfoSection">
-            <div className="MIresName">{menu.restaurant_name}</div>
-            {menu.menu_name.quantity === 1 ? (
-              <div className="MImenuName">{menu.menu_name.name}</div>
-            ) : (
-              <div className="MImenuName">
-                {menu.menu_name.name} and {menu.menu_name.quantity - 1} more
+      {Object.entries(orderHistoryList.details).map(([key, value]) => {
+        return (
+          <>
+            <div
+              className="myOrderItemMainContainer"
+              key={orderHistoryList.id}
+              onClick={handleRestaurantClick(key)}
+            >
+              <div className="myOrderItemLogoImg">
+                <RestaurantLogo src={ResImg} />
               </div>
-            )}
+              <div className="myOrderInfoSection">
+                <div className="MIresName">{value.restaurant_name}</div>
+                {value.quantity === 1 ? (
+                  <div className="MImenuName">{value.menu_name}</div>
+                ) : (
+                  <div className="MImenuName">
+                    {value.menu_name} and {value.quantity - 1} more
+                  </div>
+                )}
 
-            <div className="MIprice">{menu.menu_name.total_price} won</div>
-          </div>
-        </div>
-      ))}
+                <div className="MIprice">
+                  {addCommasToNumberString(value.total_price)} won
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      })}
     </div>
   );
 };

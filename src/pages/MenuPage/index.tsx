@@ -6,16 +6,10 @@ import "./MenuPage.css";
 import Button from "@components/common/button/Button";
 import QuantityButton from "@components/common/button/QuantityButton";
 import { useNavigate, useParams } from "react-router-dom";
-import { menuOptionType, selectMenuType } from "src/types/menuOptionTypes";
+import { menuOptionType } from "src/types/menuOptionTypes";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
-
-type Order = {
-  orders: {
-    restaurant_id: number;
-    menus: selectMenuType[];
-  }[];
-};
+import { Order } from "src/types/ordersType";
 
 const MenuPage: React.FC = () => {
   const { restaurantId, menuId } = useParams();
@@ -69,6 +63,8 @@ const MenuPage: React.FC = () => {
     } else {
       updatedOrderData = JSON.parse(orderData);
 
+      console.log(updatedOrderData);
+
       //이미 해당 레스토랑이 담겨있는지
       const restaurantOrder = updatedOrderData.orders.find(
         (order) => order.restaurant_id === parseInt(restaurantId!)
@@ -116,8 +112,6 @@ const MenuPage: React.FC = () => {
     };
     getMenuData();
   }, []);
-
-  console.log(menuData);
 
   return (
     <div>

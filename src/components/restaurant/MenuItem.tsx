@@ -1,8 +1,8 @@
 import React from "react";
 import "./MenuItem.css";
-import MenuImg from "../../assets/images/menuImg.png";
 import { MenuType } from "src/types/restaurantTypes";
 import { useNavigate } from "react-router-dom";
+import { addCommasToNumberString } from "../../utils/addCommas";
 
 interface MenuItemProps {
   menu: MenuType;
@@ -21,10 +21,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   };
 
   // 메뉴 품절 여부
-  const isSoldOut = menu.status === 2;
-  // 메뉴 숨김 여부
-  const isHidden = menu.status === 3;
-  if (isHidden) return;
+  const isSoldOut = menu.status === 0;
 
   return (
     <div
@@ -43,14 +40,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
         {menu.description && (
           <div className="menuItemDescription">{menu.description}</div>
         )}
-        <p className="menuItemPrice">{menu.price} won</p>
+
+        <p className="menuItemPrice">
+          {addCommasToNumberString(menu.price)} won
+        </p>
       </div>
       {isSoldOut && (
         <div className="menuMainImgContainer menuSoldOut">Sold Out</div>
       )}
       {menu.picture && (
-        // img src 추후에 menu.picture로 교체
-        <img src={MenuImg} className="menuMainImgContainer menuMainImg" />
+        <img src={menu.picture} className="menuMainImgContainer menuMainImg" />
       )}
     </div>
   );

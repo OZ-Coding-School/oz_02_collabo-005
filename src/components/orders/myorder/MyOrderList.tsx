@@ -7,15 +7,15 @@ import MyOrderEmpty from "./MyOrderEmpty";
 import { OrderHistoryDataType } from "../../../types/ordersType";
 
 const MyOrderList: React.FC = () => {
-  // const [isOrdersEmpty, setIsOrdersEmpty] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [orderHistory, setOrderHistory] = useState<OrderHistoryDataType[]>();
+
   useEffect(() => {
     const getRes = async () => {
       try {
         const response = await customAxios.get(apiRoutes.orderList);
         if (response.status === 200) {
-          setOrderHistory(response.data);
+          setOrderHistory(response.data.data);
         }
       } catch (error) {
         console.log(error);

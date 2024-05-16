@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { MenuGroupType, RestaurantInfoType } from "src/types/restaurantTypes";
+import { addCommasToNumberString } from "../../utils/addCommas";
 
 const RestaurantPage: React.FC = () => {
   const { restaurantId } = useParams();
@@ -24,6 +25,7 @@ const RestaurantPage: React.FC = () => {
   const navigate = useNavigate();
 
   console.log(restaurantInfo);
+
   const handleMenuCategoryClick = (event: string) => {
     setSelectedMenuList(getMenuList(event));
   };
@@ -115,6 +117,8 @@ const RestaurantPage: React.FC = () => {
     }
   }, [restaurantInfo]);
 
+  const minimumFee = restaurantInfo?.minimum_order_amount || 16900;
+
   return (
     <div>
       <Header
@@ -156,13 +160,12 @@ const RestaurantPage: React.FC = () => {
                 </div>
               )}
               <div className="deliveryMinimumFee">
-                *Free delivery minimum fee{" "}
-                {restaurantInfo?.minimum_order_amount}
+                *Free delivery minimum fee {addCommasToNumberString(minimumFee)}{" "}
                 won
               </div>
             </div>
             <div className="operatingMessage">
-              <p className="businessHours">[ {operatingHours} ]</p>
+              <p className="businessHours">{operatingHours} </p>
             </div>
 
             <DropDownButton origin={restaurantInfo?.notice} />

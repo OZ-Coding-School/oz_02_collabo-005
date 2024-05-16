@@ -1,83 +1,45 @@
 import Header from "@components/common/header/Header";
-import OrderList from "@components/orders/ordersheet/order/OrderList";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AmountDetails from "@components/orders/ordersheet/amount/AmountDetails";
 import AddressDetails from "@components/orders/ordersheet/deliverydetails/AddressDetails";
 import "./OrderDetailsPage.css";
 import { useNavigate } from "react-router-dom";
-
-export type menuType = {
-  name: string;
-  options: string[];
-  price: string;
-  quantity: number;
-};
-
-export type orderType = {
-  restaurant: string;
-  menus: menuType[];
-};
-
-export const orders: orderType[] = [
-  {
-    restaurant: "BBQ overrice",
-    menus: [
-      {
-        name: "불고기덮밥",
-        options: ["마요네즈", "얌얌", "와사비마요"],
-        price: "15,800",
-        quantity: 1,
-      },
-      {
-        name: "제육덮밥",
-        options: ["마요네즈", "와사비마요"],
-        price: "13,800",
-        quantity: 2,
-      },
-      {
-        name: "제육덮밥",
-        options: ["마요네즈", "와사비마요"],
-        price: "13,800",
-        quantity: 2,
-      },
-    ],
-  },
-  {
-    restaurant: "EI Cubano",
-    menus: [
-      {
-        name: "샌드위치",
-        options: [],
-        price: "12,900",
-        quantity: 1,
-      },
-      {
-        name: "샐러드",
-        options: [
-          "토마토",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-        ],
-        price: "13,800",
-        quantity: 3,
-      },
-    ],
-  },
-];
+import customAxios from "../../api/axios";
+import apiRoutes from "../../api/apiRoutes";
+import { AddressType } from "../../types/addressType";
+import ViewOrderInstruction from "@components/orders/ordersheet/order/ViewOrderInstruction";
 
 const OrderDetailsPage: React.FC = () => {
   const navigate = useNavigate();
+  // const [viewOrderData, setViewOrderData] = useState<ViewOrderType[]>();
+  const [addressData, setAddressData] = useState<AddressType>({
+    mainAddress: "",
+    subAddress: "",
+  });
+
+  useEffect(() => {
+    const getAddress = async () => {
+      try {
+        const response = await customAxios.get(apiRoutes.address);
+
+        setAddressData({
+          mainAddress: response.data.base,
+          subAddress: response.data.detail,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const getViewOrder = async () => {
+      // try {
+      //   const response = await customAxios.get(apiRoutes.)
+      // } catch (error) {
+      //   console.log(error);
+      // }
+    };
+    getViewOrder();
+    getAddress();
+  }, []);
 
   return (
     <div>
@@ -89,16 +51,19 @@ const OrderDetailsPage: React.FC = () => {
         handleBackIconClick={() => navigate(-1)}
       />
       <div className="orderSheetContainer">
-        <div className="orderSection">
-          {orders.map((order) => (
-            <OrderList order={order} />
-          ))}
-        </div>
-        <AmountDetails orders={orders} />
+        <div className="orderSection">{/* <OrderList /> */}</div>
+        <AmountDetails />
         <div className="OSsection">
           <div className="deliveryDetailsTitle">Delivery details</div>
-          <AddressDetails />
+          <AddressDetails
+            mainAddress={addressData.mainAddress}
+            subAddress={addressData.subAddress}
+          />
         </div>
+        <ViewOrderInstruction
+          noteRider="문앞에 두고 가주세요"
+          noteRes="수저세트 안주셔도 됩니다"
+        />
       </div>
     </div>
   );

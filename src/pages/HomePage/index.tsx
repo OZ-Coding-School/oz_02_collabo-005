@@ -8,6 +8,9 @@ import apiRoutes from "../../api/apiRoutes";
 import customAxios from "./../../api/axios";
 import "./HomePage.css";
 import { RestaurantType } from "../../types/restaurantTypes";
+import { useLatLngStore } from "../../store/useLatLngStore";
+import loader from "../../services/GoogleMapLoad";
+import { Geocoding } from "@components/address/Geocoding";
 
 export type BannerType = {
   name: string;
@@ -32,8 +35,15 @@ const HomePage: React.FC = () => {
       try {
         const response = await customAxios.get(apiRoutes.address);
         if (response.status === 200) {
-          if (!response.data.error) {
-            setAddress(response.data.base);
+          setAddress(response.data.base);
+          if (response.data.base !== "") {
+            try {
+              await loader.importLibrary("maps");
+              const { userLat, userLng } = await Geocoding(response.data.base);
+              useLatLngStore.setState({ lat: userLat, lng: userLng });
+            } catch (error) {
+              console.error("Geocoding error: ", error);
+            }
           }
         }
       } catch (error) {

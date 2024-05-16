@@ -11,10 +11,13 @@
 
 .Btns {
   border-style: none;
-  background-color: #ff6347;
+  background-color: #ffffff00;
   color: white;
   font-size: 1rem;
-  border-radius: 100px;
   cursor: pointer;
-  padding: 0px;
+  width: 30px;
+}
+
+.minus {
+  padding-bottom: 4px;
 }

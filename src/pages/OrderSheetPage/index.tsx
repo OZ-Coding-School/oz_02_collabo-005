@@ -1,6 +1,6 @@
 import Header from "@components/common/header/Header";
 import OrderList from "@components/orders/ordersheet/order/OrderList";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./OrderSheetPage.css";
 import AmountDetails from "@components/orders/ordersheet/amount/AmountDetails";
 import AddressDetails from "@components/orders/ordersheet/deliverydetails/AddressDetails";
@@ -8,84 +8,51 @@ import AddressNotFound from "@components/orders/ordersheet/deliverydetails/Addre
 import RequestInputSection from "@components/orders/ordersheet/instructions/RequestInputSection";
 import Button from "@components/common/button/Button";
 import { useNavigate } from "react-router-dom";
-
-export type menuType = {
-  name: string;
-  options: string[];
-  price: string;
-  quantity: number;
-};
-
-export type orderType = {
-  restaurant: string;
-  menus: menuType[];
-};
-
-export const orders: orderType[] = [
-  {
-    restaurant: "BBQ overrice",
-    menus: [
-      {
-        name: "불고기덮밥",
-        options: ["마요네즈", "얌얌", "와사비마요"],
-        price: "15,800",
-        quantity: 1,
-      },
-      {
-        name: "제육덮밥",
-        options: ["마요네즈", "와사비마요"],
-        price: "13,800",
-        quantity: 2,
-      },
-      {
-        name: "제육덮밥",
-        options: ["마요네즈", "와사비마요"],
-        price: "13,800",
-        quantity: 2,
-      },
-    ],
-  },
-  {
-    restaurant: "EI Cubano",
-    menus: [
-      {
-        name: "샌드위치",
-        options: [],
-        price: "12,900",
-        quantity: 1,
-      },
-      {
-        name: "샐러드",
-        options: [
-          "토마토",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-          "간장",
-        ],
-        price: "13,800",
-        quantity: 3,
-      },
-    ],
-  },
-];
+import { CartDataType } from "src/types/ordersType";
+import { AddressType } from "src/types/addressType";
+import customAxios from "./../../api/axios";
+import apiRoutes from "./../../api/apiRoutes";
+import OrderSheetEmpty from "@components/orders/ordersheet/empty/OrderSheetEmpty";
 
 const OrderSheetPage: React.FC = () => {
-  const hasAddress = true;
   const navigate = useNavigate();
+  const [cartData, setCartData] = useState<CartDataType>();
+  const [addressData, setAddressData] = useState<AddressType>();
+  const [isCartEmpty, setIsCartEmpty] = useState(true);
 
   const handleSubmitClick = () => {
     navigate("/payment");
   };
+
+  useEffect(() => {
+    const getCartData = () => {
+      const getData = JSON.parse(localStorage.getItem("cartData")!);
+
+      console.log(getData);
+
+      if (getData !== null && getData.orders.length !== 0) {
+        setCartData(getData);
+        setIsCartEmpty(false);
+      }
+    };
+    getCartData();
+  }, []);
+
+  useEffect(() => {
+    const getAddress = async () => {
+      try {
+        const response = await customAxios.get(apiRoutes.address);
+
+        setAddressData({
+          mainAddress: response.data.base,
+          subAddress: response.data.detail,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAddress();
+  }, []);
 
   return (
     <div>
@@ -96,30 +63,50 @@ const OrderSheetPage: React.FC = () => {
         isFixed={true}
         handleBackIconClick={() => navigate(-1)}
       />
-      <div className="orderSheetContainer">
-        <div className="orderSection">
-          {orders.map((order) => (
-            <OrderList order={order} />
-          ))}
-          <button className="addmoreBtn"> + Add More </button>
-        </div>
-        <AmountDetails orders={orders} />
-        <div className="OSsection">
-          <div className="deliveryDetailsTitle">Delivery details</div>
-          {hasAddress ? <AddressDetails /> : <AddressNotFound />}
-        </div>
-        <div className="OSsection">
-          <div className="deliveryDetailsTitle">Instructions</div>
-          <RequestInputSection />
-        </div>
-        <div className="ordersheetSubmitBtn">
-          <Button
-            name="Proceed to Payment"
-            buttonType="bigButton"
-            handleClick={handleSubmitClick}
+      {!isCartEmpty ? (
+        <div className="orderSheetContainer">
+          <div className="orderSection">
+            {cartData?.orders.map(({ restaurant, menus }) => (
+              <OrderList restaurant={restaurant} menus={menus} />
+            ))}
+            <button className="addMoreBtn" onClick={() => navigate("/home")}>
+              {" "}
+              + Add More{" "}
+            </button>
+          </div>
+          <AmountDetails
+            orderPrice={cartData?.order_price}
+            deliveryFee={cartData?.delivery_fee}
+            totalPrice={cartData?.total_price}
           />
+          <div className="OSsection">
+            <div className="deliveryDetailsTitle">Delivery details</div>
+            {addressData ? (
+              <AddressDetails
+                mainAddress={addressData.mainAddress}
+                subAddress={addressData.subAddress}
+              />
+            ) : (
+              <AddressNotFound />
+            )}
+          </div>
+          <div className="OSsection">
+            <div className="deliveryDetailsTitle">Instructions</div>
+            <RequestInputSection />
+          </div>
+          <div className="ordersheetSubmitBtn">
+            <Button
+              name="Proceed to Payment"
+              buttonType="bigButton"
+              backgroundColor={addressData ? "#FF6347" : "#767676"}
+              handleClick={handleSubmitClick}
+              disabled={!addressData}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <OrderSheetEmpty />
+      )}
     </div>
   );
 };

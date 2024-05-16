@@ -1,25 +1,41 @@
 import React from "react";
 import OrderItem from "./OrderItem";
 import "./OrderList.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Menu, Restaurant } from "src/types/ordersType";
 
-const OrderList: React.FC = () => {
+interface OrderListType {
+  restaurant: Restaurant;
+  menus: Menu[];
+}
+
+const OrderList: React.FC<OrderListType> = ({ restaurant, menus }) => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const isOnDetailsPage = pathname === "/order/details";
 
   return (
     <div className="OLContainer">
-      <div className="OLrestaurantName">Kogi BBQ</div>
+      <div
+        className="OLrestaurantName"
+        onClick={() => navigate(`/restaurant/${restaurant.id}`)}
+      >
+        {restaurant?.name}
+      </div>
       <div className="orderListContainer">
-        {/* {order.menus.map(({ name, options, price, quantity }) => ( */}
-        <OrderItem
-          name="Chicken BBQ Rice Bowl (Large)"
-          options={["Lettuce", "YumYum"]}
-          price="13800"
-          quantity={3}
-          isOnDetailsPage={isOnDetailsPage}
-        />
-        {/* ))} */}
+        {menus.map(
+          ({ id, name, options, menu_total_price, quantity, resId }) => (
+            <OrderItem
+              id={id}
+              name={name}
+              options={options}
+              price={menu_total_price}
+              quantity={quantity}
+              isOnDetailsPage={isOnDetailsPage}
+              resId={restaurant.id}
+            />
+          )
+        )}
       </div>
     </div>
   );

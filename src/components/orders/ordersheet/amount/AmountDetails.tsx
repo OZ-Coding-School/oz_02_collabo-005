@@ -1,23 +1,36 @@
 import React from "react";
 import "./AmountDetails.css";
+import { addCommasToNumberString } from "./../../../../utils/addCommas";
 
-const AmountDetails: React.FC = () => {
+interface AmountDetailsProps {
+  orderPrice?: number;
+  deliveryFee?: number;
+  totalPrice?: number;
+}
+
+const AmountDetails: React.FC<AmountDetailsProps> = ({
+  orderPrice = 0,
+  deliveryFee = 0,
+  totalPrice = 0,
+}) => {
   return (
     <div className="amountDetailsContainer">
       <div className="amountDetailsItemSection">
         <div className="amountDetailsItem">
-          <div>주문 금액</div>
-          <div>41,400 won</div>
+          <div>Order Price</div>
+          <div>{addCommasToNumberString(orderPrice)} won</div>
         </div>
         <div className="amountDetailsItem">
-          <div>배달비</div>
-          <div>4,400 won</div>
+          <div>Delivery Fee</div>
+          <div>{addCommasToNumberString(deliveryFee)} won</div>
         </div>
       </div>
       <div className="amountDetailsSection">
         <div className="amountText">
           <div className="totalText">Total</div>
-          <div className="totalAmountText">45,800 won</div>
+          <div className="totalAmountText">
+            {addCommasToNumberString(totalPrice)} won
+          </div>
         </div>
         <div className="deliveryNotification">
           * minimum free delivery free 14,900won

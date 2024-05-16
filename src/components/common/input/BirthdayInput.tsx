@@ -6,15 +6,15 @@ import { dayRegex, monthRegex, yearRegex } from "../../../utils/regex";
 interface BirthdayInputProps {
   readOnly?: boolean;
   isMust?: boolean;
-  value?: string;
   handleBirthChange: (birthDay: inputType) => void;
+  value?: string;
 }
 
 const BirthdayInput: React.FC<BirthdayInputProps> = ({
   readOnly,
   isMust,
-  value,
   handleBirthChange,
+  value,
 }) => {
   type birthType = {
     year: string;
@@ -30,6 +30,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
 
   const [birthDay, setBirthDay] = useState(birthDayInitialData);
   const [isError, setIsError] = useState(false);
+  const [isErrorMessage, setIsErrorMeassage] = useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -82,12 +83,37 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
     }
   };
 
+  const isValidBirthDay = (isError: boolean, birth: string) => {
+    if (birth.length === 0) {
+      return "";
+    }
+
+    if (isError || birth.length < 8) {
+      return "생년월일이 올바르지 않습니다.";
+    }
+
+    return "";
+  };
+
   useEffect(() => {
     const birth = birthDay.year + birthDay.month + birthDay.day;
-    const error =
-      isError || birth.length < 8 ? "생년월일이 올바르지 않습니다." : "";
+    const error = isValidBirthDay(isError, birth);
+
+    if (error) setIsErrorMeassage(true);
+    else setIsErrorMeassage(false);
+
     handleBirthChange({ value: birth, error });
   }, [birthDay]);
+
+  useEffect(() => {
+    if (typeof value === "string") {
+      setBirthDay({
+        year: value.slice(0, 4),
+        month: value.slice(4, 6),
+        day: value.slice(6, 8),
+      });
+    }
+  }, []);
 
   return (
     <div className="birthInputContainer">
@@ -103,34 +129,39 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
           name="year"
           placeholder="YEAR"
           className="birthInput"
-          value={value}
+          value={birthDay.year}
           readOnly={readOnly}
           maxLength={4}
           onChange={handleInputChange}
+          autoComplete="off"
         ></input>
         <input
           type="text"
           name="month"
           placeholder="MONTH"
           className="birthInput"
-          value={value}
+          value={birthDay.month}
           readOnly={readOnly}
           maxLength={2}
           onChange={handleInputChange}
+          autoComplete="off"
         ></input>
         <input
           type="text"
           name="day"
           placeholder="DAY"
           className="birthInput"
-          value={value}
+          value={birthDay.day}
           readOnly={readOnly}
           maxLength={2}
           onChange={handleInputChange}
+          autoComplete="off"
         ></input>
       </div>
-      {isError && (
-        <div>Please enter your date of birth in the format "2024 01 02"</div>
+      {isErrorMessage && (
+        <div className="birthErrorMessage">
+          Please enter your date of birth in the format "2024 01 02"
+        </div>
       )}
     </div>
   );

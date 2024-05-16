@@ -34,8 +34,12 @@ const OrderStatusPage: React.FC = () => {
 
   return (
     <>
-      <Header hasBackIcon={true} title="" hasCartIcon={false} />
-
+      <Header
+        hasBackIcon={true}
+        title=""
+        hasCartIcon={false}
+        handleBackIconClick={() => navigate("/home")}
+      />
       <div>
         {isLoading ? (
           <div className="loadingBar">

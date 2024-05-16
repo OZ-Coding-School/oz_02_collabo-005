@@ -1,31 +1,35 @@
 import React from "react";
 import "./OptionItem.css";
+import { optionType } from "src/types/menuOptionTypes";
+import { addCommasToNumberString } from "../../../utils/addCommas";
 
-interface OptionItemProps {
-  name: string;
-  optionName: string;
-  optionPrice: string;
-  type: string;
+interface OptionItemProps extends Omit<optionType, "id"> {
+  inputType: string;
+  groupName: string;
+  handleCheckChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const OptionItem: React.FC<OptionItemProps> = ({
+  inputType,
+  groupName,
   name,
-  optionName,
-  optionPrice,
-  type,
+  price,
+  handleCheckChange,
 }) => {
   return (
     <div className="optionItemContainer">
       <div className="optionSelectSection">
         <input
-          type={type}
-          name={name.toLowerCase()}
-          id={optionName}
+          type={inputType}
+          name={groupName}
+          value={name}
+          id={name}
           className="optionItem"
+          onChange={handleCheckChange}
         />
-        <label htmlFor={optionName}>{optionName}</label>
+        <label>{name}</label>
       </div>
-      <div className="optionPrice">{optionPrice}won</div>
+      <div className="optionPrice">{addCommasToNumberString(price)} won</div>
     </div>
   );
 };

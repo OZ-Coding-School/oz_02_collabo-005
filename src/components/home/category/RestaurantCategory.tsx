@@ -1,23 +1,24 @@
 import React from "react";
 import RestaurantItem from "./RestaurantItem";
-import { Restaurant } from "../../../pages/HomePage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
-
+import { RestaurantType } from "../../../types/restaurantTypes";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "./RestaurantCategory.css";
 
-interface CategoryProps {
+interface RestaurantCategoryProps {
   title: string;
-  id: string;
-  restaurants: Restaurant[];
+  restaurants: RestaurantType[];
 }
 
-const Category: React.FC<CategoryProps> = ({ title, id, restaurants }) => {
+const RestaurantCategory: React.FC<RestaurantCategoryProps> = ({
+  title,
+  restaurants,
+}) => {
   return (
-    <div className="categoryContainer" id={id}>
+    <div className="restaurantCategoryContainer">
       <h2 className="restaurantCategoryTitle">{title}</h2>
       <div className="restaurantRow">
         <Swiper
@@ -26,12 +27,14 @@ const Category: React.FC<CategoryProps> = ({ title, id, restaurants }) => {
           freeMode={true}
           modules={[FreeMode]}
         >
-          {restaurants.map((restaurant, index) => (
-            <SwiperSlide key={index} className="restaurantItem">
+          {restaurants.map((restaurant) => (
+            <SwiperSlide key={restaurant.id} className="restaurantItem">
               <RestaurantItem
+                id={restaurant.id}
                 name={restaurant.name}
-                intro={restaurant.intro}
-                key={index}
+                image={restaurant.image}
+                hashtag={restaurant.hashtag}
+                status={restaurant.status}
               />
             </SwiperSlide>
           ))}
@@ -41,4 +44,4 @@ const Category: React.FC<CategoryProps> = ({ title, id, restaurants }) => {
   );
 };
 
-export default Category;
+export default RestaurantCategory;

@@ -1,89 +1,51 @@
-import React, { useState } from "react";
-import Button from "@components/common/button/Button";
+import React from "react";
 import InputItem from "@components/common/input/InputItem";
 import "./ChangePasswordSection.css";
+import { RiInformation2Line } from "react-icons/ri";
+import { UserDataType } from "../../pages/AccountPage";
 
-type UserPassword = {
-  currentPassword: string;
-  newPassword: string;
-};
+interface ChangePasswordSectionProps {
+  userData: UserDataType;
+  handleInputChange: (field: string, value: string) => void;
+}
 
-const ChangePasswordSection: React.FC = () => {
-  const [isVerified, setIsVerified] = useState<boolean>(false);
-  const initialUserPassword = {
-    currentPassword: "",
-    newPassword: "",
-  };
-  const [userPassword, setUserPassword] =
-    useState<UserPassword>(initialUserPassword);
-
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    event.preventDefault();
-    const inputName = event.target.name;
-    const inputValue = event.target.value;
-    setUserPassword({
-      ...userPassword,
-      [inputName]: inputValue,
-    });
-  };
-
-  // 사용자 입력 비밀번호화 현재 디비에 저장되어 있는 비밀번호가 같은지 검사 후 새로운 비밀번호 입력할 수 있도록 하는 함수
-  const handleVerify = (e: React.MouseEvent<Element, MouseEvent>): void => {
-    e.preventDefault();
-    const isPasswordEqual: boolean =
-      userPassword.currentPassword === "12345678";
-    if (isPasswordEqual) {
-      // 현재 비밀번호와 디비에 저장되어있는 비밀번호가 같으면 new password input을 수정 가능 상태로 변경
-      setIsVerified(true);
-      alert("일치합니다.");
-    } else {
-      alert("비밀번호가 틀렸습니다.");
-    }
-  };
-
-  // 사용자가 입력한 값에 따라 input 내용이 바뀌고 userPassword에 저장하는 함수
-  // const handleInputChange = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ): void => {
-  //   event.preventDefault();
-
-  //   const inputName = event.target.name;
-  //   const inputData = event.target.value;
-  //   setUserPassword({
-  //     ...userPassword,
-  //     [inputName]: inputData,
-  //   });
-  // };
-
+const ChangePasswordSection: React.FC<ChangePasswordSectionProps> = ({
+  handleInputChange,
+  userData,
+}) => {
   return (
     <div className="changePasswordSection">
       <div className="currentPasswordSection">
+        <div className="changePasswordText">
+          <RiInformation2Line color="red" size={10} />
+          &nbsp;To change your password, please enter your current password.
+        </div>
         <InputItem
           label="Current Password"
           name="currentPassword"
           type="password"
-          value={userPassword.currentPassword}
-          handleInputChange={handleInputChange}
+          value={userData.currentPassword.value}
+          className={userData.currentPassword.error ? "error" : ""}
+          errorMessage={userData.currentPassword.error}
+          handleInputChange={(e) => {
+            handleInputChange("currentPassword", e.target.value);
+          }}
           isNoStar={true}
+          place="Type Current Password"
         />
-        <div className="verifyButtonSection">
-          <Button
-            name="verify"
-            handleClick={handleVerify}
-            buttonType="smallButton"
-          />
-        </div>
       </div>
       <InputItem
         label="Confirm new Password"
-        name={isVerified ? "verifiedPassword" : "newPassword"}
+        name="newPassword"
         type="password"
-        value={userPassword.newPassword}
-        handleInputChange={handleInputChange}
+        value={userData.newPassword.value}
+        className={userData.newPassword.error ? "error" : ""}
+        errorMessage={userData.newPassword.error}
+        handleInputChange={(e) => {
+          handleInputChange("newPassword", e.target.value);
+        }}
         isNoStar={true}
-        readOnly={isVerified ? false : true}
+        place="Type New Password"
       />
     </div>
   );

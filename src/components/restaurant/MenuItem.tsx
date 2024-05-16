@@ -1,26 +1,56 @@
 import React from "react";
 import "./MenuItem.css";
-import MenuImg from "../../assets/images/menuImg.png";
+import { MenuType } from "src/types/restaurantTypes";
+import { useNavigate } from "react-router-dom";
+import { addCommasToNumberString } from "../../utils/addCommas";
 
 interface MenuItemProps {
-  label?: string;
-  handleClick: () => void;
+  menu: MenuType;
+  isPreparing: boolean;
+  restaurantId: string;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ label, handleClick }) => {
+const MenuItem: React.FC<MenuItemProps> = ({
+  menu,
+  isPreparing,
+  restaurantId,
+}) => {
+  const navigate = useNavigate();
+  const handleClick = (): void => {
+    navigate(`/restaurant/${restaurantId}/menu/${menu.id}`);
+  };
+
+  // 메뉴 품절 여부
+  const isSoldOut = menu.status === 0;
+
   return (
-    <div className="MenuItemContainer" onClick={handleClick}>
+    <div
+      className="MenuItemContainer"
+      onClick={() => {
+        if (!isSoldOut && !isPreparing) handleClick();
+      }}
+    >
       <div className="menuItemInformation">
+        {menu.represent && (
+          <div className="menuItemLabel">{menu.represent}</div>
+        )}
         <div className="menuItemTitle">
-          <p className="menuItemName">Menu name</p>
-          {label && <div className="menuItemLabel">{label}</div>}
+          <p className="menuItemName">{menu.name}</p>
         </div>
-        <p className="menuItemPrice">14,900 won</p>
-        <div className="menuItemDescription">
-          Bowl of rice topped with bulgogi beef and sauce.
-        </div>
+        {menu.description && (
+          <div className="menuItemDescription">{menu.description}</div>
+        )}
+
+        <p className="menuItemPrice">
+          {addCommasToNumberString(menu.price)} won
+        </p>
       </div>
-      <img src={MenuImg} className="menuMainImg" />
+      {isSoldOut && (
+        <div className="menuMainImgContainer menuSoldOut">Sold Out</div>
+      )}
+      {menu.picture && (
+        <img src={menu.picture} className="menuMainImgContainer menuMainImg" />
+      )}
     </div>
   );
 };

@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
 import LoginPage from "./pages/LoginPage";
 import SplashPage from "./pages/SplashPage";
@@ -23,35 +18,41 @@ import KoreanCardPage from "./pages/KoreanCardPage";
 import ForeignCardPage from "./pages/ForeignCardPage";
 import ScrollToTop from "@components/scrolltotop/ScrollToTop";
 import OrderDetailsPage from "./pages/OrderDetailsPage/index";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import CommonRoute from "./routes/CommonRoute";
 
 const App: React.FC = () => {
-  const isLogined: boolean = false;
   return (
     <Router>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route
-            path="/"
-            element={
-              isLogined ? <Navigate to="/home" /> : <Navigate to="/splash" />
-            }
-          />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/sign" element={<SignUpPage />} />
-          <Route path="/restaurant" element={<RestaurantPage />} />
-          <Route path="/splash" element={<SplashPage />} />
-          <Route path="/address" element={<AddressPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/restaurant/menu" element={<MenuPage />} />
-          <Route path="/order/sheet" element={<OrderSheetPage />} />
-          <Route path="/order/details" element={<OrderDetailsPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/order/status" element={<OrderStatusPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/account/koreanCard" element={<KoreanCardPage />} />
-          <Route path="/account/foreignCard" element={<ForeignCardPage />} />
+          <Route element={<CommonRoute />}>
+            <Route path="/" element={<SplashPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/sign" element={<SignUpPage />} />
+          </Route>
+          {/* 유저 전용 */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/address" element={<AddressPage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route
+              path="/restaurant/:restaurantId"
+              element={<RestaurantPage />}
+            />
+            <Route
+              path="/restaurant/:restaurantId/menu/:menuId"
+              element={<MenuPage />}
+            />
+            <Route path="/order/sheet" element={<OrderSheetPage />} />
+            <Route path="/order/details" element={<OrderDetailsPage />} />
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/order/status" element={<OrderStatusPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/account/koreanCard" element={<KoreanCardPage />} />
+            <Route path="/account/foreignCard" element={<ForeignCardPage />} />
+          </Route>
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

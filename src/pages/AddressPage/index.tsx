@@ -4,29 +4,26 @@ import Header from "@components/common/header/Header";
 import selectMapIcon from "../../assets/icons/selectMapIcon.png";
 import { useNavigate } from "react-router-dom";
 import InputItem from "@components/common/input/InputItem";
-import ServiceableMapImage from "../../assets/images/mapRadius.png";
+import ServiceableMapImage from "../../assets/images/deliveryAvailable.png";
 import Button from "@components/common/button/Button";
 import GoogleMapModal from "@components/address/GoogleMapModal";
 import AutoCompleteInput from "@components/address/AutoCompleteInput";
-
-export type AddressType = {
-  mainAddress: string;
-  subAddress: string;
-};
+import customAxios from "../../api/axios";
+import apiRoutes from "../../api/apiRoutes";
+import { AddressType } from "../../types/addressType";
+import { Geocoding } from "@components/address/Geocoding";
 
 const AddressPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const errorMessage: string =
-    "(*)Sorry, for now our service is only available in the SED area but we are working on it to expand very soon!";
-  const [isAvailableService, setIsAvailableService] = useState<boolean>(false);
+  const errorMessage: string = "Please enter your delivery address";
   const [isAllFilled, setIsAllFilled] = useState<boolean>(false);
   const [addressData, setAddressData] = useState<AddressType>({
     mainAddress: "",
     subAddress: "",
   });
   const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
-
+  const [isAddressExist, setIsAddressExist] = useState<boolean>(false);
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -38,6 +35,24 @@ const AddressPage: React.FC = () => {
   };
 
   useEffect(() => {
+    const getRes = async () => {
+      const response = await customAxios.get(apiRoutes.address);
+      if (response.status === 200) {
+        // 저장된 주소가 있으면
+        if (!response.data.error) {
+          setAddressData({
+            mainAddress: response.data.base,
+            subAddress: response.data.detail,
+          });
+          setIsAllFilled(true);
+          setIsAddressExist(true);
+        }
+      }
+    };
+    getRes();
+  }, []);
+
+  useEffect(() => {
     if (addressData.mainAddress !== "" && addressData.subAddress !== "") {
       setIsAllFilled(true);
     } else {
@@ -45,11 +60,58 @@ const AddressPage: React.FC = () => {
     }
   }, [addressData.mainAddress, addressData.subAddress]);
 
-  const handleSave = (): void => {
-    // db로 post
-    alert(`mainAddress: ${addressData.mainAddress},
-    subAddress: ${addressData.subAddress}`);
-    isAvailableService && isAllFilled && navigate(-1);
+  const handleSave = async () => {
+    // db로 post할 데이터
+    const postAddressData = {
+      base: addressData.mainAddress,
+      detail: addressData.subAddress,
+    };
+    try {
+      // 주소를 이용해 위도 경도로 변환
+      const { userLat, userLng } = await Geocoding(addressData.mainAddress);
+
+      // 배달 가능 지역인지 검사하는 api에 보낼 데이터(위도 경도)
+      const userAddressLatLng = {
+        userLat,
+        userLng,
+      };
+
+      const isAvailableDelivery = await customAxios.get(
+        `/user/address/check-coordinate/?lat=${userAddressLatLng.userLat}&lng=${userAddressLatLng.userLng}`
+      );
+      // 배달 불가능 지역일때 에러 메시지 알림창으로 띄움
+      if (!isAvailableDelivery.data.data.result) {
+        alert(
+          "The address you have currently selected is a non-delivery area. Please choose again."
+        );
+      } else {
+        // 배달 가능 지역이고 이미 저장된 주소가 있을때는 update
+        if (isAddressExist) {
+          const postRes = await customAxios.post(
+            apiRoutes.addressUpdate,
+            postAddressData
+          );
+          if (postRes.status === 200) {
+            navigate(-1);
+          } else {
+            alert("Address update failed");
+          }
+        } else {
+          // 현재 등록된 주소 없을 때
+          const postRes = await customAxios.post(
+            apiRoutes.address,
+            postAddressData
+          );
+          if (postRes.status === 200) {
+            navigate(-1);
+          } else {
+            alert("Address registration failed");
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const openMapModal = (): void => {
@@ -65,13 +127,21 @@ const AddressPage: React.FC = () => {
     setAddressData((prevAddressData) => ({
       ...prevAddressData,
       mainAddress: selectedAddress,
+      subAddress: "",
     }));
+    // 주소를 이용해 위도 경도로 변환
+    Geocoding(addressData.mainAddress);
     closeMapModal();
   };
 
   return (
     <>
-      <Header hasBackIcon={true} title="" hasCartIcon={false} />
+      <Header
+        hasBackIcon={true}
+        title=""
+        hasCartIcon={false}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="addressMainContainer">
         <div className="setAddressTextSection">
           <h2>Set delivery address</h2>
@@ -86,7 +156,6 @@ const AddressPage: React.FC = () => {
               <GoogleMapModal
                 onSelectAddress={handleMapModalSelect}
                 onClose={closeMapModal}
-                setIsAvailableService={setIsAvailableService}
               />
             )}
             <div className="selectAddressTextInput">
@@ -94,7 +163,6 @@ const AddressPage: React.FC = () => {
                 <AutoCompleteInput
                   addressData={addressData}
                   setAddressData={setAddressData}
-                  setIsAvailableService={setIsAvailableService}
                   options={{
                     strictBounds: true,
                     componentRestrictions: { country: "KR" },
@@ -105,7 +173,7 @@ const AddressPage: React.FC = () => {
             </div>
           </div>
           <div className="detailAddress">
-            {addressData.mainAddress === "" || isAvailableService ? (
+            {addressData.mainAddress !== "" ? (
               <>
                 <InputItem
                   label="Delivery detail"
@@ -129,12 +197,11 @@ const AddressPage: React.FC = () => {
           <div className="saveAddressButton">
             <Button
               name="Save your address"
-              backgroundColor={
-                isAvailableService && isAllFilled ? "#FF6347" : "#767676"
-              }
+              backgroundColor={isAllFilled ? "#FF6347" : "#767676"}
               handleClick={handleSave}
               buttonType="bigButton"
               type="submit"
+              disabled={isAllFilled ? false : true}
             />
           </div>
         </div>

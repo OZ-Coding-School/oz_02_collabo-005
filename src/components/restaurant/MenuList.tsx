@@ -1,17 +1,29 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import MenuItem from "./MenuItem";
 import "./MenuList.css";
+import { MenuGroupType } from "src/types/restaurantTypes";
 
-const MenuList: React.FC = () => {
-  const navigate = useNavigate();
-  const handleClick = (): void => navigate("/restaurant/menu");
+interface MenuListProps {
+  selectedMenuList: MenuGroupType | undefined;
+  isPreparing: boolean;
+  restaurantId: string;
+}
+
+const MenuList: React.FC<MenuListProps> = ({
+  selectedMenuList,
+  isPreparing,
+  restaurantId,
+}) => {
   return (
     <div className="menuListContainer">
-      <MenuItem label="BestSeller" handleClick={handleClick} />
-      <MenuItem handleClick={handleClick} />
-      <MenuItem handleClick={handleClick} />
-      <MenuItem handleClick={handleClick} />
+      {selectedMenuList?.menus?.map((menu) => (
+        <MenuItem
+          menu={menu}
+          key={menu.id}
+          isPreparing={isPreparing}
+          restaurantId={restaurantId}
+        />
+      ))}
     </div>
   );
 };

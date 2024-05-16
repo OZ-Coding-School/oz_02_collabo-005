@@ -1,15 +1,13 @@
 import loader from "../../services/GoogleMapLoad";
 import { useEffect, useRef } from "react";
-import isWithinOneKm from "./CalculateDistance";
-import centerLocation from "../../constants/location";
-import { AddressType } from "../../pages/AddressPage";
+import { AddressType } from "../../types/addressType";
+import { Geocoding } from "./Geocoding";
 
 interface AutoCompleteInputProps {
   // 옵션은 props로 관리 필요하면 더 추가하기.
   addressData: AddressType;
   setAddressData: React.Dispatch<React.SetStateAction<AddressType>>;
   options: google.maps.places.AutocompleteOptions;
-  setIsAvailableService: React.Dispatch<React.SetStateAction<boolean>>;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,17 +19,14 @@ const AutoCompleteInput = ({
     types: ["establishment"],
     fields: ["place_id", "geometry", "name"],
   },
-  setIsAvailableService,
   handleInputChange,
 }: AutoCompleteInputProps) => {
   // 구글에서 제공해주는 기능들을 input과 연결하기위해 ref사용
   const inputRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     // input이 ref에 담겼을 때만 콜백 실행
     if (!inputRef.current) {
       console.log("input not ready");
-
       return;
     }
 
@@ -50,33 +45,11 @@ const AutoCompleteInput = ({
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
         const address = place.formatted_address || "";
-
         setAddressData({
           ...addressData,
           mainAddress: address,
         });
-
-        // 선택한 주소 위도 경도로 변환
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode(
-          { address: place.formatted_address },
-          (results: google.maps.GeocoderResult[] | null) => {
-            if (results === null) {
-              console.log("Geocoding failed");
-            } else {
-              const location = results[0].geometry.location;
-              // 서비스 가능 지역인지 검사
-              setIsAvailableService(
-                isWithinOneKm(
-                  centerLocation.lat,
-                  centerLocation.lng,
-                  location.lat(),
-                  location.lng()
-                )
-              );
-            }
-          }
-        );
+        Geocoding(addressData.mainAddress);
       });
     }
   }, []);
@@ -89,7 +62,7 @@ const AutoCompleteInput = ({
       type="text"
       value={addressData.mainAddress}
       onChange={handleInputChange}
-      placeholder="Type in your address or Press the button above"
+      placeholder="Type in your address in English or Press the button above"
     />
   );
 };

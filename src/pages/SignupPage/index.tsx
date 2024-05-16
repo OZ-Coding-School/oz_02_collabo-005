@@ -7,6 +7,8 @@ import { emailRegex, passwordRegex, phoneRegex } from "../../utils/regex";
 import BirthdayInput from "@components/common/input/BirthdayInput";
 import Term from "@components/signup/Term";
 import "./SignupPage.css";
+import customAxios from "./../../api/axios";
+import apiRoutes from "./../../api/apiRoutes";
 
 export type inputType = {
   value: string;
@@ -47,47 +49,96 @@ const SignupPage: React.FC = () => {
   const isAllFieldsValidated = (): boolean => {
     for (const key in userData) {
       const error = userData[key].error;
-      console.log(error);
       if (error !== "") return false;
     }
     return true;
   };
 
-  const isButtonActive =
-    isAllFieldsFilled() && isAllFieldsValidated() && isTermChecked;
-
   const handleTermCheck = (): void => {
     setIsTermChecked((prev) => !prev);
   };
 
-  const handleButtonClick = () => {
-    navigate("/login");
+  const isButtonActive =
+    isAllFieldsFilled() && isAllFieldsValidated() && isTermChecked;
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const userPostData = {
+      name: userData.name.value,
+      password: userData.password.value,
+      email: userData.email.value,
+      phone_number: userData.phone.value,
+      birthday: userData.birthDay.value || null,
+    };
+
+    console.log(userPostData);
+
+    try {
+      const isUnique = await isEmailUnique(userPostData.email);
+      console.log(isUnique);
+      if (isUnique) {
+        const response = await customAxios.post(
+          apiRoutes.userCreate,
+          userPostData
+        );
+        console.log(response);
+        if (response.status === 200) {
+          alert("Membership registration is complete.");
+          navigate("/login");
+        }
+      } else {
+        alert("Your email has been duplicated.");
+        setUserData((prev) => ({
+          ...prev,
+          email: {
+            value: userPostData.email,
+            error: "Your email has been duplicated.",
+          },
+        }));
+      }
+    } catch (error) {
+      alert(
+        "Please check again whether the password contains English characters, numbers, and special characters"
+      );
+    }
   };
 
   const handleInputChange = (field: string, value: string): void => {
     let error = "";
 
-    switch (field) {
-      case "email":
-        error = !isValidateEmail(value) ? "이메일이 유효하지 않습니다." : "";
-        break;
-      case "password":
-        error = !isValidatePassword(value)
-          ? "비밀번호는 8글자 이상 입력해주십시오"
+    if (field === "email") {
+      error = value && !isValidateEmail(value) ? "Invalid email address." : "";
+    } else if (field === "password") {
+      if (userData.repeatPassword.value !== "") {
+        userData.repeatPassword.error = !isPasswordMatch(
+          value,
+          userData.repeatPassword.value
+        )
+          ? "Passwords do not match."
           : "";
-        break;
-      case "repeatPassword":
-        error = !isPasswordMatch(userData.password.value, value)
-          ? "비밀번호가 일치하지 않습니다."
+      }
+      if (value) {
+        if (isValidatePassword(value)) {
+          if (value.length > 16) {
+            error = "The password is 8 to 16 characters.";
+          }
+          error = "";
+        } else {
+          error =
+            "English letters, numbers, and special symbols(ex. !@#$%^&?_) must be included.";
+          if (value.length > 16) {
+            error = "The password is 8 to 16 characters.";
+          }
+        }
+      }
+    } else if (field === "repeatPassword") {
+      error =
+        value && !isPasswordMatch(userData.password.value, value)
+          ? "Passwords do not match."
           : "";
-        break;
-      case "phone":
-        error = !isValidatePhone(value)
-          ? "핸드폰 번호가 유효하지 않습니다."
-          : "";
-        break;
-      default:
-        break;
+    } else if (field === "phone") {
+      error = value && !isValidatePhone(value) ? "Invalid phone number." : "";
     }
 
     setUserData((prev) => ({
@@ -98,6 +149,17 @@ const SignupPage: React.FC = () => {
 
   const isValidateEmail = (email: string): boolean => {
     return emailRegex.test(email);
+  };
+
+  const isEmailUnique = async (email: string) => {
+    try {
+      const response = await customAxios.get(
+        `${apiRoutes.userCheck}?email=${email}`
+      );
+      if (response.status === 200) return !response.data.exists;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const isValidatePassword = (password: string): boolean => {
@@ -115,11 +177,15 @@ const SignupPage: React.FC = () => {
     return phoneRegex.test(phone);
   };
 
-  console.log(userData);
-
   return (
     <>
-      <Header hasBackIcon={true} title="" hasCartIcon={false} isFixed={false} />
+      <Header
+        hasBackIcon={true}
+        title=""
+        hasCartIcon={false}
+        isFixed={false}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="signupContainer">
         <h1 className="signupTitle">Sign Up</h1>
         <form>
@@ -149,7 +215,7 @@ const SignupPage: React.FC = () => {
             label="Password"
             name="password"
             type="password"
-            place="Please enter a password of at least 8 characters"
+            place="Password must be at least 8 characters long"
             value={userData.password.value}
             className={userData.password.error ? "error" : ""}
             errorMessage={userData.password.error}
@@ -172,7 +238,7 @@ const SignupPage: React.FC = () => {
           <InputItem
             label="Phone Number"
             name="phone"
-            type="phone"
+            type="text"
             place="Please enter except for hyphen (-)"
             value={userData.phone.value}
             className={userData.phone.error ? "error" : ""}
@@ -195,7 +261,7 @@ const SignupPage: React.FC = () => {
               name="Sign up"
               backgroundColor={isButtonActive ? "#FF6347" : "#767676"}
               buttonType="bigButton"
-              handleClick={handleButtonClick}
+              handleClick={handleSubmit}
               disabled={!isButtonActive}
             />
           </div>

@@ -1,70 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import MenuBackImg from "../../assets/images/menuImg.png";
 import OptionList from "@components/restaurant/menu/OptionList";
 import "./MenuPage.css";
 import Button from "@components/common/button/Button";
 import QuantityButton from "@components/common/button/QuantityButton";
-import { useNavigate } from "react-router-dom";
-
-export type optionType = {
-  type: string;
-  isRequired: boolean;
-  optionList: {
-    optionName: string;
-    optionPrice: string;
-  }[];
-};
+import { useNavigate, useParams } from "react-router-dom";
+import { menuOptionType } from "src/types/menuOptionTypes";
+import customAxios from "./../../api/axios";
+import apiRoutes from "./../../api/apiRoutes";
+import { Order } from "src/types/ordersType";
 
 const MenuPage: React.FC = () => {
-  const options: optionType[] = [
-    {
-      type: "Sauce",
-      isRequired: true,
-      optionList: [
-        {
-          optionName: "Cheese sauce",
-          optionPrice: "0",
-        },
-        {
-          optionName: "Mayonaise",
-          optionPrice: "0",
-        },
-        {
-          optionName: "Yum Yum",
-          optionPrice: "0",
-        },
-        {
-          optionName: "Wassabi Mayo",
-          optionPrice: "0",
-        },
-      ],
-    },
-    {
-      type: "Other toppings",
-      isRequired: false,
-      optionList: [
-        {
-          optionName: "Lettuce",
-          optionPrice: "900",
-        },
-        {
-          optionName: "Lettuce",
-          optionPrice: "900",
-        },
-        {
-          optionName: "Lettuce",
-          optionPrice: "900",
-        },
-        {
-          optionName: "Lettuce",
-          optionPrice: "900",
-        },
-      ],
-    },
-  ];
+  const { restaurantId, menuId } = useParams();
 
+  const [menuData, setMenuData] = useState<menuOptionType>();
   const [quantity, setQuantity] = useState(1);
+
+  const [isValidated, setIsValidated] = useState<boolean>(true);
+  const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
+
   const navigate = useNavigate();
 
   const handlePlusBtnClick = (): void => {
@@ -76,21 +31,102 @@ const MenuPage: React.FC = () => {
     setQuantity((prev) => prev - 1);
   };
 
-  const handleAddToBasketBtnClick = (): void => {
-    navigate("/restaurant");
+  const updateCartCount = () => {
+    const cartCount = localStorage.getItem("cartCount");
+
+    if (!cartCount) localStorage.setItem("cartCount", JSON.stringify(quantity));
+    else {
+      const newCount = JSON.parse(cartCount) + quantity;
+      localStorage.setItem("cartCount", JSON.stringify(newCount));
+    }
   };
+
+  const handleSubmit = (): void => {
+    const currentMenu = {
+      id: parseInt(menuId!),
+      options: selectedOptions,
+      quantity: quantity,
+    };
+
+    const orderData = localStorage.getItem("orderData");
+    let updatedOrderData: Order;
+
+    if (orderData === null) {
+      updatedOrderData = {
+        orders: [
+          {
+            restaurant_id: parseInt(restaurantId!),
+            menus: [currentMenu],
+          },
+        ],
+      };
+    } else {
+      updatedOrderData = JSON.parse(orderData);
+
+      console.log(updatedOrderData);
+
+      //이미 해당 레스토랑이 담겨있는지
+      const restaurantOrder = updatedOrderData.orders.find(
+        (order) => order.restaurant_id === parseInt(restaurantId!)
+      );
+
+      if (restaurantOrder) {
+        const existingMenuIndex = restaurantOrder.menus.findIndex(
+          (menu) =>
+            menu.id === currentMenu.id &&
+            JSON.stringify(menu.options) === JSON.stringify(currentMenu.options)
+        );
+
+        if (existingMenuIndex === -1) {
+          restaurantOrder.menus.push(currentMenu);
+        } else {
+          restaurantOrder.menus[existingMenuIndex].quantity +=
+            currentMenu.quantity;
+        }
+      } else {
+        updatedOrderData.orders.push({
+          restaurant_id: parseInt(restaurantId!),
+          menus: [currentMenu],
+        });
+      }
+    }
+
+    localStorage.setItem("orderData", JSON.stringify(updatedOrderData));
+    updateCartCount();
+
+    alert("Order has been added to the basket.");
+    navigate(`/restaurant/${restaurantId}`);
+  };
+
+  useEffect(() => {
+    const getMenuData = async () => {
+      try {
+        const response = await customAxios.get(
+          `${apiRoutes.menuOptionList}?menuId=${menuId}`
+        );
+        if (response.status !== 200) throw new Error("예외가 발생했습니다.");
+        setMenuData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch restaurants:", error);
+      }
+    };
+    getMenuData();
+  }, []);
 
   return (
     <div>
-      <Header hasBackIcon={true} hasCartIcon={true} isFixed={true} />
+      <Header
+        hasBackIcon={true}
+        hasCartIcon={true}
+        isFixed={true}
+        handleBackIconClick={() => navigate(-1)}
+      />
       <div className="menuPageContainer">
         <div className="menuPageInfo">
           <img src={MenuBackImg} className="MenuBackImg" alt="menuMainImage" />
           <div className="menuPageTitle">
-            <div className="menuPageName">Bulgogi Beef Bowl</div>
-            <div className="menuPageDescription">
-              Bowl of rice topped with bulgogi beef and suace
-            </div>
+            <div className="menuPageName">{menuData?.name}</div>
+            <div className="menuPageDescription">{menuData?.description}</div>
           </div>
         </div>
         <div className="devidingLine"></div>
@@ -103,16 +139,23 @@ const MenuPage: React.FC = () => {
               handleMinusBtnClick={handleMinusBtnClick}
             />
           </div>
-          {options.map((option, index) => (
-            <OptionList option={option} key={index} />
+          {menuData?.option_group_list.map((optionList, index) => (
+            <OptionList
+              optionList={optionList}
+              key={index}
+              selectedOptions={selectedOptions}
+              setSelectedOptions={setSelectedOptions}
+              setIsValidated={setIsValidated}
+            />
           ))}
           <div className="AddToBasketBtn">
             <Button
               name="Add to Basket"
-              backgroundColor="#ff6347"
+              backgroundColor={isValidated ? "#ff6347" : "#767676"}
               buttonType="bigButton"
-              handleClick={handleAddToBasketBtnClick}
               type="button"
+              handleClick={handleSubmit}
+              disabled={!isValidated}
             />
           </div>
         </div>

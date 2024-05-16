@@ -2,6 +2,7 @@
   cursor: pointer;
   display: grid;
   gap: 10px;
+  max-width: 280px;
 }
 
 .restaurantMainImg {
@@ -10,6 +11,30 @@
   border-radius: 20px;
 }
 
+.resPreparing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.596);
+  opacity: 100;
+  color: white;
+  z-index: 900;
+}
+
+.restaurantInfoSection {
+  display: grid;
+  gap: 5px;
+}
+
 .restaurantInfoSection > p {
   margin: 0px;
+}
+
+.RIname {
+  font-size: 1.2rem;
+}
+
+.RIintro {
+  color: grey;
 }

@@ -3,41 +3,62 @@ import ResImg from "../../../assets/images/restaurantBackgroundImg.png";
 import "./MyOrderItem.css";
 import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
 import { useNavigate } from "react-router-dom";
+import { OrderHistoryDataType } from "../../../types/ordersType";
+import { addCommasToNumberString } from "../../../utils/addCommas";
 
-const MyOrderItem: React.FC = () => {
+interface MyOrderItemProps {
+  orderHistoryList: OrderHistoryDataType;
+}
+
+const MyOrderItem: React.FC<MyOrderItemProps> = ({ orderHistoryList }) => {
   const navigate = useNavigate();
   const handleViewOrderClick = () => {
     navigate("/order/details");
   };
 
+  const handleRestaurantClick = (restaurantId: string) => {
+    return () => {
+      navigate(`/restaurant/${restaurantId}`);
+    };
+  };
+
   return (
     <div className="myOrderItemContainer">
       <div className="myOrderItemTop">
-        <div className="myOrderDate">04/17 (Tue)</div>
+        <div className="myOrderDate">{orderHistoryList.date}</div>
         <button className="viewOrderBtn" onClick={handleViewOrderClick}>
           View order
         </button>
       </div>
-      <div className="myOrderItemMainContainer">
-        <div className="myOrderItemLogoImg">
-          <RestaurantLogo src={ResImg} />
-        </div>
-        <div className="myOrderInfoSection">
-          <div className="MIresName">BBQ overrice</div>
-          <div className="MImenuName">불고기덮밥 외 3개</div>
-          <div className="MIprice">13,800won</div>
-        </div>
-      </div>
-      <div className="myOrderItemMainContainer">
-        <div className="myOrderItemLogoImg">
-          <RestaurantLogo src={ResImg} />
-        </div>
-        <div className="myOrderInfoSection">
-          <div className="MIresName">El Cuban</div>
-          <div className="MImenuName">sandwitch 외 1개</div>
-          <div className="MIprice">13,800won</div>
-        </div>
-      </div>
+      {Object.entries(orderHistoryList.details).map(([key, value]) => {
+        return (
+          <>
+            <div
+              className="myOrderItemMainContainer"
+              key={orderHistoryList.id}
+              onClick={handleRestaurantClick(key)}
+            >
+              <div className="myOrderItemLogoImg">
+                <RestaurantLogo src={ResImg} />
+              </div>
+              <div className="myOrderInfoSection">
+                <div className="MIresName">{value.restaurant_name}</div>
+                {value.quantity === 1 ? (
+                  <div className="MImenuName">{value.menu_name}</div>
+                ) : (
+                  <div className="MImenuName">
+                    {value.menu_name} and {value.quantity - 1} more
+                  </div>
+                )}
+
+                <div className="MIprice">
+                  {addCommasToNumberString(value.total_price)} won
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      })}
     </div>
   );
 };

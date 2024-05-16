@@ -13,7 +13,7 @@ import { AddressType } from "src/types/addressType";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import "./OrderSheetPage.css";
-import useLatLngStore from "./../../store/useLatLngStore";
+import { useLatLngStore } from "./../../store/useLatLngStore";
 
 type RequestType = {
   store_request: string;

@@ -11,6 +11,7 @@ import apiRoutes from "./../../api/apiRoutes";
 const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState<number>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getAmount = () => {
     const cartData = localStorage.getItem("cartData");
@@ -20,12 +21,11 @@ const PaymentPage: React.FC = () => {
   };
 
   const handlePayNow = async () => {
+    setIsLoading(false);
     const data = JSON.parse(localStorage.getItem("payOrderData")!);
     if (data) {
-      console.log(data);
       try {
         const response = await customAxios.post(apiRoutes.orderCreate, data);
-        console.log(response);
         if (response?.status !== 201) throw new Error("An error occurred.");
         navigate("/order/status");
       } catch (error) {
@@ -62,6 +62,7 @@ const PaymentPage: React.FC = () => {
               name="Pay now"
               handleClick={handlePayNow}
               buttonType="bigButton"
+              disabled={!isLoading && true}
             />
           </div>
         </div>

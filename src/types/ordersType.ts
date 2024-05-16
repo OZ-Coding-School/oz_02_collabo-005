@@ -1,3 +1,5 @@
+import { selectMenuType } from "./menuOptionTypes";
+
 export type OrderHistoryDataType = {
   id: number;
   order_time: string;
@@ -73,4 +75,12 @@ export type MenuOption = {
   id: number;
   name: string;
   price: number;
+};
+
+export type cartType = {
+  orders: {
+    restaurant_id: number;
+    menus: selectMenuType[];
+  }[];
+  coordinate: number[];
 };

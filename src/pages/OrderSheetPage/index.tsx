@@ -26,9 +26,12 @@ const OrderSheetPage: React.FC = () => {
 
   useEffect(() => {
     const getCartData = () => {
-      const getData = localStorage.getItem("cartData");
-      if (getData !== null) {
-        setCartData(JSON.parse(getData));
+      const getData = JSON.parse(localStorage.getItem("cartData")!);
+
+      console.log(getData);
+
+      if (getData !== null && getData.orders.length !== 0) {
+        setCartData(getData);
         setIsCartEmpty(false);
       }
     };
@@ -51,8 +54,6 @@ const OrderSheetPage: React.FC = () => {
     getAddress();
   }, []);
 
-  console.log(isCartEmpty);
-
   return (
     <div>
       <Header
@@ -68,7 +69,10 @@ const OrderSheetPage: React.FC = () => {
             {cartData?.orders.map(({ restaurant, menus }) => (
               <OrderList restaurant={restaurant} menus={menus} />
             ))}
-            <button className="addmoreBtn"> + Add More </button>
+            <button className="addMoreBtn" onClick={() => navigate("/home")}>
+              {" "}
+              + Add More{" "}
+            </button>
           </div>
           <AmountDetails
             orderPrice={cartData?.order_price}

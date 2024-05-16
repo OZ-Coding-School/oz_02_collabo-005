@@ -69,6 +69,8 @@ const MenuPage: React.FC = () => {
     } else {
       updatedOrderData = JSON.parse(orderData);
 
+      console.log(updatedOrderData);
+
       //이미 해당 레스토랑이 담겨있는지
       const restaurantOrder = updatedOrderData.orders.find(
         (order) => order.restaurant_id === parseInt(restaurantId!)

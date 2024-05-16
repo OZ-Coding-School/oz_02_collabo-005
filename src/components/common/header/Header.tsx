@@ -2,10 +2,10 @@ import { useNavigate } from "react-router-dom";
 import BackIcon from "../../../assets/icons/back-icon.png";
 import CartIcon from "../../../assets/icons/cart-icon.png";
 import "./Header.css";
-import { selectMenuType } from "src/types/menuOptionTypes";
 import useLatLngStore from "./../../../store/useLatLngStore";
 import customAxios from "./../../../api/axios";
 import apiRoutes from "./../../../api/apiRoutes";
+import { cartType } from "src/types/ordersType";
 
 interface HeaderProps {
   hasBackIcon: boolean;
@@ -14,14 +14,6 @@ interface HeaderProps {
   isFixed?: boolean;
   handleBackIconClick?: () => void;
 }
-
-type cartType = {
-  orders: {
-    restaurant_id: number;
-    menus: selectMenuType[];
-  }[];
-  coordinate: number[];
-};
 
 const Header: React.FC<HeaderProps> = ({
   hasBackIcon,
@@ -41,14 +33,15 @@ const Header: React.FC<HeaderProps> = ({
 
   const handleCartIconClick = async () => {
     const coordinate =
-      lat === "" && lng === "" ? [0, 0] : [parseFloat(lat), parseFloat(lng)];
+      lat === "" && lng === "" ? [] : [parseFloat(lat), parseFloat(lng)];
     const orders = getCartData();
 
-    if (orders !== null) {
+    if (orders !== null && orders !== undefined) {
       const postOrderData: cartType = {
         orders,
         coordinate,
       };
+
       try {
         const response = await customAxios.post(apiRoutes.cart, postOrderData);
         localStorage.setItem("cartData", JSON.stringify(response.data.data));

@@ -1,5 +1,4 @@
 import React from "react";
-import ResImg from "../../../assets/images/restaurantBackgroundImg.png";
 import "./MyOrderItem.css";
 import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
 import { useNavigate } from "react-router-dom";
@@ -39,7 +38,7 @@ const MyOrderItem: React.FC<MyOrderItemProps> = ({ orderHistoryList }) => {
               onClick={handleRestaurantClick(key)}
             >
               <div className="myOrderItemLogoImg">
-                <RestaurantLogo src={ResImg} />
+                <RestaurantLogo src={value.logo} />
               </div>
               <div className="myOrderInfoSection">
                 <div className="MIresName">{value.restaurant_name}</div>

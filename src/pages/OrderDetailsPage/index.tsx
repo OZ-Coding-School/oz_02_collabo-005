@@ -1,11 +1,9 @@
 import Header from "@components/common/header/Header";
-import OrderList from "@components/orders/ordersheet/order/OrderList";
 import React, { useEffect, useState } from "react";
 import AmountDetails from "@components/orders/ordersheet/amount/AmountDetails";
 import AddressDetails from "@components/orders/ordersheet/deliverydetails/AddressDetails";
 import "./OrderDetailsPage.css";
 import { useNavigate } from "react-router-dom";
-import { ViewOrderType } from "../../types/ordersType";
 import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
 import { AddressType } from "../../types/addressType";
@@ -13,7 +11,7 @@ import ViewOrderInstruction from "@components/orders/ordersheet/order/ViewOrderI
 
 const OrderDetailsPage: React.FC = () => {
   const navigate = useNavigate();
-  const [viewOrderData, setViewOrderData] = useState<ViewOrderType[]>();
+  // const [viewOrderData, setViewOrderData] = useState<ViewOrderType[]>();
   const [addressData, setAddressData] = useState<AddressType>({
     mainAddress: "",
     subAddress: "",
@@ -53,9 +51,7 @@ const OrderDetailsPage: React.FC = () => {
         handleBackIconClick={() => navigate(-1)}
       />
       <div className="orderSheetContainer">
-        <div className="orderSection">
-          <OrderList />
-        </div>
+        <div className="orderSection">{/* <OrderList /> */}</div>
         <AmountDetails />
         <div className="OSsection">
           <div className="deliveryDetailsTitle">Delivery details</div>

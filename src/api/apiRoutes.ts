@@ -12,6 +12,7 @@ const apiRoutes = {
   menuOptionList: "/restaurant/menu/detail",
   cart: "/order/cart/check/",
   payRead: "/pay/read/",
+  orderCreate: "/order/",
   orderList: "/order/list/",
   orderUpdate: "/order/update/",
   orderStatus: "/order/status/",

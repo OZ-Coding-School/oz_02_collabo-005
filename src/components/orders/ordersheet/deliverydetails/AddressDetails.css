@@ -4,10 +4,6 @@
   margin: 0;
 }
 
-.addressDetailsTitle {
-  font-weight: 600;
-}
-
-.addressDetailsTitle {
-  line-height: 25px;
+.addressDetails {
+  font-size: 0.8rem;
 }

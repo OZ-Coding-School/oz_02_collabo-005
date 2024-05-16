@@ -8,18 +8,53 @@ import AddressNotFound from "@components/orders/ordersheet/deliverydetails/Addre
 import RequestInputSection from "@components/orders/ordersheet/instructions/RequestInputSection";
 import Button from "@components/common/button/Button";
 import OrderSheetEmpty from "@components/orders/ordersheet/empty/OrderSheetEmpty";
-import { CartDataType } from "src/types/ordersType";
+import { CartDataType, OrderDataType } from "src/types/ordersType";
 import { AddressType } from "src/types/addressType";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import "./OrderSheetPage.css";
+import useLatLngStore from "./../../store/useLatLngStore";
+
+type RequestType = {
+  store_request: string;
+  rider_request: string;
+};
 
 const OrderSheetPage: React.FC = () => {
   const navigate = useNavigate();
+  const { lat, lng } = useLatLngStore();
   const [cartData, setCartData] = useState<CartDataType | null>(null);
   const [addressData, setAddressData] = useState<AddressType | null>(null);
+  const [isValidated, setIsValidated] = useState<boolean>(true);
 
-  const handleSubmitClick = () => {
+  const [requestState, setRequestState] = useState<RequestType>({
+    store_request: "",
+    rider_request: "",
+  });
+
+  const coordinate =
+    lat === "" && lng === "" ? [] : [parseFloat(lat), parseFloat(lng)];
+
+  const handleInputChange = (field: string, value: string): void => {
+    setRequestState({ ...requestState, [field]: value });
+  };
+
+  const handleSubmit = () => {
+    const { orders } = JSON.parse(localStorage.getItem("orderData")!);
+
+    if (orders) {
+      const payOrderData: OrderDataType = {
+        orders,
+        delivery_address: `${addressData?.mainAddress} ${addressData?.subAddress}`,
+        coordinate: coordinate,
+        store_request: requestState.store_request,
+        rider_request: requestState.rider_request,
+        payment_method: "PMM101",
+      };
+
+      localStorage.setItem("payOrderData", JSON.stringify(payOrderData));
+    }
+
     navigate("/payment");
   };
 
@@ -47,6 +82,16 @@ const OrderSheetPage: React.FC = () => {
     };
     getAddress();
   }, []);
+
+  useEffect(() => {
+    if (cartData && cartData.orders.length > 0) {
+      const hasInvalidMenu = cartData.orders.some((order) =>
+        order.menus.some((menu) => menu.status === 0)
+      );
+
+      setIsValidated(!hasInvalidMenu);
+    }
+  }, [cartData]);
 
   return (
     <div>
@@ -90,15 +135,21 @@ const OrderSheetPage: React.FC = () => {
           </div>
           <div className="OSsection">
             <div className="deliveryDetailsTitle">Instructions</div>
-            <RequestInputSection />
+            <RequestInputSection
+              handleInputChange={(e) =>
+                handleInputChange(e.target.name, e.target.value)
+              }
+            />
           </div>
           <div className="ordersheetSubmitBtn">
             <Button
               name="Proceed to Payment"
               buttonType="bigButton"
-              backgroundColor={addressData ? "#FF6347" : "#767676"}
-              handleClick={handleSubmitClick}
-              disabled={!addressData}
+              backgroundColor={
+                addressData && isValidated ? "#FF6347" : "#767676"
+              }
+              handleClick={handleSubmit}
+              disabled={!addressData || !isValidated}
             />
           </div>
         </div>

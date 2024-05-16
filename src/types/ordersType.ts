@@ -87,3 +87,19 @@ export type cartType = {
   }[];
   coordinate: number[];
 };
+
+export type OrderDataType = {
+  orders: {
+    restaurant_id: number;
+    menus: {
+      id: number;
+      options: number[];
+      quantity: number;
+    }[];
+  }[];
+  delivery_address: string;
+  coordinate: number[];
+  store_request: string;
+  rider_request: string;
+  payment_method: string;
+};

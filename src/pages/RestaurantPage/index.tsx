@@ -24,6 +24,8 @@ const RestaurantPage: React.FC = () => {
   const [address, setAddress] = useState<string>("");
   const navigate = useNavigate();
 
+  console.log(restaurantInfo);
+
   const handleMenuCategoryClick = (event: string) => {
     setSelectedMenuList(getMenuList(event));
   };
@@ -163,7 +165,7 @@ const RestaurantPage: React.FC = () => {
               </div>
             </div>
             <div className="operatingMessage">
-              <p className="businessHours">[ {operatingHours} ]</p>
+              <p className="businessHours">{operatingHours} </p>
             </div>
 
             <DropDownButton origin={restaurantInfo?.notice} />

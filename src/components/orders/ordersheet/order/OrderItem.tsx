@@ -21,7 +21,7 @@ interface OrderItemProps {
   quantity: number;
   setCartData: React.Dispatch<React.SetStateAction<CartDataType | null>>;
   isOnDetailsPage?: boolean;
-  resId: number;
+  status: number;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({
@@ -32,22 +32,99 @@ const OrderItem: React.FC<OrderItemProps> = ({
   quantity,
   setCartData,
   isOnDetailsPage,
-  resId,
+  status,
 }) => {
   const optionList =
     options.length === 0
       ? "unselected"
       : options.map((option) => option.name).join(", ");
+
   const { lat, lng } = useLatLngStore();
   const [count, setCount] = useState(quantity);
 
-  const handlePlusBtnClick = (): void => {
+  const orders: Order = JSON.parse(localStorage.getItem("orderData")!);
+  const coordinate =
+    lat === "" && lng === "" ? [] : [parseFloat(lat), parseFloat(lng)];
+
+  const isSoldOut = status === 0;
+
+  const handlePlusBtnClick = async () => {
     setCount((prev) => prev + 1);
+    if (orders !== null && orders !== undefined) {
+      const updatedOrders = orders.orders.map((order) => {
+        return {
+          ...order,
+          menus: order.menus.map((menu) => {
+            if (menu.id === id) {
+              return {
+                ...menu,
+                quantity: quantity + 1,
+              };
+            } else return menu;
+          }),
+        };
+      });
+
+      const postOrderData: cartType = {
+        orders: updatedOrders,
+        coordinate,
+      };
+
+      try {
+        const response = await customAxios.post(apiRoutes.cart, postOrderData);
+        localStorage.setItem(
+          "orderData",
+          JSON.stringify({ orders: updatedOrders })
+        );
+        localStorage.setItem("cartData", JSON.stringify(response.data.data));
+
+        setCartData(response.data.data);
+        changeCartCount();
+        if (response?.status !== 200) throw new Error("An error occurred.");
+      } catch (error) {
+        console.error("Failed to fetch restaurants:", error);
+      }
+    }
   };
 
-  const handleMinusBtnClick = (): void => {
+  const handleMinusBtnClick = async () => {
     if (count === 1) return;
     setCount((prev) => prev - 1);
+    if (orders !== null && orders !== undefined) {
+      const updatedOrders = orders.orders.map((order) => {
+        return {
+          ...order,
+          menus: order.menus.map((menu) => {
+            if (menu.id === id) {
+              return {
+                ...menu,
+                quantity: quantity - 1,
+              };
+            } else return menu;
+          }),
+        };
+      });
+
+      const postOrderData: cartType = {
+        orders: updatedOrders,
+        coordinate,
+      };
+
+      try {
+        const response = await customAxios.post(apiRoutes.cart, postOrderData);
+        localStorage.setItem(
+          "orderData",
+          JSON.stringify({ orders: updatedOrders })
+        );
+        localStorage.setItem("cartData", JSON.stringify(response.data.data));
+
+        setCartData(response.data.data);
+        changeCartCount();
+        if (response?.status !== 200) throw new Error("An error occurred.");
+      } catch (error) {
+        console.error("Failed to fetch restaurants:", error);
+      }
+    }
   };
 
   const handleDeleteClick = async () => {
@@ -111,17 +188,23 @@ const OrderItem: React.FC<OrderItemProps> = ({
         )}
       </button>
       <div className="orderInfoSection">
-        <div className="OImenuName">{name}</div>
+        <div className={`OImenuName ${isSoldOut ? "OIsoldeOut" : ""}`}>
+          {name}
+        </div>
+
         <div className="OIoptionList">options: {optionList}</div>
         <div className="OIprice">{addCommasToNumberString(price)} won</div>
       </div>
       <div className="orderBtnSection">
-        <QuantityButton
-          quantity={count}
-          handlePlusBtnClick={handlePlusBtnClick}
-          handleMinusBtnClick={handleMinusBtnClick}
-          disabled={isOnDetailsPage}
-        />
+        {!isSoldOut && (
+          <QuantityButton
+            quantity={count}
+            handlePlusBtnClick={handlePlusBtnClick}
+            handleMinusBtnClick={handleMinusBtnClick}
+            disabled={isOnDetailsPage}
+          />
+        )}
+        {isSoldOut && <div className="soldOutLabel">Sold out</div>}
       </div>
     </div>
   );

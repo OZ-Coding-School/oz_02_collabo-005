@@ -14,9 +14,7 @@
   background-color: #ff6347;
   color: white;
   font-size: 1rem;
+  border-radius: 100px;
   cursor: pointer;
-}
-
-.minus {
-  padding-bottom: 4px;
+  padding: 0px;
 }

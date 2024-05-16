@@ -12,7 +12,7 @@ type LoginState = {
   ) => void;
 };
 
-export const useLoginStore = create<LoginState>(
+const useLoginStore = create<LoginState>(
   persist(
     (set) => ({
       // 초기 값
@@ -29,7 +29,7 @@ export const useLoginStore = create<LoginState>(
   ) as (set: (fn: (state: LoginState) => LoginState) => void) => LoginState
 );
 
-export const getStoredLoginState = () => {
+const getStoredLoginState = () => {
   // 로컬 스토리지의 문자열 형태의 데이터를 저장
   const storedDataString = localStorage.getItem("login-storage");
   // 문자열 형태의 데이터를 객체 형태로 변환
@@ -49,3 +49,5 @@ export const getStoredLoginState = () => {
     return { isLogin: false, loginToken: null, refreshToken: null };
   }
 };
+
+export { useLoginStore, getStoredLoginState };

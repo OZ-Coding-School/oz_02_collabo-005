@@ -69,7 +69,6 @@ const LoginPage: React.FC = () => {
         apiRoutes.userLogin,
         postUserData
       );
-      console.log(response);
       if (response.status === 200) {
         if (response.data.error) {
           alert("The account you have currently entered is a deleted account.");

@@ -109,7 +109,6 @@ const AccountPage: React.FC = () => {
               apiRoutes.userUpdate,
               putUserData
             );
-            console.log(response);
             if (response.status === 200) {
               alert("Update Complete!!");
               setIsEdit(false);
@@ -131,7 +130,6 @@ const AccountPage: React.FC = () => {
             }));
           }
         } catch (error) {
-          console.log(userData);
           if (
             userData.currentPassword.value !== "" &&
             userData.newPassword.value !== ""

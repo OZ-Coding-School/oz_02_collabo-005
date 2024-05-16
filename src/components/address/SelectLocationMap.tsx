@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import loader from "../../services/GoogleMapLoad";
-import { userLatLngType } from "../../types/addressType";
 import {
   freeDeliveryPolygonOptions,
   serviceablePolygonOptions,
 } from "./PolygonStyle";
 import { ReverseGeocoding } from "./Geocoding";
+import { UserLatLngType } from "../../types/addressType";
 
 interface selectLocationMapProps {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,7 +35,7 @@ const SelectLocationMap: React.FC<selectLocationMapProps> = ({
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const userLatLng: userLatLngType = {
+          const userLatLng: UserLatLngType = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };

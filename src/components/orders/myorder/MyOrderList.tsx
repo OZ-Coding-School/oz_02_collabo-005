@@ -7,7 +7,6 @@ import MyOrderEmpty from "./MyOrderEmpty";
 import { OrderHistoryDataType } from "../../../types/ordersType";
 
 const MyOrderList: React.FC = () => {
-  // const [isOrdersEmpty, setIsOrdersEmpty] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [orderHistory, setOrderHistory] = useState<OrderHistoryDataType[]>();
 

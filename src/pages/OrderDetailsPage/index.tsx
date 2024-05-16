@@ -32,13 +32,14 @@ const OrderDetailsPage: React.FC = () => {
         console.log(error);
       }
     };
-    // const getViewOrder = async () => {
-    //   try {
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-    // getViewOrder();
+    const getViewOrder = async () => {
+      // try {
+      //   const response = await customAxios.get(apiRoutes.)
+      // } catch (error) {
+      //   console.log(error);
+      // }
+    };
+    getViewOrder();
     getAddress();
   }, []);
 

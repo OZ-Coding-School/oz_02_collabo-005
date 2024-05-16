@@ -1,6 +1,7 @@
 import React from "react";
 import "./OptionItem.css";
 import { optionType } from "src/types/menuOptionTypes";
+import { addCommasToNumberString } from "../../../utils/addCommas";
 
 interface OptionItemProps extends Omit<optionType, "id"> {
   inputType: string;
@@ -28,7 +29,7 @@ const OptionItem: React.FC<OptionItemProps> = ({
         />
         <label>{name}</label>
       </div>
-      <div className="optionPrice">{price}won</div>
+      <div className="optionPrice">{addCommasToNumberString(price)} won</div>
     </div>
   );
 };

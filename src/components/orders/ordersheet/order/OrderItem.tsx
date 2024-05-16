@@ -11,7 +11,7 @@ import {
 import { addCommasToNumberString } from "./../../../../utils/addCommas";
 import customAxios from "./../../../../api/axios";
 import apiRoutes from "./../../../../api/apiRoutes";
-import useLatLngStore from "./../../../../store/useLatLngStore";
+import { useLatLngStore } from "./../../../../store/useLatLngStore";
 
 interface OrderItemProps {
   id: number;

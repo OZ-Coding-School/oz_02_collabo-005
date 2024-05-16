@@ -4,6 +4,7 @@ import "./MyOrderItem.css";
 import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
 import { useNavigate } from "react-router-dom";
 import { OrderHistoryDataType } from "../../../types/ordersType";
+import { addCommasToNumberString } from "../../../utils/addCommas";
 
 interface MyOrderItemProps {
   orderHistoryList: OrderHistoryDataType;
@@ -50,7 +51,9 @@ const MyOrderItem: React.FC<MyOrderItemProps> = ({ orderHistoryList }) => {
                   </div>
                 )}
 
-                <div className="MIprice">{value.total_price} won</div>
+                <div className="MIprice">
+                  {addCommasToNumberString(value.total_price)} won
+                </div>
               </div>
             </div>
           </>

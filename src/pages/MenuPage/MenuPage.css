@@ -1,5 +1,10 @@
+.menuPageContainer {
+  height: calc(100vh - 50px);
+}
+
 .MenuBackImg {
   width: 100%;
+  height: 250px;
 }
 
 .menuPageTitle {
@@ -13,13 +18,21 @@
   font-weight: 800;
 }
 
+.menuPrice {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 5px 0px;
+}
+
 .devidingLine {
   background-color: #0000001d;
   height: 5px;
 }
 
 .menuPageOptionContainer {
-  margin: 10px 10px;
+  margin: 15px 10px;
   display: grid;
   gap: 20px;
 }
@@ -31,10 +44,14 @@
 }
 
 .quantityText {
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
 .AddToBasketBtn {
-  display: flex;
-  justify-content: center;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 10px;
 }

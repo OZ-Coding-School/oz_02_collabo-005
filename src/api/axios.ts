@@ -19,7 +19,7 @@ refreshAxios.interceptors.request.use(async (config) => {
 
 const customAxios = (() =>
   axios.create({
-    baseURL: "/api/v1",
+    baseURL: import.meta.env.DEV ? "/api/v1" : "",
     headers: {
       "Content-Type": "application/json",
     },

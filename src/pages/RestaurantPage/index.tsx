@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import AddressBar from "@components/address/AddressBar";
-import BackgroundImg from "../../assets/images/restaurantBackgroundImg.png";
-import LogoImg from "../../assets/images/restaurantLogoImg.jpg";
 import MenuCategory from "@components/restaurant/MenuCategory";
 import "./RestaurantPage.css";
 import DropDownButton from "@components/restaurant/DropDownButton";
@@ -133,14 +131,12 @@ const RestaurantPage: React.FC = () => {
         <div className="restaurantInfoContainer">
           <div className="restaurantImgContainer">
             <img
-              src={BackgroundImg}
-              alt="레스토랑 배경 이미지" // 추후에 restaurantInfo.image로 교체
+              src={restaurantInfo?.image}
+              alt="레스토랑 배경 이미지"
               className="restaurantBackgroundImg"
             />
             <div className="restaurantLogoImgContainer">
-              <RestaurantLogo
-                src={LogoImg} // 추후에 restaurantInfo.logo로 교체
-              />
+              <RestaurantLogo src={restaurantInfo?.logo} />
             </div>
           </div>
           <div className="restaurantProfile">

@@ -8,19 +8,53 @@ import AddressNotFound from "@components/orders/ordersheet/deliverydetails/Addre
 import RequestInputSection from "@components/orders/ordersheet/instructions/RequestInputSection";
 import Button from "@components/common/button/Button";
 import OrderSheetEmpty from "@components/orders/ordersheet/empty/OrderSheetEmpty";
-import { CartDataType } from "src/types/ordersType";
+import { CartDataType, OrderDataType } from "src/types/ordersType";
 import { AddressType } from "src/types/addressType";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import "./OrderSheetPage.css";
+import useLatLngStore from "./../../store/useLatLngStore";
+
+type RequestType = {
+  store_request: string;
+  rider_request: string;
+};
 
 const OrderSheetPage: React.FC = () => {
   const navigate = useNavigate();
+  const { lat, lng } = useLatLngStore();
   const [cartData, setCartData] = useState<CartDataType | null>(null);
   const [addressData, setAddressData] = useState<AddressType | null>(null);
   const [isValidated, setIsValidated] = useState<boolean>(true);
 
-  const handleSubmitClick = () => {
+  const [requestState, setRequestState] = useState<RequestType>({
+    store_request: "",
+    rider_request: "",
+  });
+
+  const coordinate =
+    lat === "" && lng === "" ? [] : [parseFloat(lat), parseFloat(lng)];
+
+  const handleInputChange = (field: string, value: string): void => {
+    setRequestState({ ...requestState, [field]: value });
+  };
+
+  const handleSubmit = () => {
+    const { orders } = JSON.parse(localStorage.getItem("orderData")!);
+
+    if (orders) {
+      const payOrderData: OrderDataType = {
+        orders,
+        delivery_address: `${addressData?.mainAddress} ${addressData?.subAddress}`,
+        coordinate: coordinate,
+        store_request: requestState.store_request,
+        rider_request: requestState.rider_request,
+        payment_method: "PMM101",
+      };
+
+      localStorage.setItem("payOrderData", JSON.stringify(payOrderData));
+    }
+
     navigate("/payment");
   };
 
@@ -50,14 +84,11 @@ const OrderSheetPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // cartData가 존재하고, orders 배열이 존재하며, 하나 이상의 주문이 있는 경우
     if (cartData && cartData.orders.length > 0) {
-      // 모든 주문을 순회하면서 메뉴의 상태가 0인지 확인
       const hasInvalidMenu = cartData.orders.some((order) =>
         order.menus.some((menu) => menu.status === 0)
       );
 
-      // 메뉴의 상태가 0인 것이 있으면 isValidated 값을 false로 설정
       setIsValidated(!hasInvalidMenu);
     }
   }, [cartData]);
@@ -104,7 +135,11 @@ const OrderSheetPage: React.FC = () => {
           </div>
           <div className="OSsection">
             <div className="deliveryDetailsTitle">Instructions</div>
-            <RequestInputSection />
+            <RequestInputSection
+              handleInputChange={(e) =>
+                handleInputChange(e.target.name, e.target.value)
+              }
+            />
           </div>
           <div className="ordersheetSubmitBtn">
             <Button
@@ -113,7 +148,7 @@ const OrderSheetPage: React.FC = () => {
               backgroundColor={
                 addressData && isValidated ? "#FF6347" : "#767676"
               }
-              handleClick={handleSubmitClick}
+              handleClick={handleSubmit}
               disabled={!addressData || !isValidated}
             />
           </div>

@@ -1,20 +1,28 @@
 import InputItem from "@components/common/input/InputItem";
 import React from "react";
 
-const RequestInputSection: React.FC = () => {
+interface RequestInputSection {
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const RequestInputSection: React.FC<RequestInputSection> = ({
+  handleInputChange,
+}) => {
   return (
     <div>
       <InputItem
         label="Notes for Restaurant"
-        name="restaurantRequest"
+        name="store_request"
         type="text"
         isNoStar={true}
+        handleInputChange={handleInputChange}
       />
       <InputItem
         label="Notes for Rider"
-        name="riderRequest"
+        name="rider_request"
         type="text"
         isNoStar={true}
+        handleInputChange={handleInputChange}
       />
     </div>
   );

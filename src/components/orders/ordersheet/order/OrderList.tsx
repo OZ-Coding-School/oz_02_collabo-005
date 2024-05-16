@@ -16,9 +16,6 @@ const OrderList: React.FC<OrderListType> = ({
   setCartData,
 }) => {
   const navigate = useNavigate();
-
-  console.log(menus);
-
   return (
     <div className="OLContainer">
       <div

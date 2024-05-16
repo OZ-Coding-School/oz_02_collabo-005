@@ -117,7 +117,6 @@ const AccountPage: React.FC = () => {
                 currentPassword: { value: "", error: "" },
                 newPassword: { value: "", error: "" },
               });
-              console.log(response);
             }
           } else {
             alert("Your email has been duplicated.");

@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type LatLngState = {
-  lat: string | null;
-  lng: string | null;
+  lat: string;
+  lng: string;
   setLatLngState: (lat: string, lng: string) => void;
 };
 
@@ -29,8 +29,8 @@ const useLatLngStore = create<LatLngState>(
   persist(
     (set) => ({
       // 초기 값
-      lat: null,
-      lng: null,
+      lat: "",
+      lng: "",
       setLatLngState: (lat, lng) =>
         set({
           lat,
@@ -47,22 +47,15 @@ const getLatLngStore = () => {
   const storedDataString = localStorage.getItem("latlng-storage");
   const storedData = storedDataString && JSON.parse(storedDataString);
 
-  if (storedData) {
-    const storedLat = storedData.state.lat;
-    const storedLng = storedData.state.lng;
+  const storedLat = storedData.state.lat;
+  const storedLng = storedData.state.lng;
 
-    const lat = storedLat || null;
-    const lng = storedLng || null;
-    return {
-      lat,
-      lng,
-    };
-  } else {
-    return {
-      lat: null,
-      lng: null,
-    };
-  }
+  const lat = storedLat;
+  const lng = storedLng;
+  return {
+    lat,
+    lng,
+  };
 };
 
 export { useLatLngStore, getLatLngStore };

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import BackIcon from "../../../assets/icons/back-icon.png";
 import CartIcon from "../../../assets/icons/cart-icon.png";
 import "./Header.css";
-import useLatLngStore from "./../../../store/useLatLngStore";
+import { useLatLngStore } from "./../../../store/useLatLngStore";
 import customAxios from "./../../../api/axios";
 import apiRoutes from "./../../../api/apiRoutes";
 import { cartType } from "src/types/ordersType";
@@ -46,6 +46,7 @@ const Header: React.FC<HeaderProps> = ({
 
       try {
         const response = await customAxios.post(apiRoutes.cart, postOrderData);
+        console.log(postOrderData);
         localStorage.setItem("cartData", JSON.stringify(response.data.data));
         if (response?.status !== 200) throw new Error("예외가 발생했습니다.");
       } catch (error) {

@@ -1,6 +1,14 @@
 import React from "react";
 
-const ViewOrderInstruction: React.FC = () => {
+interface ViewOrderInstruction {
+  noteRider: string;
+  noteRes: string;
+}
+
+const ViewOrderInstruction: React.FC<ViewOrderInstruction> = ({
+  noteRider,
+  noteRes,
+}) => {
   return (
     <>
       <div className="OSsection">
@@ -9,12 +17,12 @@ const ViewOrderInstruction: React.FC = () => {
           <div className="noteForRes">
             Notes for Restaurant
             <br />
-            수저세트 안주셔도 됩니다.
+            {noteRes}
           </div>
           <div className="noteForRider">
             Notes for Rider
             <br />
-            문앞에 두고 가주세요.
+            {noteRider}
           </div>
         </div>
       </div>

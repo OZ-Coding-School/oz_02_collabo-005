@@ -11,7 +11,7 @@ import {
 import { addCommasToNumberString } from "./../../../../utils/addCommas";
 import customAxios from "./../../../../api/axios";
 import apiRoutes from "./../../../../api/apiRoutes";
-import useLatLngStore from "./../../../../store/useLatLngStore";
+import { useLatLngStore } from "./../../../../store/useLatLngStore";
 
 interface OrderItemProps {
   id: number;
@@ -128,6 +128,10 @@ const OrderItem: React.FC<OrderItemProps> = ({
   };
 
   const handleDeleteClick = async () => {
+    const orders: Order = JSON.parse(localStorage.getItem("orderData")!);
+    const coordinate =
+      lat === "" && lng === "" ? [] : [parseFloat(lat), parseFloat(lng)];
+
     if (orders !== null && orders !== undefined) {
       const updatedOrders = orders.orders
         .map((order) => {

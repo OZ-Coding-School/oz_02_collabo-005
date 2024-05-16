@@ -1,10 +1,8 @@
-import useLatLngStore from "../../store/useLatLngStore";
 import { UserLatLngType } from "../../types/addressType";
+import { useLatLngStore } from "../../store/useLatLngStore";
 
 // 역지오코딩 : 위도 경도를 이용해 주소로 변환
-export const ReverseGeocoding = (
-  userLatLng: UserLatLngType
-): Promise<string> => {
+const ReverseGeocoding = (userLatLng: UserLatLngType): Promise<string> => {
   return new Promise((resolve, reject) => {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode(
@@ -26,9 +24,9 @@ export const ReverseGeocoding = (
 };
 
 // 지오코딩 : 주소를 이용해 위도 경도로 변환
-export const Geocoding = (
+const Geocoding = (
   address: string
-): Promise<{ lat: string; lng: string }> => {
+): Promise<{ userLat: string; userLng: string }> => {
   return new Promise((resolve, reject) => {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode(
@@ -36,11 +34,11 @@ export const Geocoding = (
       (results: google.maps.GeocoderResult[] | null) => {
         if (results !== null) {
           const location = results[0].geometry.location;
-          const lat = String(location.lat());
-          const lng = String(location.lng());
+          const userLat = String(location.lat());
+          const userLng = String(location.lng());
           // geocoding을 쓰지 않는 다른 컴포넌트에서 위도 경도 값을 사용할 수 있도록 전역
-          useLatLngStore.getState().setLatLngState(lat, lng);
-          resolve({ lat, lng });
+          useLatLngStore.setState({ lat: userLat, lng: userLng });
+          resolve({ userLat, userLng });
         } else {
           reject("Geocoding failed");
         }
@@ -48,3 +46,5 @@ export const Geocoding = (
     );
   });
 };
+
+export { ReverseGeocoding, Geocoding };

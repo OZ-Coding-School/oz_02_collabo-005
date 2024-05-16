@@ -5,7 +5,7 @@ import {
   serviceablePolygonOptions,
 } from "./PolygonStyle";
 import { ReverseGeocoding } from "./Geocoding";
-import { UserLatLngType } from "src/types/addressType";
+import { UserLatLngType } from "../../types/addressType";
 
 interface selectLocationMapProps {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;

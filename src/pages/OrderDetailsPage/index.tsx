@@ -30,13 +30,14 @@ const OrderDetailsPage: React.FC = () => {
         console.log(error);
       }
     };
-    // const getViewOrder = async () => {
-    //   try {
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-    // getViewOrder();
+    const getViewOrder = async () => {
+      // try {
+      //   const response = await customAxios.get(apiRoutes.)
+      // } catch (error) {
+      //   console.log(error);
+      // }
+    };
+    getViewOrder();
     getAddress();
   }, []);
 
@@ -59,7 +60,10 @@ const OrderDetailsPage: React.FC = () => {
             subAddress={addressData.subAddress}
           />
         </div>
-        <ViewOrderInstruction />
+        <ViewOrderInstruction
+          noteRider="문앞에 두고 가주세요"
+          noteRes="수저세트 안주셔도 됩니다"
+        />
       </div>
     </div>
   );

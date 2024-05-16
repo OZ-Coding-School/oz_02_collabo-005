@@ -2,6 +2,7 @@ import React from "react";
 import "./MenuItem.css";
 import { MenuType } from "src/types/restaurantTypes";
 import { useNavigate } from "react-router-dom";
+import { addCommasToNumberString } from "../../utils/addCommas";
 
 interface MenuItemProps {
   menu: MenuType;
@@ -39,7 +40,10 @@ const MenuItem: React.FC<MenuItemProps> = ({
         {menu.description && (
           <div className="menuItemDescription">{menu.description}</div>
         )}
-        <p className="menuItemPrice">{menu.price} won</p>
+
+        <p className="menuItemPrice">
+          {addCommasToNumberString(menu.price)} won
+        </p>
       </div>
       {isSoldOut && (
         <div className="menuMainImgContainer menuSoldOut">Sold Out</div>

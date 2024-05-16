@@ -2,7 +2,7 @@ import React from "react";
 import "./RestaurantLogo.css";
 
 interface RestaurantLogoProps {
-  src: string;
+  src: string | undefined;
 }
 
 const RestaurantLogo: React.FC<RestaurantLogoProps> = ({ src }) => {

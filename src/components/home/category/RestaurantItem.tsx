@@ -1,5 +1,4 @@
 import React from "react";
-import RestaurantImage from "../../../assets/images/restaurantImg.jpg";
 import "./RestaurantItem.css";
 import { useNavigate } from "react-router-dom";
 import { RestaurantType } from "../../../types/restaurantTypes";
@@ -9,6 +8,7 @@ interface RestaurantItemProps extends Omit<RestaurantType, "category"> {}
 const RestaurantItem: React.FC<RestaurantItemProps> = ({
   id,
   name,
+  image,
   hashtag,
   status,
 }) => {
@@ -28,9 +28,9 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
         <div className="restaurantMainImg resPreparing">{noticeMessage}</div>
       )}
       <img
-        src={RestaurantImage}
+        src={image}
         className="restaurantMainImg"
-        alt="restaurant main image" //image로 대체
+        alt="restaurant main image"
       />
       <div className="restaurantInfoSection">
         <p className="RIname">{name}</p>

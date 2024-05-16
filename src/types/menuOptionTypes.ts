@@ -2,6 +2,7 @@ export type menuOptionType = {
   id: number;
   name: string;
   image: string;
+  price: number;
   description: string;
   option_group_list: optionGroupType[];
 };

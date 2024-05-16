@@ -1,5 +1,5 @@
 import axios from "axios";
-import useLoginStore from "../store/useLoginStore";
+import { getStoredLoginState, useLoginStore } from "../store/useLoginStore";
 
 const refreshAxios = axios.create({
   baseURL: `/api/v1/token/refresh/`,
@@ -7,7 +7,7 @@ const refreshAxios = axios.create({
 });
 
 refreshAxios.interceptors.request.use(async (config) => {
-  const refreshToken = useLoginStore.getState().refreshToken;
+  const { refreshToken } = getStoredLoginState();
   if (refreshToken) {
     config.data = {
       ...config.data,
@@ -36,15 +36,18 @@ customAxios.interceptors.response.use(
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
-      const refreshToken = useLoginStore.getState().refreshToken;
+      const { refreshToken } = getStoredLoginState();
+      refreshToken;
       if (refreshToken) {
         try {
           const response = await refreshAxios.post("");
-          const isLogin = useLoginStore.getState().isLogin;
+          const { isLogin } = getStoredLoginState();
           const newAccessToken = response.data.access;
-          useLoginStore
-            .getState()
-            .setLoginState(isLogin, newAccessToken, refreshToken);
+          useLoginStore.setState({
+            isLogin: isLogin,
+            loginToken: newAccessToken,
+            refreshToken: refreshToken,
+          });
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return customAxios(originalRequest);
         } catch (refreshError) {
@@ -60,8 +63,7 @@ customAxios.interceptors.response.use(
 // 요청 전에 실행되는 인터셉터
 customAxios.interceptors.request.use(
   (config) => {
-    const loginToken = useLoginStore.getState().loginToken;
-    const isLogin = useLoginStore.getState().isLogin;
+    const { isLogin, loginToken } = getStoredLoginState();
 
     // 로그인되어 있으면 헤더에 인증 토큰 추가
     if (isLogin && loginToken) {

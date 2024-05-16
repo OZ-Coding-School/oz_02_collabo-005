@@ -2,20 +2,16 @@ import { selectMenuType } from "./menuOptionTypes";
 
 export type OrderHistoryDataType = {
   id: number;
-  order_time: string;
-  order_status: number;
-  menus: [
-    {
-      restaurant_id: number;
+  date: string;
+  details: {
+    [resId: string]: {
+      menu_name: string;
+      quantity: number;
+      total_price: number;
+      logo: string;
       restaurant_name: string;
-      image: string;
-      menu_name: {
-        name: string;
-        quantity: number;
-        total_price: number;
-      };
-    },
-  ];
+    };
+  };
 };
 
 export type ViewOrderType = {

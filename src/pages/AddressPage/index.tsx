@@ -68,19 +68,17 @@ const AddressPage: React.FC = () => {
     };
     try {
       // 주소를 이용해 위도 경도로 변환
-      const { lat, lng } = await Geocoding(addressData.mainAddress);
+      const { userLat, userLng } = await Geocoding(addressData.mainAddress);
 
       // 배달 가능 지역인지 검사하는 api에 보낼 데이터(위도 경도)
       const userAddressLatLng = {
-        lat,
-        lng,
+        userLat,
+        userLng,
       };
-      console.log(userAddressLatLng);
 
       const isAvailableDelivery = await customAxios.get(
-        `/user/address/check-coordinate/?lat=${userAddressLatLng.lat}&lng=${userAddressLatLng.lng}`
+        `/user/address/check-coordinate/?lat=${userAddressLatLng.userLat}&lng=${userAddressLatLng.userLng}`
       );
-      console.log(isAvailableDelivery);
       // 배달 불가능 지역일때 에러 메시지 알림창으로 띄움
       if (!isAvailableDelivery.data.data.result) {
         alert(

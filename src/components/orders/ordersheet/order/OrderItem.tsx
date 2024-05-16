@@ -21,6 +21,7 @@ interface OrderItemProps {
   quantity: number;
   setCartData: React.Dispatch<React.SetStateAction<CartDataType | null>>;
   isOnDetailsPage?: boolean;
+  resId: number;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({
@@ -31,6 +32,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
   quantity,
   setCartData,
   isOnDetailsPage,
+  resId,
 }) => {
   const optionList =
     options.length === 0

@@ -163,7 +163,6 @@ const RestaurantPage: React.FC = () => {
             <div className="operatingMessage">
               <p className="businessHours">{operatingHours} </p>
             </div>
-
             <DropDownButton origin={restaurantInfo?.notice} />
           </div>
         </div>

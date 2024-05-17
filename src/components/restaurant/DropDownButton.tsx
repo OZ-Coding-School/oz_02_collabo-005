@@ -18,7 +18,11 @@ const DropDownButton: React.FC<DropDownButtonProps> = ({ origin }) => {
       <div className="dropdownTitle">
         <div>check origin</div>
         <button className="dropBtn" onClick={handleClick}>
-          {isClicked ? <BiCaretUp /> : <BiCaretDown />}
+          {isClicked ? (
+            <BiCaretUp className="dropIcon" />
+          ) : (
+            <BiCaretDown className="dropIcon" />
+          )}
         </button>
       </div>
       <div className={`dropdownContent ${isClicked ? "open" : " "}`}>

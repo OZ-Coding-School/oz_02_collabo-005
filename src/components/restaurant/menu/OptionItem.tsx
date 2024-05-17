@@ -29,7 +29,7 @@ const OptionItem: React.FC<OptionItemProps> = ({
         />
         <label>{name}</label>
       </div>
-      <div className="optionPrice">{addCommasToNumberString(price)} won</div>
+      <div className="optionPrice">+{addCommasToNumberString(price)} won</div>
     </div>
   );
 };

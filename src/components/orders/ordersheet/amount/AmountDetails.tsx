@@ -3,34 +3,36 @@ import "./AmountDetails.css";
 import { addCommasToNumberString } from "./../../../../utils/addCommas";
 
 interface AmountDetailsProps {
-  orderPrice?: number;
-  deliveryFee?: number;
-  totalPrice?: number;
+  orderPrice?: number | undefined;
+  deliveryFee?: number | undefined;
+  totalPrice?: number | undefined;
 }
 
 const AmountDetails: React.FC<AmountDetailsProps> = ({
-  orderPrice = 0,
-  deliveryFee = 0,
-  totalPrice = 0,
+  orderPrice,
+  deliveryFee,
+  totalPrice,
 }) => {
+  const stringOrderPrice = addCommasToNumberString(orderPrice || 0);
+  const stringDeliveryFee = addCommasToNumberString(deliveryFee || 0);
+  const stringTotalPrice = addCommasToNumberString(totalPrice || 0);
+
   return (
     <div className="amountDetailsContainer">
       <div className="amountDetailsItemSection">
         <div className="amountDetailsItem">
           <div>Order Price</div>
-          <div>{addCommasToNumberString(orderPrice)} won</div>
+          <div>{stringOrderPrice} won</div>
         </div>
         <div className="amountDetailsItem">
           <div>Delivery Fee</div>
-          <div>{addCommasToNumberString(deliveryFee)} won</div>
+          <div>{stringDeliveryFee} won</div>
         </div>
       </div>
       <div className="amountDetailsSection">
         <div className="amountText">
           <div className="totalText">Total</div>
-          <div className="totalAmountText">
-            {addCommasToNumberString(totalPrice)} won
-          </div>
+          <div className="totalAmountText">{stringTotalPrice} won</div>
         </div>
         <div className="deliveryNotification">
           * minimum free delivery free 16,900 won

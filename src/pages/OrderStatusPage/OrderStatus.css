@@ -22,6 +22,8 @@
 
 .errorMessage {
   text-decoration: underline;
+  color: red;
+  font-weight: 600;
 }
 
 .statusText span {

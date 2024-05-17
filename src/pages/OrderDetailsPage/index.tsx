@@ -3,43 +3,42 @@ import React, { useEffect, useState } from "react";
 import AmountDetails from "@components/orders/ordersheet/amount/AmountDetails";
 import AddressDetails from "@components/orders/ordersheet/deliverydetails/AddressDetails";
 import "./OrderDetailsPage.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
-import { AddressType } from "../../types/addressType";
 import ViewOrderInstruction from "@components/orders/ordersheet/order/ViewOrderInstruction";
+import { ViewOrderType } from "../../types/ordersType";
+import OrderList from "@components/orders/ordersheet/order/OrderList";
 
 const OrderDetailsPage: React.FC = () => {
   const navigate = useNavigate();
-  // const [viewOrderData, setViewOrderData] = useState<ViewOrderType[]>();
-  const [addressData, setAddressData] = useState<AddressType>({
-    mainAddress: "",
-    subAddress: "",
-  });
+  const [viewOrderData, setViewOrderData] = useState<ViewOrderType>();
+  const { orderId } = useParams();
+  const [isViewOrderDetail, setIsViewOrderDetail] = useState<boolean>(false);
+  const [addressData, setAddressData] = useState<string>("");
 
   useEffect(() => {
-    const getAddress = async () => {
+    const getViewOrder = async () => {
       try {
-        const response = await customAxios.get(apiRoutes.address);
-
-        setAddressData({
-          mainAddress: response.data.base,
-          subAddress: response.data.detail,
-        });
+        const response = await customAxios.get(
+          `${apiRoutes.orderDetail}?id=${orderId}`
+        );
+        if (response.data.status === 200) {
+          setIsViewOrderDetail(true);
+          setViewOrderData(response.data.data);
+          setAddressData(response.data.data.address);
+        }
       } catch (error) {
         console.log(error);
       }
     };
-    const getViewOrder = async () => {
-      // try {
-      //   const response = await customAxios.get(apiRoutes.)
-      // } catch (error) {
-      //   console.log(error);
-      // }
-    };
     getViewOrder();
-    getAddress();
   }, []);
+
+  const handleBackIconClick = () => {
+    setIsViewOrderDetail(false);
+    navigate(-1);
+  };
 
   return (
     <div>
@@ -48,21 +47,31 @@ const OrderDetailsPage: React.FC = () => {
         title="Order Details"
         hasCartIcon={false}
         isFixed={true}
-        handleBackIconClick={() => navigate(-1)}
+        handleBackIconClick={handleBackIconClick}
       />
       <div className="orderSheetContainer">
-        <div className="orderSection">{/* <OrderList /> */}</div>
-        <AmountDetails />
+        <div className="orderSection">
+          {viewOrderData?.orders.map((id, index) => (
+            <OrderList
+              isViewOrderDetail={isViewOrderDetail}
+              key={index}
+              restaurant={id.restaurant}
+              menus={id.menus}
+            />
+          ))}
+        </div>
+        <AmountDetails
+          orderPrice={viewOrderData?.order_price}
+          deliveryFee={viewOrderData?.delivery_fee}
+          totalPrice={viewOrderData?.total_price}
+        />
         <div className="OSsection">
           <div className="deliveryDetailsTitle">Delivery details</div>
-          <AddressDetails
-            mainAddress={addressData.mainAddress}
-            subAddress={addressData.subAddress}
-          />
+          <AddressDetails addressData={addressData} />
         </div>
         <ViewOrderInstruction
-          noteRider="문앞에 두고 가주세요"
-          noteRes="수저세트 안주셔도 됩니다"
+          noteRider={viewOrderData?.rider_request}
+          noteRes={viewOrderData?.store_request}
         />
       </div>
     </div>

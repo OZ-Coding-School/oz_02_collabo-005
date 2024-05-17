@@ -1,9 +1,16 @@
+.MenuItem {
+  border-bottom: 1px solid #80808057;
+  padding-bottom: 10px;
+}
+
 .MenuItemContainer {
   display: flex;
   cursor: pointer;
-  border-bottom: 1px solid #80808057;
-  padding-bottom: 10px;
   min-height: 100px;
+}
+
+.MenuItemContainer:active {
+  background-color: #80808057;
 }
 
 .MenuItemContainer:last-child {

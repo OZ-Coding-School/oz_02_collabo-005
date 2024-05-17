@@ -123,7 +123,7 @@ const OrderSheetPage: React.FC = () => {
             totalPrice={cartData.total_price}
           />
           <div className="OSsection">
-            <div className="deliveryDetailsTitle">Delivery details</div>
+            <div className="deliveryDetailsTitle">Delivery address</div>
             {addressData ? (
               <AddressDetails
                 mainAddress={addressData.mainAddress}

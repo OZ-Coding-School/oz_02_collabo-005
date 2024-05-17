@@ -149,15 +149,21 @@ const MenuPage: React.FC = () => {
               handleMinusBtnClick={handleMinusBtnClick}
             />
           </div>
-          {menuData?.option_group_list.map((optionList, index) => (
-            <OptionList
-              optionList={optionList}
-              key={index}
-              selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
-              setIsValidated={setIsValidated}
-            />
-          ))}
+          <div className="MPOptionListContainer">
+            {menuData?.option_group_list.map((optionList, index) => (
+              <OptionList
+                optionList={optionList}
+                key={index}
+                selectedOptions={selectedOptions}
+                setSelectedOptions={setSelectedOptions}
+                setIsValidated={setIsValidated}
+              />
+            ))}
+          </div>
+        </div>
+        <div
+          className={`AddToBasketBtnContainer ${menuData?.option_group_list.length === 0 ? "btnAbsolute" : "btnSticky"}`}
+        >
           <div className="AddToBasketBtn">
             <Button
               name="Add to Basket"

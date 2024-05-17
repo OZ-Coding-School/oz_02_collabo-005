@@ -1,5 +1,6 @@
 .menuPageContainer {
-  height: calc(100vh - 50px);
+  min-height: 100vh;
+  position: relative;
 }
 
 .MenuBackImg {
@@ -37,6 +38,11 @@
   gap: 20px;
 }
 
+.MPOptionListContainer {
+  display: grid;
+  gap: 20px;
+}
+
 .menuQuantitySection {
   display: flex;
   justify-content: space-between;
@@ -49,10 +55,24 @@
   font-weight: 600;
 }
 
-.AddToBasketBtn {
+.btnSticky {
+  max-width: 500px;
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  padding: 10px;
+  background-color: white;
+  z-index: 1000;
+}
+
+.btnAbsolute {
   position: absolute;
-  bottom: 0px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  margin-bottom: 10px;
+}
+
+.AddToBasketBtn {
+  display: flex;
+  justify-content: center;
 }

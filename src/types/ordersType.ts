@@ -15,33 +15,37 @@ export type OrderHistoryDataType = {
 };
 
 export type ViewOrderType = {
+  address: string;
   orders: [
-    restaurant: {
-      id: number;
-      name: string;
-    },
-    menus: [
-      {
+    {
+      restaurant: {
         id: number;
         name: string;
-        status: number;
-        price: number;
-        quantity: number;
-        options: [
-          {
-            id: number;
-            name: string;
-            price: number;
-          },
-        ];
-        menu_total_price: number;
-      },
-    ],
+      };
+
+      menus: [
+        {
+          id: number;
+          name: string;
+          price: number;
+          options: [
+            {
+              id: number;
+              name: string;
+              price: number;
+            },
+          ];
+          quantity: number;
+          menu_total_price: number;
+        },
+      ];
+    },
   ];
-  coordinate: boolean;
   order_price: number;
   delivery_fee: number;
   total_price: number;
+  store_request: string;
+  rider_request: string;
 };
 
 export type CartDataType = {

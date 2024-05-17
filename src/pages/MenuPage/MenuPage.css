@@ -1,17 +1,16 @@
 .menuPageContainer {
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh - 115px);
 }
 
 .menuBackImgContainer {
   height: 280px;
-  position: -webkit-sticky;
   position: sticky;
+  z-index: -1;
   top: 0px;
 }
 
 .MenuBackImg {
   position: relative;
-  z-index: 1;
   width: 100%;
   height: 280px;
 }

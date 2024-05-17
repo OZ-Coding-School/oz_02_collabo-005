@@ -130,7 +130,7 @@ const RestaurantPage: React.FC = () => {
           <div className="restaurantImgContainer">
             <img
               src={restaurantInfo?.image}
-              alt="레스토랑 배경 이미지"
+              alt="restaurant Background Img"
               className="restaurantBackgroundImg"
             />
             <div className="restaurantLogoImgContainer">

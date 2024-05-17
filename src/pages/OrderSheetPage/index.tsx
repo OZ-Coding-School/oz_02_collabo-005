@@ -125,10 +125,7 @@ const OrderSheetPage: React.FC = () => {
           <div className="OSsection">
             <div className="deliveryDetailsTitle">Delivery address</div>
             {addressData ? (
-              <AddressDetails
-                mainAddress={addressData.mainAddress}
-                subAddress={addressData.subAddress}
-              />
+              <AddressDetails addressData={addressData} />
             ) : (
               <AddressNotFound />
             )}

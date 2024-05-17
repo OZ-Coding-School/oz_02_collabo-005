@@ -18,9 +18,9 @@ export type BannerType = {
 
 const HomePage: React.FC = () => {
   const banners: BannerType[] = [
-    { name: "banner1" },
-    { name: "banner2" },
-    { name: "banner3" },
+    { name: "Banner1" },
+    { name: "Banner2" },
+    { name: "Banner3" },
   ];
 
   const [restaurants, setRestaurants] = useState<RestaurantType[]>();

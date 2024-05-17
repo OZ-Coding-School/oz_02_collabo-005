@@ -22,8 +22,6 @@ const RestaurantPage: React.FC = () => {
   const [address, setAddress] = useState<string>("");
   const navigate = useNavigate();
 
-  console.log(restaurantInfo);
-
   const handleMenuCategoryClick = (event: string) => {
     setSelectedMenuList(getMenuList(event));
   };

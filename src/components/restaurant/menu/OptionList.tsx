@@ -20,8 +20,6 @@ const OptionList: React.FC<OptionListProps> = ({
   const inputType = optionList.mandatory ? "radio" : "checkbox";
   const prevSelectedOption = useRef<number>();
 
-  console.log(selectedOptions);
-
   const handleCheckBoxChange = (isChecked: boolean, optionId: number) => {
     if (isChecked) {
       setSelectedOptions([...selectedOptions, optionId]);

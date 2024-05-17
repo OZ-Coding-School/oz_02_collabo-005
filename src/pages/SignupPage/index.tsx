@@ -72,17 +72,13 @@ const SignupPage: React.FC = () => {
       birthday: userData.birthDay.value || null,
     };
 
-    console.log(userPostData);
-
     try {
       const isUnique = await isEmailUnique(userPostData.email);
-      console.log(isUnique);
       if (isUnique) {
         const response = await customAxios.post(
           apiRoutes.userCreate,
           userPostData
         );
-        console.log(response);
         if (response.status === 200) {
           alert("Membership registration is complete.");
           navigate("/login");

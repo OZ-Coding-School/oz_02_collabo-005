@@ -63,8 +63,6 @@ const UserInfoSection: React.FC<isEditProps> = ({
           error = "It has to be different from the current password.";
         }
       }
-      console.log(userData.currentPassword);
-      console.log(value);
     } else if (field === "phone") {
       error = !isValidatePhone(value) ? "Invalid phone number." : "";
     }

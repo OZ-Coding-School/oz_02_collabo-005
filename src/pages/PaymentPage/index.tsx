@@ -37,20 +37,28 @@ const PaymentPage: React.FC = () => {
     if (data) {
       try {
         const response = await customAxios.post(apiRoutes.orderCreate, data);
+        console.log(response);
         if (response.status === 201) {
-          setIsLoading(false);
-          localStorage.removeItem("orderData");
-          localStorage.setItem("cartCount", "0");
-          localStorage.removeItem("cartData");
-          navigate("/order/status", { state: { isSuccess: true } });
+          if (response.data.data.code === "PMS001") {
+            localStorage.removeItem("orderData");
+            localStorage.setItem("cartCount", "0");
+            localStorage.removeItem("cartData");
+            navigate("/order/status", { state: { isSuccess: true } });
+          } else {
+            errorMessage = response.data.message;
+            navigate("/order/status", {
+              state: { isSuccess: false, errorMessage },
+            });
+          }
         }
       } catch (error) {
-        setIsLoading(false);
         errorMessage =
           (error as ErrorResponse).response?.data?.message || "Server error";
         navigate("/order/status", {
           state: { isSuccess: false, errorMessage },
         });
+      } finally {
+        setIsLoading(false);
       }
     }
   };

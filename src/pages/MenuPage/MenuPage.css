@@ -1,7 +1,5 @@
 .menuPageContainer {
   min-height: calc(100vh - 50px);
-  position: relative;
-  z-index: 3;
 }
 
 .menuBackImgContainer {
@@ -20,7 +18,7 @@
 
 .MPmainContainer {
   position: relative;
-  z-index: 2;
+  z-index: 100;
   background-color: white;
 }
 

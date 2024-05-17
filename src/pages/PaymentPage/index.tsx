@@ -27,12 +27,13 @@ const PaymentPage: React.FC = () => {
     if (data) {
       try {
         const response = await customAxios.post(apiRoutes.orderCreate, data);
-        if (response?.status !== 201) throw new Error("An error occurred.");
-        setIsLoading(false);
-        navigate("/order/status");
-        console.log(response.data);
+        if (response.status === 201) {
+          setIsLoading(false);
+          navigate("/order/status");
+        }
       } catch (error) {
-        console.error("Failed to fetch restaurants:", error);
+        alert("Server error!");
+        navigate("/order/status");
       }
     }
   };

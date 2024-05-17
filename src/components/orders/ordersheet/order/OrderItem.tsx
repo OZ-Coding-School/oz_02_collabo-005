@@ -19,9 +19,9 @@ interface OrderItemProps {
   options: MenuOption[];
   price: number;
   quantity: number;
-  setCartData: React.Dispatch<React.SetStateAction<CartDataType | null>>;
+  setCartData?: React.Dispatch<React.SetStateAction<CartDataType | null>>;
   isOnDetailsPage?: boolean;
-  status: number;
+  status?: number;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({
@@ -70,20 +70,24 @@ const OrderItem: React.FC<OrderItemProps> = ({
         coordinate,
       };
 
-      try {
-        const response = await customAxios.post(apiRoutes.cart, postOrderData);
-        localStorage.setItem(
-          "orderData",
-          JSON.stringify({ orders: updatedOrders })
-        );
-        localStorage.setItem("cartData", JSON.stringify(response.data.data));
+      if (setCartData)
+        try {
+          const response = await customAxios.post(
+            apiRoutes.cart,
+            postOrderData
+          );
+          localStorage.setItem(
+            "orderData",
+            JSON.stringify({ orders: updatedOrders })
+          );
+          localStorage.setItem("cartData", JSON.stringify(response.data.data));
 
-        setCartData(response.data.data);
-        changeCartCount();
-        if (response?.status !== 200) throw new Error("An error occurred.");
-      } catch (error) {
-        console.error("Failed to fetch restaurants:", error);
-      }
+          setCartData(response.data.data);
+          changeCartCount();
+          if (response?.status !== 200) throw new Error("An error occurred.");
+        } catch (error) {
+          console.error("Failed to fetch restaurants:", error);
+        }
     }
   };
 
@@ -109,21 +113,24 @@ const OrderItem: React.FC<OrderItemProps> = ({
         orders: updatedOrders,
         coordinate,
       };
+      if (setCartData)
+        try {
+          const response = await customAxios.post(
+            apiRoutes.cart,
+            postOrderData
+          );
+          localStorage.setItem(
+            "orderData",
+            JSON.stringify({ orders: updatedOrders })
+          );
+          localStorage.setItem("cartData", JSON.stringify(response.data.data));
 
-      try {
-        const response = await customAxios.post(apiRoutes.cart, postOrderData);
-        localStorage.setItem(
-          "orderData",
-          JSON.stringify({ orders: updatedOrders })
-        );
-        localStorage.setItem("cartData", JSON.stringify(response.data.data));
-
-        setCartData(response.data.data);
-        changeCartCount();
-        if (response?.status !== 200) throw new Error("An error occurred.");
-      } catch (error) {
-        console.error("Failed to fetch restaurants:", error);
-      }
+          setCartData(response.data.data);
+          changeCartCount();
+          if (response?.status !== 200) throw new Error("An error occurred.");
+        } catch (error) {
+          console.error("Failed to fetch restaurants:", error);
+        }
     }
   };
 
@@ -147,19 +154,23 @@ const OrderItem: React.FC<OrderItemProps> = ({
         coordinate,
       };
 
-      try {
-        const response = await customAxios.post(apiRoutes.cart, postOrderData);
-        localStorage.setItem(
-          "orderData",
-          JSON.stringify({ orders: updatedOrders })
-        );
-        localStorage.setItem("cartData", JSON.stringify(response.data.data));
-        setCartData(response.data.data);
-        changeCartCount();
-        if (response?.status !== 200) throw new Error("An error occurred.");
-      } catch (error) {
-        console.error("Failed to fetch restaurants:", error);
-      }
+      if (setCartData)
+        try {
+          const response = await customAxios.post(
+            apiRoutes.cart,
+            postOrderData
+          );
+          localStorage.setItem(
+            "orderData",
+            JSON.stringify({ orders: updatedOrders })
+          );
+          localStorage.setItem("cartData", JSON.stringify(response.data.data));
+          setCartData(response.data.data);
+          changeCartCount();
+          if (response?.status !== 200) throw new Error("An error occurred.");
+        } catch (error) {
+          console.error("Failed to fetch restaurants:", error);
+        }
     }
   };
 

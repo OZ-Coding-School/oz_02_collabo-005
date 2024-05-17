@@ -7,12 +7,17 @@ import { addCommasToNumberString } from "../../../utils/addCommas";
 
 interface MyOrderItemProps {
   orderHistoryList: OrderHistoryDataType;
+  orderId: number;
 }
 
-const MyOrderItem: React.FC<MyOrderItemProps> = ({ orderHistoryList }) => {
+const MyOrderItem: React.FC<MyOrderItemProps> = ({
+  orderHistoryList,
+  orderId,
+}) => {
   const navigate = useNavigate();
+
   const handleViewOrderClick = () => {
-    navigate("/order/details");
+    navigate(`/order/${orderId}/details`);
   };
 
   const handleRestaurantClick = (restaurantId: string) => {
@@ -29,35 +34,30 @@ const MyOrderItem: React.FC<MyOrderItemProps> = ({ orderHistoryList }) => {
           View order
         </button>
       </div>
-      {Object.entries(orderHistoryList.details).map(([key, value]) => {
-        return (
-          <>
-            <div
-              className="myOrderItemMainContainer"
-              key={orderHistoryList.id}
-              onClick={handleRestaurantClick(key)}
-            >
-              <div className="myOrderItemLogoImg">
-                <RestaurantLogo src={value.logo} />
+      {Object.entries(orderHistoryList.details).map(([id, value], index) => (
+        <div
+          className="myOrderItemMainContainer"
+          key={id + index}
+          onClick={handleRestaurantClick(id)}
+        >
+          <div className="myOrderItemLogoImg">
+            <RestaurantLogo src={value.logo} />
+          </div>
+          <div className="myOrderInfoSection">
+            <div className="MIresName">{value.restaurant_name}</div>
+            {value.quantity === 1 ? (
+              <div className="MImenuName">{value.menu_name}</div>
+            ) : (
+              <div className="MImenuName">
+                {value.menu_name} and {value.quantity - 1} more
               </div>
-              <div className="myOrderInfoSection">
-                <div className="MIresName">{value.restaurant_name}</div>
-                {value.quantity === 1 ? (
-                  <div className="MImenuName">{value.menu_name}</div>
-                ) : (
-                  <div className="MImenuName">
-                    {value.menu_name} and {value.quantity - 1} more
-                  </div>
-                )}
-
-                <div className="MIprice">
-                  {addCommasToNumberString(value.total_price)} won
-                </div>
-              </div>
+            )}
+            <div className="MIprice">
+              {addCommasToNumberString(value.total_price)} won
             </div>
-          </>
-        );
-      })}
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

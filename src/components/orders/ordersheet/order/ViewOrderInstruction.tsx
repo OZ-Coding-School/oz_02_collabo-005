@@ -1,8 +1,8 @@
 import React from "react";
 
 interface ViewOrderInstruction {
-  noteRider: string;
-  noteRes: string;
+  noteRider: string | undefined;
+  noteRes: string | undefined;
 }
 
 const ViewOrderInstruction: React.FC<ViewOrderInstruction> = ({

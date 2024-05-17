@@ -68,7 +68,7 @@ export type Menu = {
   options: MenuOption[];
   price: number;
   quantity: number;
-  status: number;
+  status?: number;
 };
 
 export type MenuOption = {

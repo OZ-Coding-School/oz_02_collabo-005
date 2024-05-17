@@ -46,7 +46,6 @@ const Header: React.FC<HeaderProps> = ({
 
       try {
         const response = await customAxios.post(apiRoutes.cart, postOrderData);
-        console.log(postOrderData);
         localStorage.setItem("cartData", JSON.stringify(response.data.data));
         if (response?.status !== 200) throw new Error("예외가 발생했습니다.");
       } catch (error) {

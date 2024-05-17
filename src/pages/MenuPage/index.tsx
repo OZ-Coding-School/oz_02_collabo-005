@@ -161,9 +161,7 @@ const MenuPage: React.FC = () => {
             ))}
           </div>
         </div>
-        <div
-          className={`AddToBasketBtnContainer ${menuData?.option_group_list.length === 0 ? "btnAbsolute" : "btnSticky"}`}
-        >
+        <div className="AddToBasketBtnContainer">
           <div className="AddToBasketBtn">
             <Button
               name="Add to Basket"

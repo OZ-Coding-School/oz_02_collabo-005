@@ -1,5 +1,5 @@
 .menuPageContainer {
-  min-height: 100vh;
+  min-height: calc(100vh - 50px);
   position: relative;
 }
 
@@ -55,21 +55,12 @@
   font-weight: 600;
 }
 
-.btnSticky {
-  max-width: 500px;
-  width: 100%;
+.AddToBasketBtnContainer {
   position: sticky;
   bottom: 0;
   padding: 10px;
   background-color: white;
   z-index: 1000;
-}
-
-.btnAbsolute {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .AddToBasketBtn {

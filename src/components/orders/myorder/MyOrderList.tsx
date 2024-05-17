@@ -40,6 +40,7 @@ const MyOrderList: React.FC = () => {
                   return (
                     <MyOrderItem
                       orderHistoryList={orderHistoryList}
+                      orderId={orderHistoryList.id}
                       key={orderHistoryList.id}
                     />
                   );

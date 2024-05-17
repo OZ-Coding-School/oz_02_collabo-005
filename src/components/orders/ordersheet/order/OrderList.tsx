@@ -7,13 +7,16 @@ import { Menu, Restaurant, CartDataType } from "src/types/ordersType";
 interface OrderListType {
   restaurant: Restaurant;
   menus: Menu[];
-  setCartData: React.Dispatch<React.SetStateAction<CartDataType | null>>;
+  setCartData?: React.Dispatch<React.SetStateAction<CartDataType | null>>;
+  isViewOrderDetail?: boolean;
+  setIsViewOrderDetail?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const OrderList: React.FC<OrderListType> = ({
   restaurant,
   menus,
   setCartData,
+  isViewOrderDetail,
 }) => {
   const navigate = useNavigate();
 
@@ -28,6 +31,7 @@ const OrderList: React.FC<OrderListType> = ({
       <div className="orderListContainer">
         {menus.map((menu) => (
           <OrderItem
+            isOnDetailsPage={isViewOrderDetail}
             key={menu.id}
             id={menu.id}
             name={menu.name}
@@ -35,7 +39,7 @@ const OrderList: React.FC<OrderListType> = ({
             price={menu.menu_total_price}
             quantity={menu.quantity}
             setCartData={setCartData}
-            status={menu.status}
+            {...(isViewOrderDetail ? null : { status: menu.status })}
           />
         ))}
       </div>

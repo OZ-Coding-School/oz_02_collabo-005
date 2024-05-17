@@ -16,6 +16,7 @@ const apiRoutes = {
   orderList: "/order/list/",
   orderUpdate: "/order/update/",
   orderStatus: "/order/status/",
+  orderDetail: "/order/detail",
 };
 
 export default apiRoutes;

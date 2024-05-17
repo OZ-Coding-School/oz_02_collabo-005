@@ -9,6 +9,14 @@ import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { PacmanLoader } from "react-spinners";
 
+interface ErrorResponse {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
 const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState<number>();
@@ -23,16 +31,26 @@ const PaymentPage: React.FC = () => {
 
   const handlePayNow = async () => {
     setIsLoading(true);
+    let errorMessage = "";
+
     const data = JSON.parse(localStorage.getItem("payOrderData")!);
     if (data) {
       try {
         const response = await customAxios.post(apiRoutes.orderCreate, data);
-        if (response?.status !== 201) throw new Error("An error occurred.");
-        setIsLoading(false);
-        navigate("/order/status");
-        console.log(response.data);
+        if (response.status === 201) {
+          setIsLoading(false);
+          localStorage.removeItem("orderData");
+          localStorage.setItem("cartCount", "0");
+          localStorage.removeItem("cartData");
+          navigate("/order/status", { state: { isSuccess: true } });
+        }
       } catch (error) {
-        console.error("Failed to fetch restaurants:", error);
+        setIsLoading(false);
+        errorMessage =
+          (error as ErrorResponse).response?.data?.message || "Server error";
+        navigate("/order/status", {
+          state: { isSuccess: false, errorMessage },
+        });
       }
     }
   };

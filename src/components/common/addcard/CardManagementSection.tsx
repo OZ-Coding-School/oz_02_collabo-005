@@ -5,11 +5,8 @@ import "./CardManagementSection.css";
 const CardManagementSection: React.FC = () => {
   return (
     <>
-      <div className="cardSection">
-        <div>Payment</div>
-        <div className="addCardSection">
-          <AddCardItem />
-        </div>
+      <div className="addCardSection">
+        <AddCardItem />
       </div>
     </>
   );

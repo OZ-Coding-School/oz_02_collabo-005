@@ -3,8 +3,11 @@
 }
 
 .bannerItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 280px;
   height: 140px;
   border-radius: 20px;
-  background-color: blue;
+  background-color: rgb(231, 231, 231);
 }

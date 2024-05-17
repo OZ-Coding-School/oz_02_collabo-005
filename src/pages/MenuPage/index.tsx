@@ -121,13 +121,15 @@ const MenuPage: React.FC = () => {
         handleBackIconClick={() => navigate(-1)}
       />
       <div className="menuPageContainer">
-        <div className="menuBackImgContainer">
-          <img
-            src={menuData?.image}
-            className="MenuBackImg"
-            alt="menuMainImage"
-          />
-        </div>
+        {menuData?.image && (
+          <div className="menuBackImgContainer">
+            <img
+              src={menuData?.image}
+              className="MenuBackImg"
+              alt="menuMainImage"
+            />
+          </div>
+        )}
         <div className="MPmainContainer">
           <div className="menuPageInfo">
             <div className="menuPageTitle">

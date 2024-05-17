@@ -19,22 +19,27 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 400px;
+  width: 85%;
+  max-width: 400px;
   height: 600px;
 }
 
 .closeModalSection {
+  width: 20px;
+  height: 22.5px;
   position: absolute;
   top: 2.5px;
-  right: 6px;
+  right: 1%;
   cursor: pointer;
 }
 
 button.closeModalButton {
+  width: 100%;
+  height: 100%;
   background: none;
   border: none;
   font-size: 20px;
-  height: 10px;
+  padding: 0px;
 }
 
 .mapModalContent span {
@@ -45,7 +50,7 @@ button.closeModalButton {
 
 .googleMap {
   width: 100%;
-  height: 490px;
+  height: 80%;
   border-radius: 6px;
   border: 1px solid #ccc;
 }

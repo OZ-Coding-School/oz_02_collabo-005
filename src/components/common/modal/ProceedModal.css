@@ -20,28 +20,25 @@
 }
 
 .closeButtonSection {
-  position: absolute;
-  top: 8%;
-  right: 10px;
-  width: 20px;
-  height: 21.5px;
-  border-radius: 50%;
-  background-color: #e5e5e5;
-  font-size: 16px;
-  cursor: pointer;
+  display: flex;
+  justify-content: end;
 }
 
 .closeButton {
   display: flex;
-  background: none;
   border: none;
+  width: 20px;
+  height: 21.5px;
   font-size: 16px;
+  background-color: #e5e5e5;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .proceedQuestionSection {
   color: #54595e;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 10px;
   margin-bottom: 13px;
 }
 

@@ -1,6 +1,5 @@
 import React from "react";
 import MappinIcon from "../../assets/icons/mappin-icon.png";
-import ArrowDownIcon from "../../assets/icons/arrow-down.png";
 import "./AddressBar.css";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +19,6 @@ const AddressBar: React.FC<addressProps> = ({ address }) => {
         <img src={MappinIcon} className="mappinIcon" />
         <div className={address && "homeAddressDetail"}>{address}</div>
       </div>
-      <img src={ArrowDownIcon} className="arrowDownIcon" />
     </div>
   );
 };

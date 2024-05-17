@@ -16,15 +16,15 @@ import PaymentPage from "./pages/PaymentPage";
 import ErrorPage from "./pages/ErrorPage";
 import KoreanCardPage from "./pages/KoreanCardPage";
 import ForeignCardPage from "./pages/ForeignCardPage";
-import ScrollToTop from "@components/scrolltotop/ScrollToTop";
 import OrderDetailsPage from "./pages/OrderDetailsPage/index";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import CommonRoute from "./routes/CommonRoute";
+import ScrollTo from "@components/scrollto/ScrollTo";
 
 const App: React.FC = () => {
   return (
     <Router>
-      <ScrollToTop />
+      <ScrollTo />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route element={<CommonRoute />}>

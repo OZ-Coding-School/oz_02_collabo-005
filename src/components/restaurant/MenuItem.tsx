@@ -25,32 +25,37 @@ const MenuItem: React.FC<MenuItemProps> = ({
 
   return (
     <div
-      className="MenuItemContainer"
+      className="MenuItem"
       onClick={() => {
         if (!isSoldOut && !isPreparing) handleClick();
       }}
     >
-      <div className="menuItemInformation">
-        {menu.represent && (
-          <div className="menuItemLabel">{menu.represent}</div>
-        )}
-        <div className="menuItemTitle">
-          <p className="menuItemName">{menu.name}</p>
-        </div>
-        {menu.description && (
-          <div className="menuItemDescription">{menu.description}</div>
-        )}
+      <div className="MenuItemContainer">
+        <div className="menuItemInformation">
+          {menu.represent && (
+            <div className="menuItemLabel">{menu.represent}</div>
+          )}
+          <div className="menuItemTitle">
+            <p className="menuItemName">{menu.name}</p>
+          </div>
+          {menu.description && (
+            <div className="menuItemDescription">{menu.description}</div>
+          )}
 
-        <p className="menuItemPrice">
-          {addCommasToNumberString(menu.price)} won
-        </p>
+          <p className="menuItemPrice">
+            {addCommasToNumberString(menu.price)} won
+          </p>
+        </div>
+        {isSoldOut && (
+          <div className="menuMainImgContainer menuSoldOut">Sold Out</div>
+        )}
+        {menu.picture && (
+          <img
+            src={menu.picture}
+            className="menuMainImgContainer menuMainImg"
+          />
+        )}
       </div>
-      {isSoldOut && (
-        <div className="menuMainImgContainer menuSoldOut">Sold Out</div>
-      )}
-      {menu.picture && (
-        <img src={menu.picture} className="menuMainImgContainer menuMainImg" />
-      )}
     </div>
   );
 };

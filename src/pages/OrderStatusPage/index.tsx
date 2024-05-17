@@ -30,6 +30,7 @@ const OrderStatusPage: React.FC = () => {
       <div>
         <div className="statusContentContainer">
           <div className="statusText">
+
             {isSuccess ? (
               <>
                 <img src={orderSuccessIcon} />

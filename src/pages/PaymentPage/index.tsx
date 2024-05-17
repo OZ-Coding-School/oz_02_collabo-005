@@ -32,11 +32,11 @@ const PaymentPage: React.FC = () => {
   const handlePayNow = async () => {
     setIsLoading(true);
     let errorMessage = "";
+
     const data = JSON.parse(localStorage.getItem("payOrderData")!);
     if (data) {
       try {
         const response = await customAxios.post(apiRoutes.orderCreate, data);
-        console.log(response);
         if (response.status === 201) {
           setIsLoading(false);
           localStorage.removeItem("orderData");

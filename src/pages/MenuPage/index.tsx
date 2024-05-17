@@ -112,8 +112,6 @@ const MenuPage: React.FC = () => {
     getMenuData();
   }, []);
 
-  console.log(menuData);
-
   return (
     <div>
       <Header
@@ -123,53 +121,58 @@ const MenuPage: React.FC = () => {
         handleBackIconClick={() => navigate(-1)}
       />
       <div className="menuPageContainer">
-        <div className="menuPageInfo">
-          <div>
-            <img
-              src={menuData?.image}
-              className="MenuBackImg"
-              alt="menuMainImage"
-            />
+        <div className="menuBackImgContainer">
+          <img
+            src={menuData?.image}
+            className="MenuBackImg"
+            alt="menuMainImage"
+          />
+        </div>
+        <div className="MPmainContainer">
+          <div className="menuPageInfo">
+            <div className="menuPageTitle">
+              <div className="menuPageName">{menuData?.name}</div>
+              <div className="menuPageDescription">{menuData?.description}</div>
+              <div className="menuPrice">
+                <div>Price</div>
+                <div>{addCommasToNumberString(menuPrice)} won</div>
+              </div>
+            </div>
           </div>
-
-          <div className="menuPageTitle">
-            <div className="menuPageName">{menuData?.name}</div>
-            <div className="menuPageDescription">{menuData?.description}</div>
-            <div className="menuPrice">
-              <div>Price</div>
-              <div>{addCommasToNumberString(menuPrice)} won</div>
+          <div className="devidingLine"></div>
+          <div className="menuPageOptionContainer">
+            <div className="menuQuantitySection">
+              <div className="quantityText">Quantity</div>
+              <QuantityButton
+                quantity={quantity}
+                handlePlusBtnClick={handlePlusBtnClick}
+                handleMinusBtnClick={handleMinusBtnClick}
+              />
+            </div>
+            <div className="MPOptionListContainer">
+              {menuData?.option_group_list.map((optionList, index) => (
+                <OptionList
+                  optionList={optionList}
+                  key={index}
+                  selectedOptions={selectedOptions}
+                  setSelectedOptions={setSelectedOptions}
+                  setIsValidated={setIsValidated}
+                />
+              ))}
             </div>
           </div>
         </div>
-        <div className="devidingLine"></div>
-        <div className="menuPageOptionContainer">
-          <div className="menuQuantitySection">
-            <div className="quantityText">Quantity</div>
-            <QuantityButton
-              quantity={quantity}
-              handlePlusBtnClick={handlePlusBtnClick}
-              handleMinusBtnClick={handleMinusBtnClick}
-            />
-          </div>
-          {menuData?.option_group_list.map((optionList, index) => (
-            <OptionList
-              optionList={optionList}
-              key={index}
-              selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
-              setIsValidated={setIsValidated}
-            />
-          ))}
-          <div className="AddToBasketBtn">
-            <Button
-              name="Add to Basket"
-              backgroundColor={isValidated ? "#ff6347" : "#767676"}
-              buttonType="bigButton"
-              type="button"
-              handleClick={handleSubmit}
-              disabled={!isValidated}
-            />
-          </div>
+      </div>
+      <div className="AddToBasketBtnContainer">
+        <div className="AddToBasketBtn">
+          <Button
+            name="Add to Basket"
+            backgroundColor={isValidated ? "#ff6347" : "#767676"}
+            buttonType="bigButton"
+            type="button"
+            handleClick={handleSubmit}
+            disabled={!isValidated}
+          />
         </div>
       </div>
     </div>

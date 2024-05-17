@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import "./OrderStatus.css";
 import Header from "@components/common/header/Header";
 import Button from "@components/common/button/Button";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import orderSuccessIcon from "../../assets/icons/orderSuccessIcon.png";
 
 const OrderStatusPage: React.FC = () => {
-  const [isOrderStatus, setIsOrderStatus] = useState<boolean>(true);
+  const location = useLocation();
+  const isSuccess = location.state && location.state.isSuccess;
+  const errorMessage = location.state && location.state.errorMessage;
   const navigate = useNavigate();
-
-  const handleToggle = (): void => {
-    setIsOrderStatus(!isOrderStatus);
-  };
 
   const handleSuccess = (): void => {
     navigate("/orders");
@@ -32,7 +30,7 @@ const OrderStatusPage: React.FC = () => {
       <div>
         <div className="statusContentContainer">
           <div className="statusText">
-            {isOrderStatus ? (
+            {isSuccess ? (
               <>
                 <img src={orderSuccessIcon} />
                 <h1>
@@ -48,7 +46,7 @@ const OrderStatusPage: React.FC = () => {
                   we encountered an issue
                   <br /> processing your order."
                 </h1>
-                <span className="errorMessage">error message</span>
+                <span className="errorMessage">{errorMessage}</span>
               </>
             )}
           </div>
@@ -58,23 +56,12 @@ const OrderStatusPage: React.FC = () => {
               display: "flex",
               justifyContent: "center",
             }}
-          >
-            <button
-              style={{
-                width: "100px",
-                height: "30px",
-                fontSize: "20px",
-              }}
-              onClick={handleToggle}
-            >
-              toggle
-            </button>
-          </div>
+          ></div>
         </div>
         <div className="bottomSection">
           <Button
-            name={isOrderStatus ? "Check your order" : "Ask for help"}
-            handleClick={isOrderStatus ? handleSuccess : handleFailed}
+            name={isSuccess ? "Check your order" : "Ask for help"}
+            handleClick={isSuccess ? handleSuccess : handleFailed}
             buttonType="bigButton"
             type="button"
           />

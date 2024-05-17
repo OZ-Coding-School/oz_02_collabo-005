@@ -9,6 +9,14 @@ import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { PacmanLoader } from "react-spinners";
 
+interface ErrorResponse {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+}
+
 const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState<number>();
@@ -23,17 +31,26 @@ const PaymentPage: React.FC = () => {
 
   const handlePayNow = async () => {
     setIsLoading(true);
+    let errorMessage = "";
     const data = JSON.parse(localStorage.getItem("payOrderData")!);
     if (data) {
       try {
         const response = await customAxios.post(apiRoutes.orderCreate, data);
+        console.log(response);
         if (response.status === 201) {
           setIsLoading(false);
-          navigate("/order/status");
+          localStorage.removeItem("orderData");
+          localStorage.setItem("cartCount", "0");
+          localStorage.removeItem("cartData");
+          navigate("/order/status", { state: { isSuccess: true } });
         }
       } catch (error) {
-        alert("Server error!");
-        navigate("/order/status");
+        setIsLoading(false);
+        errorMessage =
+          (error as ErrorResponse).response?.data?.message || "Server error";
+        navigate("/order/status", {
+          state: { isSuccess: false, errorMessage },
+        });
       }
     }
   };

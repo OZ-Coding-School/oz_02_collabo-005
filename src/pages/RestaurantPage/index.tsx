@@ -11,6 +11,7 @@ import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { MenuGroupType, RestaurantInfoType } from "src/types/restaurantTypes";
 import { addCommasToNumberString } from "../../utils/addCommas";
+import Loading from "@components/common/loading/loading";
 
 const RestaurantPage: React.FC = () => {
   const { restaurantId } = useParams();
@@ -20,13 +21,12 @@ const RestaurantPage: React.FC = () => {
   const [operatingHours, setOperatingHours] = useState<string>();
   const [isPreparing, setIsPreparing] = useState<boolean>(true);
   const [address, setAddress] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleMenuCategoryClick = (event: string) => {
     setSelectedMenuList(getMenuList(event));
   };
-
-  console.log(restaurantInfo);
 
   const getMenuList = (event: string) => {
     const menuList = restaurantInfo?.menu_group_list.filter(
@@ -70,6 +70,7 @@ const RestaurantPage: React.FC = () => {
     // 레스토랑 메뉴 가져오는 함수
     const getRestaurantMenus = async () => {
       try {
+        setIsLoading(true);
         const response = await customAxios.get(
           `${apiRoutes.menuList}?restaurantId=${restaurantId}`
         );
@@ -78,6 +79,8 @@ const RestaurantPage: React.FC = () => {
         setSelectedMenuList(response.data?.menu_group_list[0]);
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getAddress();
@@ -118,68 +121,76 @@ const RestaurantPage: React.FC = () => {
   const minimumFee = restaurantInfo?.minimum_order_amount || 16900;
 
   return (
-    <div>
-      <Header
-        hasBackIcon={true}
-        title={restaurantInfo?.name}
-        hasCartIcon={true}
-        isFixed={true}
-        handleBackIconClick={() => navigate("/home")}
-      />
-      <AddressBar address={address} />
-      <div className="restaurantContainer">
-        <div className="restaurantInfoContainer">
-          <div className="restaurantImgContainer">
-            <img
-              src={restaurantInfo?.image}
-              alt="restaurant Background Img"
-              className="restaurantBackgroundImg"
-            />
-            <div className="restaurantLogoImgContainer">
-              <RestaurantLogo src={restaurantInfo?.logo} />
-            </div>
-          </div>
-          <div className="restaurantProfile">
-            <div className="restaurantDetails">
-              <h2 className="restaurantName">{restaurantInfo?.name}</h2>
-            </div>
-            <div className="restaurantIntroduction">
-              {restaurantInfo?.description}
-            </div>
-            <div className="notificationMessage">
-              {isPreparing && (
-                <div>
-                  Operating Status:{" "}
-                  <span className="preparingMessage">
-                    Currently under preparation
-                  </span>
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div>
+          <Header
+            hasBackIcon={true}
+            title={restaurantInfo?.name}
+            hasCartIcon={true}
+            isFixed={true}
+            handleBackIconClick={() => navigate("/home")}
+          />
+          <div>
+            <AddressBar address={address} />
+            <div className="restaurantContainer">
+              <div className="restaurantInfoContainer">
+                <div className="restaurantImgContainer">
+                  <img
+                    src={restaurantInfo?.image}
+                    alt="restaurant Background Img"
+                    className="restaurantBackgroundImg"
+                  />
+                  <div className="restaurantLogoImgContainer">
+                    <RestaurantLogo src={restaurantInfo?.logo} />
+                  </div>
                 </div>
-              )}
-              <div className="deliveryMinimumFee">
-                *Free delivery minimum fee {addCommasToNumberString(minimumFee)}{" "}
-                won
+                <div className="restaurantProfile">
+                  <div className="restaurantDetails">
+                    <h2 className="restaurantName">{restaurantInfo?.name}</h2>
+                  </div>
+                  <div className="restaurantIntroduction">
+                    {restaurantInfo?.description}
+                  </div>
+                  <div className="notificationMessage">
+                    {isPreparing && (
+                      <div>
+                        Operating Status:{" "}
+                        <span className="preparingMessage">
+                          Currently under preparation
+                        </span>
+                      </div>
+                    )}
+                    <div className="deliveryMinimumFee">
+                      *Free delivery minimum fee{" "}
+                      {addCommasToNumberString(minimumFee)} won
+                    </div>
+                  </div>
+                  <div className="operatingMessage">
+                    <p className="businessHours">{operatingHours} </p>
+                  </div>
+                  <DropDownButton origin={restaurantInfo?.notice} />
+                </div>
+              </div>
+              <div className="menuContainer">
+                <MenuCategory
+                  categories={categories}
+                  selectedCategory={selectedMenuList?.name}
+                  handleMenuCategoryClick={handleMenuCategoryClick}
+                />
+                <MenuList
+                  selectedMenuList={selectedMenuList}
+                  isPreparing={isPreparing}
+                  restaurantId={restaurantId!}
+                />
               </div>
             </div>
-            <div className="operatingMessage">
-              <p className="businessHours">{operatingHours} </p>
-            </div>
-            <DropDownButton origin={restaurantInfo?.notice} />
           </div>
         </div>
-        <div className="menuContainer">
-          <MenuCategory
-            categories={categories}
-            selectedCategory={selectedMenuList?.name}
-            handleMenuCategoryClick={handleMenuCategoryClick}
-          />
-          <MenuList
-            selectedMenuList={selectedMenuList}
-            isPreparing={isPreparing}
-            restaurantId={restaurantId!}
-          />
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

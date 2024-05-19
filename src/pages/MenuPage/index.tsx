@@ -10,6 +10,7 @@ import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { Order } from "src/types/ordersType";
 import { addCommasToNumberString } from "./../../utils/addCommas";
+import Loading from "@components/common/loading/loading";
 
 const MenuPage: React.FC = () => {
   const { restaurantId, menuId } = useParams();
@@ -17,6 +18,7 @@ const MenuPage: React.FC = () => {
   const [menuData, setMenuData] = useState<menuOptionType>();
   const [quantity, setQuantity] = useState(1);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isValidated, setIsValidated] = useState<boolean>(true);
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
 
@@ -100,6 +102,7 @@ const MenuPage: React.FC = () => {
   useEffect(() => {
     const getMenuData = async () => {
       try {
+        setIsLoading(true);
         const response = await customAxios.get(
           `${apiRoutes.menuOptionList}?menuId=${menuId}`
         );
@@ -107,6 +110,8 @@ const MenuPage: React.FC = () => {
         setMenuData(response.data);
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getMenuData();
@@ -120,63 +125,71 @@ const MenuPage: React.FC = () => {
         isFixed={true}
         handleBackIconClick={() => navigate(-1)}
       />
-      <div className="menuPageContainer">
-        {menuData?.image && (
-          <div className="menuBackImgContainer">
-            <img
-              src={menuData?.image}
-              className="MenuBackImg"
-              alt="menuMainImage"
-            />
-          </div>
-        )}
-        <div className="MPmainContainer">
-          <div className="menuPageInfo">
-            <div className="menuPageTitle">
-              <div className="menuPageName">{menuData?.name}</div>
-              <div className="menuPageDescription">{menuData?.description}</div>
-              <div className="menuPrice">
-                <div>Price</div>
-                <div>{addCommasToNumberString(menuPrice)} won</div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div>
+          <div className="menuPageContainer">
+            {menuData?.image && (
+              <div className="menuBackImgContainer">
+                <img
+                  src={menuData?.image}
+                  className="MenuBackImg"
+                  alt="menuMainImage"
+                />
+              </div>
+            )}
+            <div className="MPmainContainer">
+              <div className="menuPageInfo">
+                <div className="menuPageTitle">
+                  <div className="menuPageName">{menuData?.name}</div>
+                  <div className="menuPageDescription">
+                    {menuData?.description}
+                  </div>
+                  <div className="menuPrice">
+                    <div>Price</div>
+                    <div>{addCommasToNumberString(menuPrice)} won</div>
+                  </div>
+                </div>
+              </div>
+              <div className="devidingLine"></div>
+              <div className="menuPageOptionContainer">
+                <div className="menuQuantitySection">
+                  <div className="quantityText">Quantity</div>
+                  <QuantityButton
+                    quantity={quantity}
+                    handlePlusBtnClick={handlePlusBtnClick}
+                    handleMinusBtnClick={handleMinusBtnClick}
+                  />
+                </div>
+                <div className="MPOptionListContainer">
+                  {menuData?.option_group_list.map((optionList, index) => (
+                    <OptionList
+                      optionList={optionList}
+                      key={index}
+                      selectedOptions={selectedOptions}
+                      setSelectedOptions={setSelectedOptions}
+                      setIsValidated={setIsValidated}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-          <div className="devidingLine"></div>
-          <div className="menuPageOptionContainer">
-            <div className="menuQuantitySection">
-              <div className="quantityText">Quantity</div>
-              <QuantityButton
-                quantity={quantity}
-                handlePlusBtnClick={handlePlusBtnClick}
-                handleMinusBtnClick={handleMinusBtnClick}
+          <div className="AddToBasketBtnContainer">
+            <div className="AddToBasketBtn">
+              <Button
+                name="Add to Basket"
+                backgroundColor={isValidated ? "#ff6347" : "#767676"}
+                buttonType="bigButton"
+                type="button"
+                handleClick={handleSubmit}
+                disabled={!isValidated}
               />
-            </div>
-            <div className="MPOptionListContainer">
-              {menuData?.option_group_list.map((optionList, index) => (
-                <OptionList
-                  optionList={optionList}
-                  key={index}
-                  selectedOptions={selectedOptions}
-                  setSelectedOptions={setSelectedOptions}
-                  setIsValidated={setIsValidated}
-                />
-              ))}
             </div>
           </div>
         </div>
-      </div>
-      <div className="AddToBasketBtnContainer">
-        <div className="AddToBasketBtn">
-          <Button
-            name="Add to Basket"
-            backgroundColor={isValidated ? "#ff6347" : "#767676"}
-            buttonType="bigButton"
-            type="button"
-            handleClick={handleSubmit}
-            disabled={!isValidated}
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

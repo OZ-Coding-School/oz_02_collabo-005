@@ -105,5 +105,5 @@ export type OrderDataType = {
   coordinate: number[];
   store_request: string;
   rider_request: string;
-  payment_method: string;
+  payment_method: number;
 };

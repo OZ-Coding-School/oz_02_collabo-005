@@ -1,4 +1,5 @@
 .myOrderListContainer {
+  padding: 10px;
   display: grid;
   gap: 15px;
 }

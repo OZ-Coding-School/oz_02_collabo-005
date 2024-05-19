@@ -19,7 +19,7 @@ const AmountDetails: React.FC<AmountDetailsProps> = ({
   const [isDeliveryFree, setIsDeliveryFree] = useState<boolean>(false);
 
   useEffect(() => {
-    const isFree = (totalPrice || 0) >= 16900;
+    const isFree = (orderPrice || 0) >= 16900;
     setIsDeliveryFree(isFree);
   }, [totalPrice]);
 

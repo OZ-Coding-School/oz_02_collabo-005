@@ -2,7 +2,9 @@
   text-align: center;
   color: #767676;
   cursor: pointer;
+  margin-top: 10px;
 }
+
 .footerNavTitle {
   font-size: 0.8rem;
   font-weight: 600;

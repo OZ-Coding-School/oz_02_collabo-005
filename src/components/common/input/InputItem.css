@@ -15,11 +15,15 @@
   display: none;
 }
 
-.inputContainer input {
+.inputContainer > input {
   height: 5vh;
   border: 1px solid #c4c4c4;
   border-radius: 6px;
   padding-left: 10px;
+}
+
+.inputContainer > input:focus {
+  background-color: #f1f1f1;
 }
 
 .inputErrorMessage {

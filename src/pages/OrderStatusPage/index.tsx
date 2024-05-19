@@ -16,7 +16,7 @@ const OrderStatusPage: React.FC = () => {
   };
 
   const handleFailed = (): void => {
-    alert("고객센터로 이동합니다");
+    navigate("/order/status/CustomerService");
   };
 
   return (
@@ -30,7 +30,6 @@ const OrderStatusPage: React.FC = () => {
       <div>
         <div className="statusContentContainer">
           <div className="statusText">
-
             {isSuccess ? (
               <>
                 <img src={orderSuccessIcon} />

@@ -1,0 +1,9 @@
+.CScontainer {
+  display: flex;
+  justify-content: center;
+}
+
+.CSiframe {
+  width: 100%;
+  height: calc(100vh - 50px);
+}

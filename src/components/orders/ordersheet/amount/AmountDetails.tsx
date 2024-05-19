@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./AmountDetails.css";
 import { addCommasToNumberString } from "./../../../../utils/addCommas";
 
@@ -16,6 +16,12 @@ const AmountDetails: React.FC<AmountDetailsProps> = ({
   const stringOrderPrice = addCommasToNumberString(orderPrice || 0);
   const stringDeliveryFee = addCommasToNumberString(deliveryFee || 0);
   const stringTotalPrice = addCommasToNumberString(totalPrice || 0);
+  const [isDeliveryFree, setIsDeliveryFree] = useState<boolean>(false);
+
+  useEffect(() => {
+    const isFree = (totalPrice || 0) >= 16900;
+    setIsDeliveryFree(isFree);
+  }, [totalPrice]);
 
   return (
     <div className="amountDetailsContainer">
@@ -34,9 +40,11 @@ const AmountDetails: React.FC<AmountDetailsProps> = ({
           <div className="totalText">Total</div>
           <div className="totalAmountText">{stringTotalPrice} won</div>
         </div>
-        <div className="deliveryNotification">
-          * minimum free delivery free 16,900 won
-        </div>
+        {!isDeliveryFree && (
+          <div className="deliveryNotification">
+            * minimum free delivery free 16,900 won
+          </div>
+        )}
       </div>
     </div>
   );

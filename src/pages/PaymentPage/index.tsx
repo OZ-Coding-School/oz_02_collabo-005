@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import CardManagementSection from "@components/common/addcard/CardManagementSection";
 import "./PaymentPage.css";
-import Button from "@components/common/button/Button";
 import { useNavigate } from "react-router-dom";
 import { addCommasToNumberString } from "./../../utils/addCommas";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { PacmanLoader } from "react-spinners";
+import PayButtons from "@components/payment/PayButtons";
 
 interface ErrorResponse {
   response?: {
@@ -17,7 +17,16 @@ interface ErrorResponse {
   };
 }
 
+export type PayButtonType = {
+  name: string;
+};
+
 const PaymentPage: React.FC = () => {
+  const payButtons: PayButtonType[] = [
+    { name: "Online payment (credit card)" },
+    { name: "On-site payment (credit card)" },
+    { name: "On-site payment (cash)" },
+  ];
   const navigate = useNavigate();
   const [amount, setAmount] = useState<number>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,9 +46,9 @@ const PaymentPage: React.FC = () => {
     if (data) {
       try {
         const response = await customAxios.post(apiRoutes.orderCreate, data);
-        console.log(response);
+        console.log(response.data.data);
         if (response.status === 201) {
-          if (response.data.data.code === "PMS001") {
+          if (response.data.data.code === 300000) {
             localStorage.removeItem("orderData");
             localStorage.setItem("cartCount", "0");
             localStorage.removeItem("cartData");
@@ -98,11 +107,7 @@ const PaymentPage: React.FC = () => {
               </span>
             </div>
             <div className="payNowButtonSection">
-              <Button
-                name="Pay now"
-                handleClick={handlePayNow}
-                buttonType="bigButton"
-              />
+              <PayButtons payButtons={payButtons} handlePayNow={handlePayNow} />
             </div>
           </div>
         </div>

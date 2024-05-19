@@ -1,4 +1,4 @@
-const setOrderStatusMessage = (orderStatusCode: number) => {
+const setOrderStatusMessage = (orderStatusCode: number | string) => {
   let message = "";
   let status = "";
 
@@ -43,21 +43,25 @@ const setOrderStatusMessage = (orderStatusCode: number) => {
       message = "Payment failed";
       status = "orderFailed";
       break;
-    case 300300:
+    case 300300 || 320000:
       message = "Waiting for dispatch";
       status = "orderLoading";
       break;
-    case 300301:
+    case 300301 || 302001:
       message = "Waiting for pickup";
       status = "orderLoading";
       break;
-    case 300302:
+    case 300302 || 302002:
       message = "Delivering";
       status = "orderLoading";
       break;
-    case 300303:
+    case 300303 || 302003:
       message = "Delivery completed";
       status = "orderSuccess";
+      break;
+    case "300091-2":
+      message = "order cancellation";
+      status = "orderFailed";
       break;
   }
   return { message, status };

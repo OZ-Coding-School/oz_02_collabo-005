@@ -58,7 +58,7 @@ const OrderStatusPage: React.FC = () => {
             }}
           ></div>
         </div>
-        <div className="bottomSection">
+        <div className="statusBottomSection">
           <Button
             name={isSuccess ? "Check your order" : "Ask for help"}
             handleClick={isSuccess ? handleSuccess : handleFailed}

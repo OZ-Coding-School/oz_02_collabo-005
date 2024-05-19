@@ -3,15 +3,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import { PayButtonType } from "../../pages/PaymentPage";
 
+import "./PayButtons.css";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import "../home/banner/Banner.css";
 import Button from "@components/common/button/Button";
 
 interface PayButtonsProps {
   payButtons: PayButtonType[];
-  handlePayNow: () => Promise<void>;
+  handlePayNow: (buttonName: string) => Promise<void>;
 }
 
 const PayButtons: React.FC<PayButtonsProps> = ({
@@ -23,17 +23,21 @@ const PayButtons: React.FC<PayButtonsProps> = ({
       <Swiper
         slidesPerView="auto"
         spaceBetween={15}
+        loop={false}
+        pagination={true}
         freeMode={true}
         modules={[FreeMode]}
       >
         {payButtons.map((payButtons, index) => (
-          <SwiperSlide key={index} className="bannerSwiperSlide">
-            <Button
-              name={payButtons.name}
-              handleClick={handlePayNow}
-              buttonType="bigButton"
-              key={index}
-            />
+          <SwiperSlide key={index} className="paySwiperSlide">
+            <div className="payButtonBox">
+              <Button
+                name={payButtons.name}
+                handleClick={() => handlePayNow(payButtons.name)}
+                buttonType="bigButton"
+                key={index}
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

@@ -33,6 +33,7 @@
   bottom: 3%;
   left: 50%;
   transform: translateX(-50%);
+  width: 70%;
 }
 
 .totalAccount {
@@ -43,13 +44,7 @@
   margin: 0 0 20px 0;
 }
 
-.payNowButtonSection {
-  display: flex;
-  justify-content: center;
-}
-
-.payNowButtonSection button {
-  height: 55px;
-  font-size: 28px;
-  font-weight: bold;
+.payNowButtonSection .bannerRow {
+  width: 100%;
+  overflow: hidden;
 }

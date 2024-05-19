@@ -3,6 +3,10 @@
   justify-content: center;
 }
 
+.CScontainer.loading {
+  display: none;
+}
+
 .CSiframe {
   width: 100%;
   height: calc(100vh - 50px);

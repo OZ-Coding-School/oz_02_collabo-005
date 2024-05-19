@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "SourceSans3-Medium";
+  font-weight: normal;
+  src: url("./fonts/SourceSans3-Medium.ttf") format("truetype");
+}
+
+body {
+  font-family: "SourceSans3-Medium";
+}

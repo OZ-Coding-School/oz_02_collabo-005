@@ -3,6 +3,7 @@ import { selectMenuType } from "./menuOptionTypes";
 export type OrderHistoryDataType = {
   id: number;
   date: string;
+  order_status: number;
   details: {
     [resId: string]: {
       menu_name: string;
@@ -105,5 +106,5 @@ export type OrderDataType = {
   coordinate: number[];
   store_request: string;
   rider_request: string;
-  payment_method: string;
+  payment_method: number;
 };

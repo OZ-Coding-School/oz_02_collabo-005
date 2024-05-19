@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import CardManagementSection from "@components/common/addcard/CardManagementSection";
 import "./PaymentPage.css";
-import Button from "@components/common/button/Button";
 import { useNavigate } from "react-router-dom";
 import { addCommasToNumberString } from "./../../utils/addCommas";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { PacmanLoader } from "react-spinners";
+import PayButtons from "@components/payment/PayButtons";
+import getPayStatus from "@components/payment/payStatus";
 
 interface ErrorResponse {
   response?: {
@@ -17,7 +18,16 @@ interface ErrorResponse {
   };
 }
 
+export type PayButtonType = {
+  name: string;
+};
+
 const PaymentPage: React.FC = () => {
+  const payButtons: PayButtonType[] = [
+    { name: "Online payment (credit card)" },
+    { name: "On-site payment (credit card)" },
+    { name: "On-site payment (cash)" },
+  ];
   const navigate = useNavigate();
   const [amount, setAmount] = useState<number>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,23 +39,30 @@ const PaymentPage: React.FC = () => {
     }
   };
 
-  const handlePayNow = async () => {
+  const handlePayNow = async (buttonName: string) => {
     setIsLoading(true);
     let errorMessage = "";
 
     const data = JSON.parse(localStorage.getItem("payOrderData")!);
     if (data) {
+      if (buttonName === "On-site payment (credit card)") {
+        data.payment_method = 310201;
+      } else if (buttonName === "On-site payment (cash)") {
+        data.payment_method = 310202;
+      }
       try {
         const response = await customAxios.post(apiRoutes.orderCreate, data);
-        console.log(response);
+        console.log(response.data.data);
         if (response.status === 201) {
-          if (response.data.data.code === "PMS001") {
+          if (response.data.data.code === (300000 || 310001)) {
             localStorage.removeItem("orderData");
             localStorage.setItem("cartCount", "0");
             localStorage.removeItem("cartData");
             navigate("/order/status", { state: { isSuccess: true } });
           } else {
-            errorMessage = response.data.message;
+            const { message } = getPayStatus(response.data.data.fail);
+            const payError = message;
+            errorMessage = `error code: ${response.data.data.fail} - ${payError}`;
             navigate("/order/status", {
               state: { isSuccess: false, errorMessage },
             });
@@ -98,11 +115,7 @@ const PaymentPage: React.FC = () => {
               </span>
             </div>
             <div className="payNowButtonSection">
-              <Button
-                name="Pay now"
-                handleClick={handlePayNow}
-                buttonType="bigButton"
-              />
+              <PayButtons payButtons={payButtons} handlePayNow={handlePayNow} />
             </div>
           </div>
         </div>

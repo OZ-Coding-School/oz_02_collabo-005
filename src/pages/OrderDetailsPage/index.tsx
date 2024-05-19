@@ -23,6 +23,7 @@ const OrderDetailsPage: React.FC = () => {
         const response = await customAxios.get(
           `${apiRoutes.orderDetail}?id=${orderId}`
         );
+        console.log(response.data.data);
         if (response.data.status === 200) {
           setIsViewOrderDetail(true);
           setViewOrderData(response.data.data);

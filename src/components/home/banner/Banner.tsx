@@ -24,7 +24,7 @@ const Banner: React.FC<BannerProps> = ({ banners }) => {
       >
         {banners.map((banner, index) => (
           <SwiperSlide key={index} className="bannerSwiperSlide">
-            <BannerItem name={banner.name} key={index} />
+            <BannerItem name={banner.name} />
           </SwiperSlide>
         ))}
       </Swiper>

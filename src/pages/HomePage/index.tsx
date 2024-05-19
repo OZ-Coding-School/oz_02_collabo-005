@@ -81,7 +81,7 @@ const HomePage: React.FC = () => {
             (restaurant) => {
               return (
                 restaurant.category.includes(category) &&
-                restaurant.status === 1
+                restaurant.status === 200001
               );
             }
           );
@@ -90,7 +90,7 @@ const HomePage: React.FC = () => {
             (restaurant) => {
               return (
                 restaurant.category.includes(category) &&
-                restaurant.status !== 1
+                restaurant.status !== 200001
               );
             }
           );

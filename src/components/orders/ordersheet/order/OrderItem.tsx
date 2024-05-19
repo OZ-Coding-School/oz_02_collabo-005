@@ -46,7 +46,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
   const coordinate =
     lat === "" && lng === "" ? [] : [parseFloat(lat), parseFloat(lng)];
 
-  const isSoldOut = status === 0;
+  const isSoldOut = status === 210002;
 
   const handlePlusBtnClick = async () => {
     setCount((prev) => prev + 1);
@@ -153,7 +153,6 @@ const OrderItem: React.FC<OrderItemProps> = ({
         orders: updatedOrders,
         coordinate,
       };
-
 
       if (setCartData)
         try {

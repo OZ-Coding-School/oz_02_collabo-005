@@ -20,6 +20,7 @@ import OrderDetailsPage from "./pages/OrderDetailsPage/index";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import CommonRoute from "./routes/CommonRoute";
 import ScrollTo from "@components/scrollto/ScrollTo";
+import CustomerServicePage from "./pages/CustomerServicePage/index";
 
 const App: React.FC = () => {
   return (
@@ -52,6 +53,10 @@ const App: React.FC = () => {
             />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/order/status" element={<OrderStatusPage />} />
+            <Route
+              path="/order/status/CustomerService"
+              element={<CustomerServicePage />}
+            />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/account/koreanCard" element={<KoreanCardPage />} />
             <Route path="/account/foreignCard" element={<ForeignCardPage />} />

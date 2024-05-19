@@ -26,6 +26,8 @@ const RestaurantPage: React.FC = () => {
     setSelectedMenuList(getMenuList(event));
   };
 
+  console.log(restaurantInfo);
+
   const getMenuList = (event: string) => {
     const menuList = restaurantInfo?.menu_group_list.filter(
       (menuGroup) => menuGroup.name === event
@@ -109,7 +111,7 @@ const RestaurantPage: React.FC = () => {
 
   useEffect(() => {
     if (restaurantInfo !== undefined && restaurantInfo.status !== undefined) {
-      setIsPreparing(restaurantInfo.status !== 1);
+      setIsPreparing(restaurantInfo.status !== 200001);
     }
   }, [restaurantInfo]);
 

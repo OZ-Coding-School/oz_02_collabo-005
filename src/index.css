@@ -2,6 +2,7 @@
   font-family: "SourceSans3-Medium";
   font-weight: normal;
   src: url("./font/SourceSans3-Medium.ttf") format("truetype");
+  font-display: swap;
 }
 
 body {

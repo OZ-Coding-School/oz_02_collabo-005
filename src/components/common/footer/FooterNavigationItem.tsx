@@ -1,5 +1,6 @@
 import React from "react";
-import { CgHomeAlt, CgNotes, CgUser } from "react-icons/cg";
+import { CgNotes } from "react-icons/cg";
+import { FiHome, FiUser } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import "./FooterNavigationItem.css";
 
@@ -23,13 +24,13 @@ const FooterNavigationItem: React.FC<FooterProps> = ({
 
   switch (title) {
     case "Home":
-      IconComponent = CgHomeAlt;
+      IconComponent = FiHome;
       break;
     case "Orders":
       IconComponent = CgNotes;
       break;
     case "Account":
-      IconComponent = CgUser;
+      IconComponent = FiUser;
       break;
     default:
       IconComponent = null;

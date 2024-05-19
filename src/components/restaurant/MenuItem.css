@@ -30,6 +30,9 @@
 }
 
 .menuItemInformation {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: relative;
   width: 70%;
 }
@@ -40,8 +43,6 @@
 }
 
 .menuItemPrice {
-  position: absolute;
-  bottom: 0;
 }
 
 .menuItemDescription {

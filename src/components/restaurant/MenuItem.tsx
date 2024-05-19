@@ -22,7 +22,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   };
 
   // 메뉴 품절 여부
-  const isSoldOut = menu.status === 0;
+  const isSoldOut = menu.status === 210002;
 
   return (
     <div
@@ -33,15 +33,17 @@ const MenuItem: React.FC<MenuItemProps> = ({
     >
       <div className="MenuItemContainer">
         <div className="menuItemInformation">
-          {menu.represent && (
-            <div className="menuItemLabel">{menu.represent}</div>
-          )}
-          <div className="menuItemTitle">
-            <p className="menuItemName">{menu.name}</p>
+          <div>
+            {menu.represent && (
+              <div className="menuItemLabel">{menu.represent}</div>
+            )}
+            <div className="menuItemTitle">
+              <p className="menuItemName">{menu.name}</p>
+            </div>
+            {menu.description && (
+              <div className="menuItemDescription">{menu.description}</div>
+            )}
           </div>
-          {menu.description && (
-            <div className="menuItemDescription">{menu.description}</div>
-          )}
           <p className="menuItemPrice">
             {addCommasToNumberString(menu.price)} won
           </p>

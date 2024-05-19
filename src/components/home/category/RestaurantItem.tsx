@@ -19,8 +19,9 @@ const RestaurantItem: React.FC<RestaurantItemProps> = ({
   };
 
   const description = hashtag ? hashtag.join(" ") : "";
-  const isOpen = status === 1;
-  const noticeMessage = status !== 1 && status === 2 ? "Close" : "Preparing";
+  const isOpen = status === 200001;
+  const noticeMessage =
+    status !== 200001 && status === 200003 ? "Close" : "Preparing";
 
   return (
     <div className="restaurantItemContainer" key={id} onClick={handleClick}>

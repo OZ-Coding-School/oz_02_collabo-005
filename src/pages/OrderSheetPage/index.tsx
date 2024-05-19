@@ -86,7 +86,7 @@ const OrderSheetPage: React.FC = () => {
   useEffect(() => {
     if (cartData && cartData.orders.length > 0) {
       const hasInvalidMenu = cartData.orders.some((order) =>
-        order.menus.some((menu) => menu.status === 0)
+        order.menus.some((menu) => menu.status === 210002)
       );
 
       setIsValidated(!hasInvalidMenu);

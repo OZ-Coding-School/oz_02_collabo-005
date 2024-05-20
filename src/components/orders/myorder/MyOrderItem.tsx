@@ -39,8 +39,10 @@ const MyOrderItem: React.FC<MyOrderItemProps> = ({
   return (
     <div className="myOrderItemContainer">
       <div className="myOrderItemTop">
-        <div className="myOrderDate">{orderHistoryList.date}</div>
-        <div className={ordersStatus}>{ordersStatusMessage}</div>
+        <div className="myOrderStatus">
+          <div className="myOrderDate">{orderHistoryList.date}</div>
+          <div className={ordersStatus}>{ordersStatusMessage}</div>
+        </div>
         <button className="viewOrderBtn" onClick={handleViewOrderClick}>
           View order
         </button>

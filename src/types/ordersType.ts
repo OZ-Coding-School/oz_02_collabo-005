@@ -47,6 +47,7 @@ export type ViewOrderType = {
   total_price: number;
   store_request: string;
   rider_request: string;
+  payment_method: number;
 };
 
 export type CartDataType = {

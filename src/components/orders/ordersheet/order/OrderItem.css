@@ -15,11 +15,11 @@
   font-weight: 600;
 }
 
-.OIsoldeOut {
+.OInotice {
   color: red;
 }
 
-.soldOutLabel {
+.noticeLabel {
   display: flex;
   justify-content: center;
   align-content: center;

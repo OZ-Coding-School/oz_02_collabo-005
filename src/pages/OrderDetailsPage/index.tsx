@@ -19,6 +19,11 @@ const OrderDetailsPage: React.FC = () => {
   const [addressData, setAddressData] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const handleBackIconClick = () => {
+    setIsViewOrderDetail(false);
+    navigate(-1);
+  };
+
   useEffect(() => {
     const getViewOrder = async () => {
       try {
@@ -40,11 +45,6 @@ const OrderDetailsPage: React.FC = () => {
     };
     getViewOrder();
   }, []);
-
-  const handleBackIconClick = () => {
-    setIsViewOrderDetail(false);
-    navigate(-1);
-  };
 
   return (
     <div>
@@ -73,6 +73,8 @@ const OrderDetailsPage: React.FC = () => {
             orderPrice={viewOrderData?.order_price}
             deliveryFee={viewOrderData?.delivery_fee}
             totalPrice={viewOrderData?.total_price}
+            paymentMethod={viewOrderData?.payment_method}
+            isViewOrderDetail={isViewOrderDetail}
           />
           <div className="OSsection">
             <div className="deliveryDetailsTitle">Delivery details</div>

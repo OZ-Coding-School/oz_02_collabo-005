@@ -29,6 +29,8 @@ const OrderSheetPage: React.FC = () => {
   const [isValidated, setIsValidated] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  console.log(cartData);
+
   const [requestState, setRequestState] = useState<RequestType>({
     store_request: "",
     rider_request: "",
@@ -96,7 +98,13 @@ const OrderSheetPage: React.FC = () => {
         order.menus.some((menu) => menu.status === 210002)
       );
 
+      // const hasInvalidRestaurant = cartData.orders.some(
+      //   (order) => order.restaurant.status !== 200001
+      // );
+
       setIsValidated(!hasInvalidMenu);
+    } else {
+      setIsValidated(false);
     }
   }, [cartData]);
 

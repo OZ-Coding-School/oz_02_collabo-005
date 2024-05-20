@@ -77,7 +77,6 @@ const LoginPage: React.FC = () => {
           const refreshToken = response.data.token.refresh;
           useLoginStore.setState({ isLogin: true, loginToken, refreshToken });
 
-          alert("Login Success!!");
           navigate(from);
         }
       }
@@ -115,27 +114,28 @@ const LoginPage: React.FC = () => {
             label="PASSWORD"
             handleInputChange={handleInputChange}
           />
+          <div className="loginButtonSection">
+            <div>
+              <Button
+                name="Login"
+                backgroundColor={isAllFilled ? "#FF6347" : "#767676"}
+                handleClick={handleLoginButtonClick}
+                buttonType="bigButton"
+                disabled={isAllFilled ? false : true}
+              />
+            </div>
+            <div>
+              <Button
+                name="Create an account"
+                backgroundColor="#FF6347"
+                handleClick={handleGoSignUp}
+                buttonType="bigButton"
+                type="button"
+              />
+            </div>
+          </div>
         </form>
-        <div className="loginButtonSection">
-          <div className="loginButton">
-            <Button
-              name="Login"
-              backgroundColor={isAllFilled ? "#FF6347" : "#767676"}
-              handleClick={handleLoginButtonClick}
-              buttonType="bigButton"
-              disabled={isAllFilled ? false : true}
-            />
-          </div>
-          <div className="signUpButton">
-            <Button
-              name="Create an account"
-              backgroundColor="#FF6347"
-              handleClick={handleGoSignUp}
-              buttonType="bigButton"
-              type="button"
-            />
-          </div>
-        </div>
+
         <div className="socialLoginButtonSection">
           <div className="googleButton">
             <SocialLoginButton

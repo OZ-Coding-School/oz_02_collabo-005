@@ -3,6 +3,7 @@ import { selectMenuType } from "./menuOptionTypes";
 export type OrderHistoryDataType = {
   id: number;
   date: string;
+  order_status: number;
   details: {
     [resId: string]: {
       menu_name: string;

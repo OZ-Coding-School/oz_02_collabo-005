@@ -8,8 +8,39 @@
 }
 
 .myOrderItemTop {
+  position: relative;
   display: flex;
   justify-content: space-between;
+}
+
+.orderSuccess,
+.orderFailed,
+.orderLoading {
+  position: absolute;
+  left: 110px;
+  font-size: 0.7rem;
+  display: inline-block;
+  border-radius: 5px;
+  padding: 2px 5px 5px 5px;
+  max-height: 22px;
+}
+
+.orderSuccess {
+  color: #327c1f;
+  background-color: #bdecb6;
+  border: 1px solid#327c1f;
+}
+
+.orderFailed {
+  color: #ff6347;
+  background-color: #ff63474f;
+  border: 1px solid #ff6347;
+}
+
+.orderLoading {
+  color: #fbc933f0;
+  background-color: #fff9c4;
+  border: 1px solid #fbc933f0;
 }
 
 .myOrderDate {

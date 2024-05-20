@@ -28,6 +28,8 @@ const RestaurantPage: React.FC = () => {
     setSelectedMenuList(getMenuList(event));
   };
 
+  console.log(restaurantInfo);
+
   const getMenuList = (event: string) => {
     const menuList = restaurantInfo?.menu_group_list.filter(
       (menuGroup) => menuGroup.name === event

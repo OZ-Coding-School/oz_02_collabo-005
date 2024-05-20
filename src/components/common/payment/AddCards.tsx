@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcSimCardChip } from "react-icons/fc";
+import { TiPlus } from "react-icons/ti";
 import ProceedModal from "@components/common/modal/ProceedModal";
 
 const AddCards: React.FC = () => {
@@ -33,7 +34,9 @@ const AddCards: React.FC = () => {
         id="addCards"
       >
         <FcSimCardChip className="simCard" />
-        <div className="addCardPlus">+</div>
+        <div className="addCardPlus">
+          <TiPlus />
+        </div>
       </div>
       {isModalOpen && (
         <ProceedModal

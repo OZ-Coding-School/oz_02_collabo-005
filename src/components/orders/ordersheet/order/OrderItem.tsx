@@ -22,7 +22,7 @@ interface OrderItemProps {
   setCartData?: React.Dispatch<React.SetStateAction<CartDataType | null>>;
   isOnDetailsPage?: boolean;
   status?: number;
-  isClosing: boolean;
+  isClosing?: boolean;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({

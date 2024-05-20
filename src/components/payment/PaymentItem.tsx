@@ -29,8 +29,6 @@ const PaymentItem: React.FC<PaymentItemProps> = ({
       newPaymentMethod = 0;
     }
 
-    console.log(itemId);
-
     const updatedData = {
       ...payOrderData,
       payment_method: newPaymentMethod,

@@ -19,10 +19,14 @@ const OrderDetailsPage: React.FC = () => {
   const [addressData, setAddressData] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const handleBackIconClick = () => {
+    setIsViewOrderDetail(false);
+    navigate(-1);
+  };
+
   useEffect(() => {
     const getViewOrder = async () => {
       try {
-        setIsLoading(true);
         setIsLoading(true);
         const response = await customAxios.get(
           `${apiRoutes.orderDetail}?id=${orderId}`
@@ -34,8 +38,6 @@ const OrderDetailsPage: React.FC = () => {
         }
       } catch (error) {
         console.log(error);
-      } finally {
-        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
@@ -57,12 +59,12 @@ const OrderDetailsPage: React.FC = () => {
       ) : (
         <div className="orderSheetContainer">
           <div className="orderSection">
-            {viewOrderData?.orders.map((id, index) => (
+            {viewOrderData?.orders.map((order, index) => (
               <OrderList
                 isViewOrderDetail={isViewOrderDetail}
                 key={index}
-                restaurant={id.restaurant}
-                menus={id.menus}
+                restaurant={order.restaurant}
+                menus={order.menus}
               />
             ))}
           </div>

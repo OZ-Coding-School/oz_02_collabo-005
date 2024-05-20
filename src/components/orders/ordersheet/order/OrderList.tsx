@@ -39,7 +39,7 @@ const OrderList: React.FC<OrderListType> = ({
             price={menu.menu_total_price}
             quantity={menu.quantity}
             setCartData={setCartData}
-            isClosing={isClosing}
+            isClosing={isViewOrderDetail ? false : isClosing}
             {...(isViewOrderDetail ? null : { status: menu.status })}
           />
         ))}

@@ -7,7 +7,7 @@ interface AmountDetailsProps {
   deliveryFee?: number | undefined;
   totalPrice?: number | undefined;
   paymentMethod?: number | undefined;
-  isViewOrderDetail: boolean;
+  isViewOrderDetail?: boolean;
 }
 
 const AmountDetails: React.FC<AmountDetailsProps> = ({

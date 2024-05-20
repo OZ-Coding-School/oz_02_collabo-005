@@ -61,6 +61,7 @@ export type CartDataType = {
 export type Restaurant = {
   id: number;
   name: string;
+  status?: number;
 };
 
 export type Menu = {

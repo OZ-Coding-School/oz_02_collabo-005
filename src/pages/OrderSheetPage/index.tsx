@@ -15,7 +15,6 @@ import apiRoutes from "./../../api/apiRoutes";
 import "./OrderSheetPage.css";
 import { useLatLngStore } from "./../../store/useLatLngStore";
 import Loading from "@components/common/loading/loading";
-import Loading from "@components/common/loading/loading";
 
 type RequestType = {
   store_request: string;
@@ -27,11 +26,8 @@ const OrderSheetPage: React.FC = () => {
   const { lat, lng } = useLatLngStore();
   const [cartData, setCartData] = useState<CartDataType | null>(null);
   const [addressData, setAddressData] = useState<AddressType | null>(null);
-  const [isValidated, setIsValidated] = useState<boolean>(true);
+  const [isValidated, setIsValidated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  console.log(cartData);
 
   const [requestState, setRequestState] = useState<RequestType>({
     store_request: "",
@@ -100,11 +96,11 @@ const OrderSheetPage: React.FC = () => {
         order.menus.some((menu) => menu.status === 210002)
       );
 
-      // const hasInvalidRestaurant = cartData.orders.some(
-      //   (order) => order.restaurant.status !== 200001
-      // );
+      const hasInvalidRestaurant = cartData.orders.some(
+        (order) => order.restaurant.status !== 200001
+      );
 
-      setIsValidated(!hasInvalidMenu);
+      setIsValidated(!hasInvalidMenu && !hasInvalidRestaurant);
     } else {
       setIsValidated(false);
     }

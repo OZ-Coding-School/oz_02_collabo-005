@@ -60,10 +60,6 @@ const setOrderStatusMessage = (orderStatusCode: number | string) => {
       message = "Delivery completed";
       status = "orderSuccess";
       break;
-    case 300091 || 300092:
-      message = "order cancellation";
-      status = "orderFailed";
-      break;
   }
   return { message, status };
 };

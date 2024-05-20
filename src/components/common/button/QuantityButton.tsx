@@ -20,6 +20,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
         className="minus Btns"
         onClick={handleMinusBtnClick}
         disabled={disabled}
+        aria-label="minusButton"
       >
         -
       </button>
@@ -28,6 +29,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
         className="plus Btns"
         onClick={handlePlusBtnClick}
         disabled={disabled}
+        aria-label="plusButton"
       >
         +
       </button>

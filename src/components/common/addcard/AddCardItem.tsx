@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import addCardImage from "../../../assets/images/AddCardImage.png";
+import addCardImage from "../../../assets/images/AddCardImage.webp";
 import ProceedModal from "../modal/ProceedModal";
 import { useNavigate } from "react-router-dom";
 
@@ -29,6 +29,7 @@ const AddCardItem: React.FC = () => {
     <>
       <img
         src={addCardImage}
+        alt="addCardImage"
         onClick={openModal}
         style={{ cursor: "pointer" }}
       />

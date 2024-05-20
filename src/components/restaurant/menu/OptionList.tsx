@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import OptionItem from "./OptionItem";
 import "./OptionList.css";
-import { optionGroupType } from "src/types/menuOptionTypes";
+import { optionGroupType } from "../../../types/menuOptionTypes";
 
 interface OptionListProps {
   optionList: optionGroupType;

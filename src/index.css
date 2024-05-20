@@ -1,7 +1,7 @@
 @font-face {
   font-family: "SourceSans3-Medium";
   font-weight: normal;
-  src: url("./font/SourceSans3-Medium.ttf") format("truetype");
+  src: url("./font/SourceSans3-Medium.woff2") format("truetype");
   font-display: swap;
 }
 

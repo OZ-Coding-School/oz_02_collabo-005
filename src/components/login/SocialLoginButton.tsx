@@ -15,7 +15,7 @@ const SocialLoginButton: React.FC<SocialLoginProps> = ({
   return (
     <>
       <button>
-        <img className={name} src={imageUrl} />
+        <img className={name} src={imageUrl} alt="googleLogo" />
         {text}
       </button>
     </>

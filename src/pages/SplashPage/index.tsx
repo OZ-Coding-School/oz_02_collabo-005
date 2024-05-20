@@ -1,5 +1,5 @@
 import React from "react";
-import logoImage from "../../assets/images/AppLogo.png";
+import logoImage from "../../assets/images/AppLogo.webp";
 import "./SplashPage.css";
 import Button from "@components/common/button/Button";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,12 @@ const SplashPage: React.FC = () => {
       <div className="splashMainContainer">
         <div className="splashSubContainer">
           <div className="logoContainer">
-            <img src={logoImage} width="128px" height="128px" />
+            <img
+              src={logoImage}
+              alt="okiveryLogo"
+              width="128px"
+              height="128px"
+            />
           </div>
           <div className="appNameTextContainer">
             <div className="appNameDescription">

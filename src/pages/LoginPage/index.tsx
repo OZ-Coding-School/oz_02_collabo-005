@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
-import logoImage from "../../assets/images/AppLogo.png";
+import logoImage from "../../assets/images/AppLogo.webp";
 import Button from "@components/common/button/Button";
 import "./LoginPage.css";
-import googleLogoImage from "../../assets/images/GoogleLogoImage.png";
+import googleLogoImage from "../../assets/images/GoogleLogoImage.webp";
 import FloatingLabelInput from "@components/common/input/FloatingLabelInput";
 import { useLocation, useNavigate } from "react-router-dom";
 import SocialLoginButton from "../../components/login/SocialLoginButton";
@@ -96,7 +96,7 @@ const LoginPage: React.FC = () => {
       />
       <div className="loginMainContainer">
         <div className="logoContainer">
-          <img src={logoImage} width="128px" height="128px" />
+          <img src={logoImage} alt="okiveryLogo" width="128px" height="128px" />
         </div>
         <form className="loginInputForm">
           <FloatingLabelInput

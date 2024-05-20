@@ -22,7 +22,11 @@ const Modal: React.FC<ModalProps> = ({
     <div className="modalOverlay" onClick={onClose}>
       <div className="modalContent" onClick={(e) => e.stopPropagation()}>
         <div className="closeButtonSection">
-          <button className="closeButton" onClick={onClose}>
+          <button
+            className="closeButton"
+            onClick={onClose}
+            aria-label="closeButton"
+          >
             x
           </button>
         </div>
@@ -31,10 +35,18 @@ const Modal: React.FC<ModalProps> = ({
         </div>
 
         <div className="twoButtonSection">
-          <button className="leftButton" onClick={handleLeftClick}>
+          <button
+            className="leftButton"
+            onClick={handleLeftClick}
+            aria-label="leftButton"
+          >
             {leftButtonText}
           </button>
-          <button className="rightButton" onClick={handleRightClick}>
+          <button
+            className="rightButton"
+            onClick={handleRightClick}
+            aria-label="rightButton"
+          >
             {rightButtonText}
           </button>
         </div>

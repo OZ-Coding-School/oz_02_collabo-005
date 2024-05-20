@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import "./AccountPage.css";
 import UserInfoSection from "@components/account/UserInfoSection";
-import CardManagementSection from "@components/common/addcard/CardManagementSection";
+import CardManagementSection from "@components/common/payment/PaymentItemSection";
 import { useNavigate } from "react-router-dom";
 import Button from "@components/common/button/Button";
 import ProceedModal from "@components/common/modal/ProceedModal";

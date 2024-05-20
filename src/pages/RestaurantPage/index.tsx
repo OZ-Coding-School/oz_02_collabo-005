@@ -28,8 +28,6 @@ const RestaurantPage: React.FC = () => {
     setSelectedMenuList(getMenuList(event));
   };
 
-  console.log(restaurantInfo);
-
   const getMenuList = (event: string) => {
     const menuList = restaurantInfo?.menu_group_list.filter(
       (menuGroup) => menuGroup.name === event
@@ -140,11 +138,13 @@ const RestaurantPage: React.FC = () => {
             <div className="restaurantContainer">
               <div className="restaurantInfoContainer">
                 <div className="restaurantImgContainer">
-                  <img
-                    src={restaurantInfo?.image}
-                    alt="restaurant Background Img"
-                    className="restaurantBackgroundImg"
-                  />
+                  {restaurantInfo?.image && (
+                    <img
+                      src={restaurantInfo?.image}
+                      alt="restaurant Background Img"
+                      className="restaurantBackgroundImg"
+                    />
+                  )}
                   <div className="restaurantLogoImgContainer">
                     <RestaurantLogo src={restaurantInfo?.logo} />
                   </div>

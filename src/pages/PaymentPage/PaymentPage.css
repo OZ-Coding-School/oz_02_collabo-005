@@ -44,7 +44,7 @@
   margin: 0 0 20px 0;
 }
 
-.payNowButtonSection .bannerRow {
-  width: 100%;
-  overflow: hidden;
+.payNowButtonSection {
+  display: flex;
+  justify-content: center;
 }

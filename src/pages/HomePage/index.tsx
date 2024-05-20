@@ -35,7 +35,6 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const getAddress = async () => {
       try {
-        setIsLoading(true);
         const response = await customAxios.get(apiRoutes.address);
 
         if (response.status === 200) {
@@ -52,17 +51,18 @@ const HomePage: React.FC = () => {
         }
       } catch (error) {
         setAddress("Please click here and enter your address");
-      } finally {
-        setIsLoading(false);
       }
     };
     const fetchRestaurants = async () => {
       try {
+        setIsLoading(true);
         const response = await customAxios.get(apiRoutes.restaurantList);
         if (response.status !== 200) throw new Error("예외가 발생했습니다.");
         setRestaurants(response.data);
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getAddress();

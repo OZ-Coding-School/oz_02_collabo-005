@@ -51,7 +51,7 @@ const OrderSheetPage: React.FC = () => {
         coordinate: coordinate,
         store_request: requestState.store_request,
         rider_request: requestState.rider_request,
-        payment_method: 310101,
+        payment_method: 0,
       };
 
       localStorage.setItem("payOrderData", JSON.stringify(payOrderData));

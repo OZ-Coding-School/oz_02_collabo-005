@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
-import CardManagementSection from "@components/common/addcard/CardManagementSection";
+import PaymentItemSection from "@components/common/payment/PaymentItemSection";
 import "./PaymentPage.css";
 import { useNavigate } from "react-router-dom";
 import { addCommasToNumberString } from "./../../utils/addCommas";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import { PacmanLoader } from "react-spinners";
-import PayButtons from "@components/payment/PayButtons";
 import getPayStatus from "@components/payment/payStatus";
+import { OrderDataType } from "src/types/ordersType";
+import Button from "@components/common/button/Button";
 
 interface ErrorResponse {
   response?: {
@@ -23,14 +24,12 @@ export type PayButtonType = {
 };
 
 const PaymentPage: React.FC = () => {
-  const payButtons: PayButtonType[] = [
-    { name: "Online payment (credit card)" },
-    { name: "On-site payment (credit card)" },
-    { name: "On-site payment (cash)" },
-  ];
   const navigate = useNavigate();
   const [amount, setAmount] = useState<number>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [payOrderData, setPayOrderData] = useState<OrderDataType>(
+    JSON.parse(localStorage.getItem("payOrderData")!)
+  );
 
   const getAmount = () => {
     const cartData = localStorage.getItem("cartData");
@@ -39,20 +38,17 @@ const PaymentPage: React.FC = () => {
     }
   };
 
-  const handlePayNow = async (buttonName: string) => {
-    setIsLoading(true);
+  const handlePayNow = async () => {
     let errorMessage = "";
 
-    const data = JSON.parse(localStorage.getItem("payOrderData")!);
-    if (data) {
-      if (buttonName === "On-site payment (credit card)") {
-        data.payment_method = 310201;
-      } else if (buttonName === "On-site payment (cash)") {
-        data.payment_method = 310202;
-      }
+    if (payOrderData) {
       try {
-        const response = await customAxios.post(apiRoutes.orderCreate, data);
-        console.log(response.data.data);
+        setIsLoading(true);
+        const response = await customAxios.post(
+          apiRoutes.orderCreate,
+          payOrderData
+        );
+
         if (response.status === 201) {
           if (response.data.data.code === (300000 || 310001)) {
             localStorage.removeItem("orderData");
@@ -93,19 +89,20 @@ const PaymentPage: React.FC = () => {
         handleBackIconClick={() => navigate(-1)}
       />
       {isLoading ? (
-        <>
-          <div className="loadingBar">
-            <PacmanLoader color="#ff6347" size="50px" speedMultiplier={0.8} />
-            <h2>
-              "Your order is in
-              <br /> progress..."
-            </h2>
-          </div>
-        </>
+        <div className="loadingBar">
+          <PacmanLoader color="#ff6347" size="50px" speedMultiplier={0.8} />
+          <h2>
+            "Your order is in
+            <br /> progress..."
+          </h2>
+        </div>
       ) : (
         <div className="paymentMainContainer">
           <div className="cardContainer">
-            <CardManagementSection />
+            <PaymentItemSection
+              payOrderData={payOrderData}
+              setPayOrderData={setPayOrderData}
+            />
           </div>
           <div className="bottomSection">
             <div className="totalAccount">
@@ -115,7 +112,15 @@ const PaymentPage: React.FC = () => {
               </span>
             </div>
             <div className="payNowButtonSection">
-              <PayButtons payButtons={payButtons} handlePayNow={handlePayNow} />
+              <Button
+                name="Pay Now"
+                handleClick={handlePayNow}
+                buttonType="bigButton"
+                backgroundColor={
+                  payOrderData.payment_method !== 0 ? "#FF6347" : "#767676"
+                }
+                disabled={payOrderData.payment_method === 0}
+              />
             </div>
           </div>
         </div>

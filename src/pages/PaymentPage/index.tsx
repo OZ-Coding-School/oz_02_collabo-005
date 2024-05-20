@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
-import PaymentItemSection from "@components/common/payment/PaymentItemSection";
+import PaymentItemSection from "@components/payment/PaymentItemSection";
 import "./PaymentPage.css";
 import { useNavigate } from "react-router-dom";
 import { addCommasToNumberString } from "./../../utils/addCommas";

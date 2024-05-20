@@ -26,8 +26,6 @@
 
 .cardManagementSection {
   margin-top: 20px;
-  display: grid;
-  row-gap: 5px;
 }
 
 .signOutSection {

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import "./AccountPage.css";
 import UserInfoSection from "@components/account/UserInfoSection";
-import CardManagementSection from "@components/common/payment/PaymentItemSection";
 import { useNavigate } from "react-router-dom";
 import Button from "@components/common/button/Button";
 import ProceedModal from "@components/common/modal/ProceedModal";
@@ -11,6 +10,7 @@ import apiRoutes from "../../api/apiRoutes";
 import { inputType } from "../SignupPage";
 import { getStoredLoginState, useLoginStore } from "../../store/useLoginStore";
 import Loading from "@components/common/loading/loading";
+import AddCards from "@components/common/payment/AddCards";
 
 export type UserDataType = {
   name: inputType;
@@ -237,7 +237,7 @@ const AccountPage: React.FC = () => {
             setUserData={setUserData}
           />
           <div className="cardManagementSection">
-            <CardManagementSection />
+            <AddCards />
           </div>
           <div className="signOutSection">
             <Button

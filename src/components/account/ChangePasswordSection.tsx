@@ -14,7 +14,7 @@ const ChangePasswordSection: React.FC<ChangePasswordSectionProps> = ({
   userData,
 }) => {
   return (
-    <div className="changePasswordSection">
+    <div>
       <div className="currentPasswordSection">
         <div className="changePasswordText">
           <RiInformation2Line color="red" size={10} />

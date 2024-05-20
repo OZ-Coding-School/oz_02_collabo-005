@@ -20,7 +20,7 @@ const RestaurantCategory: React.FC<RestaurantCategoryProps> = ({
   return (
     <div className="restaurantCategoryContainer">
       <h2 className="restaurantCategoryTitle">{title}</h2>
-      <div className="restaurantRow">
+      <div>
         <Swiper
           slidesPerView="auto"
           spaceBetween={50}

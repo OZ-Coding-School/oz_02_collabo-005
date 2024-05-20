@@ -50,6 +50,14 @@
   padding: 1px 2px 1px 10px;
 }
 
+.detailAddress {
+  margin-bottom: 20px;
+}
+
+.detailAddress input {
+  height: 45px;
+}
+
 .addressErrorMessage {
   color: red;
 }
@@ -59,14 +67,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.detailAddress {
-  margin-bottom: 20px;
-}
-
-.detailAddress input {
-  height: 45px;
 }
 
 .mapImageSection img {

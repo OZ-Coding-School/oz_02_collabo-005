@@ -1,6 +1,5 @@
 import React from "react";
 import PaymentItem from "./PaymentItem";
-import "./PaymentItemSection.css";
 import { OrderDataType } from "src/types/ordersType";
 
 interface PaymentItemSectionProps {

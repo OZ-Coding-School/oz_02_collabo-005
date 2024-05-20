@@ -15,6 +15,7 @@ import apiRoutes from "./../../api/apiRoutes";
 import "./OrderSheetPage.css";
 import { useLatLngStore } from "./../../store/useLatLngStore";
 import Loading from "@components/common/loading/loading";
+import Loading from "@components/common/loading/loading";
 
 type RequestType = {
   store_request: string;
@@ -27,6 +28,7 @@ const OrderSheetPage: React.FC = () => {
   const [cartData, setCartData] = useState<CartDataType | null>(null);
   const [addressData, setAddressData] = useState<AddressType | null>(null);
   const [isValidated, setIsValidated] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   console.log(cartData);

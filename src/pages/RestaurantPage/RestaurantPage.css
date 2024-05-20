@@ -2,12 +2,12 @@
   position: relative;
 }
 
-.restaurantBackgroundImg {
-  width: 100%;
-}
-
 .restaurantImgContainer {
   position: relative;
+}
+
+.restaurantBackgroundImg {
+  width: 100%;
 }
 
 .restaurantLogoImgContainer {

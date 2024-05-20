@@ -26,7 +26,7 @@ const QuantityButton: React.FC<QuantityButtonProps> = ({
       </button>
       <div className="menuQuantity"> {quantity} </div>
       <button
-        className="plus Btns"
+        className="Btns"
         onClick={handlePlusBtnClick}
         disabled={disabled}
         aria-label="plusButton"

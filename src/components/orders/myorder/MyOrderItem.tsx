@@ -54,7 +54,7 @@ const MyOrderItem: React.FC<MyOrderItemProps> = ({
           onClick={handleRestaurantClick(id)}
         >
           <div className="myOrderItemLogoImg">
-            <RestaurantLogo src={value.logo} />
+            {value.logo && <RestaurantLogo src={value.logo} />}
           </div>
           <div className="myOrderInfoSection">
             <div className="MIresName">{value.restaurant_name}</div>

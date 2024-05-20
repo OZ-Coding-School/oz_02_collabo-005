@@ -22,6 +22,7 @@ interface OrderItemProps {
   setCartData?: React.Dispatch<React.SetStateAction<CartDataType | null>>;
   isOnDetailsPage?: boolean;
   status?: number;
+  isClosing?: boolean;
 }
 
 const OrderItem: React.FC<OrderItemProps> = ({
@@ -33,6 +34,7 @@ const OrderItem: React.FC<OrderItemProps> = ({
   setCartData,
   isOnDetailsPage,
   status,
+  isClosing,
 }) => {
   const optionList =
     options.length === 0
@@ -198,15 +200,16 @@ const OrderItem: React.FC<OrderItemProps> = ({
         )}
       </button>
       <div className="orderInfoSection">
-        <div className={`OImenuName ${isSoldOut ? "OIsoldeOut" : ""}`}>
+        <div
+          className={`OImenuName ${isSoldOut || isClosing ? "OInotice" : ""}`}
+        >
           {name}
         </div>
-
         <div className="OIoptionList">options: {optionList}</div>
         <div className="OIprice">{addCommasToNumberString(price)} won</div>
       </div>
       <div className="orderBtnSection">
-        {!isSoldOut && (
+        {!isSoldOut && !isClosing && (
           <QuantityButton
             quantity={count}
             handlePlusBtnClick={handlePlusBtnClick}
@@ -214,7 +217,8 @@ const OrderItem: React.FC<OrderItemProps> = ({
             disabled={isOnDetailsPage}
           />
         )}
-        {isSoldOut && <div className="soldOutLabel">Sold out</div>}
+        {isSoldOut && <div className="noticeLabel">Sold out</div>}
+        {isClosing && <div className="noticeLabel">Close</div>}
       </div>
     </div>
   );

@@ -3,6 +3,46 @@
   flex-direction: column;
 }
 
+.simCard {
+  position: absolute;
+  left: 10px;
+  width: 25%;
+  height: 25%;
+}
+
+.addCardPlus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 30%;
+  border-radius: 50%;
+  background-color: rgb(255, 132, 98);
+  font-size: 3rem;
+  color: rgb(103, 103, 103);
+}
+
+.paymentItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  height: 30vh;
+  background-color: rgb(255, 216, 206);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.selectedPayment {
+  background-color: rgb(255, 151, 122);
+}
+
+.addCardItem {
+  position: relative;
+  flex-direction: column;
+}
+
 .paymentItem {
   display: flex;
   justify-content: center;

@@ -56,7 +56,10 @@ const PaymentPage: React.FC = () => {
             localStorage.removeItem("cartData");
             navigate("/order/status", { state: { isSuccess: true } });
           } else {
-            const { message } = getPayStatus(response.data.data.fail);
+            const { message } = getPayStatus(
+              response.data.data.fail,
+              response.data.message
+            );
             const payError = message;
             errorMessage = `error code: ${response.data.data.fail} - ${payError}`;
             navigate("/order/status", {

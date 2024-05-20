@@ -1,4 +1,4 @@
-const getPayStatus = (statusCode: number) => {
+const getPayStatus = (statusCode: number, errorMessage: string) => {
   let message = "";
   switch (statusCode) {
     case 310400:
@@ -12,6 +12,15 @@ const getPayStatus = (statusCode: number) => {
       break;
     case 310502:
       message = "Payment communication error";
+      break;
+    case 200002:
+      message = errorMessage || "The restaurant is prepared";
+      break;
+    case 200003:
+      message = errorMessage || "The restaurant is closed";
+      break;
+    case 210002:
+      message = errorMessage || "The menu is soldOut";
       break;
   }
   return { message };

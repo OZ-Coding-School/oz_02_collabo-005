@@ -26,7 +26,7 @@ const OrderSheetPage: React.FC = () => {
   const { lat, lng } = useLatLngStore();
   const [cartData, setCartData] = useState<CartDataType | null>(null);
   const [addressData, setAddressData] = useState<AddressType | null>(null);
-  const [isValidated, setIsValidated] = useState<boolean>(true);
+  const [isValidated, setIsValidated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [requestState, setRequestState] = useState<RequestType>({
@@ -96,7 +96,13 @@ const OrderSheetPage: React.FC = () => {
         order.menus.some((menu) => menu.status === 210002)
       );
 
-      setIsValidated(!hasInvalidMenu);
+      const hasInvalidRestaurant = cartData.orders.some(
+        (order) => order.restaurant.status !== 200001
+      );
+
+      setIsValidated(!hasInvalidMenu && !hasInvalidRestaurant);
+    } else {
+      setIsValidated(false);
     }
   }, [cartData]);
 

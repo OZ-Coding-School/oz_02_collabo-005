@@ -9,7 +9,6 @@ interface OrderListType {
   menus: Menu[];
   setCartData?: React.Dispatch<React.SetStateAction<CartDataType | null>>;
   isViewOrderDetail?: boolean;
-  setIsViewOrderDetail?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const OrderList: React.FC<OrderListType> = ({
@@ -19,6 +18,7 @@ const OrderList: React.FC<OrderListType> = ({
   isViewOrderDetail,
 }) => {
   const navigate = useNavigate();
+  const isClosing = restaurant.status !== 200001;
 
   return (
     <div className="OLContainer">
@@ -28,7 +28,7 @@ const OrderList: React.FC<OrderListType> = ({
       >
         {restaurant.name}
       </div>
-      <div className="orderListContainer">
+      <div className="orderListContainer closingRestaurant">
         {menus.map((menu) => (
           <OrderItem
             isOnDetailsPage={isViewOrderDetail}
@@ -39,6 +39,7 @@ const OrderList: React.FC<OrderListType> = ({
             price={menu.menu_total_price}
             quantity={menu.quantity}
             setCartData={setCartData}
+            isClosing={isViewOrderDetail ? false : isClosing}
             {...(isViewOrderDetail ? null : { status: menu.status })}
           />
         ))}

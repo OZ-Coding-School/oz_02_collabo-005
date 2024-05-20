@@ -7,6 +7,7 @@ import orderSuccessIcon from "../../assets/icons/orderSuccessIcon.webp";
 
 const OrderStatusPage: React.FC = () => {
   const location = useLocation();
+
   const isSuccess = location.state && location.state.isSuccess;
   const errorMessage = location.state && location.state.errorMessage;
   const navigate = useNavigate();
@@ -16,7 +17,10 @@ const OrderStatusPage: React.FC = () => {
   };
 
   const handleFailed = (): void => {
-    navigate("/order/status/CustomerService");
+    window.open(
+      "https://docs.google.com/forms/d/e/1FAIpQLSccQRUNJWp41IlopstJiL28sfcpAPebBNImuhAtQmU1H6HTuQ/viewform",
+      "_blank"
+    );
   };
 
   return (

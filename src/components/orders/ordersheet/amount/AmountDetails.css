@@ -12,7 +12,7 @@
 .amountDetailsItemSection,
 .amountDetailsSection {
   display: grid;
-  gap: 5px;
+  gap: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(100, 100, 100, 0.329);
 }
@@ -25,4 +25,13 @@
 .deliveryNotification {
   font-size: 0.9rem;
   color: rgb(133, 133, 133);
+}
+
+.paymentMethodContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.paymentMethodText {
+  font-weight: 600;
 }

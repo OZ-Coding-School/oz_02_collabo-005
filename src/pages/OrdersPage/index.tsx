@@ -1,7 +1,6 @@
 import Header from "@components/common/header/Header";
 import MyOrderList from "@components/orders/myorder/MyOrderList";
 import React from "react";
-import "./OrdersPage.css";
 import { useNavigate } from "react-router-dom";
 
 const OrdersPage: React.FC = () => {

@@ -48,11 +48,10 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
             )}
             <SelectLocationMap
               setIsLoading={setIsLoading}
-              // setIsAvailable={setIsAvailable}
               setUserAddressData={setUserAddressData}
             />
           </div>
-          <div className="saveButtonSection">
+          <div>
             <button
               className="selectAddressButton"
               onClick={handleSelectAddress}

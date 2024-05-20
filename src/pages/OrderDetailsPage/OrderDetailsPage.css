@@ -10,25 +10,9 @@
   gap: 15px;
 }
 
-.deliveryDetailsTitle {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
 .OSsection {
   display: grid;
   gap: 10px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(100, 100, 100, 0.329);
-}
-
-.instructionsText {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.noteForRes,
-.noteForRider {
-  line-height: 25px;
 }

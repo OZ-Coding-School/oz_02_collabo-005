@@ -48,7 +48,7 @@ const AccountPage: React.FC = () => {
           const response = await customAxios.get(apiRoutes.user);
 
           if (response.status !== 200)
-            throw new Error(`예외 발생 ! 상태코드 : ${response.status}`);
+            throw new Error(`Error ! Status Code : ${response.status}`);
           setPreEmail(response.data.email);
           setUserData({
             ...userData,

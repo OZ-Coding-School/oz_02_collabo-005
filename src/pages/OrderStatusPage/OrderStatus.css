@@ -20,15 +20,15 @@
   margin: 0;
 }
 
+.statusText span {
+  margin-top: 20px;
+  font-size: 20px;
+}
+
 .errorMessage {
   text-decoration: underline;
   color: red;
   font-weight: 600;
-}
-
-.statusText span {
-  margin-top: 20px;
-  font-size: 20px;
 }
 
 .statusBottomSection button {

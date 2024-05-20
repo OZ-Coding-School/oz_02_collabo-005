@@ -26,18 +26,10 @@ div.homeAddressDetail {
   text-overflow: ellipsis;
 }
 
-.mappinIcon,
-.arrowDownIcon {
+.mappinIcon {
   width: 1rem;
   height: 1rem;
-}
-
-.mappinIcon {
   margin-left: 10px;
-}
-
-.arrowDownIcon {
-  margin-right: 10px;
 }
 
 .homeAddressContainer .homeAddressDetail {

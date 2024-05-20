@@ -19,6 +19,10 @@
   gap: 15px;
 }
 
+.myOrderDate {
+  color: rgb(199, 199, 199);
+}
+
 .orderSuccess {
   color: #327c1f;
 }
@@ -29,10 +33,6 @@
 
 .orderLoading {
   color: #ffa448;
-}
-
-.myOrderDate {
-  color: rgb(199, 199, 199);
 }
 
 .viewOrderBtn {

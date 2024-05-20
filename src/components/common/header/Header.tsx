@@ -73,7 +73,7 @@ const Header: React.FC<HeaderProps> = ({
       {hasCartIcon && (
         <div className="headerCart" onClick={handleCartIconClick}>
           <img src={CartIcon} alt="CartIcon" className="cartIcon" />
-          <div className="cartQuantity">{count}</div>
+          <div>{count}</div>
         </div>
       )}
     </div>

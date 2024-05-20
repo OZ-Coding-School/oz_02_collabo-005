@@ -50,13 +50,6 @@ const OrderStatusPage: React.FC = () => {
               </>
             )}
           </div>
-          <div
-            className="toggleButton"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          ></div>
         </div>
         <div className="statusBottomSection">
           <Button

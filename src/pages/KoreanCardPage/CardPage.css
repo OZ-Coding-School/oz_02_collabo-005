@@ -8,6 +8,11 @@
   align-items: center;
 }
 
+.expirationDateInputSection {
+  display: flex;
+  margin-top: 10px;
+}
+
 .expirationDateInputSection input {
   height: 5vh;
   border: 1px solid #c4c4c4;
@@ -16,9 +21,4 @@
   width: 50px;
   text-align: center;
   margin-right: 10px;
-}
-
-.expirationDateInputSection {
-  display: flex;
-  margin-top: 10px;
 }

@@ -13,8 +13,12 @@
   border-bottom: none;
 }
 
-.menuItemTitle {
+.menuItemInformation {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  width: 70%;
 }
 
 .menuItemLabel {
@@ -29,20 +33,13 @@
   max-height: 22px;
 }
 
-.menuItemInformation {
+.menuItemTitle {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  width: 70%;
 }
 
 .menuItemName {
   font-size: 1.1rem;
   font-weight: 600;
-}
-
-.menuItemPrice {
 }
 
 .menuItemDescription {

@@ -15,7 +15,6 @@ const OrdersPage: React.FC = () => {
         isFixed={true}
         handleBackIconClick={() => navigate("/home")}
       />
-
       <div className="orderPageContainer">
         <MyOrderList />
       </div>

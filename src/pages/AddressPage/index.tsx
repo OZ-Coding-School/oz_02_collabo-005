@@ -12,6 +12,7 @@ import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
 import { AddressType } from "../../types/addressType";
 import { Geocoding } from "@components/address/Geocoding";
+import Loading from "@components/common/loading/loading";
 
 const AddressPage: React.FC = () => {
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ const AddressPage: React.FC = () => {
   });
   const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
   const [isAddressExist, setIsAddressExist] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -36,17 +39,24 @@ const AddressPage: React.FC = () => {
 
   useEffect(() => {
     const getRes = async () => {
-      const response = await customAxios.get(apiRoutes.address);
-      if (response.status === 200) {
-        // 저장된 주소가 있으면
-        if (!response.data.error) {
-          setAddressData({
-            mainAddress: response.data.base,
-            subAddress: response.data.detail,
-          });
-          setIsAllFilled(true);
-          setIsAddressExist(true);
+      try {
+        setIsLoading(true);
+        const response = await customAxios.get(apiRoutes.address);
+        if (response.status === 200) {
+          // 저장된 주소가 있으면
+          if (!response.data.error) {
+            setAddressData({
+              mainAddress: response.data.base,
+              subAddress: response.data.detail,
+            });
+            setIsAllFilled(true);
+            setIsAddressExist(true);
+          }
         }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getRes();
@@ -142,70 +152,74 @@ const AddressPage: React.FC = () => {
         hasCartIcon={false}
         handleBackIconClick={() => navigate(-1)}
       />
-      <div className="addressMainContainer">
-        <div className="setAddressTextSection">
-          <h2>Set delivery address</h2>
-        </div>
-        <div>
-          <div className="selectMapSection">
-            <button onClick={openMapModal}>
-              <img src={selectMapIcon} alt="Select map icon" />
-              Find your location on the map
-            </button>
-            {isMapModalOpen && (
-              <GoogleMapModal
-                onSelectAddress={handleMapModalSelect}
-                onClose={closeMapModal}
-              />
-            )}
-            <div className="selectAddressTextInput">
-              <div className="mainAddressInput">
-                <AutoCompleteInput
-                  addressData={addressData}
-                  setAddressData={setAddressData}
-                  options={{
-                    strictBounds: true,
-                    componentRestrictions: { country: "KR" },
-                  }}
-                  handleInputChange={handleInputChange}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="addressMainContainer">
+          <div className="setAddressTextSection">
+            <h2>Set delivery address</h2>
+          </div>
+          <div>
+            <div className="selectMapSection">
+              <button onClick={openMapModal}>
+                <img src={selectMapIcon} alt="Select map icon" />
+                Find your location on the map
+              </button>
+              {isMapModalOpen && (
+                <GoogleMapModal
+                  onSelectAddress={handleMapModalSelect}
+                  onClose={closeMapModal}
                 />
+              )}
+              <div className="selectAddressTextInput">
+                <div className="mainAddressInput">
+                  <AutoCompleteInput
+                    addressData={addressData}
+                    setAddressData={setAddressData}
+                    options={{
+                      strictBounds: true,
+                      componentRestrictions: { country: "KR" },
+                    }}
+                    handleInputChange={handleInputChange}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="detailAddress">
-            {addressData.mainAddress !== "" ? (
-              <>
-                <InputItem
-                  label="Delivery detail"
-                  name="subAddress"
-                  type="text"
-                  value={addressData.subAddress}
-                  place="Please enter the details address."
-                  handleInputChange={handleInputChange}
-                />
-              </>
-            ) : (
-              <>
-                <span className="addressErrorMessage">{errorMessage}</span>
-              </>
-            )}
-          </div>
-          <div className="mapImageSection">
-            <div>Serviceable area</div>
-            <img src={ServiceableMapImage} alt="Serviceable map" />
-          </div>
-          <div className="saveAddressButton">
-            <Button
-              name="Save your address"
-              backgroundColor={isAllFilled ? "#FF6347" : "#767676"}
-              handleClick={handleSave}
-              buttonType="bigButton"
-              type="submit"
-              disabled={isAllFilled ? false : true}
-            />
+            <div className="detailAddress">
+              {addressData.mainAddress !== "" ? (
+                <>
+                  <InputItem
+                    label="Delivery detail"
+                    name="subAddress"
+                    type="text"
+                    value={addressData.subAddress}
+                    place="Please enter the details address."
+                    handleInputChange={handleInputChange}
+                  />
+                </>
+              ) : (
+                <>
+                  <span className="addressErrorMessage">{errorMessage}</span>
+                </>
+              )}
+            </div>
+            <div className="mapImageSection">
+              <div>Serviceable area</div>
+              <img src={ServiceableMapImage} alt="Serviceable map" />
+            </div>
+            <div className="saveAddressButton">
+              <Button
+                name="Save your address"
+                backgroundColor={isAllFilled ? "#FF6347" : "#767676"}
+                handleClick={handleSave}
+                buttonType="bigButton"
+                type="submit"
+                disabled={isAllFilled ? false : true}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

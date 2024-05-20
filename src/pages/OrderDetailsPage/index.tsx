@@ -9,6 +9,7 @@ import apiRoutes from "../../api/apiRoutes";
 import ViewOrderInstruction from "@components/orders/ordersheet/order/ViewOrderInstruction";
 import { ViewOrderType } from "../../types/ordersType";
 import OrderList from "@components/orders/ordersheet/order/OrderList";
+import Loading from "@components/common/loading/loading";
 
 const OrderDetailsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -16,10 +17,12 @@ const OrderDetailsPage: React.FC = () => {
   const { orderId } = useParams();
   const [isViewOrderDetail, setIsViewOrderDetail] = useState<boolean>(false);
   const [addressData, setAddressData] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const getViewOrder = async () => {
       try {
+        setIsLoading(true);
         const response = await customAxios.get(
           `${apiRoutes.orderDetail}?id=${orderId}`
         );
@@ -31,6 +34,8 @@ const OrderDetailsPage: React.FC = () => {
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getViewOrder();
@@ -50,31 +55,35 @@ const OrderDetailsPage: React.FC = () => {
         isFixed={true}
         handleBackIconClick={handleBackIconClick}
       />
-      <div className="orderSheetContainer">
-        <div className="orderSection">
-          {viewOrderData?.orders.map((id, index) => (
-            <OrderList
-              isViewOrderDetail={isViewOrderDetail}
-              key={index}
-              restaurant={id.restaurant}
-              menus={id.menus}
-            />
-          ))}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="orderSheetContainer">
+          <div className="orderSection">
+            {viewOrderData?.orders.map((id, index) => (
+              <OrderList
+                isViewOrderDetail={isViewOrderDetail}
+                key={index}
+                restaurant={id.restaurant}
+                menus={id.menus}
+              />
+            ))}
+          </div>
+          <AmountDetails
+            orderPrice={viewOrderData?.order_price}
+            deliveryFee={viewOrderData?.delivery_fee}
+            totalPrice={viewOrderData?.total_price}
+          />
+          <div className="OSsection">
+            <div className="deliveryDetailsTitle">Delivery details</div>
+            <AddressDetails addressData={addressData} />
+          </div>
+          <ViewOrderInstruction
+            noteRider={viewOrderData?.rider_request}
+            noteRes={viewOrderData?.store_request}
+          />
         </div>
-        <AmountDetails
-          orderPrice={viewOrderData?.order_price}
-          deliveryFee={viewOrderData?.delivery_fee}
-          totalPrice={viewOrderData?.total_price}
-        />
-        <div className="OSsection">
-          <div className="deliveryDetailsTitle">Delivery details</div>
-          <AddressDetails addressData={addressData} />
-        </div>
-        <ViewOrderInstruction
-          noteRider={viewOrderData?.rider_request}
-          noteRes={viewOrderData?.store_request}
-        />
-      </div>
+      )}
     </div>
   );
 };

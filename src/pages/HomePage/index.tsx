@@ -11,6 +11,7 @@ import { RestaurantType } from "../../types/restaurantTypes";
 import { useLatLngStore } from "../../store/useLatLngStore";
 import loader from "../../services/GoogleMapLoad";
 import { Geocoding } from "@components/address/Geocoding";
+import Loading from "@components/common/loading/loading";
 
 export type BannerType = {
   name: string;
@@ -28,12 +29,14 @@ const HomePage: React.FC = () => {
     [key: string]: RestaurantType[];
   }>({});
   const [address, setAddress] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // 레스토랑 리스트 get해오는 함수
   useEffect(() => {
     const getAddress = async () => {
       try {
         const response = await customAxios.get(apiRoutes.address);
+
         if (response.status === 200) {
           setAddress(response.data.base);
           if (response.data.base !== "") {
@@ -52,11 +55,14 @@ const HomePage: React.FC = () => {
     };
     const fetchRestaurants = async () => {
       try {
+        setIsLoading(true);
         const response = await customAxios.get(apiRoutes.restaurantList);
         if (response.status !== 200) throw new Error("예외가 발생했습니다.");
         setRestaurants(response.data);
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getAddress();
@@ -108,28 +114,36 @@ const HomePage: React.FC = () => {
   }, [restaurants]);
 
   return (
-    <div>
+    <>
       <Header
         hasBackIcon={false}
         title="Home"
         hasCartIcon={true}
         isFixed={true}
       />
-      <AddressBar address={address} />
-      <main className="mainContainer">
-        <Banner banners={banners} />
-        <div className="categoryList">
-          {Object.keys(categories).map((categoryKey) => (
-            <RestaurantCategory
-              key={categoryKey}
-              title={categoryKey}
-              restaurants={categories[categoryKey]}
-            />
-          ))}
-        </div>
-      </main>
+      <div className="homeContainer">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div>
+            <AddressBar address={address} />
+            <main className="mainContainer">
+              <Banner banners={banners} />
+              <div className="categoryList">
+                {Object.keys(categories).map((categoryKey) => (
+                  <RestaurantCategory
+                    key={categoryKey}
+                    title={categoryKey}
+                    restaurants={categories[categoryKey]}
+                  />
+                ))}
+              </div>
+            </main>
+          </div>
+        )}
+      </div>
       <FooterNavigationBar page="Home" />
-    </div>
+    </>
   );
 };
 

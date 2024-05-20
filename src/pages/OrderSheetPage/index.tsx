@@ -14,6 +14,7 @@ import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import "./OrderSheetPage.css";
 import { useLatLngStore } from "./../../store/useLatLngStore";
+import Loading from "@components/common/loading/loading";
 
 type RequestType = {
   store_request: string;
@@ -26,6 +27,7 @@ const OrderSheetPage: React.FC = () => {
   const [cartData, setCartData] = useState<CartDataType | null>(null);
   const [addressData, setAddressData] = useState<AddressType | null>(null);
   const [isValidated, setIsValidated] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [requestState, setRequestState] = useState<RequestType>({
     store_request: "",
@@ -49,7 +51,7 @@ const OrderSheetPage: React.FC = () => {
         coordinate: coordinate,
         store_request: requestState.store_request,
         rider_request: requestState.rider_request,
-        payment_method: 310101,
+        payment_method: 0,
       };
 
       localStorage.setItem("payOrderData", JSON.stringify(payOrderData));
@@ -60,10 +62,12 @@ const OrderSheetPage: React.FC = () => {
 
   useEffect(() => {
     const getCartData = () => {
+      setIsLoading(true);
       const getData = JSON.parse(localStorage.getItem("cartData")!);
       if (getData !== null && getData.orders.length !== 0) {
         setCartData(getData);
       }
+      setIsLoading(false);
     };
     getCartData();
   }, []);
@@ -71,6 +75,7 @@ const OrderSheetPage: React.FC = () => {
   useEffect(() => {
     const getAddress = async () => {
       try {
+        setIsLoading(true);
         const response = await customAxios.get(apiRoutes.address);
         setAddressData({
           mainAddress: response.data.base,
@@ -78,6 +83,8 @@ const OrderSheetPage: React.FC = () => {
         });
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getAddress();
@@ -102,62 +109,67 @@ const OrderSheetPage: React.FC = () => {
         isFixed={true}
         handleBackIconClick={() => navigate(-1)}
       />
-      {cartData && cartData.orders.length > 0 ? (
-        <div className="orderSheetContainer">
-          <div className="orderSection">
-            {cartData.orders.map((order) => (
-              <OrderList
-                key={order.restaurant.id}
-                restaurant={order.restaurant}
-                menus={order.menus}
-                setCartData={setCartData}
-              />
-            ))}
-            <button
-              className="addMoreBtn"
-              onClick={() => navigate("/home")}
-              aria-label="addMoreButton"
-            >
-              + Add More
-            </button>
-          </div>
-          <AmountDetails
-            orderPrice={cartData.order_price}
-            deliveryFee={cartData.delivery_fee}
-            totalPrice={cartData.total_price}
-          />
-          <div className="OSsection">
-            <div className="deliveryDetailsTitle">Delivery address</div>
-            {addressData ? (
-              <AddressDetails
-                addressData={`${addressData.mainAddress} ${addressData.subAddress}`}
-              />
-            ) : (
-              <AddressNotFound />
-            )}
-          </div>
-          <div className="OSsection">
-            <div className="deliveryDetailsTitle">Instructions</div>
-            <RequestInputSection
-              handleInputChange={(e) =>
-                handleInputChange(e.target.name, e.target.value)
-              }
-            />
-          </div>
-          <div className="ordersheetSubmitBtn">
-            <Button
-              name="Proceed to Payment"
-              buttonType="bigButton"
-              backgroundColor={
-                addressData && isValidated ? "#FF6347" : "#767676"
-              }
-              handleClick={handleSubmit}
-              disabled={!addressData || !isValidated}
-            />
-          </div>
-        </div>
+      {isLoading ? (
+        <Loading />
       ) : (
-        <OrderSheetEmpty />
+        <>
+          {cartData && cartData.orders.length > 0 ? (
+            <div className="orderSheetContainer">
+              <div className="orderSection">
+                {cartData.orders.map((order) => (
+                  <OrderList
+                    key={order.restaurant.id}
+                    restaurant={order.restaurant}
+                    menus={order.menus}
+                    setCartData={setCartData}
+                  />
+                ))}
+                <button
+                  className="addMoreBtn"
+                  onClick={() => navigate("/home")}
+                >
+                  + Add More
+                </button>
+              </div>
+              <AmountDetails
+                orderPrice={cartData.order_price}
+                deliveryFee={cartData.delivery_fee}
+                totalPrice={cartData.total_price}
+              />
+              <div className="OSsection">
+                <div className="deliveryDetailsTitle">Delivery address</div>
+                {addressData ? (
+                  <AddressDetails
+                    addressData={`${addressData.mainAddress} ${addressData.subAddress}`}
+                  />
+                ) : (
+                  <AddressNotFound />
+                )}
+              </div>
+              <div className="OSsection">
+                <div className="deliveryDetailsTitle">Instructions</div>
+                <RequestInputSection
+                  handleInputChange={(e) =>
+                    handleInputChange(e.target.name, e.target.value)
+                  }
+                />
+              </div>
+              <div className="ordersheetSubmitBtn">
+                <Button
+                  name="Proceed to Payment"
+                  buttonType="bigButton"
+                  backgroundColor={
+                    addressData && isValidated ? "#FF6347" : "#767676"
+                  }
+                  handleClick={handleSubmit}
+                  disabled={!addressData || !isValidated}
+                />
+              </div>
+            </div>
+          ) : (
+            <OrderSheetEmpty />
+          )}
+        </>
       )}
     </div>
   );

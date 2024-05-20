@@ -5,51 +5,57 @@ import customAxios from "../../../api/axios";
 import apiRoutes from "../../../api/apiRoutes";
 import MyOrderEmpty from "./MyOrderEmpty";
 import { OrderHistoryDataType } from "../../../types/ordersType";
+import Loading from "@components/common/loading/loading";
 
 const MyOrderList: React.FC = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [orderHistory, setOrderHistory] = useState<OrderHistoryDataType[]>();
 
   useEffect(() => {
     const getRes = async () => {
       try {
+        setIsLoading(true);
         const response = await customAxios.get(apiRoutes.orderList);
-        console.log(response);
         if (response.status === 200) {
           setOrderHistory(response.data.data);
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
     getRes();
   }, []);
 
   return (
-    !isLoading && (
-      <div className="myOrderListContainer">
-        {orderHistory?.length === 0 ? (
-          <MyOrderEmpty />
-        ) : (
-          <>
-            {orderHistory &&
-              orderHistory
-                .slice()
-                .reverse()
-                .map((orderHistoryList) => {
-                  return (
-                    <MyOrderItem
-                      orderHistoryList={orderHistoryList}
-                      orderId={orderHistoryList.id}
-                      key={orderHistoryList.id}
-                    />
-                  );
-                })}
-          </>
-        )}
-      </div>
-    )
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div>
+          {orderHistory?.length === 0 ? (
+            <MyOrderEmpty />
+          ) : (
+            <div className="myOrderListContainer">
+              {orderHistory &&
+                orderHistory
+                  .slice()
+                  .reverse()
+                  .map((orderHistoryList) => {
+                    return (
+                      <MyOrderItem
+                        orderHistoryList={orderHistoryList}
+                        orderId={orderHistoryList.id}
+                        key={orderHistoryList.id}
+                      />
+                    );
+                  })}
+            </div>
+          )}
+        </div>
+      )}
+    </>
   );
 };
 

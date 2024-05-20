@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import addCardImage from "../../../assets/images/AddCardImage.webp";
-import ProceedModal from "../modal/ProceedModal";
 import { useNavigate } from "react-router-dom";
+import { FcSimCardChip } from "react-icons/fc";
+import { TiPlus } from "react-icons/ti";
+import ProceedModal from "@components/common/modal/ProceedModal";
 
-const AddCardItem: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const AddCards: React.FC = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (): void => {
     setIsModalOpen(true);
@@ -27,12 +28,16 @@ const AddCardItem: React.FC = () => {
 
   return (
     <>
-      <img
-        src={addCardImage}
-        alt="addCardImage"
-        onClick={openModal}
-        style={{ cursor: "pointer" }}
-      />
+      <div
+        className={"paymentItem addCardItem"}
+        onClick={() => openModal()}
+        id="addCards"
+      >
+        <FcSimCardChip className="simCard" />
+        <div className="addCardPlus">
+          <TiPlus />
+        </div>
+      </div>
       {isModalOpen && (
         <ProceedModal
           onClose={closeModal}
@@ -47,4 +52,4 @@ const AddCardItem: React.FC = () => {
   );
 };
 
-export default AddCardItem;
+export default AddCards;

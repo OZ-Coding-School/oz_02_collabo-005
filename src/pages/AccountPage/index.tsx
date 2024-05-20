@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "@components/common/header/Header";
 import "./AccountPage.css";
 import UserInfoSection from "@components/account/UserInfoSection";
-import CardManagementSection from "@components/common/addcard/CardManagementSection";
 import { useNavigate } from "react-router-dom";
 import Button from "@components/common/button/Button";
 import ProceedModal from "@components/common/modal/ProceedModal";
@@ -10,6 +9,8 @@ import customAxios from "../../api/axios";
 import apiRoutes from "../../api/apiRoutes";
 import { inputType } from "../SignupPage";
 import { getStoredLoginState, useLoginStore } from "../../store/useLoginStore";
+import Loading from "@components/common/loading/loading";
+import AddCards from "@components/common/payment/AddCards";
 
 export type UserDataType = {
   name: inputType;
@@ -37,20 +38,30 @@ const AccountPage: React.FC = () => {
   });
   const { loginToken } = getStoredLoginState();
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (loginToken !== null) {
       const getUserData = async () => {
-        const response = await customAxios.get(apiRoutes.user);
-        setPreEmail(response.data.email);
-        setUserData({
-          ...userData,
-          name: { value: response.data.name, error: "" },
-          email: { value: response.data.email, error: "" },
-          phone: { value: response.data.phone_number, error: "" },
-          birthDay: { value: response.data.birthday, error: "" },
-        });
-        setIsLoading(false);
+        try {
+          setIsLoading(true);
+          const response = await customAxios.get(apiRoutes.user);
+
+          if (response.status !== 200)
+            throw new Error(`예외 발생 ! 상태코드 : ${response.status}`);
+          setPreEmail(response.data.email);
+          setUserData({
+            ...userData,
+            name: { value: response.data.name, error: "" },
+            email: { value: response.data.email, error: "" },
+            phone: { value: response.data.phone_number, error: "" },
+            birthDay: { value: response.data.birthday, error: "" },
+          });
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsLoading(false);
+        }
       };
       getUserData();
     }
@@ -200,14 +211,16 @@ const AccountPage: React.FC = () => {
   };
 
   return (
-    !isLoading && (
-      <>
-        <Header
-          hasBackIcon={true}
-          title="Account"
-          hasCartIcon={false}
-          handleBackIconClick={() => navigate(-1)}
-        />
+    <>
+      <Header
+        hasBackIcon={true}
+        title="Account"
+        hasCartIcon={false}
+        handleBackIconClick={() => navigate(-1)}
+      />
+      {isLoading ? (
+        <Loading />
+      ) : (
         <div className="accountMainContainer">
           <div className="editButtonSection">
             <Button
@@ -224,7 +237,7 @@ const AccountPage: React.FC = () => {
             setUserData={setUserData}
           />
           <div className="cardManagementSection">
-            <CardManagementSection />
+            <AddCards />
           </div>
           <div className="signOutSection">
             <Button
@@ -259,8 +272,8 @@ const AccountPage: React.FC = () => {
             )}
           </div>
         </div>
-      </>
-    )
+      )}
+    </>
   );
 };
 

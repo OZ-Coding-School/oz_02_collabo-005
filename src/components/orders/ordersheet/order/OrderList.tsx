@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import OrderItem from "./OrderItem";
 import "./OrderList.css";
-import { Menu, Restaurant, CartDataType } from "src/types/ordersType";
+import { Menu, Restaurant, CartDataType } from "../../../../types/ordersType";
 
 interface OrderListType {
   restaurant: Restaurant;

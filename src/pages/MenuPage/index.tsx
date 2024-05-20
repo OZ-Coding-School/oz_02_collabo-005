@@ -5,10 +5,10 @@ import "./MenuPage.css";
 import Button from "@components/common/button/Button";
 import QuantityButton from "@components/common/button/QuantityButton";
 import { useNavigate, useParams } from "react-router-dom";
-import { menuOptionType } from "src/types/menuOptionTypes";
+import { menuOptionType } from "../../types/menuOptionTypes";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
-import { Order } from "src/types/ordersType";
+import { Order } from "../../types/ordersType";
 import { addCommasToNumberString } from "./../../utils/addCommas";
 
 const MenuPage: React.FC = () => {

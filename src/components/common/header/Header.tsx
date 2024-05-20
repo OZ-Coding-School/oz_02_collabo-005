@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import BackIcon from "../../../assets/icons/back-icon.png";
-import CartIcon from "../../../assets/icons/cart-icon.png";
+import BackIcon from "../../../assets/icons/back-icon.webp";
+import CartIcon from "../../../assets/icons/cart-icon.webp";
 import "./Header.css";
 import { useLatLngStore } from "./../../../store/useLatLngStore";
 import customAxios from "./../../../api/axios";
@@ -64,6 +64,7 @@ const Header: React.FC<HeaderProps> = ({
       {hasBackIcon && (
         <img
           src={BackIcon}
+          alt="BackIcon"
           className="backIcon"
           onClick={handleBackIconClick}
         />
@@ -71,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({
       <div className="headerTitle">{title}</div>
       {hasCartIcon && (
         <div className="headerCart" onClick={handleCartIconClick}>
-          <img src={CartIcon} className="cartIcon" />
+          <img src={CartIcon} alt="CartIcon" className="cartIcon" />
           <div className="cartQuantity">{count}</div>
         </div>
       )}

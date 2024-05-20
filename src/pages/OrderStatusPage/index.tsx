@@ -3,7 +3,7 @@ import "./OrderStatus.css";
 import Header from "@components/common/header/Header";
 import Button from "@components/common/button/Button";
 import { useLocation, useNavigate } from "react-router-dom";
-import orderSuccessIcon from "../../assets/icons/orderSuccessIcon.png";
+import orderSuccessIcon from "../../assets/icons/orderSuccessIcon.webp";
 
 const OrderStatusPage: React.FC = () => {
   const location = useLocation();
@@ -32,7 +32,7 @@ const OrderStatusPage: React.FC = () => {
           <div className="statusText">
             {isSuccess ? (
               <>
-                <img src={orderSuccessIcon} />
+                <img src={orderSuccessIcon} alt="OrderSuccessIcon" />
                 <h1>
                   "Order successfully
                   <br />

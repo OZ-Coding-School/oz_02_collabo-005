@@ -24,7 +24,11 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
       <div className="mapModalOverlay" onClick={onClose}>
         <div className="mapModalContent" onClick={(e) => e.stopPropagation()}>
           <div className="closeModalSection">
-            <button className="closeModalButton" onClick={onClose}>
+            <button
+              className="closeModalButton"
+              onClick={onClose}
+              aria-label="closeButton"
+            >
               x
             </button>
           </div>
@@ -52,6 +56,7 @@ const GoogleMapModal: React.FC<MapModalProps> = ({
             <button
               className="selectAddressButton"
               onClick={handleSelectAddress}
+              aria-label="selectButton"
             >
               Select current address
             </button>

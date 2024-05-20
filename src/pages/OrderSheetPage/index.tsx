@@ -8,8 +8,8 @@ import AddressNotFound from "@components/orders/ordersheet/deliverydetails/Addre
 import RequestInputSection from "@components/orders/ordersheet/instructions/RequestInputSection";
 import Button from "@components/common/button/Button";
 import OrderSheetEmpty from "@components/orders/ordersheet/empty/OrderSheetEmpty";
-import { CartDataType, OrderDataType } from "src/types/ordersType";
-import { AddressType } from "src/types/addressType";
+import { CartDataType, OrderDataType } from "../../types/ordersType";
+import { AddressType } from "../../types/addressType";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
 import "./OrderSheetPage.css";
@@ -113,7 +113,11 @@ const OrderSheetPage: React.FC = () => {
                 setCartData={setCartData}
               />
             ))}
-            <button className="addMoreBtn" onClick={() => navigate("/home")}>
+            <button
+              className="addMoreBtn"
+              onClick={() => navigate("/home")}
+              aria-label="addMoreButton"
+            >
               + Add More
             </button>
           </div>

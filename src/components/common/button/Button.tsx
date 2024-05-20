@@ -27,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={handleClick}
       disabled={disabled}
       type={type}
+      aria-label={name}
     >
       {name}
     </button>

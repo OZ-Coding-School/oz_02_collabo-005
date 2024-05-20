@@ -7,7 +7,7 @@ import {
   CartDataType,
   cartType,
   Order,
-} from "src/types/ordersType";
+} from "../../../../types/ordersType";
 import { addCommasToNumberString } from "./../../../../utils/addCommas";
 import customAxios from "./../../../../api/axios";
 import apiRoutes from "./../../../../api/apiRoutes";

@@ -9,7 +9,7 @@ import RestaurantLogo from "@components/common/restaurantlogo/RestaurantLogo";
 import { useNavigate, useParams } from "react-router-dom";
 import customAxios from "./../../api/axios";
 import apiRoutes from "./../../api/apiRoutes";
-import { MenuGroupType, RestaurantInfoType } from "src/types/restaurantTypes";
+import { MenuGroupType, RestaurantInfoType } from "../../types/restaurantTypes";
 import { addCommasToNumberString } from "../../utils/addCommas";
 import Loading from "@components/common/loading/loading";
 

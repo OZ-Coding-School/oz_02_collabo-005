@@ -1,7 +1,7 @@
 import React from "react";
 import MenuItem from "./MenuItem";
 import "./MenuList.css";
-import { MenuGroupType } from "src/types/restaurantTypes";
+import { MenuGroupType } from "../../types/restaurantTypes";
 
 interface MenuListProps {
   selectedMenuList: MenuGroupType | undefined;

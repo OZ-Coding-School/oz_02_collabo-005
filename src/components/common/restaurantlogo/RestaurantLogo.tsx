@@ -8,7 +8,7 @@ interface RestaurantLogoProps {
 const RestaurantLogo: React.FC<RestaurantLogoProps> = ({ src }) => {
   return (
     <>
-      <img src={src} className="restaurantLogoImg" />
+      <img src={src} alt="restaurantLogo" className="restaurantLogoImg" />
     </>
   );
 };

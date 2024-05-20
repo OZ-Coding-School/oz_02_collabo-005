@@ -1,4 +1,4 @@
-import { inputType } from "src/pages/SignupPage";
+import { inputType } from "../../../pages/SignupPage";
 import "./BirthdayInput.css";
 import { useEffect, useState } from "react";
 import { dayRegex, monthRegex, yearRegex } from "../../../utils/regex";
@@ -89,7 +89,7 @@ const BirthdayInput: React.FC<BirthdayInputProps> = ({
     }
 
     if (isError || birth.length < 8) {
-      return "생년월일이 올바르지 않습니다.";
+      return "Invalid date of birth.";
     }
 
     return "";

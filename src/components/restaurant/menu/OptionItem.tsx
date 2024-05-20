@@ -1,6 +1,6 @@
 import React from "react";
 import "./OptionItem.css";
-import { optionType } from "src/types/menuOptionTypes";
+import { optionType } from "../../../types/menuOptionTypes";
 import { addCommasToNumberString } from "../../../utils/addCommas";
 
 interface OptionItemProps extends Omit<optionType, "id"> {

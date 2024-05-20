@@ -1,9 +1,9 @@
 import React from "react";
 import "./MenuItem.css";
-import { MenuType } from "src/types/restaurantTypes";
+import { MenuType } from "../../types/restaurantTypes";
 import { useNavigate } from "react-router-dom";
 import { addCommasToNumberString } from "../../utils/addCommas";
-import dummyImg from "./../../assets/images/dummyMenu.png";
+import dummyImg from "./../../assets/images/dummyMenu.webp";
 
 interface MenuItemProps {
   menu: MenuType;
@@ -53,6 +53,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
         )}
         <img
           src={menu.picture ? menu.picture : dummyImg}
+          alt="menuImage"
           className="menuMainImgContainer menuMainImg"
         />
       </div>

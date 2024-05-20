@@ -86,7 +86,7 @@ const UserInfoSection: React.FC<isEditProps> = ({
   };
 
   return (
-    <div className="signUpContainer">
+    <div>
       <form>
         <InputItem
           label="Name"

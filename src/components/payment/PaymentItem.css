@@ -3,6 +3,17 @@
   flex-direction: column;
 }
 
+.paymentItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  height: 30vh;
+  background-color: rgb(255, 216, 206);
+  border-radius: 10px;
+}
+
 .simCard {
   position: absolute;
   left: 10px;
@@ -20,17 +31,6 @@
   background-color: rgb(255, 132, 98);
   font-size: 3rem;
   color: rgb(103, 103, 103);
-}
-
-.paymentItem {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.3rem;
-  height: 30vh;
-  background-color: rgb(255, 216, 206);
-  border-radius: 10px;
 }
 
 .selectedPayment {

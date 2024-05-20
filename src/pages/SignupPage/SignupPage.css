@@ -1,8 +1,3 @@
-.signupTitle {
-  font-size: 2rem;
-  margin-top: 0px;
-}
-
 .signupContainer {
   padding: 10px;
 }
@@ -10,6 +5,11 @@
 .signupContainer > form {
   display: grid;
   gap: 10px;
+}
+
+.signupTitle {
+  font-size: 2rem;
+  margin-top: 0px;
 }
 
 .signupBtn {

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import loader from "../../services/GoogleMapLoad";
+import "./SelectLocation.css";
+
 import {
   freeDeliveryPolygonOptions,
   serviceablePolygonOptions,

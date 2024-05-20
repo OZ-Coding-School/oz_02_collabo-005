@@ -15,7 +15,7 @@ interface BannerProps {
 
 const Banner: React.FC<BannerProps> = ({ banners }) => {
   return (
-    <div className="bannerRow">
+    <div>
       <Swiper
         slidesPerView="auto"
         spaceBetween={15}

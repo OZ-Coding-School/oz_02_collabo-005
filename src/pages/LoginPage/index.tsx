@@ -3,10 +3,8 @@ import Header from "@components/common/header/Header";
 import logoImage from "../../assets/images/AppLogo.webp";
 import Button from "@components/common/button/Button";
 import "./LoginPage.css";
-import googleLogoImage from "../../assets/images/GoogleLogoImage.webp";
 import FloatingLabelInput from "@components/common/input/FloatingLabelInput";
 import { useLocation, useNavigate } from "react-router-dom";
-import SocialLoginButton from "../../components/login/SocialLoginButton";
 import apiRoutes from "../../api/apiRoutes";
 import customAxios from "../../api/axios";
 import { useLoginStore } from "../../store/useLoginStore";
@@ -136,13 +134,13 @@ const LoginPage: React.FC = () => {
           </div>
         </form>
 
-        <div className="googleButton">
+        {/* <div className="googleButton">
           <SocialLoginButton
             name="googleLogoImage"
             text="Continue with Google"
             imageUrl={googleLogoImage}
           />
-        </div>
+        </div> */}
       </div>
     </>
   );

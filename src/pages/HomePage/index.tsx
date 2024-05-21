@@ -12,6 +12,7 @@ import { useLatLngStore } from "../../store/useLatLngStore";
 import loader from "../../services/GoogleMapLoad";
 import { Geocoding } from "@components/address/Geocoding";
 import Loading from "@components/common/loading/loading";
+import Footer from "@components/common/footer/Footer";
 
 export type BannerType = {
   name: string;
@@ -142,6 +143,7 @@ const HomePage: React.FC = () => {
           </div>
         )}
       </div>
+      <Footer />
       <FooterNavigationBar page="Home" />
     </>
   );

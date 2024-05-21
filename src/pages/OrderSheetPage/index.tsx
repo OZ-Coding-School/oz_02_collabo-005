@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "@components/common/header/Header";
-import OrderList from "@components/orders/ordersheet/order/OrderList";
-import AmountDetails from "@components/orders/ordersheet/amount/AmountDetails";
-import AddressDetails from "@components/orders/ordersheet/deliverydetails/AddressDetails";
-import AddressNotFound from "@components/orders/ordersheet/deliverydetails/AddressNotFound";
-import RequestInputSection from "@components/orders/ordersheet/instructions/RequestInputSection";
-import Button from "@components/common/button/Button";
-import OrderSheetEmpty from "@components/orders/ordersheet/empty/OrderSheetEmpty";
-import { CartDataType, OrderDataType } from "../../types/ordersType";
-import { AddressType } from "../../types/addressType";
-import customAxios from "./../../api/axios";
-import apiRoutes from "./../../api/apiRoutes";
-import "./OrderSheetPage.css";
-import { useLatLngStore } from "./../../store/useLatLngStore";
-import Loading from "@components/common/loading/loading";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '@components/common/header/Header';
+import OrderList from '@components/orders/ordersheet/order/OrderList';
+import AmountDetails from '@components/orders/ordersheet/amount/AmountDetails';
+import AddressDetails from '@components/orders/ordersheet/deliverydetails/AddressDetails';
+import AddressNotFound from '@components/orders/ordersheet/deliverydetails/AddressNotFound';
+import RequestInputSection from '@components/orders/ordersheet/instructions/RequestInputSection';
+import Button from '@components/common/button/Button';
+import OrderSheetEmpty from '@components/orders/ordersheet/empty/OrderSheetEmpty';
+import { CartDataType, OrderDataType } from '../../types/ordersType';
+import { AddressType } from '../../types/addressType';
+import customAxios from './../../api/axios';
+import apiRoutes from './../../api/apiRoutes';
+import './OrderSheetPage.css';
+import { useLatLngStore } from './../../store/useLatLngStore';
+import Loading from '@components/common/loading/loading';
 
 type RequestType = {
   store_request: string;
@@ -30,19 +30,23 @@ const OrderSheetPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [requestState, setRequestState] = useState<RequestType>({
-    store_request: "",
-    rider_request: "",
+    store_request: '',
+    rider_request: '',
   });
 
   const coordinate =
-    lat === "" && lng === "" ? [] : [parseFloat(lat), parseFloat(lng)];
+    lat === '' && lng === '' ? [] : [parseFloat(lat), parseFloat(lng)];
 
-  const handleInputChange = (field: string, value: string): void => {
-    setRequestState({ ...requestState, [field]: value });
-  };
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      const { field, value } = e.target;
+      setRequestState({ ...requestState, [field]: value });
+    },
+    []
+  );
 
   const handleSubmit = () => {
-    const { orders } = JSON.parse(localStorage.getItem("orderData")!);
+    const { orders } = JSON.parse(localStorage.getItem('orderData')!);
 
     if (orders) {
       const payOrderData: OrderDataType = {
@@ -54,16 +58,16 @@ const OrderSheetPage: React.FC = () => {
         payment_method: 0,
       };
 
-      localStorage.setItem("payOrderData", JSON.stringify(payOrderData));
+      localStorage.setItem('payOrderData', JSON.stringify(payOrderData));
     }
 
-    navigate("/payment");
+    navigate('/payment');
   };
 
   useEffect(() => {
     const getCartData = () => {
       setIsLoading(true);
-      const getData = JSON.parse(localStorage.getItem("cartData")!);
+      const getData = JSON.parse(localStorage.getItem('cartData')!);
       if (getData !== null && getData.orders.length !== 0) {
         setCartData(getData);
       }
@@ -132,7 +136,7 @@ const OrderSheetPage: React.FC = () => {
                 ))}
                 <button
                   className="addMoreBtn"
-                  onClick={() => navigate("/home")}
+                  onClick={() => navigate('/home')}
                 >
                   + Add More
                 </button>
@@ -154,18 +158,14 @@ const OrderSheetPage: React.FC = () => {
               </div>
               <div className="OSsection">
                 <div className="deliveryDetailsTitle">Instructions</div>
-                <RequestInputSection
-                  handleInputChange={(e) =>
-                    handleInputChange(e.target.name, e.target.value)
-                  }
-                />
+                <RequestInputSection handleInputChange={handleInputChange} />
               </div>
               <div className="ordersheetSubmitBtn">
                 <Button
                   name="Proceed to Payment"
                   buttonType="bigButton"
                   backgroundColor={
-                    addressData && isValidated ? "#FF6347" : "#767676"
+                    addressData && isValidated ? '#FF6347' : '#767676'
                   }
                   handleClick={handleSubmit}
                   disabled={!addressData || !isValidated}

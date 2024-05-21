@@ -44,7 +44,7 @@ const MyOrderItem: React.FC<MyOrderItemProps> = ({
           <div className={ordersStatus}>{ordersStatusMessage}</div>
         </div>
         <button className="viewOrderBtn" onClick={handleViewOrderClick}>
-          View order
+          View detail
         </button>
       </div>
       {Object.entries(orderHistoryList.details).map(([id, value], index) => (

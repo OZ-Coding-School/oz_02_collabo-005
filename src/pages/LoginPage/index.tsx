@@ -136,14 +136,12 @@ const LoginPage: React.FC = () => {
           </div>
         </form>
 
-        <div className="socialLoginButtonSection">
-          <div className="googleButton">
-            <SocialLoginButton
-              name="googleLogoImage"
-              text="Continue with Google"
-              imageUrl={googleLogoImage}
-            />
-          </div>
+        <div className="googleButton">
+          <SocialLoginButton
+            name="googleLogoImage"
+            text="Continue with Google"
+            imageUrl={googleLogoImage}
+          />
         </div>
       </div>
     </>

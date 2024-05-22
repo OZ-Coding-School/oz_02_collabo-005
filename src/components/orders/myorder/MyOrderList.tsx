@@ -13,12 +13,10 @@ const MyOrderList: React.FC = () => {
 
   useEffect(() => {
     const getRes = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const response = await customAxios.get(apiRoutes.orderList);
-        if (response.status === 200) {
-          setOrderHistory(response.data.data);
-        }
+        setOrderHistory(response.data.data);
       } catch (error) {
         console.log(error);
       } finally {

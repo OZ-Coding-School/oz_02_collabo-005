@@ -37,17 +37,15 @@ const HomePage: React.FC = () => {
     const getAddress = async () => {
       try {
         const response = await customAxios.get(apiRoutes.address);
-
-        if (response.status === 200) {
-          setAddress(response.data.base);
-          if (response.data.base !== "") {
-            try {
-              await loader.importLibrary("maps");
-              const { userLat, userLng } = await Geocoding(response.data.base);
-              useLatLngStore.setState({ lat: userLat, lng: userLng });
-            } catch (error) {
-              console.error("Geocoding error: ", error);
-            }
+        setAddress(response.data.base);
+        if (response.data.base !== "") {
+          try {
+            // 가져온 주소를 위도와 경도로 변환해서 저장
+            await loader.importLibrary("maps");
+            const { userLat, userLng } = await Geocoding(response.data.base);
+            useLatLngStore.setState({ lat: userLat, lng: userLng });
+          } catch (error) {
+            console.error("Geocoding error: ", error);
           }
         }
       } catch (error) {
@@ -55,10 +53,9 @@ const HomePage: React.FC = () => {
       }
     };
     const fetchRestaurants = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const response = await customAxios.get(apiRoutes.restaurantList);
-        if (response.status !== 200) throw new Error("예외가 발생했습니다.");
         setRestaurants(response.data);
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);

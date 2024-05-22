@@ -126,10 +126,8 @@ const OrderItem: React.FC<OrderItemProps> = ({
             JSON.stringify({ orders: updatedOrders })
           );
           localStorage.setItem("cartData", JSON.stringify(response.data.data));
-
           setCartData(response.data.data);
           changeCartCount();
-          if (response?.status !== 200) throw new Error("An error occurred.");
         } catch (error) {
           console.error("Failed to fetch restaurants:", error);
         }
@@ -169,7 +167,6 @@ const OrderItem: React.FC<OrderItemProps> = ({
           localStorage.setItem("cartData", JSON.stringify(response.data.data));
           setCartData(response.data.data);
           changeCartCount();
-          if (response?.status !== 200) throw new Error("An error occurred.");
         } catch (error) {
           console.error("Failed to fetch restaurants:", error);
         }

@@ -3,7 +3,7 @@ import customAxios from "../api/axios";
 
 const useGet = <T>(url: string) => {
   const [response, setResponse] = useState<T | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const callUrl = async () => {
@@ -12,7 +12,7 @@ const useGet = <T>(url: string) => {
         const { data } = await customAxios.get<T>(url);
         setResponse(data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }

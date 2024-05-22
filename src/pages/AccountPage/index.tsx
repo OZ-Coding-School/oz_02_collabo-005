@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Header from "@components/common/header/Header";
-import "./AccountPage.css";
-import UserInfoSection from "@components/account/UserInfoSection";
-import { useNavigate } from "react-router-dom";
-import Button from "@components/common/button/Button";
-import ProceedModal from "@components/common/modal/ProceedModal";
-import customAxios from "../../api/axios";
-import apiRoutes from "../../api/apiRoutes";
-import { inputType } from "../SignupPage";
-import { getStoredLoginState, useLoginStore } from "../../store/useLoginStore";
-import Loading from "@components/common/loading/loading";
-import AddCards from "@components/common/payment/AddCards";
+import React, { useEffect, useState } from 'react';
+import Header from '@components/common/header/Header';
+import './AccountPage.css';
+import UserInfoSection from '@components/account/UserInfoSection';
+import { useNavigate } from 'react-router-dom';
+import Button from '@components/common/button/Button';
+import ProceedModal from '@components/common/modal/ProceedModal';
+import customAxios from '../../api/axios';
+import apiRoutes from '../../api/apiRoutes';
+import { inputType } from '../SignupPage';
+import { useLoginStore } from '../../store/useLoginStore';
+import Loading from '@components/common/loading/loading';
+import AddCards from '@components/common/payment/AddCards';
+import { useQuery } from '../../hooks/useFetch';
 
 export type UserDataType = {
   name: inputType;
@@ -25,52 +26,46 @@ export type UserDataType = {
 const AccountPage: React.FC = () => {
   const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [preEmail, setPreEmail] = useState<string>("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
-  const [userData, setUserData] = useState<UserDataType>({
-    name: { value: "", error: "" },
-    email: { value: "", error: "" },
-    currentPassword: { value: "", error: "" },
-    newPassword: { value: "", error: "" },
-    phone: { value: "", error: "" },
-    birthDay: { value: "", error: "" },
-  });
-  const { loginToken } = getStoredLoginState();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [userData, setUserData] = useState<UserDataType>({
+    name: { value: '', error: '' },
+    email: { value: '', error: '' },
+    currentPassword: { value: '', error: '' },
+    newPassword: { value: '', error: '' },
+    phone: { value: '', error: '' },
+    birthDay: { value: '', error: '' },
+  });
+
+  const { data: fetchedUserData, isLoading } = useQuery<Record<string, string>>(
+    apiRoutes.user
+  );
+  const preEmail = fetchedUserData?.email;
+
+  const { refetch: checkEmail } = useQuery(
+    `${apiRoutes.userCheck}?email=${userData.email.value}`
+  );
 
   useEffect(() => {
-    if (loginToken !== null) {
-      const getUserData = async () => {
-        try {
-          setIsLoading(true);
-          const response = await customAxios.get(apiRoutes.user);
-
-          if (response.status !== 200)
-            throw new Error(`Error ! Status Code : ${response.status}`);
-          setPreEmail(response.data.email);
-          setUserData({
-            ...userData,
-            name: { value: response.data.name, error: "" },
-            email: { value: response.data.email, error: "" },
-            phone: { value: response.data.phone_number, error: "" },
-            birthDay: { value: response.data.birthday, error: "" },
-          });
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-      getUserData();
+    if (!fetchedUserData) {
+      return;
     }
-  }, []);
+
+    setUserData({
+      birthDay: { value: fetchedUserData.birthday, error: '' },
+      currentPassword: { value: fetchedUserData.currentPassword, error: '' },
+      email: { value: fetchedUserData.email, error: '' },
+      name: { value: fetchedUserData.name, error: '' },
+      newPassword: { value: fetchedUserData.newPassword, error: '' },
+      phone: { value: fetchedUserData.phone_number, error: '' },
+    });
+  }, [fetchedUserData]);
 
   const isAllFieldsValidated = (): boolean => {
     for (const key in userData) {
       const error = userData[key].error;
-      if (error !== "") return false;
+      if (error !== '') return false;
     }
     return true;
   };
@@ -80,10 +75,9 @@ const AccountPage: React.FC = () => {
       return true;
     } else {
       try {
-        const response = await customAxios.get(
-          `${apiRoutes.userCheck}?email=${email}`
-        );
-        if (response.status === 200) return !response.data.exists;
+        const data = await checkEmail();
+
+        return !data.exists;
       } catch (error) {
         console.log(error);
       }
@@ -104,57 +98,55 @@ const AccountPage: React.FC = () => {
     // edit버튼 클릭했을때
     if (isEdit === false) {
       setIsEdit(true);
+      return;
     }
-    // save버튼을 클릭했을 때
-    else {
-      if (
+    // 유효성 검사 실패
+    if (
+      !(
         isAllFieldsValidated() &&
-        userData.email.value !== "" &&
-        userData.name.value !== "" &&
-        userData.phone.value !== ""
-      ) {
-        try {
-          const isUnique = await isEmailUnique(putUserData.email);
-          if (isUnique) {
-            const response = await customAxios.put(
-              apiRoutes.userUpdate,
-              putUserData
-            );
-            if (response.status === 200) {
-              alert("Update Complete!!");
-              setIsEdit(false);
-              setUserData({
-                ...userData,
-                currentPassword: { value: "", error: "" },
-                newPassword: { value: "", error: "" },
-              });
-            }
-          } else {
-            alert("Your email has been duplicated.");
-            setUserData((prev) => ({
-              ...prev,
-              email: {
-                value: putUserData.email,
-                error: "Your email has been duplicated.",
-              },
-            }));
-          }
-        } catch (error) {
-          if (
-            userData.currentPassword.value !== "" &&
-            userData.newPassword.value !== ""
-          ) {
-            alert("Current password error");
-          } else {
-            alert(
-              "You must enter both the current password and the new password."
-            );
-          }
-        }
-      } else {
-        alert(
-          "Please fill in all the fields for name, email, and phone number correctly.."
+        userData.email.value !== '' &&
+        userData.name.value !== '' &&
+        userData.phone.value !== ''
+      )
+    ) {
+      alert(
+        'Please fill in all the fields for name, email, and phone number correctly..'
+      );
+      return;
+    }
+
+    try {
+      const isUnique = await isEmailUnique(putUserData.email);
+      if (isUnique) {
+        const response = await customAxios.put(
+          apiRoutes.userUpdate,
+          putUserData
         );
+        alert('Update Complete!!');
+        setIsEdit(false);
+        setUserData({
+          ...userData,
+          currentPassword: { value: '', error: '' },
+          newPassword: { value: '', error: '' },
+        });
+      } else {
+        alert('Your email has been duplicated.');
+        setUserData((prev) => ({
+          ...prev,
+          email: {
+            value: putUserData.email,
+            error: 'Your email has been duplicated.',
+          },
+        }));
+      }
+    } catch (error) {
+      if (
+        userData.currentPassword.value !== '' &&
+        userData.newPassword.value !== ''
+      ) {
+        alert('Current password error');
+      } else {
+        alert('You must enter both the current password and the new password.');
       }
     }
   };
@@ -167,7 +159,7 @@ const AccountPage: React.FC = () => {
       refreshToken: null,
     });
     localStorage.clear();
-    navigate("/");
+    navigate('/');
   };
 
   // 계정삭제 버튼을 눌렀을 때 호출되는 함수
@@ -181,7 +173,7 @@ const AccountPage: React.FC = () => {
           refreshToken: null,
         });
         localStorage.clear();
-        navigate("/");
+        navigate('/');
       }
     } catch (error) {
       console.error(error);
@@ -224,11 +216,11 @@ const AccountPage: React.FC = () => {
         <div className="accountMainContainer">
           <div className="editButtonSection">
             <Button
-              name={isEdit ? "Save" : "Edit"}
+              name={isEdit ? 'Save' : 'Edit'}
               handleClick={handleEditChange}
               buttonType="smallButton"
               disabled={isAllFieldsValidated() ? false : true}
-              type={isEdit ? "submit" : "button"}
+              type={isEdit ? 'submit' : 'button'}
             />
           </div>
           <UserInfoSection

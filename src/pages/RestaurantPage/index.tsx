@@ -69,12 +69,11 @@ const RestaurantPage: React.FC = () => {
     };
     // 레스토랑 메뉴 가져오는 함수
     const getRestaurantMenus = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const response = await customAxios.get(
           `${apiRoutes.menuList}?restaurantId=${restaurantId}`
         );
-        if (response.status !== 200) throw new Error("예외가 발생했습니다.");
         setRestaurantInfo(response.data);
         setSelectedMenuList(response.data?.menu_group_list[0]);
       } catch (error) {

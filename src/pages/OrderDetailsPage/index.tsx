@@ -26,16 +26,14 @@ const OrderDetailsPage: React.FC = () => {
 
   useEffect(() => {
     const getViewOrder = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const response = await customAxios.get(
           `${apiRoutes.orderDetail}?id=${orderId}`
         );
-        if (response.data.status === 200) {
-          setIsViewOrderDetail(true);
-          setViewOrderData(response.data.data);
-          setAddressData(response.data.data.address);
-        }
+        setIsViewOrderDetail(true);
+        setViewOrderData(response.data.data);
+        setAddressData(response.data.data.address);
       } catch (error) {
         console.log(error);
       } finally {

@@ -74,8 +74,8 @@ const OrderSheetPage: React.FC = () => {
 
   useEffect(() => {
     const getAddress = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const response = await customAxios.get(apiRoutes.address);
         setAddressData({
           mainAddress: response.data.base,

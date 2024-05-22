@@ -95,7 +95,6 @@ const MenuPage: React.FC = () => {
     localStorage.setItem("orderData", JSON.stringify(updatedOrderData));
     updateCartCount();
 
-    alert("Order has been added to the basket.");
     navigate(`/restaurant/${restaurantId}`);
   };
 
@@ -106,7 +105,6 @@ const MenuPage: React.FC = () => {
         const response = await customAxios.get(
           `${apiRoutes.menuOptionList}?menuId=${menuId}`
         );
-        if (response.status !== 200) throw new Error("예외가 발생했습니다.");
         setMenuData(response.data);
       } catch (error) {
         console.error("Failed to fetch restaurants:", error);

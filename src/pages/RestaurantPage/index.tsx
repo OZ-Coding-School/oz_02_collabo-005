@@ -120,8 +120,6 @@ const RestaurantPage: React.FC = () => {
 
   const minimumFee = restaurantInfo?.minimum_order_amount || 16900;
 
-  console.log(restaurantInfo);
-
   return (
     <>
       {isLoading ? (

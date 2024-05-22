@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
 import customAxios from "../api/axios";
 
-const useGet = (url: string) => {
-  const [payload, setPayload] = useState(null);
+const useGet = <T>(url: string) => {
+  const [response, setResponse] = useState<T | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const callUrl = async () => {
+      setIsLoading(true);
       try {
-        const { data } = await customAxios.get(url);
-        setPayload(data);
+        const { data } = await customAxios.get<T>(url);
+        setResponse(data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     callUrl();
   }, [url]); // url이 변경될 때만 호출
 
-  return payload;
+  return { response, isLoading };
 };
 
 export default useGet;

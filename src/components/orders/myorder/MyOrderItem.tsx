@@ -48,16 +48,17 @@ const MyOrderItem: React.FC<MyOrderItemProps> = ({
         </button>
       </div>
       {Object.entries(orderHistoryList.details).map(([id, value], index) => (
-        <div
-          className="myOrderItemMainContainer"
-          key={id + index}
-          onClick={handleRestaurantClick(id)}
-        >
-          <div className="myOrderItemLogoImg">
+        <div className="myOrderItemMainContainer" key={id + index}>
+          <div
+            className="myOrderItemLogoImg"
+            onClick={handleRestaurantClick(id)}
+          >
             {value.logo && <RestaurantLogo src={value.logo} />}
           </div>
           <div className="myOrderInfoSection">
-            <div className="MIresName">{value.restaurant_name}</div>
+            <div className="MIresName" onClick={handleRestaurantClick(id)}>
+              {value.restaurant_name} &gt;
+            </div>
             {value.quantity === 1 ? (
               <div className="MImenuName">{value.menu_name}</div>
             ) : (

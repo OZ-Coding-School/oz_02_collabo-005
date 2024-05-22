@@ -74,16 +74,7 @@ const SignupPage: React.FC = () => {
 
     try {
       const isUnique = await isEmailUnique(userPostData.email);
-      if (isUnique) {
-        const response = await customAxios.post(
-          apiRoutes.userCreate,
-          userPostData
-        );
-        if (response.status === 200) {
-          alert("Membership registration is complete.");
-          navigate("/login");
-        }
-      } else {
+      if (!isUnique) {
         alert("Your email has been duplicated.");
         setUserData((prev) => ({
           ...prev,
@@ -92,7 +83,11 @@ const SignupPage: React.FC = () => {
             error: "Your email has been duplicated.",
           },
         }));
+        return;
       }
+      await customAxios.post(apiRoutes.userCreate, userPostData);
+      alert("Membership registration is complete.");
+      navigate("/login");
     } catch (error) {
       alert(
         "Please check again whether the password contains English characters, numbers, and special characters"
@@ -152,7 +147,7 @@ const SignupPage: React.FC = () => {
       const response = await customAxios.get(
         `${apiRoutes.userCheck}?email=${email}`
       );
-      if (response.status === 200) return !response.data.exists;
+      return !response.data.exists;
     } catch (error) {
       console.log(error);
     }

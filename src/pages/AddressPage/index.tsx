@@ -39,19 +39,17 @@ const AddressPage: React.FC = () => {
 
   useEffect(() => {
     const getRes = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const response = await customAxios.get(apiRoutes.address);
-        if (response.status === 200) {
-          // 저장된 주소가 있으면
-          if (!response.data.error) {
-            setAddressData({
-              mainAddress: response.data.base,
-              subAddress: response.data.detail,
-            });
-            setIsAllFilled(true);
-            setIsAddressExist(true);
-          }
+        // 저장된 주소가 있으면
+        if (!response.data.error) {
+          setAddressData({
+            mainAddress: response.data.base,
+            subAddress: response.data.detail,
+          });
+          setIsAllFilled(true);
+          setIsAddressExist(true);
         }
       } catch (error) {
         console.log(error);
@@ -94,33 +92,19 @@ const AddressPage: React.FC = () => {
         alert(
           "The address you have currently selected is a non-delivery area. Please choose again."
         );
+        return;
+      }
+      // 배달 가능 지역이고 이미 저장된 주소가 있을때는 update
+      if (isAddressExist) {
+        await customAxios.post(apiRoutes.addressUpdate, postAddressData);
+        navigate(-1);
       } else {
-        // 배달 가능 지역이고 이미 저장된 주소가 있을때는 update
-        if (isAddressExist) {
-          const postRes = await customAxios.post(
-            apiRoutes.addressUpdate,
-            postAddressData
-          );
-          if (postRes.status === 200) {
-            navigate(-1);
-          } else {
-            alert("Address update failed");
-          }
-        } else {
-          // 현재 등록된 주소 없을 때
-          const postRes = await customAxios.post(
-            apiRoutes.address,
-            postAddressData
-          );
-          if (postRes.status === 200) {
-            navigate(-1);
-          } else {
-            alert("Address registration failed");
-          }
-        }
+        // 현재 등록된 주소 없을 때
+        await customAxios.post(apiRoutes.address, postAddressData);
+        navigate(-1);
       }
     } catch (error) {
-      console.log(error);
+      alert("Address update failed");
     }
   };
 

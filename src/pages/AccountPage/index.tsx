@@ -43,12 +43,9 @@ const AccountPage: React.FC = () => {
   useEffect(() => {
     if (loginToken !== null) {
       const getUserData = async () => {
+        setIsLoading(true);
         try {
-          setIsLoading(true);
           const response = await customAxios.get(apiRoutes.user);
-
-          if (response.status !== 200)
-            throw new Error(`Error ! Status Code : ${response.status}`);
           setPreEmail(response.data.email);
           setUserData({
             ...userData,
@@ -78,15 +75,14 @@ const AccountPage: React.FC = () => {
   const isEmailUnique = async (email: string) => {
     if (preEmail === email) {
       return true;
-    } else {
-      try {
-        const response = await customAxios.get(
-          `${apiRoutes.userCheck}?email=${email}`
-        );
-        if (response.status === 200) return !response.data.exists;
-      } catch (error) {
-        console.log(error);
-      }
+    }
+    try {
+      const response = await customAxios.get(
+        `${apiRoutes.userCheck}?email=${email}`
+      );
+      return !response.data.exists;
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -104,58 +100,51 @@ const AccountPage: React.FC = () => {
     // edit버튼 클릭했을때
     if (isEdit === false) {
       setIsEdit(true);
+      return;
     }
     // save버튼을 클릭했을 때
-    else {
-      if (
-        isAllFieldsValidated() &&
-        userData.email.value !== "" &&
-        userData.name.value !== "" &&
-        userData.phone.value !== ""
-      ) {
-        try {
-          const isUnique = await isEmailUnique(putUserData.email);
-          if (isUnique) {
-            const response = await customAxios.put(
-              apiRoutes.userUpdate,
-              putUserData
-            );
-            if (response.status === 200) {
-              alert("Update Complete!!");
-              setIsEdit(false);
-              setUserData({
-                ...userData,
-                currentPassword: { value: "", error: "" },
-                newPassword: { value: "", error: "" },
-              });
-            }
-          } else {
-            alert("Your email has been duplicated.");
-            setUserData((prev) => ({
-              ...prev,
-              email: {
-                value: putUserData.email,
-                error: "Your email has been duplicated.",
-              },
-            }));
-          }
-        } catch (error) {
-          if (
-            userData.currentPassword.value !== "" &&
-            userData.newPassword.value !== ""
-          ) {
-            alert("Current password error");
-          } else {
-            alert(
-              "You must enter both the current password and the new password."
-            );
-          }
+
+    if (
+      isAllFieldsValidated() &&
+      userData.email.value !== "" &&
+      userData.name.value !== "" &&
+      userData.phone.value !== ""
+    ) {
+      try {
+        const isUnique = await isEmailUnique(putUserData.email);
+        if (!isUnique) {
+          alert("Your email has been duplicated.");
+          setUserData((prev) => ({
+            ...prev,
+            email: {
+              value: putUserData.email,
+              error: "Your email has been duplicated.",
+            },
+          }));
+          return;
         }
-      } else {
-        alert(
-          "Please fill in all the fields for name, email, and phone number correctly.."
-        );
+        await customAxios.put(apiRoutes.userUpdate, putUserData);
+        alert("Update Complete!!");
+        setIsEdit(false);
+        setUserData({
+          ...userData,
+          currentPassword: { value: "", error: "" },
+          newPassword: { value: "", error: "" },
+        });
+      } catch (error) {
+        if (
+          userData.currentPassword.value !== "" &&
+          userData.newPassword.value !== ""
+        ) {
+          alert("Current password error");
+          return;
+        }
+        alert("You must enter both the current password and the new password.");
       }
+    } else {
+      alert(
+        "Please fill in all the fields for name, email, and phone number correctly.."
+      );
     }
   };
 
@@ -173,16 +162,14 @@ const AccountPage: React.FC = () => {
   // 계정삭제 버튼을 눌렀을 때 호출되는 함수
   const handleDeleteAccount = async () => {
     try {
-      const response = await customAxios.post(apiRoutes.userDelete);
-      if (response.status === 200) {
-        useLoginStore.setState({
-          isLogin: false,
-          loginToken: null,
-          refreshToken: null,
-        });
-        localStorage.clear();
-        navigate("/");
-      }
+      await customAxios.post(apiRoutes.userDelete);
+      useLoginStore.setState({
+        isLogin: false,
+        loginToken: null,
+        refreshToken: null,
+      });
+      localStorage.clear();
+      navigate("/");
     } catch (error) {
       console.error(error);
     }

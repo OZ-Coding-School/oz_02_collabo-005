@@ -40,32 +40,29 @@ const PaymentPage: React.FC = () => {
 
   const handlePayNow = async () => {
     let errorMessage = "";
-
+    setIsLoading(true);
     if (payOrderData) {
       try {
-        setIsLoading(true);
         const response = await customAxios.post(
           apiRoutes.orderCreate,
           payOrderData
         );
 
-        if (response.status === 201) {
-          if (response.data.data.code === (300000 || 310001)) {
-            localStorage.removeItem("orderData");
-            localStorage.setItem("cartCount", "0");
-            localStorage.removeItem("cartData");
-            navigate("/order/status", { state: { isSuccess: true } });
-          } else {
-            const { message } = getPayStatus(
-              response.data.data.fail,
-              response.data.message
-            );
-            const payError = message;
-            errorMessage = `error code: ${response.data.data.fail} - ${payError}`;
-            navigate("/order/status", {
-              state: { isSuccess: false, errorMessage },
-            });
-          }
+        if (response.data.data.code === (300000 || 310001)) {
+          localStorage.removeItem("orderData");
+          localStorage.setItem("cartCount", "0");
+          localStorage.removeItem("cartData");
+          navigate("/order/status", { state: { isSuccess: true } });
+        } else {
+          const { message } = getPayStatus(
+            response.data.data.fail,
+            response.data.message
+          );
+          const payError = message;
+          errorMessage = `error code: ${response.data.data.fail} - ${payError}`;
+          navigate("/order/status", {
+            state: { isSuccess: false, errorMessage },
+          });
         }
       } catch (error) {
         errorMessage =

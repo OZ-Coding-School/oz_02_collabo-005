@@ -42,6 +42,7 @@
   padding: 5px 10px;
   color: rgba(43, 43, 43, 0.836);
   background-color: rgb(236, 236, 236);
+  cursor: pointer;
 }
 
 .viewOrderBtn:active {
@@ -52,13 +53,13 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  cursor: pointer;
 }
 
 .myOrderItemLogoImg {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .myOrderInfoSection {
@@ -69,4 +70,5 @@
 .MIresName {
   font-size: 1.2rem;
   font-weight: 600;
+  cursor: pointer;
 }

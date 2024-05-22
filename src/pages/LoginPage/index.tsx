@@ -67,17 +67,15 @@ const LoginPage: React.FC = () => {
         apiRoutes.userLogin,
         postUserData
       );
-      if (response.status === 200) {
-        if (response.data.error) {
-          alert("The account you have currently entered is a deleted account.");
-        } else {
-          const loginToken = response.data.token.access;
-          const refreshToken = response.data.token.refresh;
-          useLoginStore.setState({ isLogin: true, loginToken, refreshToken });
-
-          navigate(from);
-        }
+      if (response.data.error) {
+        alert("The account you have currently entered is a deleted account.");
+        return;
       }
+      const loginToken = response.data.token.access;
+      const refreshToken = response.data.token.refresh;
+      useLoginStore.setState({ isLogin: true, loginToken, refreshToken });
+
+      navigate(from);
     } catch (error) {
       alert("Re-enter your email or password.");
     }

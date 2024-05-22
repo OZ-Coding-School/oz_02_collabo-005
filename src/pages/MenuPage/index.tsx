@@ -95,7 +95,6 @@ const MenuPage: React.FC = () => {
     localStorage.setItem("orderData", JSON.stringify(updatedOrderData));
     updateCartCount();
 
-    alert("Order has been added to the basket.");
     navigate(`/restaurant/${restaurantId}`);
   };
 

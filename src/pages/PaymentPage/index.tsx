@@ -47,7 +47,6 @@ const PaymentPage: React.FC = () => {
           apiRoutes.orderCreate,
           payOrderData
         );
-
         if (response.data.data.code === (300000 || 310001)) {
           localStorage.removeItem("orderData");
           localStorage.setItem("cartCount", "0");

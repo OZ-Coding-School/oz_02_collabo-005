@@ -60,6 +60,11 @@
   right: 10px;
 }
 
+.menuMainImgContainer .menuMainImg {
+  width: 100px;
+  height: 100px;
+}
+
 .menuSoldOut {
   display: flex;
   justify-content: center;

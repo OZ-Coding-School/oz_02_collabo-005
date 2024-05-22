@@ -4,7 +4,7 @@ const setOrderStatusMessage = (orderStatusCode: number | string) => {
 
   switch (orderStatusCode) {
     case 300000:
-      message = "Order confirmation";
+      message = "Checking your order";
       status = "orderLoading";
       break;
     case 300001:
@@ -44,19 +44,19 @@ const setOrderStatusMessage = (orderStatusCode: number | string) => {
       message = "Payment failed";
       status = "orderFailed";
       break;
-    case 300300 || 320000:
+    case 320000:
       message = "Waiting for dispatch";
       status = "orderLoading";
       break;
-    case 300301 || 302001:
+    case 320001:
       message = "Waiting for pickup";
       status = "orderLoading";
       break;
-    case 300302 || 302002:
+    case 320002:
       message = "Delivering";
       status = "orderLoading";
       break;
-    case 300303 || 302003:
+    case 320003:
       message = "Delivery completed";
       status = "orderSuccess";
       break;

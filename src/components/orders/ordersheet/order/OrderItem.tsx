@@ -86,7 +86,6 @@ const OrderItem: React.FC<OrderItemProps> = ({
 
           setCartData(response.data.data);
           changeCartCount();
-          if (response?.status !== 200) throw new Error("An error occurred.");
         } catch (error) {
           console.error("Failed to fetch restaurants:", error);
         }

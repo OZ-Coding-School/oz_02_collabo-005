@@ -1,5 +1,51 @@
 ## 📖 프로젝트 소개
-> 외국인을 대상으로한 딜리버리 앱
+> 📱 한국에 사는 외국인들이 사용하는 배달음식 어플!! <br/>
+👌 에피타이저부터 디저트까지 모두 한 번의 주문으로 해결!! <br/>
+😢 기존의 배달 어플은 언어와 결제라는 큰 벽이 존재하여 외국인들이 사용하기에 많은 어려움이 존재했으며, 한 주문에 한 식당만 선택하는 번거로움도 존재했습니다. <br/>
+🧐 저희는 이러한 문제점들을 개선하여 외국인들이 사용하기 편한 배달 어플을 만들기로 했습니다!!<br/>
+
+<br/>
+
+## 🔗 배포 링크
+> https://okivery.duckdns.org/
+
+<br/>
+
+## 📽️ 시연 영상
+### 회원가입
+<br/>
+
+![회원가입](https://github.com/user-attachments/assets/93a6127d-1c47-4fab-9eb3-5bf88d05cf3e)
+ 
+ ---
+ 
+### 로그인
+<br/>
+
+![로그인](https://github.com/user-attachments/assets/97bbf887-11b4-4430-b6ff-9eb7f9ebc48c)
+ 
+ ---
+
+### 주소 등록
+> 현재 평택지역으로 서비스가 제한 되어있습니다.
+<br/>
+
+https://github.com/user-attachments/assets/e6045862-1dd8-40fe-96af-e60ec989264a
+
+ ---
+
+### 메뉴 담기
+<br/>
+
+![메뉴담기](https://github.com/user-attachments/assets/04cc16c5-b54c-41b5-9d0f-a9c20c346a77)
+
+
+ ---
+
+### 결제 및 결제 내역 확인
+<br/>
+
+![결제-시연_1](https://github.com/user-attachments/assets/5886039e-2027-4084-b137-68046364c1ad)
 
 <br/>
 
@@ -7,8 +53,8 @@
 
 ### 💻 FrontEnd
 <div>
-  <img src="https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white"/>
-  <img src="https://img.shields.io/badge/CSS3-yellow?style=for-the-badge&logo=CSS3&logoColor=white"/>
+<img src="https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white"/>
+<img src="https://img.shields.io/badge/CSS3-yellow?style=for-the-badge&logo=CSS3&logoColor=white"/>
 <img src="https://img.shields.io/badge/TypeScript-61DAFB?style=for-the-badge&logo=TypeScript&logoColor=white"/>
 <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
 <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
@@ -22,7 +68,11 @@
 ### 💻 BackEnd
 
 <div>
-  
+    <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
+    <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
+    <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
+  <img src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> 
+  <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> 
 </div>
 
 <br/>
@@ -38,6 +88,12 @@
 <br/>
 
 ## 👥 팀 동료
+### 💻 BD
+- 장유위
+- 천지원
+
+<br/>
+
 ### 💻 FrontEnd
 
 | <a href=https://github.com/woic-ej><img src="https://avatars.githubusercontent.com/u/93540726?v=4" width=100px/><br/><sub><b>@woic-ej</b></sub></a><br/> | <a href=https://github.com/jjaeho0415><img src="https://avatars.githubusercontent.com/u/111436967?v=4" width=100px/><br/><sub><b>@jjaeho0415</b></sub></a><br/> |
